@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+{% set image = resize_image(path='static/assets/Redis_client.png', width=600, op='fit_width') %}
+
+<h1 class="title">This is my blog made with Zola</h1>
+<p>Click <a href="{{ get_url(path='@/blog/_index.md') }}">here</a> to see my posts.</p>
+<img src="{{ image.url }}" alt="Example image">
+{% endblock content %}
