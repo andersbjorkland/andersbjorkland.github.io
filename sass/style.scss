@@ -1,0 +1,27 @@
+$obsidian: #141414;
+$light: #FFF0FE;
+
+
+body {
+  background-color: $obsidian;
+  color: $light;
+}
+
+.bg-svg {
+  position: fixed;
+  z-index: -1;
+  overflow: visible;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+svg path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  transition: all 2s ease-in-out;
+}
+
+svg:hover path {
+  stroke-dashoffset: 0;
+}
