@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block articles_nav_item %}active{% endblock articles_nav_item%}
+
+{% block title %}
+ {{ section.title}}
+{% endblock title %}
+
+{% block content %}
+ {{ section.content | safe }}
+{% endblock content %}

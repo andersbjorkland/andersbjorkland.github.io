@@ -1,0 +1,15 @@
+.neon-container {
+  display: flex;
+  position: relative;
+  text-decoration: none;
+
+  * {
+    position: relative;
+  }
+
+  .neon-shadow {
+    filter: blur(4px);
+    opacity: 1;
+    position: absolute;
+  }
+}

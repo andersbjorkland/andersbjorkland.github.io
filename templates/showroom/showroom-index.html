@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Showroom</h2>
+<p>Projects that I've done recently</p>
+<ul>
+    {% for page in section.pages %}
+    <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock content %}

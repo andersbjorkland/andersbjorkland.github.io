@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% block home_nav_item %}active{% endblock home_nav_item%}
 
 {% block content %}
 {% set image = resize_image(path='static/assets/Redis_client.png', width=600, op='fit_width') %}
