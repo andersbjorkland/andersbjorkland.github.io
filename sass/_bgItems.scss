@@ -1,0 +1,25 @@
+.bg-svg {
+  position: fixed;
+  z-index: -1;
+  overflow: visible;
+  stroke-width: 1;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+
+svg.animate path {
+  stroke-dasharray: 1000;
+  animation: paths 15s infinite linear;
+  opacity: 0.25
+}
+
+@keyframes paths {
+  from {
+    stroke-dashoffset: 1000;
+    filter:url(#paint0_linear);
+  }
+  to {
+    stroke-dashoffset: -1000;
+    filter:url(#paint0_linear);
+  }
+}
