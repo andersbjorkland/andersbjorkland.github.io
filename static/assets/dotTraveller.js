@@ -1,10 +1,10 @@
-function dotTraveller(svgId, pathId, dotColor="#FFF0FE", dotRadius = "5") {
+function dotTraveller(svgId, pathId, dotColor="#FFF0FE", dotRadius = "5", dotOpacity = "0.1") {
     const path = document.getElementById(pathId);
     const pathLength = path.getTotalLength();
 
     const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
     dot.setAttribute("fill", dotColor);
-    dot.setAttribute("fill-opacity", "0.1");
+    dot.setAttribute("fill-opacity", dotOpacity);
     dot.setAttribute("r", dotRadius);
     dot.classList.add("dot-traveller")
 
@@ -22,11 +22,16 @@ function dotTraveller(svgId, pathId, dotColor="#FFF0FE", dotRadius = "5") {
         // Increase or reset the position
         if (position < pathLength) {
             position++;
+            setTimeout(moveDot, 10);
         } else {
-            position = 0;
+            dot.setAttribute("fill-opacity", 0);
+            setTimeout(() => {
+                position = 0
+                dot.setAttribute("fill-opacity", dotOpacity);
+                moveDot();
+            }, 5000);
         }
 
-        setTimeout(moveDot, 10);
     }
 
     moveDot();

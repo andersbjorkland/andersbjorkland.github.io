@@ -27,7 +27,7 @@ body {
   stroke-linecap: round;
 }
 
-svg path {
+svg.animate path {
   stroke-dasharray: 1000;
   animation: paths 15s infinite linear;
   opacity: 0.25

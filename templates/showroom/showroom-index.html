@@ -9,3 +9,11 @@
     {% endfor %}
 </ul>
 {% endblock content %}
+
+{% block scripts %}
+<script src="{{ get_url(path='assets/dotTraveller.js') }}"></script>
+<script>
+    dotTraveller("slider", "wave-1", "#FECDFC", "1", "0.7");
+    dotTraveller("slider", "wave-5", "#FECDFC", "1", "0.5");
+</script>
+{% endblock scripts %}
