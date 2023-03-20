@@ -1,0 +1,8 @@
+@use 'dimensions';
+
+.content {
+  &-wrapper {
+    margin: auto;
+    max-width: 1200px;
+  }
+}

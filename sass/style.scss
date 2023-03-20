@@ -1,7 +1,9 @@
 @use 'bgItems';
 @use 'colors';
 @use 'cta';
+@use 'dimensions';
 @use 'hero';
+@use 'image';
 @use 'nav';
 @use 'utils';
 
@@ -19,8 +21,9 @@ body {
   background-color: colors.$obsidian;
   color: colors.$light;
   font-family: 'Raleway', Arial, Helvetica, sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
 
+  margin: 0;
   padding: 1rem;
 
 }
