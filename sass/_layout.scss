@@ -1,0 +1,16 @@
+@use 'dimensions';
+
+.layout {
+  &-wrapper {
+    margin: auto;
+    max-width: dimensions.$smallBp;
+    
+    @media screen and (min-width: dimensions.$smallBp) {
+      max-width: dimensions.$mediumWidth;
+    }
+
+    @media screen and (min-width: dimensions.$mediumBp) {
+      max-width: dimensions.$largeWidth;
+    }
+  }
+}
