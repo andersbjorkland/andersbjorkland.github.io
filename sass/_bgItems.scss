@@ -1,17 +1,30 @@
 .bg-svg {
-  position: fixed;
   z-index: -1;
-  overflow: visible;
+
+  min-width: 100%;
+  min-height: 100%;
+
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
   stroke-width: 1;
   stroke-linejoin: round;
   stroke-linecap: round;
+
+  &.animate path {
+    stroke-dasharray: 1000;
+    animation: paths 15s infinite linear;
+    opacity: 0.25
+  }
+
+  &-container {
+    display: flex;
+    align-content: center;
+  }
 }
 
-svg.animate path {
-  stroke-dasharray: 1000;
-  animation: paths 15s infinite linear;
-  opacity: 0.25
-}
+
 
 @keyframes paths {
   from {
@@ -19,6 +32,7 @@ svg.animate path {
     filter:url(#paint0_linear);
   }
   to {
+
     stroke-dashoffset: -1000;
     filter:url(#paint0_linear);
   }

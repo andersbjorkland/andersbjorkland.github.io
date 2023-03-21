@@ -12,8 +12,10 @@ function dotTraveller(svgId, pathId, dotColor="#FFF0FE", dotRadius = "5", dotOpa
     svg.appendChild(dot);
 
     let position = 0;
+    let move = false;
 
     function moveDot() {
+        move = !move;
         const point = path.getPointAtLength(position);
 
         dot.setAttribute("cx", point.x.toString());
@@ -21,10 +23,14 @@ function dotTraveller(svgId, pathId, dotColor="#FFF0FE", dotRadius = "5", dotOpa
 
         // Increase or reset the position
         if (position < pathLength) {
-            position++;
-            setTimeout(moveDot, 10);
+
+            if (move) {
+                position++;
+            }
+
+            window.requestAnimationFrame(moveDot);
         } else {
-            dot.setAttribute("fill-opacity", 0);
+            dot.setAttribute("fill-opacity", "0");
             setTimeout(() => {
                 position = 0
                 dot.setAttribute("fill-opacity", dotOpacity);
