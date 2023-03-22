@@ -1,3 +1,5 @@
+@use 'dimensions';
+
 .neon-container {
   display: flex;
   position: relative;
@@ -11,5 +13,45 @@
     filter: blur(4px);
     opacity: 1;
     position: absolute;
+  }
+}
+
+.article-link {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-size: 10px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+  }
+
+  h3 {
+    position: absolute;
+    bottom: 0;
+    margin: 0;
+    padding: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 1.5em;
+    text-align: left;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @media screen and (min-width: dimensions.$smallBp) {
+    font-size: 14px;
+  }
+
+  @media screen and (min-width: dimensions.$mediumBp) {
+    font-size: 16px;
   }
 }
