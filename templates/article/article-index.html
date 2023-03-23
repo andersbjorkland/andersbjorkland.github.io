@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% import "macro/source-set.html" as imager %}
+
 {% block articles_nav_item %}active{% endblock articles_nav_item%}
 
 {% block title %}
@@ -7,28 +9,20 @@
 {% endblock title %}
 
 {% block content %}
+{{ section.content | safe }}
+
+<div class="layout-grid">
     {% for page in section.pages %}
     <a href="{{ page.permalink | safe }}" >
         <div class="article-link">
             <h3>{{ page.title }}</h3>
             {% for asset in page.assets %}
                 {%- if asset is matching("hero[.](jpg|png)$") -%}
-                    {% set smImage = resize_image(path=asset, width=240, height=180) %}
-                    {% set mdImage = resize_image(path=asset, width=400, height=300) %}
-                    {% set lgImage = resize_image(path=asset, width=600, height=450) %}
-                    <img
-                        src="{{ mdImage.url }}"
-                        srcset="{{ smImage.url }} 240w,
-                                {{ mdImage.url }} 400w,
-                                {{ lgImage.url }} 600w"
-                        sizes="(max-width: 240px) 200px,
-                                (max-width: 400px) 360px,
-                                600px"
-                    />
+                    {{ imager::source_set(asset=asset, alt=page.title) }}
                 {%- endif %}
             {% endfor %}
         </div>
     </a>
  {% endfor %}
- {{ section.content | safe }}
+ </div>
 {% endblock content %}
