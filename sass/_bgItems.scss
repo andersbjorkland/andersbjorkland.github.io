@@ -1,3 +1,5 @@
+@use 'dimensions';
+
 .bg-svg {
   z-index: -1;
 
@@ -14,8 +16,11 @@
 
   &.animate path {
     stroke-dasharray: 1000;
-    animation: paths 15s infinite linear;
-    opacity: 0.25
+    opacity: 0.25;
+
+    @media screen and (min-width: dimensions.$smallBp) {
+      animation: paths 15s infinite linear;
+    }
   }
 
   &-container {
@@ -32,7 +37,6 @@
     filter:url(#paint0_linear);
   }
   to {
-
     stroke-dashoffset: -1000;
     filter:url(#paint0_linear);
   }
