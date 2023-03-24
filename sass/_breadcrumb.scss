@@ -1,0 +1,15 @@
+@use 'colors';
+
+.breadcrumb {
+  &-container {
+    display: flex;
+
+    a {
+      color: colors.$lightPink;
+    }
+  }
+
+  &::after {
+    content: "/";
+  }
+}

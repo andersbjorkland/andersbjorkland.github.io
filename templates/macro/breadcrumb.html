@@ -1,0 +1,10 @@
+{% macro breadcrumb(ancestors) %}
+<div class="breadcrumb-container">
+    {% for ancestorPath in ancestors %}
+    {% set ancestor = get_section(path=ancestorPath) %}
+    <div class="breadcrumb">
+        <a href="{{ ancestor.permalink | safe}}">{{ ancestor.title }}</a>
+    </div>
+    {% endfor %}
+</div>
+{% endmacro %}

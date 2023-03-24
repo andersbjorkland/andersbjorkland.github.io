@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
+{% import "macro/breadcrumb.html" as breadcrumb %}
 {% import "macro/source-set.html" as imager %}
 
 {% block articles_nav_item %}active{% endblock articles_nav_item%}
@@ -9,7 +10,8 @@
 {% endblock title %}
 
 {% block content %}
-<h1>Articles</h1>
+<h1>{{ section.title }}</h1>
+{{ breadcrumb::breadcrumb(ancestors=section.ancestors) }}
 
 <div class="link-container">
 {% for subsectionPath in section.subsections %}
