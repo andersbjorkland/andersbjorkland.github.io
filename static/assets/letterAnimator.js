@@ -1,4 +1,4 @@
-const textWrappers = document.querySelectorAll('nav a .nav-text');
+const textWrappers = document.querySelectorAll('.letter-anim-text');
 textWrappers.forEach(function(textWrapper) {
     textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
 });
