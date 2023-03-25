@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 
+{% import "macro/breadcrumb.html" as breadcrumb %}
+
+{% block nav_item %}{% set articlesActive='active' %}{% endblock nav_item%}
+
 {% block content %}
- 
+ <div class="layout-row">
+  {{ breadcrumb::breadcrumb(ancestors=page.ancestors) }}
+ </div>
+ {{ page.content | safe }}
 {% endblock content %}

@@ -1,0 +1,25 @@
+.article {
+  &-header {
+    position: relative;
+    width: 100%;
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      aspect-ratio: 3/1;
+    }
+
+  }
+
+  &-title {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    color: white;
+
+    margin: 0;
+    padding: .5em .5em .25em 0.5em;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}

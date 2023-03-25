@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% import "macro/breadcrumb.html" as breadcrumb %}
+{% import "macro/page-link.html" as pager %}
 {% import "macro/source-set.html" as imager %}
 
 {% block nav_item %}{% set articlesActive='active' %}{% endblock nav_item%}
@@ -24,18 +25,10 @@
 </div>
 
 <div class="layout-grid">
-    {% for page in section.pages %}
+    {% set featured1 = get_page(path='articles/exploration/api_platform/index.md')  %}
+    {% set featured2 = get_page(path='articles/exploration/discovering_elixir/index.md')  %}
+    {{ pager::link(page=featured1) }}
+    {{ pager::link(page=featured2) }}
 
-    <a href="{{ page.permalink | safe }}" >
-        <div class="article-link">
-            <h3>{{ page.title }}</h3>
-            {% for asset in page.assets %}
-                {%- if asset is matching("hero[.](jpg|png)$") -%}
-                    {{ imager::source_set(asset=asset, alt=page.title) }}
-                {%- endif %}
-            {% endfor %}
-        </div>
-    </a>
- {% endfor %}
  </div>
 {% endblock content %}
