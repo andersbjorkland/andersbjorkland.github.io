@@ -3,7 +3,7 @@
 {% import "macro/breadcrumb.html" as breadcrumb %}
 {% import "macro/source-set.html" as imager %}
 
-{% block articles_nav_item %}{% set articlesActive='active' %}{% endblock articles_nav_item%}
+{% block nav_item %}{% set articlesActive='active' %}{% endblock nav_item%}
 
 {% block title %}
  {{ section.title}}
@@ -18,11 +18,8 @@
 <div class="link-container">
 {% for subsectionPath in section.subsections %}
     {% set subsection = get_section(path=subsectionPath) %}
-    <a class="link letter-anim-text-container" href="{{ subsection.permalink | safe}}">
-        <div>
-            <div class="letter-anim-text">{{ subsection.title }}</div>
-        </div>
-    </a>
+    {{ text::link(link=subsection.permalink | safe, linkText=subsection.title, linkClass='link') }}
+
 {% endfor %}
 </div>
 
