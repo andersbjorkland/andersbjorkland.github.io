@@ -1,4 +1,6 @@
 .article {
+  backdrop-filter: blur(4px);
+
   &-header {
     position: relative;
     width: 100%;

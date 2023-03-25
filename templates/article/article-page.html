@@ -8,5 +8,7 @@
  <div class="layout-row">
   {{ breadcrumb::breadcrumb(ancestors=page.ancestors) }}
  </div>
- {{ page.content | safe }}
+ <div class="article">
+  {{ page.content | safe }}
+ </div>
 {% endblock content %}
