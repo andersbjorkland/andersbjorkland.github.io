@@ -3,6 +3,8 @@
 .breadcrumb {
   &-container {
     display: flex;
+    align-items: flex-end;
+    padding-bottom: 0.35em;
 
     a {
       color: colors.$lightPink;

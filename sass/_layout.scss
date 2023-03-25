@@ -19,4 +19,10 @@
     grid-template-columns: repeat(auto-fit, minmax(18em, 1fr));
     grid-gap: 1.5em;
   }
+
+  &-row {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5em;
+  }
 }

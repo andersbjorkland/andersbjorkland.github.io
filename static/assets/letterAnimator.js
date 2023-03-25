@@ -4,7 +4,7 @@ textWrappers.forEach(function(textWrapper) {
 });
 
 // Add a hover event listener to each nav item
-const navItems = document.querySelectorAll('nav a');
+const navItems = document.querySelectorAll('.letter-anim-text-container');
 navItems.forEach(function(navItem) {
     navItem.addEventListener('mouseover', function() {
         // Generate a random angle for each letter on hover
@@ -23,13 +23,4 @@ navItems.forEach(function(navItem) {
             letter.style.transform = 'none'; // Remove the rotation from the letter
         });
     });
-});
-
-const nav = document.querySelector('nav');
-
-const burgerMenu = document.querySelector('.burger');
-burgerMenu.addEventListener('click', function() {
-    burgerMenu.classList.toggle('toggled');
-
-    nav.classList.toggle('toggled');
 });

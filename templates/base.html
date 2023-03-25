@@ -1,3 +1,20 @@
+{% import "macro/text.html" as text %}
+
+{% set homeActive = '' %}
+{% set articlesActive = '' %}
+{% set showroomActive = '' %}
+
+
+{% block home_nav_item %}
+{% endblock home_nav_item %}
+
+{% block articles_nav_item %}
+{% endblock articles_nav_item %}
+
+{% block showroom_nav_item %}
+{% endblock showroom_nav_item %}
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -14,37 +31,24 @@
 
 </head>
 <body>
+
     <header class="layout-wrapper">
         <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
         <nav>
             <div class="nav-inner-container">
                 <ul>
                     <li>
-                        <a href="{{ get_url(path='/') }}" class="{% block home_nav_item %}{% endblock home_nav_item %}">
-                            <div class="neon-container">
-                                <div class="nav-text letter-anim-text">home</div>
-                                <div class="neon-shadow">home</div>
-                            </div>
-                        </a>
+                        {{ text::link(link=get_url(path='/'), linkText='home', linkClass=homeActive) }}
                     </li>
                     <li>
-                        <a href="{{ get_url(path='@/articles/_index.md') }}" class="{% block articles_nav_item %}{% endblock articles_nav_item %}">
-                            <div class="neon-container">
-                                <div class="nav-text letter-anim-text">articles</div>
-                                <div class="neon-shadow">articles</div>
-                            </div>
-                        </a>
+                        {{ text::link(link=get_url(path='@/articles/_index.md'), linkText='articles', linkClass=articlesActive) }}
                     </li>
                     <li>
-                        <a href="{{ get_url(path='@/showroom/_index.md') }}" class="{% block showroom_nav_item %}{% endblock showroom_nav_item %}">
-                            <div class="neon-container">
-                                <div class="nav-text letter-anim-text">showroom</div>
-                                <div class="neon-shadow">showroom</div>
-                            </div>
-                        </a>
+                        {{ text::link(link=get_url(path='@/showroom/_index.md'), linkText='showroom', linkClass=showroomActive) }}
                     </li>
                     <li>
-                        <a href="#" class="{% block about_nav_item %}{% endblock about_nav_item %}">
+                        <a href="#" class="letter-anim-text-container {% block about_nav_item %}{% endblock about_nav_item %}">
                             <div class="neon-container">
                                 <div class="nav-text letter-anim-text">about</div>
                                 <div class="neon-shadow">about</div>
@@ -52,7 +56,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#" class="{% block contact_nav_item %}{% endblock contact_nav_item %}">
+                        <a href="#" class="letter-anim-text-container {% block contact_nav_item %}{% endblock contact_nav_item %}">
                             <div class="neon-container">
                                 <div class="nav-text letter-anim-text">contact</div>
                                 <div class="neon-shadow">contact</div>
@@ -67,6 +71,7 @@
     <div class="layout-wrapper">
     {% block content %}{% endblock %}
     </div>
+    <script src="{{ get_url(path='assets/burger.js') }}"></script>
     <script src="{{ get_url(path='assets/letterAnimator.js') }}"></script>
     {% block scripts %}{% endblock scripts %}
 

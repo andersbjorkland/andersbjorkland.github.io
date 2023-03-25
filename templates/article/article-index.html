@@ -3,20 +3,26 @@
 {% import "macro/breadcrumb.html" as breadcrumb %}
 {% import "macro/source-set.html" as imager %}
 
-{% block articles_nav_item %}active{% endblock articles_nav_item%}
+{% block articles_nav_item %}{% set articlesActive='active' %}{% endblock articles_nav_item%}
 
 {% block title %}
  {{ section.title}}
 {% endblock title %}
 
 {% block content %}
-<h1>{{ section.title }}</h1>
-{{ breadcrumb::breadcrumb(ancestors=section.ancestors) }}
+<div class="layout-row">
+    {{ breadcrumb::breadcrumb(ancestors=section.ancestors) }}
+    <h1>{{ section.title }}</h1>
+</div>
 
 <div class="link-container">
 {% for subsectionPath in section.subsections %}
     {% set subsection = get_section(path=subsectionPath) %}
-    <a class="link" href="{{ subsection.permalink | safe}}">{{ subsection.title }}</a>
+    <a class="link letter-anim-text-container" href="{{ subsection.permalink | safe}}">
+        <div>
+            <div class="letter-anim-text">{{ subsection.title }}</div>
+        </div>
+    </a>
 {% endfor %}
 </div>
 

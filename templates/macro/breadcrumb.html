@@ -1,4 +1,6 @@
 {% macro breadcrumb(ancestors) %}
+
+{% if ancestors | length > 1 %}
 <div class="breadcrumb-container">
     {% for ancestorPath in ancestors %}
     {% set ancestor = get_section(path=ancestorPath) %}
@@ -7,4 +9,6 @@
     </div>
     {% endfor %}
 </div>
+{% endif %}
+
 {% endmacro %}

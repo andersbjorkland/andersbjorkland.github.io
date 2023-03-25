@@ -1,0 +1,10 @@
+{% macro link(link, linkText, linkClass="") %}
+
+<a href="{{ link }}" class="letter-anim-text-container {{ linkClass }}">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">{{ linkText }}</div>
+    <div class="neon-shadow">{{ linkText }}</div>
+  </div>
+</a>
+
+{% endmacro %}
