@@ -1,0 +1,12 @@
+{% set url1 = get_url(path=source)%}
+{% if source2 %}
+    {% set url2 = get_url(path=source2)%}
+{% endif %}
+
+<video width="600" height="337" muted controls>
+    <source src="{{ url1 }}" type="{{ type }}">
+    {% if url2 and type2 %}
+    <source src="{{ url2 }}" type="{{ type2 }}">
+    {% endif %}
+    Your browser does not support this video
+</video>

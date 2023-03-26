@@ -1,3 +1,13 @@
 img {
   max-width: 100%;
 }
+
+.image {
+  &-container {
+    display: flex;
+
+    &.center {
+      justify-content: center;
+    }
+  }
+}

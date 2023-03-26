@@ -1,9 +1,12 @@
+@use 'colors';
+
 .article {
   backdrop-filter: blur(4px);
 
   &-header {
     position: relative;
     width: 100%;
+    margin-bottom: 4em;
 
     img {
       width: 100%;
@@ -23,5 +26,14 @@
     margin: 0;
     padding: .5em .5em .25em 0.5em;
     background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  h2 {
+    margin-top: 2em;
+  }
+
+  blockquote {
+    border-left: 0.25em solid colors.$lightPink;
+    padding-left: 0.25em;
   }
 }

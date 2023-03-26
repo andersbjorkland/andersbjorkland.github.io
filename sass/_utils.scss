@@ -78,9 +78,18 @@
 
 .quote {
   margin: 3em 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
   cite {
     font-style: italic;
     font-size: 2.5em;
     font-weight: 100;
+    text-align: center;
+
+    * {
+      margin: 0;
+    }
   }
 }

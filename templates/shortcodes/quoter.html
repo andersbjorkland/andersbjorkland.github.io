@@ -1,7 +1,7 @@
 
 <div class="quote">
     <cite>
-        {{ body }}
+        {{ body | markdown | safe }}
     </cite>
     {% if author %}
     <div>{{ author }}</div>
