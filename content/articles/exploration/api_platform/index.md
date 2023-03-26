@@ -282,4 +282,63 @@ And just like that we get back the following for the first *song*:
     }
 ```
 
-So far, this has been a pleasant journey. But can we add and get a list of songs from the Cassette resource? 
+So far, this has been a pleasant journey. But can we add a song at a time to the cassette and get a list of songs from the Cassette resource? This will require a bit more work. While we have an endpoint to setup the whole lists of songs with a one-off `PATCH` request, we do not have an endpoint to add one song at a time. Another challenge is the nature of cassettes! 
+
+{{ imager(asset='articles/exploration/api_platform/cassette_1.jpeg', alt='A cassette in a purple neon light', class='center') }}
+
+A traditional cassette has 2 sides; an A-side and a B-side. Each side can contain upto about 30 minutes of audio. We will add a method called `addSong` which will add songs to the A-side until it is full and then continue to add to the B-side. We will have a method to calculate the length occupied for each side called `totalLength` and another method called `sideAddable` to the `Cassette` class. We will modify the methods `addSideA` and `addSideB` to add the control if it can add another song.
+
+```php
+    // ./src/Entity/Cassette
+    public function addSong(Song $song): self
+    {
+        if (!$this->sideA->contains($song) && $this->sideAddable($song, $this->sideA)) {
+            $this->addSideA($song);
+        } else {
+            $this->addSideB($song);
+        }
+
+        return $this;
+    }
+    
+    public function addSideA(Song $song): self
+    {
+        if (!$this->sideA->contains($song) && $this->sideAddable($song, $this->sideA)) {
+            $this->sideA->add($song);
+        }
+
+        return $this;
+    }
+    
+    public function addSideB(Song $song): self
+    {
+        if (!$this->sideB->contains($song) && $this->sideAddable($song, $this->sideB)) {
+            $this->sideB->add($song);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Collection<Song> $songs
+     * @return int
+     */
+    public function totalLength(Collection $songs): int
+    {
+        $sum = 0;
+
+        foreach ($songs as $song) {
+            $sum += $song->getDuration() ?? 0;
+        }
+
+        return $sum;
+    }
+
+    protected function sideAddable(Song $candidateSong, Collection $sideSongs): bool
+    {
+        $allowedLength = 30 * 60;
+
+        return $allowedLength > ($this->totalLength($sideSongs) + $candidateSong->getDuration());
+    }
+```
+
