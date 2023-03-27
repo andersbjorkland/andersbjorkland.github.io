@@ -1,0 +1,9 @@
+
+<div class="quote">
+    <cite>
+        {{ body | markdown | safe }}
+    </cite>
+    {% if author %}
+    <div>{{ author }}</div>
+    {% endif %}
+</div>

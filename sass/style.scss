@@ -1,8 +1,10 @@
+@use 'article';
 @use 'bgItems';
 @use 'breadcrumb';
 @use 'colors';
 @use 'cta';
 @use 'dimensions';
+@use 'fonts';
 @use 'hero';
 @use 'image';
 @use 'layout';
@@ -29,4 +31,17 @@ body {
   margin: 0;
   padding: 1rem;
 
+  font-size: 10px;
+
+  @media screen and (min-width: dimensions.$smallBp) {
+    font-size: 14px;
+  }
+
+  @media screen and (min-width: dimensions.$mediumBp) {
+    font-size: 16px;
+  }
+
+  @media screen and (min-width: dimensions.$largeBp) {
+    font-size: 18px;
+  }
 }
