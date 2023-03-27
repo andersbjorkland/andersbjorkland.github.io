@@ -1,6 +1,6 @@
 +++
 title = "Discovering API Platform"
-date = 2023-03-22
+date = 2023-03-27
 weight = 1
 +++
 
@@ -32,7 +32,7 @@ install API Platform, it also adds some additional configurations such as exposi
 
 Visiting the `api` route right now will display an OpenAPI (*swagger*) UI 👇
 
-{{ imager_standard(asset='articles/exploration/api_platform/api-platform-0.jpeg', alt='Swagger UI, but no resources available') }}
+{{ imager_standard(asset='articles/exploration/api_platform/api-platform-0.jpeg', alt='Swagger UI, but no resources available', class='center') }}
 
 {% quoter() %}We don't do this because it is easy, we do it because we thought it would be easy. {% end %}
 
@@ -155,6 +155,8 @@ We see some metadata about this entity in the form of [PHP attributes](https://w
   
 By expanding the `ApiResource` attribute with an `operations` argument we can specify which requests we want to enable for the entity.  
 ```php
+<?php 
+// ...
 #[ApiResource(
     operations: [
         new Get(),
@@ -259,6 +261,8 @@ Perhaps we could improve the response for the songs so we could get duration in 
   
 Add the following method to `App\Entity\Song`:
 ```php
+<?php
+// ...
     public function getFormattedDuration(): ?string
     {
         $duration = $this->duration ?? 0;
@@ -290,6 +294,10 @@ A traditional cassette has 2 sides; an A-side and a B-side. Each side can contai
 
 ```php
     // ./src/Entity/Cassette
+<?php
+
+    // ...
+
     public function addSong(Song $song): self
     {
         if (!$this->sideA->contains($song) && $this->sideAddable($song, $this->sideA)) {
@@ -342,3 +350,250 @@ A traditional cassette has 2 sides; an A-side and a B-side. Each side can contai
     }
 ```
 
+We will add a controller to handle when songs are added to a cassette. After this, we will use the controller when we register a new API route. You will see that we pass an EntityManagerInterface to the controller. This will be automaticallly resolved by Symsony's Dependency Injection container. It will be used to loop up the song in the database and store it to a cassette. The controller will return a `201 OK` status for successful creation of a new relation, `400 BAD REQUEST` for requests without a required body parameter (*songId*), or `404 NOT FOUND` if a song is not found. If you look oveer the class you will see that we don't look up the Cassette to see if it is present. In a __invoke method we assume a cassette has already been found, this means that Symfony in conjunction with the ORM will already have processed the lookup and will handle returning a `404` for us if it was not found. 
+
+```php
+//  ./src/Controller/CassetteSongController.php
+
+<?php
+
+declare(strict_types=1);
+
+namespace App\Controller;
+
+use App\Entity\Cassette;
+use App\Entity\Song;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class CassetteSongController extends AbstractController
+{
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager
+    ){}
+    public function __invoke(Cassette $cassette, Request $request = null): Response
+    {
+        if ($request !== null) {
+            $content = $request->getContent();
+            $data = json_decode($content, true);
+            $songId = $data['songId'] ?? false;
+
+            if (!$songId) {
+                return $this->json(
+                    ['description' => 'Missing required key "songId"'],
+                    Response::HTTP_BAD_REQUEST
+                );
+            }
+
+            $songRepository = $this->entityManager->getRepository(Song::class);
+            $song = $songRepository->findOneBy(['id' => $songId]);
+
+            if ($song === null) {
+                return $this->json(['description' => 'Song was not found'], Response::HTTP_BAD_REQUEST);
+            }
+
+            $cassette = $cassette->addSong($song);
+            $this->entityManager->flush($cassette);
+        }
+
+        return $this->json(
+            [
+                'description' => 'Song was added!',
+            ],
+            Response::HTTP_CREATED
+        );
+    }
+}
+```
+
+{% quoter() %}
+To be or not to be, that is the question. Well, actually, there are many other questions, like "why that controller though?"
+{% end %}
+{{ imager(asset='articles/exploration/api_platform/hamlet-controller.jpeg', alt='A cassette in a purple neon light', class='center') }}
+
+So what to do with that controller? As we see, it will take an instance of the Cassette class and a request object. We will go into the Cassette class and expand the API definitions. This will be less magic (but not totally without some sourcery), and more definitions. We add a new Post-request to the API Resource, define its route, the controller to handle it, and its response values.
+  
+```php
+<?php
+
+#[ApiResource(
+    operations: [
+        // ... 
+        new Post(
+            uriTemplate: '/cassettes/{id}/songs',
+            controller: CassetteSongController::class,
+            openapiContext: [
+                'summary' => 'Add a Song to a cassette',
+                'requestBody' => [
+                    'content' => [
+                        'application/json' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'properties' => [
+                                    'songId' => [
+                                        'type' => 'integer'
+                                    ]
+                                ]
+                            ]
+                        ]
+                    ]
+                ],
+                'responses' => [
+                    '201' => [
+                        'description' => 'Song added successfully'
+                    ],
+                    '400' => [
+                        'description' => 'Missing required key'
+                    ],
+                    '404' => [
+                        'description' => 'Cassette or Song not found'
+                    ]
+                ]
+            ]
+        )
+    ]
+)]
+class Cassette
+// ...
+```
+
+In the route for the endpoint we have added a placeholder, `{id}`. This id corresponds to the Cassette entity we want to add to, and Symfony will fetch the correct one for us and insert into the controller's `__invoke` method. In the POST body we define the schema to have a `songId` with an `integer`. Having added this, we will see a new route and schema for it on `localhost:8000/api`.
+
+{{ imager_standard(asset='articles/exploration/api_platform/new-post-route.jpeg', alt='The swagger ui has an with the description "Add a Song to a cassette"', class='center') }}
+
+We can now create a Cassette, multiple songs, and add songs to a cassette. Having done that, when we fetch a Cassette with a GET request we will get back the songs it has. But something looks a bit off.
+
+`GET https://127.0.0.1:8000/api/cassettes/1`
+```yaml
+{
+  "@context": "/api/contexts/Cassette",
+  "@id": "/api/cassettes/1",
+  "@type": "Cassette",
+  "id": 1,
+  "title": "Mix Tape #1",
+  "sideA": [
+    "/api/songs/1",
+    "/api/songs/2",
+    "/api/songs/3",
+    "/api/songs/4",
+    "/api/songs/5",
+    "/api/songs/6",
+    "/api/songs/7",
+    "/api/songs/8"
+  ],
+  "sideB": [
+    "/api/songs/10",
+    "/api/songs/11",
+    "/api/songs/12",
+    "/api/songs/13",
+    "/api/songs/14"
+  ]
+}
+```
+
+We can see that we have 8 songs on side A, and 5 on side B. But we would like to get the song, artist, and duration for each. So what are these strings we get? It looks like URLs, and while they functions as this too they are API Platform's way to identify each entity, or IRIs (*International Resource Identifiers*).  
+  
+We will modify how API Platform returns the songs when we fetch a cassette. We will do this by defining a normalization-group in Cassette and map the Song class to also use this group.
+
+```php
+// ./src/Entity/Cassette
+<?php
+// ...
+use Symfony\Component\Serializer\Annotation\Groups;
+// ...
+
+#[ApiResource(
+    // ...
+    normalizationContext: [
+        'groups' => ['read:cassette']
+    ]
+)]
+class Cassette
+{
+    // ...
+    // add this group to the fields you want to expose in the API
+    #[Groups(['read:cassette'])]
+    private ?string $title = null;
+
+    // ...
+    #[Groups(['read:cassette'])]
+    private Collection $sideA;
+
+    // ...
+    #[Groups(['read:cassette'])]
+    private Collection $sideB;
+
+    // ...
+}
+```
+
+And for the magic of it all we will add this group in the Song class as well.  
+
+```php
+// ./src/Entity/Song
+
+<?php
+
+use Symfony\Component\Serializer\Annotation\Groups;
+// ...
+
+    #[Groups(['read:cassette'])]
+    private ?string $title = null;
+
+    #[Groups(['read:cassette'])]
+    private ?string $artist = null;
+
+    // ...
+
+    #[Groups(['read:cassette'])]
+    public function getFormattedDuration(): ?string
+    {
+        // ...
+    }
+
+``` 
+
+So we did something odd here. We use a normalization-group defined in another API Resource and add it to the fields of the Song class. How would this ever be enough to get the behaviour that we want? The answer is magic! Or, [serialization process, you can read more about that in API Platform's documention](https://api-platform.com/docs/core/serialization/). This is the result:  
+  
+```yaml
+{
+  "@context": "/api/contexts/Cassette",
+  "@id": "/api/cassettes/1",
+  "@type": "Cassette",
+  "title": "Mix Tape #1",
+  "sideA": [
+    {
+      "@id": "/api/songs/1",
+      "@type": "Song",
+      "title": "Never Gonna Give You Up",
+      "artist": "Rick Astley",
+      "formattedDuration": "3:34"
+    },
+    {
+      "@id": "/api/songs/2",
+      "@type": "Song",
+      "title": "If I Could Turn Back Time",
+      "artist": "Cher",
+      "formattedDuration": "3:59"
+    },
+    // ...
+  ]
+  // ...
+}
+    
+```
+
+And that is exactly what we were working towards! But we have only been scratching the surface of API Platform. There are many other topics to discover, such as:
+* [RESTful to GraphQL](https://api-platform.com/docs/core/graphql/)
+* [Securing resources and operations](https://api-platform.com/docs/core/security/)
+* [The Admin component](https://api-platform.com/docs/admin/)
+* [Filters](https://api-platform.com/docs/core/filters/)
+* ...and so much more!
+
+{% quoter() %}
+What thou seest is but the shadow of the truth; the substance lies beneath, and thou must scratch the surface to reveal it. But scratch not with thy nails, but with thy vinyl records!
+{% end %}
+
+{{ imager(asset='articles/exploration/api_platform/shakespeare-dj.jpeg', alt='A classic writer as a DJ, scratching the surface of his mixtable', class='center') }}

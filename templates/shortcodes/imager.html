@@ -5,6 +5,7 @@
 {% else %}
     {% set alt = "" %}
 {% endif %}
+<div class="image-container {{class}}">
 <img
         alt="{{ alt }}"
         src="{{ asset }}"
@@ -15,3 +16,4 @@
                     (max-width: 400px) 360px,
                     600px"
 />
+</div>
