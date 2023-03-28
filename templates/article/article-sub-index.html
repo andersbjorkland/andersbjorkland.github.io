@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% import "macro/breadcrumb.html" as breadcrumb %}
+{% import "macro/page-link.html" as pager %}
+{% import "macro/source-set.html" as imager %}
+
+{% block nav_item %}{% set articlesActive='active' %}{% endblock nav_item%}
+
+{% block title %}
+ {{ section.title}}
+{% endblock title %}
+
+{% block content %}
+<div class="layout-row">
+    {{ breadcrumb::breadcrumb(ancestors=section.ancestors) }}
+    <h1>{{ section.title }}</h1>
+</div>
+
+<div class="link-container">
+{% for subsectionPath in section.subsections %}
+    {% set subsection = get_section(path=subsectionPath) %}
+    {{ text::link(link=subsection.permalink | safe, linkText=subsection.title, linkClass='link') }}
+{% endfor %}
+</div>
+
+<div class="layout-grid">
+    {% set featured1 = get_page(path='articles/exploration/api_platform/index.md')  %}
+    {% for page in section.pages %}
+        {{ pager::link(page=page) }}
+    {% endfor %}
+ </div>
+{% endblock content %}

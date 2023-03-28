@@ -1,0 +1,30 @@
+<header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    {{ text::link(link=get_url(path='/'), linkText='home', linkClass=homeActive) }}
+                </li>
+                <li>
+                    {{ text::link(link=get_url(path='@/articles/_index.md'), linkText='articles', linkClass=articlesActive) }}
+                </li>
+                <li>
+                    {{ text::link(link=get_url(path='@/showroom/_index.md'), linkText='showroom', linkClass=showroomActive) }}
+                </li>
+                <li>
+                    {{ text::link(link=get_url(path='@/about/_index.md'), linkText='about', linkClass=aboutActive) }}
+                </li>
+                <li>
+                    <a href="#" class="letter-anim-text-container {% block contact_nav_item %}{% endblock contact_nav_item %}">
+                        <div class="neon-container">
+                            <div class="nav-text letter-anim-text">contact</div>
+                            <div class="neon-shadow">contact</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
