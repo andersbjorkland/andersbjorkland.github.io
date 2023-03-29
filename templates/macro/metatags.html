@@ -1,0 +1,16 @@
+{% macro page(page) %}
+
+{% for asset in page.assets %}
+    {% if asset is matching("hero[.](jpg|png)$") %}
+        {% set resizedImage = resize_image(path=asset, width=1200, height=627) %}
+        {% set imagePath = resizedImage.url | safe %}
+        <meta property="og:image" content="{{ imagePath }}" />
+    {% endif %}
+{% endfor %}
+
+<meta property="og:title" content="{{ page.title }}" />
+<meta property="og:description" content="{{ page.description }}" />
+<meta property="og:url" content="{{ page.permalink | safe }}" />
+
+
+{% endmacro %}

@@ -1,7 +1,9 @@
 +++
 title = "Discovering API Platform"
 date = 2023-03-27
+updated = 2023-03-29
 weight = 1
+description = "API Platform is your RESTful API framework that let's you build API's in most any ways you want, as long as you are in the PHP world."
 +++
 
 {{ articleHeader(
