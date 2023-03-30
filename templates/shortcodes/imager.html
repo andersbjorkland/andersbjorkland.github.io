@@ -5,6 +5,12 @@
 {% else %}
     {% set alt = "" %}
 {% endif %}
+
+{% if class %}
+{% else %}
+{% set class = "" %}
+{% endif %}
+
 <div class="image-container {{class}}">
 <img
         alt="{{ alt }}"
