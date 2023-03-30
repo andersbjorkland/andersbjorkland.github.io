@@ -1,15 +1,19 @@
 {% extends "base.html" %}
 
+{% import "macro/page-link.html" as pager %}
+{% import "macro/source-set.html" as imager %}
+
+{% block animateSvg %}animate{% endblock animateSvg %}
 {% block nav_item %}{% set showroomActive='active' %}{% endblock nav_item %}
 
 {% block content %}
-<h2>Showroom</h2>
-<p>Projects that I've done recently</p>
-<ul>
-    {% for page in section.pages %}
-    <li><a href="{{ page.permalink | safe }}">{{ page.title }}</a></li>
-    {% endfor %}
-</ul>
+    <h2>Showroom</h2>
+    <p>Projects that I've done recently</p>
+    <div class="link-container">
+        {% for page in section.pages %}
+        {{ pager::link(page=page) }}
+        {% endfor %}
+    </div>
 {% endblock content %}
 
 {% block scripts %}

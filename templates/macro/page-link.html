@@ -1,12 +1,15 @@
+{% import "macro/image.html" as image %}
+
 {% macro link(page) %}
 
 <a href="{{ page.permalink | safe }}" >
     <div class="article-link">
         <h3>{{ page.title }}</h3>
         {% for asset in page.assets %}
-        {%- if asset is matching("hero[.](jpg|png)$") -%}
-        {{ imager::source_set(asset=asset, alt=page.title) }}
-        {%- endif %}
+            {% if asset is matching("hero[.](jpg|jpeg|png)$") %}
+            {{ image::srcsetter(asset=asset, alt=page.title) }}
+            {% break %}
+        {% endif %}
         {% endfor %}
     </div>
 </a>

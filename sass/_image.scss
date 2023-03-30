@@ -10,4 +10,20 @@ img {
       justify-content: center;
     }
   }
+
+  &--glossy {
+    position: relative;
+    display: inline-block;
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 25%;
+      left: 25%;
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background-image: linear-gradient(-45deg, rgba(255, 255, 255, .4), rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, 0) 50%);
+    }
+  }
 }

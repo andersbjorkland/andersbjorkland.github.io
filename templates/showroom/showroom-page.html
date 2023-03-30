@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block nav_item %}{% set showroomActive='active' %}{% endblock nav_item %}
+
 {% block content %}
-{{ page.content | safe }}
+<div class="article">
+    {{ page.content | safe }}
+</div>
 {% endblock content %}
