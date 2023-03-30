@@ -226,7 +226,7 @@ not an empty list and again call `print_seq_helper` and let it take the next ele
 on it goes until the list is empty and a "simple" `:ok` is returned.   
   
 The `:ok` is called an 
-[atom](https://elixir-lang.org/getting-started/basic-types.html#atoms. It is a constant that has the same value as it is 
+[atom](https://elixir-lang.org/getting-started/basic-types.html#atoms). It is a constant that has the same value as it is 
 named. The name can be most anything we want. We could return `:cat_in_a_hat` if we wanted to! 
   
 When we return to `iex` we can compile the latest changes and see what our output will be:
