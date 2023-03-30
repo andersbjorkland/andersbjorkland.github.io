@@ -108,7 +108,6 @@ ExUnit.start()
 
 defmodule FibonacciTest do
   use ExUnit.Case
-  require Fibonacci
 
   test "fibonacci of 0 is 0" do
     assert Fibonacci.fib(0) == 0
