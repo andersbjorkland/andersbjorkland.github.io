@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
+
 {% block title %}home{% endblock title %}
 
-
-{% block nav_item %}{% set homeActive='active' %}{% endblock nav_item%}
+{% block nav_item %}{% set contactActive='active' %}{% endblock nav_item%}
 
 {% block animateSvg %}animate{% endblock animateSvg %}
 
@@ -15,8 +15,8 @@
     <h1 class="second-row">Building sustainable eCommerce and friendly API:s</h1>
 </div>
 
-<div class="cta">
-    <a href="{{ get_url(path='@/contact/_index.md') }}">contact</a>
+<div class="about-content">
+    {{ section.content | safe }}
 </div>
 
 {% endblock content %}
