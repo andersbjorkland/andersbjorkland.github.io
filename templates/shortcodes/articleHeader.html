@@ -2,5 +2,9 @@
 
 <div class="article-header">
     {{ imager::source_set(asset=path) }}
-    <h1 class="article-title">{{ title }}</h1>
-</div>
+    <h1 class="article-title">
+        <div class="title">{{ title }}</div>
+        {% if subtitle %}
+            <div class="subtitle">{{ subtitle }}</div>
+        {% endif %}
+    </h1>

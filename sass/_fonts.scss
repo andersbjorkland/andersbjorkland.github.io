@@ -1,4 +1,5 @@
 @use 'colors';
+@use 'dimensions';
 
 h1, h2, h3, h4, h5, h6 {
   margin: 0;
@@ -24,4 +25,39 @@ a {
 p {
   font-size: 1em;
   line-height: 1.75em;
+}
+
+.title {
+  font-size: 1.5rem;
+}
+
+.subtitle {
+  font-size: 1rem;
+}
+
+@media screen and (min-width: dimensions.$vsmallBp) {
+  .title {
+    font-size: 2rem;
+  }
+  .subtitle {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (min-width: dimensions.$smallBp) {
+  .title {
+    font-size: 3rem;
+  }
+  .subtitle {
+    font-size: 1.75rem;
+  }
+}
+
+@media screen and (min-width: dimensions.$mediumBp) {
+  .title {
+    font-size: 4rem;
+  }
+  .subtitle {
+    font-size: 2rem;
+  }
 }
