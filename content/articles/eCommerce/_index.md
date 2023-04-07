@@ -1,11 +1,11 @@
 +++
 title = "eCommerce"
 sort_by = "date"
-template = "article/article-index.html"
+template = "article/article-sub-index.html"
 page_template = "article/article-page.html"
 render=true
-draft = true
+draft = false
 +++
 
 # Articles
-Articles about most anything: from architecture and design to leisure items.  
+Articles about most anything: from software architecture and design to leisure items.  
