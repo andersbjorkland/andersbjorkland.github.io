@@ -5,7 +5,8 @@
 {% for asset in page.assets %}
     {% if asset is matching("meta[.](jpg|jpeg|png)$") %}
         {% set_global metaImage = true %}
-<meta name="image" property="og:image" content="{{ get_url(path=asset) | safe }}" />
+        {% set resizedImage = resize_image(path=asset, width=1200, height=627) %}
+<meta name="image" property="og:image" content="{{ resizedImage.url | safe }}" />
         {% break %}
     {% endif %}
 {% endfor %}
