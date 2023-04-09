@@ -1,12 +1,25 @@
 {% macro page(page) %}
 
+{% set metaImage = false %}
+
 {% for asset in page.assets %}
-    {% if asset is matching("hero[.](jpg|png)$") %}
-        {% set resizedImage = resize_image(path=asset, width=1200, height=627) %}
-        {% set imagePath = resizedImage.url | safe %}
-        <meta property="og:image" content="{{ imagePath }}" />
+    {% if asset is matching("meta[.](jpg|jpeg|png)$") %}
+        {% set_global metaImage = true %}
+        <meta property="og:image" content="{{ get_url(path=asset) }}" />
+        {% break %}
     {% endif %}
 {% endfor %}
+
+{% if metaImage %}
+{% else %}
+    {% for asset in page.assets %}
+    {% if asset is matching("hero[.](jpg|jpeg|png)$") %}
+        {% set resizedImage = resize_image(path=asset, width=1200, height=627) %}
+        <meta property="og:image" content="{{ resizedImage.url | safe }}" />
+    {% endif %}
+    {% endfor %}
+   
+{% endif %}
 
 <meta property="og:title" content="{{ page.title }}" />
 <meta property="og:description" content="{{ page.description }}" />

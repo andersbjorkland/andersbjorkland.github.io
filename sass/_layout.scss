@@ -34,3 +34,13 @@
     margin: auto;
   }
 }
+
+.mb {
+  &-2 {
+    margin-bottom: 2rem;
+  }
+
+  &-4 {
+    margin-bottom: 4rem;
+  }
+}

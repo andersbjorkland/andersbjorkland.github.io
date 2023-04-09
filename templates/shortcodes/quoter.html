@@ -1,5 +1,10 @@
 
-<div class="quote">
+{% if class %}
+{% else %}
+    {% set class="" %}
+{% endif %}
+
+<div class="quote {{ class }}">
     <cite>
         {{ body | markdown | safe }}
     </cite>
