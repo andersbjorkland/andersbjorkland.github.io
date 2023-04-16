@@ -41,10 +41,10 @@ img {
       z-index: 2;
 
       font-weight: bold;
-      text-shadow:  -1px -1px 1px #000,  
-                    1px -1px 0 #000,
-                    -1px 1px 0 #000,
-                    1px 1px 0 #000;
+      text-shadow:  -2px -2px 0 #000,  
+                    2px -2px 0 #000,
+                    -2px 2px 0 #000,
+                    2px 2px 0 #000;
 
       left: 50%;
       transform: translateX(-50%);
