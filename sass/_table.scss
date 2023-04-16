@@ -1,0 +1,9 @@
+@use 'colors';
+
+table {
+    border-collapse: collapse;
+}
+
+thead {
+    border-bottom: 1px solid colors.$light;
+}

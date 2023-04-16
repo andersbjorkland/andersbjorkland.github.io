@@ -1,3 +1,5 @@
+@use 'dimensions';
+
 img {
   max-width: 100%;
 }
@@ -24,6 +26,67 @@ img {
       height: 100%;
       border-radius: inherit;
       background-image: linear-gradient(-45deg, rgba(255, 255, 255, .4), rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, 0) 50%);
+    }
+  }
+
+  &-text-overlay {
+    position: relative;
+    margin: 3rem auto;
+    width: fit-content;
+    
+
+    .image-text {
+      position: absolute;
+      left: 0;
+      z-index: 2;
+
+      font-weight: bold;
+      text-shadow:  -1px -1px 1px #000,  
+                    1px -1px 0 #000,
+                    -1px 1px 0 #000,
+                    1px 1px 0 #000;
+
+      left: 50%;
+      transform: translateX(-50%);
+
+      max-width: 90%;
+      width: max-content;
+      text-align: center;
+
+      font-size: calc(10px + (100vw - 10px) / 40);
+
+      @media screen and (min-width: dimensions.$vsmallBp) {
+        font-size: 2.5rem;
+      }
+
+      @media screen and (min-width: dimensions.$smallBp) {
+        font-size: 4.5rem;
+      }
+
+      &--up {
+        top: 1rem;
+      }
+
+      &--down {
+        bottom: 1rem;
+      }
+    }
+
+    .image-container {
+      position: relative;
+      z-index: 1;
+
+      left: 50%;
+      transform: translateX(-50%);
+
+      width: fit-content;
+
+      & img {
+        display: block;
+        width: fit-content;
+        margin: 0;
+        
+      }
     }
   }
 }

@@ -1,0 +1,33 @@
+{% set smImage = resize_image(path=asset, width=240, op="fit_width") %}
+{% set mdImage = resize_image(path=asset, width=400, op="fit_width") %}
+{% set lgImage = resize_image(path=asset, width=600, op="fit_width") %}
+{% set xlgImage = resize_image(path=asset, width=800, op="fit_width") %}
+{% if alt %}
+{% else %}
+    {% set alt = "" %}
+{% endif %}
+
+{% if class %}
+{% else %}
+{% set class = "" %}
+{% endif %}
+
+
+<div class="image-text-overlay">
+    <div class="image-text image-text--up">{{ text_up }}</div>
+    <div class="image-text image-text--down">{{ text_down }}</div>
+    <div class="image-container {{class}}">
+        <img
+                alt="{{ alt }}"
+                src="{{ asset }}"
+                srcset="{{ smImage.url }} 240w,
+                            {{ mdImage.url }} 400w,
+                            {{ lgImage.url }} 600w,
+                            {{ xlgImage.url }} 800w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            (max-width: 600px) 550px,
+                            800px"
+        />
+    </div>
+</div>
