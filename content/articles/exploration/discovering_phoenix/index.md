@@ -12,6 +12,9 @@ title='Discovering Phoenix'
 
 Phoenix is a web development framework written in Elixir that uses a server-side model-view-controller (MVC) pattern. It’s perfect for building highly scalable and fault-tolerant applications. In this article, we’ll explore Phoenix by building a simple RESTful API with it. But not just any API - we’ll build a dad-joke machine! We’ll show you how to generate schemas and controllers in one fell swoop, add new fields to an API endpoint, and rediscover the ancient wisdom of dad-jokers before us.
 
+{{ readingTimer() }}  
+
+
 {% quoter() %}What do you get when you cross a phoenix and a unicorn? A magical mystery tour!{% end %}
 
 ## Project Setup
@@ -230,7 +233,7 @@ We can like any joke we like by making a `PATCH` request to `http://localhost:40
 }
 ```
   
-We have successfully created a simple API, suitable for simple jokes. A couple of commands and some modifications to the code has gotten us here. In my opinion a pretty swell experience. With a tool like Phoenix it's easy to feel top of your game.
+We have successfully created a simple API with potential of becoming a fearsome dad-jokes machine. A couple of commands and some modifications to the code has gotten us here. In my opinion a pretty swell experience. With a tool like Phoenix it's easy to feel top of your game.
 
 
 {{ image_overlayer(
