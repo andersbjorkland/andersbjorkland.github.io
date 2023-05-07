@@ -1,25 +1,39 @@
-{% set smImage = resize_image(path=asset, width=240, height=180) %}
-{% set mdImage = resize_image(path=asset, width=400, height=300) %}
-{% set lgImage = resize_image(path=asset, width=600, height=450) %}
+{% if class %}
+{% else %}
+    {% set class = "" %}
+{% endif %}
+
 {% if alt %}
 {% else %}
     {% set alt = "" %}
 {% endif %}
 
-{% if class %}
+{% if asset is matching("(.svg)$") %}
+    {% set meta = get_image_metadata(path=page.path~asset) %}
+    <div class="image-container {{class}}">
+        <img
+                alt="{{ alt }}"
+                src="{{ asset }}"
+                height="{{ meta.height }}" 
+                width="{{ meta.width }}"
+        />
+    </div>
 {% else %}
-{% set class = "" %}
+    {% set smImage = resize_image(path=asset, width=240, height=180) %}
+    {% set mdImage = resize_image(path=asset, width=400, height=300) %}
+    {% set lgImage = resize_image(path=asset, width=600, height=450) %}
+    
+    <div class="image-container {{class}}">
+        <img
+                alt="{{ alt }}"
+                src="{{ asset }}"
+                srcset="{{ smImage.url }} 240w,
+                            {{ mdImage.url }} 400w,
+                            {{ lgImage.url }} 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+    </div>
 {% endif %}
 
-<div class="image-container {{class}}">
-<img
-        alt="{{ alt }}"
-        src="{{ asset }}"
-        srcset="{{ smImage.url }} 240w,
-                    {{ mdImage.url }} 400w,
-                    {{ lgImage.url }} 600w"
-        sizes="(max-width: 240px) 200px,
-                    (max-width: 400px) 360px,
-                    600px"
-/>
-</div>
