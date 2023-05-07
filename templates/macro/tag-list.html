@@ -1,0 +1,14 @@
+
+{% macro tag_list() %}
+ 
+{% if page %}
+<div class="tag-list">
+    {% if page.taxonomies.tags %}
+        {% for tag in page.taxonomies.tags %}
+        <div>{{ tag }}</div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endif %}
+
+{% endmacro  %}

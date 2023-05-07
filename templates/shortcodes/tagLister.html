@@ -1,0 +1,9 @@
+{% if page %}
+<div class="flex-row">
+    {% if page.taxonomies.tags %}
+        {% for tag in tags %}
+        <span>{{ tag }}</span>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endif %}

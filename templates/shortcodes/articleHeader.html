@@ -1,11 +1,16 @@
 {% import "macro/source-set.html" as imager %}
+{% import "macro/tag-list.html" as tagList %}
 
 <div class="article-header">
     {{ imager::source_set(asset=path) }}
-    <h1 class="article-title">
-        <div class="title">{{ title }}</div>
-        {% if subtitle %}
-            <div class="subtitle">{{ subtitle }}</div>
-        {% endif %}
-    </h1>
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">{{ title }}</div>
+            {% if subtitle %}
+                <div class="subtitle">{{ subtitle }}</div>
+            {% endif %}
+        </h1>
+    </div>
+    {{ tagList::tag_list() }}
 </div>

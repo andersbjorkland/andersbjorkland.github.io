@@ -9,7 +9,7 @@
 {% block content %}
     <h2>Showroom</h2>
     <p>Projects that I've done recently</p>
-    <div class="link-container">
+    <div class="layout-grid">
         {% for page in section.pages %}
         {{ pager::link(page=page) }}
         {% endfor %}

@@ -2,7 +2,8 @@
 base_url = "https://abjork.land"
 
 taxonomies = [
-    {name = "tags"}
+    { name = "category", feed = true },
+    { name = "tags", feed = true }
 ]
 
 # Whether to automatically compile all Sass files in the sass directory

@@ -2,16 +2,15 @@
 
 {% macro link(page) %}
 
-<a href="{{ page.permalink | safe }}" >
-    <div class="article-link">
-        <h3>{{ page.title }}</h3>
-        {% for asset in page.assets %}
-            {% if asset is matching("hero[.](jpg|jpeg|png)$") %}
-            {{ image::srcsetter(asset=asset, alt=page.title) }}
-            {% break %}
-        {% endif %}
-        {% endfor %}
-    </div>
-</a>
+{% for asset in page.assets %}
+    {% if asset is matching("hero[.](jpg|jpeg|png)$") %}
+        {% set_global imagePath = asset %}
+        {% break %}
+    {% endif %}
+{% endfor %}
 
+<a href="{{ page.permalink | safe }}" class="card">
+    <h3>{{ page.title }}</h3>
+    {{ image::srcsetter(asset=imagePath, alt=page.title) }}
+</a>
 {% endmacro %}

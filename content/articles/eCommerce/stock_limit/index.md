@@ -3,6 +3,10 @@ title = "Stock Limits? No Problem! Add availability check to your Sylius Storefr
 date = 2023-04-09
 weight = 1
 description = "Learn how to add a Stock Limit to your Sylius Storefront with this article! Enhance your inventory with Sylius’ flexibility and malleability"
+
+[taxonomies] 
+category=["Programming"]
+tags=["Sylius", "eCommerce"]
 +++
 
 {{ articleHeader(

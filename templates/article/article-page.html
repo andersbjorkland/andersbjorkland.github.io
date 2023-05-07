@@ -5,10 +5,15 @@
 {% block nav_item %}{% set articlesActive='active' %}{% endblock nav_item%}
 
 {% block content %}
- <div class="layout-row">
-  {{ breadcrumb::breadcrumb(ancestors=page.ancestors) }}
- </div>
- <div class="article">
-  {{ page.content | safe }}
- </div>
+    <div class="layout-row">
+    {{ breadcrumb::breadcrumb(ancestors=page.ancestors) }}
+    </div>
+    {% if page.taxonomies.tags %}
+        {% for tag in page.taxonomies.tags %}
+            {{ tag }}
+        {% endfor %}
+    {% endif %}
+    <div class="article">
+    {{ page.content | safe }}
+    </div>
 {% endblock content %}
