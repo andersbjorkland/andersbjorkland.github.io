@@ -3,6 +3,9 @@
 {% import "macro/breadcrumb.html" as breadcrumb %}
 
 {% block nav_item %}{% set showroomActive='active' %}{% endblock nav_item %}
+{% block title %}
+ {{ page.title}}
+{% endblock title %}
 
 {% block content %}
 <div class="layout-row">
