@@ -3,6 +3,7 @@ title = "Sylius Showcase Docker Image"
 date = 2023-03-30
 weight = 1
 draft = false
+authors = ["Anders Björkland"]
 description = "A docker image to easily set up a showcase of a Sylius shop"
 +++
 

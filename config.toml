@@ -1,6 +1,8 @@
 # The URL the site will be built for
 base_url = "https://abjork.land"
 
+generate_feed = true
+
 taxonomies = [
     { name = "category", feed = true },
     { name = "tags", feed = true }

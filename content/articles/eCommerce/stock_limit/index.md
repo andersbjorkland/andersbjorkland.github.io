@@ -2,6 +2,7 @@
 title = "Stock Limits? No Problem! Add availability check to your Sylius Storefront"
 date = 2023-04-09
 weight = 1
+authors = ["Anders Björkland"]
 description = "Learn how to add a Stock Limit to your Sylius Storefront with this article! Enhance your inventory with Sylius’ flexibility and malleability"
 
 [taxonomies] 

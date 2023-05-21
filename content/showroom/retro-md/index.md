@@ -3,6 +3,7 @@ title = "Retro Markdown Editor"
 date = 2023-03-30
 weight = 2
 draft = false
+authors = ["Anders Björkland"]
 description = "retro-inspired editor bringing the Amiga 500 to markdown with a live preview. Built with React and Redux."
 +++
 

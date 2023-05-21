@@ -2,6 +2,7 @@
 title = "Discovering the Elixir programming language"
 date = 2023-03-29
 weight = 2
+authors = ["Anders Björkland"]
 draft = false
 +++
 

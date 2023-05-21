@@ -3,6 +3,7 @@ title = "Remembering Limits"
 date = 2023-04-15
 weight = 2
 draft = false
+authors = ["Anders Björkland"]
 
 [taxonomies]
 category=["Mathematics"]

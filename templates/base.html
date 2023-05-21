@@ -26,6 +26,7 @@
 
     <title>{% block title %}{% endblock title %} | abjork.land</title>
     <link rel="icon" href="{{ get_url(path='favicon.ico') }}">
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="atom.xml", trailing_slash=false) }}">
     <link rel="stylesheet" href="{{ get_url(path='style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
