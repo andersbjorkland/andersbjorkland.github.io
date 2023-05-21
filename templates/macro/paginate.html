@@ -1,0 +1,30 @@
+{% macro paginate(paginator) %}
+
+{% if paginator.number_pagers > 2 %}
+ 
+<div class="paginator" aria-label="pagination">
+    {% if paginator.first %}
+        {% if paginator.current_index != 1 %}
+            <div><a href="{{paginator.first}}" aria-label="first">|<</a></div>
+        {% endif %}
+    {% endif %}
+
+    {% if paginator.previous and paginator.previous != paginator.first %}
+        <div><a href="{{paginator.previous}}" aria-label="previous"><</a></div>
+    {% endif %}
+
+    <div>
+        {{paginator.current_index}}
+    </div>
+    
+    {% if paginator.next and paginator.next != paginator.last %}
+        <div><a href="{{paginator.next}}" aria-label="next">></a></div>
+    {% endif %}
+
+    {% if paginator.last and paginator.current_index != paginator.number_pagers %}
+        <div><a href="{{paginator.last}}" aria-label="last">>|</a></div>
+    {% endif %}
+ </div>
+ {% endif %}
+
+{% endmacro %}

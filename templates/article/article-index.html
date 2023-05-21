@@ -21,9 +21,6 @@
     <h1>{{ section.title }}</h1>
 </div>
 
-<h2>TODO: STUFF!!!</h2>
-{{ paginator.total_pages }}
-
 <div class="link-container">
 {% for subsectionPath in section.subsections %}
     {% set subsection = get_section(path=subsectionPath) %}

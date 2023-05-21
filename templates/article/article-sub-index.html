@@ -2,6 +2,7 @@
 
 {% import "macro/breadcrumb.html" as breadcrumb %}
 {% import "macro/page-link.html" as pager %}
+{% import "macro/paginate.html" as paginate %}
 {% import "macro/source-set.html" as imager %}
 
 {% block nav_item %}{% set articlesActive='active' %}{% endblock nav_item%}
@@ -26,8 +27,9 @@
 
 <div class="layout-grid">
     {% set featured1 = get_page(path='articles/exploration/api_platform/index.md')  %}
-    {% for page in section.pages %}
+    {% for page in paginator.pages %}
         {{ pager::link(page=page) }}
     {% endfor %}
  </div>
+    {{ paginate::paginate(paginator=paginator)}}
 {% endblock content %}
