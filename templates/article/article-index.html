@@ -30,16 +30,15 @@
 </div>
 
 <div class="layout-grid">
-    {% set featured1 = get_page(path='articles/exploration/api_platform/index.md')  %}
-    {% set featured2 = get_page(path='articles/exploration/discovering_elixir/index.md')  %}
-    {% set featured3 = get_page(path='articles/eCommerce/stock_limit/index.md')  %}
-    {{ pager::link(page=featured3) }}
-    {{ pager::link(page=featured2) }}
-    {{ pager::link(page=featured1) }}
+    {% set_global subsection_pages = [] %}
+    {% for subsection_path in section.subsections %}
+        {% set subsection = get_section(path=subsection_path) %}
+        {% set_global subsection_pages = subsection_pages | concat(with=subsection.pages) %}
+    {% endfor %}
 
+    {% set_global subsection_pages =  subsection_pages | sort(attribute="date") | slice(start=1, end=4) | reverse  %}
     
-
-    {% for page in section.pages %}
+    {% for page in subsection_pages %}
         {{ pager::link(page=page) }}
     {% endfor %}
  </div>
