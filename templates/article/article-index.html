@@ -11,11 +11,18 @@
  {{ section.title}}
 {% endblock title %}
 
+{% block rss %}
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="{{ get_url(path="articles/atom.xml", trailing_slash=false) }}">
+{% endblock %}
+
 {% block content %}
 <div class="layout-row">
     {{ breadcrumb::breadcrumb(ancestors=section.ancestors) }}
     <h1>{{ section.title }}</h1>
 </div>
+
+<h2>TODO: STUFF!!!</h2>
+{{ paginator.total_pages }}
 
 <div class="link-container">
 {% for subsectionPath in section.subsections %}
