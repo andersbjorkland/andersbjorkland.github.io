@@ -28,7 +28,16 @@
 <div class="layout-grid">
     {% set featured1 = get_page(path='articles/exploration/api_platform/index.md')  %}
     {% for page in paginator.pages %}
-        {{ pager::link(page=page) }}
+        <div class="grid-item">
+            {{ pager::link(page=page) }}
+            {% if page.taxonomies.tags %}
+                <div class="tag-list">
+                {% for tag in page.taxonomies.tags %}
+                    {{ tag }}
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
     {% endfor %}
  </div>
     {{ paginate::paginate(paginator=paginator)}}

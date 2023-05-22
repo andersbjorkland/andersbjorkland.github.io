@@ -39,7 +39,19 @@
     {% set_global subsection_pages =  subsection_pages | sort(attribute="date") | slice(start=1, end=4) | reverse  %}
     
     {% for page in subsection_pages %}
-        {{ pager::link(page=page) }}
+        <div class="grid-item">
+            {{ pager::link(page=page) }}
+            {% if page.taxonomies.tags %}
+                <div class="tag-list">
+                {% for category in page.taxonomies.category %}
+                    <em>{{ category }}</em>
+                {% endfor %}
+                {% for tag in page.taxonomies.tags %}
+                    {{ tag }}
+                {% endfor %}
+                </div>
+            {% endif %}
+        </div>
     {% endfor %}
  </div>
 {% endblock content %}
