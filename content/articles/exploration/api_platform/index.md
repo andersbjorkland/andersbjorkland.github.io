@@ -5,6 +5,10 @@ updated = 2023-03-29
 weight = 1
 authors = ["Anders Björkland"]
 description = "API Platform is your RESTful API framework that let's you build API's in most any ways you want, as long as you are in the PHP world."
+
+[taxonomies] 
+category=["Exploration"]
+tags=["symfony", "api platform"]
 +++
 
 {{ articleHeader(

@@ -6,8 +6,8 @@ authors = ["Anders Björkland"]
 description = "Learn how to add a Stock Limit to your Sylius Storefront with this article! Enhance your inventory with Sylius’ flexibility and malleability"
 
 [taxonomies] 
-category=["Programming"]
-tags=["Sylius", "eCommerce"]
+category=["eCommerce"]
+tags=["Sylius"]
 +++
 
 {{ articleHeader(
