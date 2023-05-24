@@ -9,6 +9,6 @@
         {{ body | markdown | safe }}
     </cite>
     {% if author %}
-    <div>{{ author }}</div>
+    <div>{{ author | markdown | safe }}</div>
     {% endif %}
 </div>
