@@ -1,6 +1,7 @@
 +++
 title = "Laugh Out Loud with LiveView"
 date = 2023-05-23
+updated = 2023-05-25
 weight = 2
 authors = ["Anders Björkland"]
 draft = false
@@ -194,7 +195,7 @@ Our Lean Jokes website is not very exciting at the moment, but it soon will be. 
 </div>
 ```
 
-Next up, we will want to add event-handlers for these buttons. We should handle `like_joke` and `dislike_joke`, and the passed `joke.id` will be used to update the correct `joke`. With the power of pattern-matching, we will get the variable `joke_id` from the parameters that are passed along with the event. This will help us with two things. First, it will help us update the correct joke in the database. Second, it will help us insert the updated joke in the jokes-list and pass it back in the socket.
+Next up, we will want to add event-handlers for these buttons. We should handle `like_joke` and `dislike_joke`. The passed `joke.id` will be used to update the correct `joke`. With the power of pattern-matching, we will get the variable `joke_id` from the parameters that are passed along with the event. This will help us with two things. First, it will help us update the correct joke in the database. Second, it will help us insert the updated joke in the jokes-list and pass it back in the socket. 
 
 `./lib/lean_jokers_web/home.ex`: 
 ```ex
@@ -243,3 +244,219 @@ Next up, we will want to add event-handlers for these buttons. We should handle 
     {:noreply, socket}
   end
 ```
+
+Back in the browser we will see that we can now update each joke and see likes and dislikes being updated in real time. 
+
+{{ videoer(
+  source='articles/elixir/liveview-and-broadcast/liveview_1.webm',
+  type='video/webm'
+)}}  
+
+Let's tighten this up so that a visitor can toggle their like or dislike, so no-more will they be able to like it 10 times over. We will also set so if a joke has been liked by the visitor, were they to change their mind to dislike, the like will be removed and a dislike added.
+
+We will start by adding fields to the joker-struct to keep track of visitor's like or dislike of a joke. This will not be stored in a database as it will be unique for each visitor. So we will add a `virtual` field for this. 
+
+`lib/lean_jokers/jokes/joke.ex`
+```ex
+  schema "jokes" do
+    # ...
+    field :has_liked, :boolean, virtual: true, default: false
+    field :has_disliked, :boolean, virtual: true, default: false
+
+    # ...
+  end
+```
+
+With these fields we can add a toggle-logic for a joke's likes and dislikes. 
+
+`lib/lean_jokers_web/live/home.ex`
+```ex
+def handle_event("like_joke", %{"joke_id" => joke_id} = _params, socket) do
+    {joke_id, _} = Integer.parse(joke_id)
+
+    socket_jokes = socket.assigns.jokes
+    [socket_joke | _rest ] = Enum.filter(socket_jokes, &(&1.id == joke_id))
+
+    toggled_joke = toggle_data(socket_joke, :like)
+
+    {:ok, _} =
+      LeanJokers.Jokes.Joke
+        |> LeanJokers.Repo.get(joke_id)
+        |> LeanJokers.Jokes.update_joke(%{likes: toggled_joke.likes, dislikes: toggled_joke.dislikes})
+
+    jokes =
+      socket.assigns.jokes
+        |> Enum.map(fn
+          %LeanJokers.Jokes.Joke{id: ^joke_id} -> toggled_joke
+          element -> element
+        end)
+
+    {:noreply, assign(socket, :jokes, jokes)}
+  end
+
+  def handle_event("dislike_joke", %{"joke_id" => joke_id} = _params, socket) do
+    {joke_id, _} = Integer.parse(joke_id)
+
+    socket_jokes = socket.assigns.jokes
+    [socket_joke | _rest ] = Enum.filter(socket_jokes, &(&1.id == joke_id))
+
+    toggled_joke = toggle_data(socket_joke, :dislike)
+
+    {:ok, _} =
+      LeanJokers.Jokes.Joke
+        |> LeanJokers.Repo.get(joke_id)
+        |> LeanJokers.Jokes.update_joke(%{likes: toggled_joke.likes, dislikes: toggled_joke.dislikes})
+
+    jokes =
+      socket.assigns.jokes
+        |> Enum.map(fn
+          %LeanJokers.Jokes.Joke{id: ^joke_id} -> toggled_joke
+          element -> element
+        end)
+
+    {:noreply, assign(socket, :jokes, jokes)}
+  end
+
+  defp toggle_data(%Jokes.Joke{} = joke, :like) do
+    dislikes = if (joke.has_disliked) do
+      joke.dislikes - 1
+    else
+      joke.dislikes
+    end
+
+    likes = if (joke.has_liked) do
+      joke.likes - 1
+    else
+      joke.likes + 1
+    end
+
+    joke = %{joke | has_liked: !joke.has_liked, likes: likes, dislikes: dislikes}
+
+    if (joke.has_liked) do
+        %{joke | has_disliked: false}
+    else
+      joke
+    end
+  end
+
+  defp toggle_data(%Jokes.Joke{} = joke, :dislike) do
+    dislikes = if (joke.has_disliked) do
+      joke.dislikes - 1
+    else
+      joke.dislikes + 1
+    end
+
+    likes = if (joke.has_liked) do
+      joke.likes - 1
+    else
+      joke.likes
+    end
+
+    joke = %{joke | has_disliked: !joke.has_disliked, likes: likes, dislikes: dislikes}
+
+    if (joke.has_disliked) do
+        %{joke | has_liked: false}
+    else
+      joke
+    end
+  end
+```
+
+What is happening here? Well, we have toggled the data for jokes so that a user only can like or dislike a joke once. They will not be allowed to simultaneously like and dislike a joke. If a joke has been liked, disliking it will undo the like and increment the dislike one step.
+
+{{ image_overlayer(
+  text_up="", 
+  text_down="I wanted both?!", 
+  asset="articles/elixir/liveview_and_broadcast/flabbergasted.png"
+) }}  
+
+## Make it broadcast  
+The visitor will get speedy update back from the server via web sockets. Other visitors will see the updated state of each joke when they first visit it. But they won't see updates from other users happen while at the page. It's time we send updates to all visitors as they occur. The [PubSub library](https://hexdocs.pm/phoenix_pubsub/Phoenix.PubSub.html) will help us do that by sending messages via specified topics, and we will use it via `LeanJokersWeb.Endpoint.broadcast()` and handle the messages via `handle_info`.
+
+We will subscribe to a topic which we will name 'jokes'. When a visitor initiates an event we will broadcast the updated joke to other visitors. We will make sure that the other visitors' jokes will preserve their each toggled state.
+
+`lib/lean_jokers_web/live/home.ex`
+```ex
+defmodule LeanJokersWeb.Live.Home do
+  # ...
+  @topic "jokes"
+
+  def mount(_params, _session, socket) do
+    if connected?(socket) do
+      LeanJokersWeb.Endpoint.subscribe(@topic)
+    end
+
+    # ...
+  end
+
+  def handle_event("like_joke", %{"joke_id" => joke_id} = _params, socket) do
+    # ...
+
+    state = %{
+      joke: toggled_joke,
+      sender: self()
+    }
+
+    LeanJokersWeb.Endpoint.broadcast(@topic, "update_joke", state)
+
+    {:noreply, assign(socket, :jokes, jokes)}
+  end
+
+  def handle_event("dislike_joke", %{"joke_id" => joke_id} = _params, socket) do
+    # ...
+
+    state = %{
+      joke: toggled_joke,
+      sender: self()
+    }
+
+    LeanJokersWeb.Endpoint.broadcast(@topic, "update_joke", state)
+
+    {:noreply, assign(socket, :jokes, jokes)}
+  end
+
+  defp toggle_data(%Jokes.Joke{} = joke, :like) do
+    # ...
+  end
+
+  defp toggle_data(%Jokes.Joke{} = joke, :dislike) do
+    # ...
+  end
+
+  def handle_info(%{topic: "jokes", event: "update_joke", payload: %{joke: joke, sender: sender}}, socket) do
+    jokes = if (sender == self()) do
+      socket.assigns.jokes
+    else
+      [socket_joke | _rest ] = Enum.filter(socket.assigns.jokes, &(&1.id == joke.id))
+      joke = %{joke | has_liked: socket_joke.has_liked, has_disliked: socket_joke.has_disliked }
+
+      joke_id = joke.id
+
+      socket.assigns.jokes
+        |> Enum.map(fn
+          %LeanJokers.Jokes.Joke{id: ^joke_id} -> joke
+          element -> element
+        end)
+    end
+
+    {:noreply, assign(socket, jokes: jokes)}
+  end
+
+end
+
+```
+
+As we are broadcasting the updated joke-data, we will see how different visitors will get a live-update:
+
+{{ videoer(
+  source='articles/elixir/liveview-and-broadcast/pubsub.webm',
+  type='video/webm'
+)}}  
+
+And in closing...
+{% quoter() %}Why did the programmer use pattern matching? *To match their socks!*{% end %}
+{{ imager(
+    asset='articles/elixir/liveview_and_broadcast/happy_socks.png', 
+    alt='A kitten rendered in synthwave style with socks on its hindlegs. Smiling while sitting. The background is dark with stars.', 
+    class='center'
+) }}

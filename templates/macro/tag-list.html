@@ -1,8 +1,13 @@
 
 {% macro tag_list() %}
+
+{% set_global additional_class = "absolute" %} 
+{% if more_class %}
+    {% set_global additional_class = "absolute" %}
+{% endif %}
  
 {% if page %}
-<div class="tag-list">
+<div class="tag-list {{ additional_class }}">
     {% if page.taxonomies.tags %}
         {% for tag in page.taxonomies.tags %}
         <div>{{ tag }}</div>

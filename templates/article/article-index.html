@@ -36,7 +36,7 @@
         {% set_global subsection_pages = subsection_pages | concat(with=subsection.pages) %}
     {% endfor %}
 
-    {% set_global subsection_pages =  subsection_pages | sort(attribute="date") | slice(start=1, end=4) | reverse  %}
+    {% set_global subsection_pages =  subsection_pages | sort(attribute="date") | reverse | slice(start=0, end=3)   %}
     
     {% for page in subsection_pages %}
         <div class="grid-item">
@@ -44,10 +44,10 @@
             {% if page.taxonomies.tags %}
                 <div class="tag-list">
                 {% for category in page.taxonomies.category %}
-                    <em>{{ category }}</em>
+                    <div><em>{{ category }}</em></div>
                 {% endfor %}
                 {% for tag in page.taxonomies.tags %}
-                    {{ tag }}
+                    <div>{{ tag }}</div>
                 {% endfor %}
                 </div>
             {% endif %}
