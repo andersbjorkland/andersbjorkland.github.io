@@ -11,15 +11,21 @@
     {% set class = "" %}
 {% endif %}
 
+{% if subtext %}
+{% else %}
+    {% set subtext = "" %}
+{% endif %}
+
 <div class="image-container {{class}}">
-<img
-        alt="{{ alt }}"
-        src="{{ asset }}"
-        srcset="{{ smImage.url }} 240w,
-                    {{ mdImage.url }} 400w,
-                    {{ lgImage.url }} 600w"
-        sizes="(max-width: 240px) 200px,
-                    (max-width: 400px) 360px,
-                    600px"
-/>
+    <img
+            alt="{{ alt }}"
+            src="{{ asset }}"
+            srcset="{{ smImage.url }} 240w,
+                        {{ mdImage.url }} 400w,
+                        {{ lgImage.url }} 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext">{{ subtext }}</div>
 </div>

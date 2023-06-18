@@ -8,15 +8,23 @@
     {% set alt = "" %}
 {% endif %}
 
+{% if subtext %}
+{% else %}
+    {% set subtext = "" %}
+{% endif %}
+
 {% if asset is matching("(.svg)$") %}
     {% set meta = get_image_metadata(path=page.path~asset) %}
     <div class="image-container {{class}}">
-        <img
-                alt="{{ alt }}"
-                src="{{ asset }}"
-                height="{{ meta.height }}" 
-                width="{{ meta.width }}"
-        />
+        <div>
+            <img
+                    alt="{{ alt }}"
+                    src="{{ asset }}"
+                    height="{{ meta.height }}" 
+                    width="{{ meta.width }}"
+            />
+        </div>
+        <div>{{ subtext }}</div>
     </div>
 {% else %}
     {% set smImage = resize_image(path=asset, width=240, height=180) %}
@@ -34,6 +42,7 @@
                             (max-width: 400px) 360px,
                             600px"
         />
+        <div class="image-subtext">{{ subtext }}</div>
     </div>
 {% endif %}
 
