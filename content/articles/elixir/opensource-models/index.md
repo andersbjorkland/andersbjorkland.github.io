@@ -93,9 +93,20 @@ Stable Diffusion is a text-to-image diffusion model from Stability AI. Released 
 
 Hugging Face has released a native application for Mac: [Diffusers](https://apps.apple.com/se/app/diffusers/id1666309574?l=en&mt=12). Showcased above, we can choose one of the available versions, write a prompt, and number of steps (the higher the steps, in general, the higher the quality).
 
+A paid service to use the different versions of Stable Diffusion do also exist. Stability AI offers [DreamStudio](https://dreamstudio.ai/), where we can generate images right in the browser.
+
 ## Bubbler: Text Summarization
 There are models that have trained on texts that have been distorted and the models then should be able to recreate the text in its original form. This way of training has led to models like BART being well suited to tasks where they should distil a body of text in to smaller segments in a way where it does not lose too much information. 
 
-An example of this is [facebook/bart-large-cnn](https://huggingface.co/facebook/bart-large-cnn), which is a BART model that has been trained on CNN Daily Mail. 
+An example of this is [facebook/bart-large-cnn](https://huggingface.co/facebook/bart-large-cnn), which is a BART model that has been trained on CNN Daily Mail. When summarizing the very first paragraph of Charles Dickens's "A Tale of Two Cities" we get:  
+
+{% quoter() %}"It was the best of times, it was the worst of times," he says. "We were all going direct to Heaven, we were all going direct the other way". "We had everything before us, we had nothing before us," he adds. "The spring of hope" was the winter of despair.{% end %}
+
+{{ imager(
+    asset='articles/elixir/opensource-models/cat-to-heaven.png', 
+    alt='A white cat with sunglasses on sitting on top of a stair going towards the sky above a cityscape', 
+    class='center',
+    subtext='User generated image using SDXL Beta'
+) }}
 
 ## Bubbler: Q/A
