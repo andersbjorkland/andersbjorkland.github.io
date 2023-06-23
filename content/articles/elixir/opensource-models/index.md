@@ -70,7 +70,7 @@ A useful task in processing language is extracting tokens from text, such as rec
 In this example we are using a RoBERTa model trained on English to detect persons, location, and organization:
 
 {{ imager_standard(
-    asset='articles/elixir/opensource-models/RoBERTa-NER-task-01.png', 
+    asset='articles/elixir/opensource-models/roberta-ner-task-02.png', 
     alt='Prompt "Me and my friends Elaine and Karla live on Mêlée Island where we often frequent the Scumm Bar.", highlighted are the words "Elain" and "Karla" which are marked with "PER", "Mêlée Island" is marked with "LOC", and "Scumm Bar" is marked with "ORG".', 
     class='center'
 ) }}
