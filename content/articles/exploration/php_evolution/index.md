@@ -39,7 +39,7 @@ So what PHP have is a pool of voters that take a stand on the features that are 
 
 Let's look at a popular feature which was finally introduced in PHP 7; [Return type declaration](https://www.php.net/manual/en/migration70.new-features.php#migration70.new-features.return-type-declarations). This feature meant that a function now could declare which type it would return.
 
-```php
+```js
 function sum(int $a, int $b): int {
     return $a + $b;
 }
@@ -173,11 +173,11 @@ class User {
 ```js
 // PHP 8
 class User {
-    // introduced property promotion (8.0)
+    // introduced property promotion and named arguments
     public function __construct(
         private string $name,
         private int $age,
-        private string $email
+        private ?string $email = null
     ) {}
 
     // introduced union types (8.0)
@@ -191,13 +191,167 @@ class User {
         return $this->age;
     }
 
-    public function getEmail(): string 
+    public function getEmail(): ?string 
     {
         return $this->email;
     }
 }
+
+$user = new User(
+    name: 'Anders', 
+    age: 37
+);
+
+echo 'Hello ' . $user->getName();
 ```
 
 What we can see is an improved support for types, and a more concise syntax. In addition to this, there have been improvements with the underlying code parser, which has led to [better performance](https://onlinephp.io/benchmarks/2023/39). In a benchmark test (a script is executed 100 times), we can see its execution time going from 237 seconds (PHP 4.0.6) to 17 seconds (PHP 8.0). Which in most worlds would be considered a significant improvement. But then again, this has been a development over 20+ years.
 
-[1. https://www.php.net/manual/en/history.php.php]
+### Bonus-features
+#### Attributes
+PHP 8.0 also introduced [attributes](https://www.php.net/manual/en/language.attributes.php), which is a way to add metadata to classes, methods, and functions. Its predecessor were annotations via PHPDocs, but this is now the native way to do that.
+
+```js
+class User {
+    #[ORM\Column(type: "string", length: 255)]
+    private string $name;
+
+    #[ORM\Column(type: "integer")]
+    private int $age;
+
+    #[ORM\Column(type: "string", length: 255)]
+    private string $email;
+
+    public function __construct(
+        private string $name,
+        private int $age,
+        private string $email
+    ) {}
+}
+```
+
+#### Arrow-functions
+PHP 7.4 introduced [arrow-functions](https://www.php.net/manual/en/functions.arrow.php), which is a more concise way to write anonymous functions. 
+
+```js
+// PHP 7.4
+$numbers = [1, 2, 3, 4, 5];
+
+$multiplier = 2;
+
+$multiplied = array_map(fn($x) use ($multiplier) => $x * $multiplier, $numbers);
+
+var_export($multiplied);
+
+/* Output:
+array (
+  0 => 2,
+  1 => 4,
+  2 => 6,
+  3 => 8,
+  4 => 10,
+)
+ */
+```
+
+[1. PHP: History of PHP](https://www.php.net/manual/en/history.php.php)
+
+Additional tools: [onlinephp.io](https://onlinephp.io/)
+
+#### Null coalescing assignment operator
+PHP 7.4 has also introduced the [null coalescing assignment operator](https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.null-coalescing-assignment-operator), which is a more concise way to assign a value to a variable if it's not already set.
+
+```js
+$foo = $bar ?? 'default';
+```
+
+#### Nullsafe operator
+PHP 8.0 introduced the [nullsafe operator](https://www.php.net/manual/en/migration80.new-features.php#migration80.new-features.core.nullsafe-operator), which is a more concise way to check if a property or method exists on a variable.
+
+```js
+$foo = $bar?->baz();
+```
+
+#### Match expression
+PHP 8.0 also introduced the [match expression](https://www.php.net/manual/en/control-structures.match.php), which (kind-of) is a more concise way to write switch statements.
+
+```js
+$bar = 5;
+
+$foo = match ($bar) {
+    1 => 'one',
+    2 => 'two',
+    3 => 'three',
+    4, 5, 6 => 'four to six',
+    default => 'unknown'
+};
+
+echo $foo; // 'four to six'
+
+
+// alternate match:
+$foo = match (true) {
+    $bar < 4 => 'less than four',
+    $bar >= 4 => '4 or greater',
+    default => 'unknown'
+};
+
+echo $foo; // '4 or greater'
+
+```
+
+#### Union types
+PHP 8.0 introduced [union types](https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.union), which is a way to declare that a variable can be of multiple types.
+
+```js
+class User {
+    public function __construct(
+        private string|int $name,
+        private int $age,
+        private ?string $email = null
+    ) {}
+
+    public function getName(): string|int 
+    {
+        return $this->name;
+    }
+
+    public function getAge(): int 
+    {
+        return $this->age;
+    }
+
+    public function getEmail(): ?string 
+    {
+        return $this->email;
+    }
+}
+
+$user = new User(24, 37);
+
+echo $user->getName(); // 24
+```
+
+#### ENUMERATIONS!!!
+PHP 8.1 finally introduced [enumerations](https://www.php.net/manual/en/language.enums.php), which is a way to declare a set of named constants.
+
+```js
+enum Fruit {
+    case Apple;
+    case Banana;
+    case Orange;
+}
+
+function eatFruit(Fruit $fruit) {
+    switch ($fruit) {
+        case Fruit::Apple:
+            echo 'Yummy';
+            break;
+        case Fruit::Banana:
+            echo 'B & NaN';
+            break;
+        case Fruit::Orange:
+            echo 'Red-yello treat';
+            break;
+    }
+}
