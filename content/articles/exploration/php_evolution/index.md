@@ -20,22 +20,25 @@ title='Evolution of PHP'
 *While there have been articles before foretelling about both the death and the rebirth of PHP, this time we will simply look at how PHP has evolved over the years and what has been the driving force behind it.*
 
 ## The beginning
-PHP was created by Rasmus Lerdorf in 1994. It was originally a collection of C programs that he used to track visitors to his online resume. It was later rewritten in C and released as PHP/FI (Personal Home Page/Forms Interpreter) in 1995. It was a simple set of Common Gateway Interface (CGI) binaries written in C. It was later renamed to PHP: Hypertext Preprocessor in Version 3. The first version of PHP was released in 1995.[1]
+Let's take a journey back to the early days of the web, when Rasmus Lerdorf created PHP in 1994. It all started with a simple idea - to track visitors to his online resume. Rasmus wrote a collection of C programs to do just that, and thus PHP was born.[1]
 
 So it started from a very personal need, but Rasmus kept developing and rewriting his PHP scripts. He strived to keep it similar to C, which meant that developers familiar with C and PERL could pick it up with "ease". 
 
-In 1997, having experienced limitations of PHP, two Israeli developers approaced Rasmus with suggestions for improvement. This led to a rewrite of the parser in C, and PHP 3 was released. It came with support for multiple database interfaces and support for classes and objects. With version 3, PHP now had support for Object Oriented Programming, and its popularity grew.
+In 1997, two Israeli developers were using PHP and found that it had some limitations. They decided to approach the creator of PHP, Rasmus Lerdorf, with suggestions for improvement. This was a pivotal moment in the evolution of PHP, as it led to a complete rewrite of the parser in C and the release of PHP 3.
 
-In similar way, PHP kept evolving and growing. With input and development from all around the world, PHP got more and more features and improvements to its underlying architecture.
+With PHP 3, the language gained support for multiple database interfaces and Object Oriented Programming. This was a huge leap forward for PHP, and its popularity grew rapidly. People from all around the world started contributing to the development of PHP, adding new features and improving its underlying architecture.
 
-When we now look at PHP, we see a language that has evolved from a simple set of CGI binaries to a full fledged programming language. It has evolved from a language that was used to track visitors to a resume, to a language that powers a large part of the web. And we can follow the discussions that have led the language where it is today.
+Today, PHP is a full-fledged programming language that powers a large part of the web. It has come a long way from its humble beginnings as a tool to track visitors to a resume. And the discussions and contributions that have shaped the language are a testament to the power of collaboration and community in software development.
 
 ## The collaborative nature of PHP
-PHP started out as one man's effort. It has become a language developed by the community, for the community. We can follow the discussions leading up to new features and improvements to the language. We can see how the community has shaped the language. And we can see how the community has shaped the language. It's all available for public view in the [Internals mailing list](https://news-web.php.net/php.internals).
+PHP is a language that has been shaped by its community. While it started out as one man's effort, it has grown into a language that is developed by the community, for the community. The discussions leading up to new features and improvements to the language are open for public view in the [Internals mailing list.](https://news-web.php.net/php.internals).
 
-The point of the discussions are to inform the community and language feature voters on what and how features should be implemented, if they at all should be implemented. 
+The purpose of these discussions is to inform the community and language feature voters on what features to implement, and how to do that. This is where the community comes together to make [suggestions for improvement](https://wiki.php.net/rfc/voting) and request feedback on their ideas.
 
-So what PHP have is a pool of voters that take a stand on the features that are being discussed. It's up to the community to make a [suggestion for improvement](https://wiki.php.net/rfc/voting) and the request for comments about it. The voters then vote on the feature, and if it gets enough votes, it will be implemented.
+The voters in the PHP community are responsible for taking a stand on the features that are being discussed. They vote on the features, and if a feature gets enough votes, it will be implemented. This democratic process ensures that the community has a say in the direction of the language, and that the language continues to evolve to meet the needs of its users.
+
+So if you're a PHP developer, you have the power to shape the future of the language. You can make suggestions for improvement, provide feedback on other people's ideas, and (if you get recognized as a main contributor) vote on the features that you think are important. By participating in the PHP community, you can help to ensure that PHP continues to be a language that is developed by the community, for the community.
+
 
 Let's look at a popular feature which was finally introduced in PHP 7; [Return type declaration](https://www.php.net/manual/en/migration70.new-features.php#migration70.new-features.return-type-declarations). This feature meant that a function now could declare which type it would return.
 
@@ -109,8 +112,11 @@ $user = new User('Anders', 37, 'anders.bjorkland@umain.com');
 echo 'Hello ' . $user->getName();
 ```
 
+
 ```js
-// PHP 5
+// PHP 5.3
+namespace App\Entity; // namespaces are introduced
+
 class User {
     // introduced accessor keywords
     private $name;
@@ -254,10 +260,6 @@ array (
  */
 ```
 
-[1. PHP: History of PHP](https://www.php.net/manual/en/history.php.php)
-
-Additional tools: [onlinephp.io](https://onlinephp.io/)
-
 #### Null coalescing assignment operator
 PHP 7.4 has also introduced the [null coalescing assignment operator](https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.null-coalescing-assignment-operator), which is a more concise way to assign a value to a variable if it's not already set.
 
@@ -355,3 +357,19 @@ function eatFruit(Fruit $fruit) {
             break;
     }
 }
+```
+
+#### Fibers
+PHP 8.1 also introduced [fibers](https://www.php.net/manual/en/language.fibers.php), which is a way to create interruptible functions, enhancing PHP's ability to handle asynchronous tasks. This has come to be used to great effect in asynchronous frameworks such as [ReactPHP](https://reactphp.org/).
+
+
+## Conclusion
+In conclusion, PHP has come a long way since its early days as a simple tool for tracking visitors to a resume. Over the years, the language has evolved to become a powerful and feature-rich language that is used by millions of developers around the world.
+
+One of the key factors in PHP's success has been its ability to evolve with the needs of its users. From the addition of object-oriented programming in PHP 4 to attributes and fibers in PHP 8, PHP has continued to add new features and improve its syntax to make it more powerful and flexible.
+
+As PHP continues to evolve, it will be interesting to see what new features and improvements are added to the language. But one thing is certain - PHP will continue to be a language that is developed by the community, for the community. And that is what makes it such a powerful and enduring language.
+
+[1. PHP: History of PHP](https://www.php.net/manual/en/history.php.php)
+
+Additional tools: [onlinephp.io](https://onlinephp.io/)
