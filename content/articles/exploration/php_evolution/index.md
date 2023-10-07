@@ -1,6 +1,7 @@
 +++
 title = "How PHP has evolved over the years"
 date = 2023-10-06
+updated = 2023-10-07
 weight = 1
 authors = ["Anders Björkland"]
 description = "A look at how PHP has evolved over the years and what has been the driving force behind it."
