@@ -1,7 +1,7 @@
 +++
 title = "Resize Image Uploads with LiveView"
-date = 2024-01-29
-updated = 2024-01-29
+date = 2024-01-31
+updated = 2024-01-31
 weight = 2
 authors = ["Anders Björkland"]
 draft = false
@@ -12,7 +12,7 @@ tags=["elixir", "phoenix", "liveview"]
 +++
 
 {{ articleHeader(
-path='articles/elixir/liveview_and_broadcast/hero-slim.png'
+path='articles/elixir/resize_image_uploads_with_liveview/hero.png'
 title='Resize Image Uploads with LiveView'
 ) }}
 
@@ -317,14 +317,7 @@ Now, let’s add the event handler for `update_profile_image` in the same `user_
   defp handle_update_profile_image(profile_image, socket) do
     [meta_data, base64] = String.split(profile_image, ",")
 
-    file_type =
-      String.replace(meta_data, "data:", "")
-      |> String.split(";")
-      |> Enum.at(0)
-      |> String.split("/")
-      |> Enum.at(1)
-
-    file_name = generate_file_name() <> "." <> file_type
+    file_name = generate_file_name()
 
     image_binary = Base.decode64!(base64)
 
@@ -370,8 +363,10 @@ Now, let’s add the event handler for `update_profile_image` in the same `user_
   defp generate_file_name do
     # Get the current timestamp in milliseconds
     timestamp = DateTime.utc_now() |> DateTime.to_unix(:millisecond)
+
     # Generate a random string of 8 characters
     random_string = :crypto.strong_rand_bytes(8) |> Base.encode64(padding: false)
+
     # Concatenate the timestamp and the random string with a dash
     "#{timestamp}-#{random_string}"
   end
