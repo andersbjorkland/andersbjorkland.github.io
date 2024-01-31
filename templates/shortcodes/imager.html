@@ -14,22 +14,30 @@
 {% endif %}
 
 {% if asset is matching("(.svg)$") %}
-    {% set meta = get_image_metadata(path=page.path~asset) %}
+    {% set meta = get_image_metadata(path=page.colocated_path ~ asset) %}
     <div class="image-container {{class}}">
         <div>
             <img
-                    alt="{{ alt }}"
-                    src="{{ asset }}"
-                    height="{{ meta.height }}" 
-                    width="{{ meta.width }}"
+                alt="{{ alt }}"
+                src="{{ asset }}"
+                height="{{ meta.height }}" 
+                width="{{ meta.width }}"
             />
         </div>
         <div>{{ subtext }}</div>
     </div>
 {% else %}
-    {% set smImage = resize_image(path=asset, width=240, height=180) %}
-    {% set mdImage = resize_image(path=asset, width=400, height=300) %}
-    {% set lgImage = resize_image(path=asset, width=600, height=450) %}
+    {% if asset is containing("/") %}
+        {% set path = asset %}
+        {% set asset = asset | split(pat="/") | last %}
+    {% else %}
+        {% set path = page.colocated_path ~ asset %}
+    {% endif  %}
+    
+
+    {% set smImage = resize_image(path=path, width=240, height=180) %}
+    {% set mdImage = resize_image(path=path, width=400, height=300) %}
+    {% set lgImage = resize_image(path=path, width=600, height=450) %}
     
     <div class="image-container {{class}}">
         <img

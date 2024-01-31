@@ -1,6 +1,14 @@
-{% set smImage = resize_image(path=asset, width=240, op="fit_width") %}
-{% set mdImage = resize_image(path=asset, width=400, op="fit_width") %}
-{% set lgImage = resize_image(path=asset, width=600, op="fit_width") %}
+{% if asset is containing("/") %}
+    {% set path = asset %}
+    {% set asset = asset | split(pat="/") | last %}
+{% else %}
+    {% set path = page.colocated_path ~ asset %}
+{% endif  %}
+
+{% set smImage = resize_image(path=path, width=240, op="fit_width") %}
+{% set mdImage = resize_image(path=path, width=400, op="fit_width") %}
+{% set lgImage = resize_image(path=path, width=600, op="fit_width") %}
+
 {% if alt %}
 {% else %}
     {% set alt = "" %}
