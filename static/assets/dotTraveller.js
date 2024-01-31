@@ -42,3 +42,9 @@ function dotTraveller(svgId, pathId, dotColor="#FFF0FE", dotRadius = "5", dotOpa
 
     moveDot();
 }
+
+dotTraveller("slider", "wave-1", "#FECDFC", "1");
+dotTraveller("slider", "wave-2", "#FECDFC", "2");
+dotTraveller("slider", "wave-3", "#FECDFC", "1");
+dotTraveller("slider", "wave-4", "#FECDFC", "2");
+dotTraveller("slider", "wave-5", "#FECDFC", "1");

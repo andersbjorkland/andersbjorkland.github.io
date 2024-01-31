@@ -14,8 +14,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    {% set localUrl = get_url(path="/") %}
+    {% if localUrl is not containing("127.0.0.1") %}
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googleapis.com *.googletagmanager.com" />
+    {% endif %}
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     {% if section %}
@@ -35,13 +42,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9E00V88D6H"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-9E00V88D6H');
-    </script>
+    <script src="{{ get_url(path="assets/gTagInit.js") }}"></script>
 </head>
 <body>
     {% include "includes/_header.html" %}
