@@ -1,15 +1,4 @@
-{% import "macro/text.html" as text %}
-{% import "macro/metatags.html" as metatags %}
-
-{% set homeActive = '' %}
-{% set articlesActive = '' %}
-{% set showroomActive = '' %}
-{% set aboutActive = '' %}
-{% set contactActive = '' %}
-
-{% block nav_item %}
-{% endblock nav_item %}
-
+{% import "macro/text.html" as text %}{% import "macro/metatags.html" as metatags %}{% set homeActive = '' %}{% set articlesActive = '' %}{% set showroomActive = '' %}{% set aboutActive = '' %}{% set contactActive = '' %}{% block nav_item %}{% endblock nav_item %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -20,6 +9,10 @@
     <meta
         http-equiv="Content-Security-Policy"
         content="default-src 'self' abjork.land *.gstatic.com *.googleapis.com *.googletagmanager.com *.google-analytics.com/" />
+    {% else %}
+    <meta
+    http-equiv="Content-Security-Policy"
+    content="default-src 'self' 127.0.0.1 ws://127.0.0.1:1024 abjork.land *.gstatic.com *.googleapis.com *.googletagmanager.com *.google-analytics.com/, style-src * 'unsafe-inline'" />
     {% endif %}
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
