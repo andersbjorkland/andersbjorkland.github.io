@@ -30,7 +30,7 @@ Livebook is a format for interactive Elixir notebooks. Like Jupyter, but special
 
 {{ imager_standard(
     asset='articles/elixir/interactive-documents-with-livebook/run_in_livebook_btn.webp', 
-    alt='The landing page with default Phoenix Framework splash screen', 
+    alt='A button with the text "Run in Livebook"', 
     class='center'
 ) }}
 
@@ -38,6 +38,69 @@ Clicking it will open a new page where you can enter a URL to your local or clou
 
 {{ imager_standard(
     asset='articles/elixir/interactive-documents-with-livebook/livebook_install.png', 
-    alt='The landing page with default Phoenix Framework splash screen', 
+    alt='Image of choosing to install livebook', 
+    class='center'
+) }}   
+
+### Hosting Livebook on Hugging Face 
+Hugging Face offers many alternatives for hosting. All it requires is that you've registered an account. Then you can onboard to their free hosting alternative. I'm registered as `beercan`, and let's see how onboarding would look like for me. 
+
+1. *Create a new Space*: Fill in the basic information for the Hugging Face Space.
+{{ imager_standard(
+    asset='articles/elixir/interactive-documents-with-livebook/create_new_space.png', 
+    alt='A simple form to select owner, space name, and associated license', 
     class='center'
 ) }}
+
+2. *Select the Space SDK*: Possibilities are endless, as Hugging Face offers a Docker hosting alternative. Select **Docker** and the **Livebook** template.  
+{{ imager_standard(
+    asset='articles/elixir/interactive-documents-with-livebook/docker_choice.png', 
+    alt='A simple form to select owner, space name, and associated license', 
+    class='center'
+) }}
+
+3. *Select hardware*: We will run a basic setup, which offers 2 virtual CPUs with 16GB RAM. Other, priced, alternatives exists. For most cases, vCPUs are enough. If you want to be training your own models or use LLMs, then the need for the GPU alternatives are there for your choosing. You may also upgrade/downgrade at any point. 
+{{ imager_standard(
+    asset='articles/elixir/interactive-documents-with-livebook/select_hardware.png', 
+    alt='A select menu with multiple alternatives. The first alternative is selected. It is "CPU basic, 2vCPU, 16GB, free".', 
+    class='center'
+) }}  
+
+4. *Secrets*: Select a password for your Livebook application, and then let `XLA_TARGET` be `cpu`. (This should reflect the type of hardware that you are running your application on.)
+{{ imager_standard(
+    asset='articles/elixir/interactive-documents-with-livebook/secrets_form.png', 
+    alt='A select menu with multiple alternatives. The first alternative is selected. It is "CPU basic, 2vCPU, 16GB, free".', 
+    class='center'
+) }}  
+
+5. *Make your Livebook Private or Public*: Select whatever you are comfortable with. Start with `Private` if you don't plan to make it visible to anyone.  
+
+6. *Click on `Create Space`*. This will build the docker image and spin it up. Per default, the container will sleep after 48 hours of inactivity. Any of the paid alternatives allows to change this. 
+{{ imager_standard(
+    asset='articles/elixir/interactive-documents-with-livebook/docker_building.png', 
+    alt='A screen with logs for docker-building. In the background a information text "Building...".', 
+    class='center'
+) }}  
+
+When the image is done building, it will be run, and you will be able to see this screen: 
+{{ imager_standard(
+    asset='articles/elixir/interactive-documents-with-livebook/new_app_running.png', 
+    alt='A page with two links. One is for "Dashboard", the other is under the headline "Apps" and says "Livebook [heart] Hugging Face".', 
+    class='center'
+) }}  
+
+Clicking on "Dashboard" will lead you to an authentication page where you will enter the password that you set earlier. Once that is passed, you can start to explore what Livebook is. It has multiple livebook documents teaching the basics of Elixir, Livebook, and some common Livebook components.  
+{{ imager_standard(
+    asset='articles/elixir/interactive-documents-with-livebook/dashboard.png', 
+    alt='A dashboard interface with a vertical menu, and a main section. The menu has the alternatives: Home, Apps, Learn, Settings, and My Hub. The Main section has two buttons: open, and "new notebook", as well as 3 livebook documents: "Welcome to Livebook", "Distributed portals with Elixir", and "Deploy a chat app with Kino"', 
+    class='center'
+) }}  
+
+## Explore a Livebook document - Bumblebee
+Let's head to https://hexdocs.pm/bumblebee/examples.html#image-classification. Click the cog-icon in the upper right corner to access the settings and check "Run in Livebook". Paste your Livebook URL in the field. 
+
+{{ imager_standard(
+    asset='articles/elixir/interactive-documents-with-livebook/hexdocs_settings.png', 
+    alt='A settings menu for Hexdocs.pm', 
+    class='center'
+) }}  
