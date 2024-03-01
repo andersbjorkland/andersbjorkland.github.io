@@ -3,28 +3,33 @@
 {% set metaImage = false %}
 
 {% for asset in page.assets %}
-    {% if asset is matching("meta[.](jpg|jpeg|png)$") %}
+    {% if asset is matching("meta[.](jpg|jpeg|png|webp)$") %}
         {% set_global metaImage = true %}
-        {% set resizedImage = resize_image(path=asset, width=1200, height=627) %}
+        {% set resizedImage = resize_image(path=asset, width=1200, height=627, format="webp") %}
 <meta name="image" property="og:image" content="{{ resizedImage.url | safe }}" />
-        {% break %}
+<meta name="twitter:image:src" content="{{ resizedImage.url | safe }}">
+{% break %}
     {% endif %}
 {% endfor %}
 
 {% if metaImage %}
 {% else %}
     {% for asset in page.assets %}
-    {% if asset is matching("hero[.](jpg|jpeg|png)$") %}
-        {% set resizedImage = resize_image(path=asset, width=1200, height=627) %}
+    {% if asset is matching("hero[.](jpg|jpeg|png|webp)$") %}
+        {% set resizedImage = resize_image(path=asset, width=1200, height=627, format="webp") %}
 <meta name="image" property="og:image" content="{{ resizedImage.url | safe }}" />
+<meta name="twitter:image:src" content="{{ resizedImage.url | safe }}">
     {% endif %}
     {% endfor %}
    
 {% endif %}
 
+<meta property="og:type" content="website">
 <meta property="og:title" content="{{ page.title }}" />
 <meta property="og:description" content="{{ page.description }}" />
 <meta property="og:url" content="{{ page.permalink | safe }}" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="author" content="Anders Björkland" />
 
 {% if page and page.date %}

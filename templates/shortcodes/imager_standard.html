@@ -5,9 +5,9 @@
     {% set path = page.colocated_path ~ asset %}
 {% endif  %}
 
-{% set smImage = resize_image(path=path, width=240, op="fit_width") %}
-{% set mdImage = resize_image(path=path, width=400, op="fit_width") %}
-{% set lgImage = resize_image(path=path, width=600, op="fit_width") %}
+{% set smImage = resize_image(path=path, width=240, op="fit_width", format="webp") %}
+{% set mdImage = resize_image(path=path, width=400, op="fit_width", format="webp") %}
+{% set lgImage = resize_image(path=path, width=600, op="fit_width", format="webp") %}
 
 {% if alt %}
 {% else %}

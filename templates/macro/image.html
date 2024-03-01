@@ -1,8 +1,8 @@
 {% macro srcsetter(asset, alt='', containerClass='', imageClass='') %}
 
-{% set smImage = resize_image(path=asset, width=240, height=180) %}
-{% set mdImage = resize_image(path=asset, width=400, height=300) %}
-{% set lgImage = resize_image(path=asset, width=600, height=450) %}
+{% set smImage = resize_image(path=asset, width=240, height=180, format="webp") %}
+{% set mdImage = resize_image(path=asset, width=400, height=300, format="webp") %}
+{% set lgImage = resize_image(path=asset, width=600, height=450, format="webp") %}
 
 <div class="image-container {{containerClass}}">
     <img

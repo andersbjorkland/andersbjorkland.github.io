@@ -1,7 +1,7 @@
-{% set smImage = resize_image(path=asset, width=240, op="fit_width") %}
-{% set mdImage = resize_image(path=asset, width=400, op="fit_width") %}
-{% set lgImage = resize_image(path=asset, width=600, op="fit_width") %}
-{% set xlgImage = resize_image(path=asset, width=800, op="fit_width") %}
+{% set smImage = resize_image(path=asset, width=240, op="fit_width", format="webp") %}
+{% set mdImage = resize_image(path=asset, width=400, op="fit_width", format="webp") %}
+{% set lgImage = resize_image(path=asset, width=600, op="fit_width", format="webp") %}
+{% set xlgImage = resize_image(path=asset, width=800, op="fit_width", format="webp") %}
 {% if alt %}
 {% else %}
     {% set alt = "" %}
