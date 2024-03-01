@@ -11,13 +11,12 @@
         content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
     {% else %}
     <meta
-<    http-equiv="Content-Security-Policy"
-    content="default-src 'self' 127.0.0.1> ws://127.0.0.1:1024 abjork.land *.gstatic.com *.googleapis.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' 127.0.0.1 abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' 127.0.0.1> ws://127.0.0.1:1024 abjork.land *.gstatic.com *.googleapis.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' 127.0.0.1 abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
     {% endif %}
 
     {% block canonical %}<link rel="canonical" href="{{current_url | safe}}">{% endblock canonical %}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     {% if section %}
         {{ metatags::page(page=section)}}
@@ -34,8 +33,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
-    <!-- Google tag (gtag.js) -->
+
     {#
+    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-9E00V88D6H"></script>
     <script src="{{ get_url(path="assets/gTagInit.js") }}"></script>
     #}
