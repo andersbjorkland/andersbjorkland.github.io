@@ -3,7 +3,7 @@
 {% macro link(page) %}
 
 {% for asset in page.assets %}
-    {% if asset is matching("hero[.](jpg|jpeg|png)$") %}
+    {% if asset is matching("hero[.](jpg|jpeg|png|webp)$") %}
         {% set_global imagePath = asset %}
         {% break %}
     {% endif %}
