@@ -1,10 +1,18 @@
-{% macro source_set(asset, alt="An image") %}
+{% macro source_set(asset, alt="An image", aspect=3) %}
 
-{% set smImage = resize_image(path=asset, width=240, height=180) %}
-{% set mdImage = resize_image(path=asset, width=400, height=300) %}
-{% set lgImage = resize_image(path=asset, width=600, height=450) %}
+{% if aspect <= 0 %}
+        {% set aspect = 3 %}  % Set a default value
+{% endif %}
+
+{% set smHeight = (240 / aspect) | round(method="floor", precision=0) | int %}
+{% set mdHeight = (400 / aspect) | round(method="floor", precision=0) | int  %}
+{% set lgHeight = (600 / aspect) | round(method="floor", precision=0) | int  %}
+
+{% set smImage = resize_image(path=asset, width=240, height=smHeight) %}
+{% set mdImage = resize_image(path=asset, width=400, height=mdHeight) %}
+{% set lgImage = resize_image(path=asset, width=600, height=lgHeight) %}
 <img
-        alt="{{ alt }}"
+        alt="{{ mdHeight }}"
         src="{{ mdImage.url }}"
         srcset="{{ smImage.url }} 240w,
                     {{ mdImage.url }} 400w,

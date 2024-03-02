@@ -11,6 +11,11 @@ category=["Elixir"]
 tags=["elixir", "livebook"]
 +++
 
+{{ articleHeader(
+path='articles/elixir/interactive-documents-with-livebook/hero.webp'
+title='Laugh Out Loud with LiveView'
+) }}
+
 Have you ever wrestled with confusing documentation while trying to learn a new library or language?  The explanations might be sparse, the code examples outdated, or the concepts too advanced for a beginner. It's a common frustration! Take the powerful R visualization library `ggplot2`. Its complex subject matter and documentation make it a challenge for newcomers.
 
 The documentation for `ggplot2` clearly explains this: 
