@@ -97,10 +97,38 @@ Clicking on "Dashboard" will lead you to an authentication page where you will e
 ) }}  
 
 ## Explore a Livebook document - Bumblebee
-Let's head to https://hexdocs.pm/bumblebee/examples.html#image-classification. Click the cog-icon in the upper right corner to access the settings and check "Run in Livebook". Paste your Livebook URL in the field. 
+Let's head to [hexdocs.pm/bumblebee/examples.html#image-classification](https://hexdocs.pm/bumblebee/examples.html#image-classification). Click the cog-icon in the upper right corner to access the settings and check "Run in Livebook". Paste your Livebook URL in the field. It should be something like `https://beercan-liveboook.hf.space/`, which is `https://{username}-{projectName}.hf.space`. 
 
 {{ imager_standard(
     asset='articles/elixir/interactive-documents-with-livebook/hexdocs_settings.png', 
     alt='A settings menu for Hexdocs.pm', 
     class='center'
 ) }}  
+
+Now when we click on "Run in Livebook" it will initiate a new Livebook document for us in our Huggning Face space. Now we can configure and execute (or *evaluate*) each Elixir code element in our document. The first Elixir element is where we will install all the dependencies that will be covered in the document. It can be executed by hovering the element and click the `Evaluate` button that will appear.  
+  
+{{ imager_standard(
+    asset='articles/elixir/interactive-documents-with-livebook/evaluate_element.png', 
+    alt='Evaluate an Elixir code element', 
+    class='center'
+) }}  
+
+Clicking it will start the code execution. Each element will have access to variables declared in earlier elexir elements, so you may define variables that will be used later in the code. 
+  
+With Livebook we have access to a library of Livebook components in the form of the Kino dependency. In this example we will see how it renders an Image input-field:  
+{{ imager_standard(
+    asset='articles/elixir/interactive-documents-with-livebook/image_import.png', 
+    alt='Rendered Livebook component for importing an Image file.', 
+    class='center'
+) }}  
+
+And to wrap this gift that is the Bumblebee library in Livebook, let's run an inference model on the image that was imported and see how it classifies the badger laying on the ground.  
+{{ imager_standard(
+    asset='articles/elixir/interactive-documents-with-livebook/image_inference.png', 
+    alt='Rendered Livebook component for importing an Image file.', 
+    class='center'
+) }}  
+
+In this case, the model that was used was pretty sure that it indeed was a badger, with a .3% uncertainty about it. 
+
+## In closing
