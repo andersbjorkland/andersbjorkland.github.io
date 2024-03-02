@@ -1,22 +1,22 @@
 +++
 title = "Interactive documents with Livebook"
-date = 2024-03-01
-updated = 2024-03-01
+date = 2024-03-02
+updated = 2024-03-02
 weight = 2
 authors = ["Anders Björkland"]
-draft = true
+draft = false
 
 [taxonomies] 
 category=["Elixir"]
 tags=["elixir", "livebook"]
 +++
 
-We may often argue that a language or a library has underwhelming documentation. The documentation may assume prior knowledge not documented, it may be code heavy without explanations of how or why a specific pattern is used, or the examples provided may just be outdated. The documentation may have any of these issues, or all. Sometimes it is an issue you can live with, since you can find other resources for a particular library. And you may argue that it’s simply just the nature of what the library is dealing with. Take an example, like `ggplot2` in *R*: 
+Have you ever wrestled with confusing documentation while trying to learn a new library or language?  The explanations might be sparse, the code examples outdated, or the concepts too advanced for a beginner. It's a common frustration! Take the powerful R visualization library `ggplot2`. Its complex subject matter and documentation make it a challenge for newcomers.
+
+The documentation for `ggplot2` clearly explains this: 
 > If you are new to ggplot2 you are better off starting with a systematic introduction, rather than trying to learn from reading individual documentation pages.  
   
-`ggplot2` deals with visualization of data, so the subject matter is complicated right from the bat and is not something for newcomers to dive right into.  
-  
-But what if that was not the case? What if we could have an easy time as newcomers to explore complicated subjects, in a manner where examples are up to date, and where explanations are plentiful?  
+But what if learning about complex subjects could be easier? What if examples were always up-to-date and explanations plentiful? That's where the Elixir ecosystem shines! Imagine a world where package documentation is interactive, intuitive, and beginner-friendly - even when the subject matter is difficult.  
   
 ## Let’s talk about documentation in Elixir-land!  
 Imagine if you’re visiting your common dependency registry, where you usually would search and find a package and some instructions for how to install it with your project, and of course a link to the package’s main webpage. In Elixir-land, this is where [hexdocs.pm](https://hexdocs.pm) enters.  
@@ -122,7 +122,7 @@ With Livebook we have access to a library of Livebook components in the form of 
     class='center'
 ) }}  
 
-And to wrap this gift that is the Bumblebee library in Livebook, let's run an inference model on the image that was imported and see how it classifies the badger laying on the ground.  
+And to wrap this gift that is the `Bumblebee` library in Livebook, let's run an inference model on the image that was imported and see how it classifies the badger laying on the ground.  
 {{ imager_standard(
     asset='articles/elixir/interactive-documents-with-livebook/image_inference.png', 
     alt='Rendered Livebook component for importing an Image file.', 
@@ -131,4 +131,5 @@ And to wrap this gift that is the Bumblebee library in Livebook, let's run an in
 
 In this case, the model that was used was pretty sure that it indeed was a badger, with a .3% uncertainty about it. 
 
-## In closing
+## In closing  
+Remember how easy it was to set up a Livebook environment on Hugging Face? And how the interactive examples in `Bumblebee`'s  documentation made understanding the library a breeze? This is just a taste of how Elixir and Livebook can streamline your learning of complex topics. Whether you're an Elixir beginner or a seasoned developer, there's always something new and exciting to discover. Go forth and explore – you might be surprised by the creative possibilities that await! 
