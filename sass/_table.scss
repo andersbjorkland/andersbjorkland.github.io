@@ -3,9 +3,19 @@
 table {
     border-collapse: collapse;
     border-bottom: 1px solid colors.$light;
+    overflow-x: auto;
+    max-width: 100%;
 }
 
 thead {
     border-bottom: 1px solid colors.$light;
     text-align: left;
+}
+
+th {
+    padding-right: 1rem;
+}
+
+td {
+    padding-right: 0.5rem;
 }

@@ -12,7 +12,7 @@
     {% else %}
     <meta
         http-equiv="Content-Security-Policy"
-        content="default-src 'self' 127.0.0.1> ws://127.0.0.1:1024 abjork.land *.gstatic.com *.googleapis.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' 127.0.0.1 abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+        content="default-src 'self' 127.0.0.1 ws://127.0.0.1:1024 abjork.land *.gstatic.com *.googleapis.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' 127.0.0.1 abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
     {% endif %}
 
     {% block canonical %}<link rel="canonical" href="{{current_url | safe}}">{% endblock canonical %}

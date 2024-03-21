@@ -4,7 +4,7 @@ date = 2024-03-17
 updated = 2024-03-17
 weight = 2
 authors = ["Anders Björkland"]
-draft = true
+draft = false
 
 [taxonomies] 
 category=["Elixir"]
@@ -57,7 +57,7 @@ Our goal is via random chromosomes start selecting the best fit ones to crossove
 ```elixir
 defmodule GeneticString do
   # We define the target phrase here but it might as well be passed in via the evolve function.
-  @target_phrase "Hello Elixir"
+  @target_phrase "The solution is yet to emerge"
 
   # Defines which characters can be present in the target phrase
   defp possible_characters() do
@@ -177,19 +177,6 @@ We will be using a evolve mechanism where we will initialize a starter populatio
 defmodule GeneticString do
   # ...
 
-  #  Our ENTRY POINT to the evolution
-  def evolve(population_size, generation_limit \\ 100) do
-    population = Enum.map(1..population_size, fn _ -> random_chromosome() end)
-    elitism_rate = 0.01
-
-    evolve_mechanism(
-      %{i: 0, limit: generation_limit}, # generation data
-      %{population: population, size: population_size}, # population data
-      %{rate: elitism_rate, count: floor(elitism_rate * population_size)}, # elitism data (suitable for adding an adaptive mechanism)
-      %{} # fitness map
-    )
-  end
-
   # Recursive function that will continue evolving the chromosomes until a perfect fitness score is reached, 
   # or the generation limit has been reached.
   defp evolve_mechanism(generation, %{population: [best_match | _]}, _elitism, _fitness_memo)
@@ -247,6 +234,104 @@ defmodule GeneticString do
 end
 ```  
 
-The `evolve_mechanism` function is recursive in that it will take as an argument a function which will be called as long as we either haven't gotten a perfect fitness or we have hit a generation limit. We will be passing `evolve_mechanism` into itself as this function.  
+The `evolve_mechanism` function is recursive in that it will call itself as long as we either haven't gotten a perfect fitness or we have hit a generation limit.
   
-Now it's finally time to define our entry-point to this genetic algorithm:
+Now it's finally time to define our entry-point to this genetic algorithm. `evolve` will set up some initial values and start the `evolve-mechanism`:  
+```elixir
+defmodule GeneticString do
+  # ...
+
+  #  Our ENTRY POINT to the evolution
+  def evolve(population_size, generation_limit \\ 100) do
+    population = Enum.map(1..population_size, fn _ -> random_chromosome() end)
+    elitism_rate = 0.01
+
+    evolve_mechanism(
+      %{i: 0, limit: generation_limit}, # generation data
+      %{population: population, size: population_size}, # population data
+      %{rate: elitism_rate, count: floor(elitism_rate * population_size)}, # elitism data (suitable for adding an adaptive mechanism)
+      %{} # fitness map
+    )
+  end
+end
+```
+
+We can call our Genetic Algorithm with the following command: `GeneticString.evolve(50, 20000)`. This will set the initial population to `50` and sets the generation limit to `20000`. The result will be a map like this: `%{generation: 6367, chromosome: "The solution is yet to emerge"}`
+
+Our Genetic Algorithm has multiple points where we can experiment with its different parameters. Instead of a static `elitism_rate` we can involve a more dynamic or adaptive format. We can also experiment with number of offsprings and parents as well. There are a lot of ways to tweak just this simple Genetic Algorithm, but for now, let's explore how it would be like to have elitism that is adjusted according to how far along the generations has come towards the generational limit.
+
+First we will add a new function that will update the elitism:  
+```elixir
+defmodule GeneticString do
+  # ...
+
+  defp adjust_elitism(elitism, generation, population_size) do
+    progress = generation.i / generation.limit
+
+    rate = case progress do
+      # Less of population considered for elite (aka, in this case, available for reproduction)
+      x when x < 0.2 ->
+        max(elitism.rate - 0.05, 0.01)
+
+      # In later generations, a larger proportion of population will be included in elite population
+      _ -> 
+        min(elitism.rate + 0.01, 0.25)
+    end
+
+    %{rate: rate, count: floor(rate * population_size)}
+  end
+end
+```
+
+Then we will update our `evolution_mechanism` so that in its recursive call will be updating the elitism:  
+```elixir
+defmodule GeneticString do
+  # ...
+
+  defp evolve_mechanism(generation, population_data, elitism, fitness_memo) do
+    # ...
+    case fitness_score do
+      x when x == max_score ->
+        %{chromosome: elite, generation: generation.i}
+
+      _ ->
+        evolve_mechanism(
+          %{i: generation.i + 1, limit: generation.limit},
+          %{population: new_population, size: population_data.size},
+          adjust_elitism(elitism, generation, population_data.size),  # We change this row to update elitism
+          memoized_fitness
+        )
+    end
+  end
+end
+```  
+
+I test ran our genetic algorithm first with a static elitism, then with an adjusted elitism. Each was run 1000-times. I plotted their density curves and gathered their core descriptive statistics. Let's see the result:  
+
+{% centerer() %}*n:th generation (static elitism)*{% end %}
+{{ imager(
+    asset='static_elitism.svg',
+    alt='Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with static elitism rate. The curve is centered (median) around 2028 with a standard deviation of 805. The curve is right-tailed.', 
+    class='center mt-0'
+) }}
+{% centerer() %}
+min | max | mean | median | stdev
+--- |  --- | --- | --- | ---
+2391 | 20000 | 7170 | 6763 | 2497
+{% end %}
+
+{% centerer() %}*n:th generation (adjustable elitism)*{% end %}
+{{ imager(
+    asset='adjustable_elitism.svg',
+    alt='Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with adjustable elitism rate. The curve is centered (median) around 2020 with a standard deviation of 862. The curve is right-tailed.', 
+    class='center mt-0'
+) }}
+{% centerer() %}
+min | max | mean | median | stdev
+--- |  --- | --- | --- | ---
+2149 | 15078 | 6297 | 5991 | 1847
+{% end %}  
+
+With this adjustable elitism, we got a more narrow distribution and a lower median. We can argue that the inclusion of the adjustable elitism improved our algorithm. But still, there are so many ways we can tinker with it. The elitism can have multiple ways it can be adjusted; different cut-offs, rate changes, minimum and maximum rates, and so on. But there are also many other adjustments we can make. How many parents we will allow getting offsprings, and how many? Perhaps the fitness-evaluation is too simple and need more nuance? Should the crossover be more of a diffusion where one parent's feature is scattered in the chromosome? 
+
+The Genetic Algorithm is versatile! We have seen its core components and got to tinker with them. We have explored one way to make it more dynamic and what impact that may have. Even a simple GA as we have built here can be adjusted in many different ways. I therefor welcome you to do so. I have created a GitHub Gist with a Livebook document that you may use in your own Livebook session: [genetic-algorithm.livemd](https://gist.github.com/andersbjorkland/a9a14665d8116204421f84f44718884a)
