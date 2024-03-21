@@ -1,7 +1,7 @@
 +++
 title = "Intro to Genetic Algorithms with Elixir"
-date = 2024-03-17
-updated = 2024-03-17
+date = 2024-03-21
+updated = 2024-03-21
 weight = 2
 authors = ["Anders Björkland"]
 draft = false
@@ -12,7 +12,7 @@ tags=["elixir", "livebook", "algorithms"]
 +++
 
 {{ articleHeader(
-path='articles/elixir/interactive-documents-with-livebook/hero.webp'
+path='articles/elixir/intro-to-genetic-algorithms-with-elixir/hero.webp'
 title='Intro to Genetic Algorithms with Elixir'
 ) }}
 
