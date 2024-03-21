@@ -48,7 +48,7 @@ In essence, these are the genetic algorithm's components:
 
 We will add an "elitism" component to this which will make sure that the best possible solutions are never discarded. This is a component that may act dynamic depending on where we are in the evolution loop. But initially we will keep it static. 
 
-> For anyone who has set up a Livebook application and want to experiment, just [grab the source from my **gist**](https://gist.github.com/andersbjorkland/a9a14665d8116204421f84f44718884a) (copy) and click *Open*/*From source*. 
+> For anyone who has set up a Livebook application and want to experiment, just [grab the source from my **gist**](https://gist.github.com/andersbjorkland/99a96a26135fea7438ef90cfc354e1ed) (copy) and click *Open*/*From source*. 
 > If you haven't set up a Livebook application, read about how to do that in my article [Interactive documents with Livebook](@/articles/elixir/interactive-documents-with-livebook/index.md#hosting-livebook-on-hugging-face). You can set it up on free hosting via Hugging Face. 
 
 ### The target phrase
@@ -334,4 +334,4 @@ min | max | mean | median | stdev
 
 With this adjustable elitism, we got a more narrow distribution and a lower median. We can argue that the inclusion of the adjustable elitism improved our algorithm. But still, there are so many ways we can tinker with it. The elitism can have multiple ways it can be adjusted; different cut-offs, rate changes, minimum and maximum rates, and so on. But there are also many other adjustments we can make. How many parents we will allow getting offsprings, and how many? Perhaps the fitness-evaluation is too simple and need more nuance? Should the crossover be more of a diffusion where one parent's feature is scattered in the chromosome? 
 
-The Genetic Algorithm is versatile! We have seen its core components and got to tinker with them. We have explored one way to make it more dynamic and what impact that may have. Even a simple GA as we have built here can be adjusted in many different ways. I therefor welcome you to do so. I have created a GitHub Gist with a Livebook document that you may use in your own Livebook session: [genetic-algorithm.livemd](https://gist.github.com/andersbjorkland/a9a14665d8116204421f84f44718884a)
+The Genetic Algorithm is versatile! We have seen its core components and got to tinker with them. We have explored one way to make it more dynamic and what impact that may have. Even a simple GA as we have built here can be adjusted in many different ways. I therefor welcome you to do so. I have created a GitHub Gist with a Livebook document that you may use in your own Livebook session: [genetic-algorithm.livemd](https://gist.github.com/andersbjorkland/99a96a26135fea7438ef90cfc354e1ed)
