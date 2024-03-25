@@ -1,7 +1,7 @@
 +++
 title = "Intro to Genetic Algorithms with Elixir"
 date = 2024-03-21
-updated = 2024-03-21
+updated = 2024-03-25
 weight = 2
 authors = ["Anders Björkland"]
 draft = false
@@ -15,6 +15,8 @@ tags=["elixir", "livebook", "algorithms"]
 path='articles/elixir/intro-to-genetic-algorithms-with-elixir/hero.webp'
 title='Intro to Genetic Algorithms with Elixir'
 ) }}
+
+{{ companyAuthor(author="Anders Björkland", occupation="Web Developer", company="Umain", url="https://www.umain.com/") }}
 
 [Genetic Algorithms (GA)](https://en.wikipedia.org/wiki/Genetic_algorithm) are algorithms inspired by the evolutionary process found in nature. Sometimes these are called Stochastic Algorithms as they make use of randomness to find an optimal solution, but with features such a "natural selection" to remove less suitable solutions while generating new possible ones. 
 
