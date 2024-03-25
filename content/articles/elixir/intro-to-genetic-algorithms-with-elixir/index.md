@@ -30,21 +30,15 @@ A genetic algorithm will try to promote the possible soultions (*chromosomes*) w
 In essence, these are the genetic algorithm's components:  
 * *Chromosomes*   
   possible solutions  
-
 * Initial population  
   *random chromosomes*  
-
 * Fitness evaluation  
-
 * Selection  
   *better fitness score are more likely to be chosen as "parents"*  
-
 * Crossover  
   *"mating" of parents to produce an "offspring", a new chromosome*  
-
 * Mutation  
   *small random changes in a chromosome*  
-
 * Evolution Loop  
   *repeating the steps of **selection** -> **crossover** -> **mutation** to arrive at a chromosome that is the best fit for the problem at the hand*
 
@@ -313,7 +307,7 @@ I test ran our genetic algorithm first with a static elitism, then with an adjus
 {% centerer() %}*n:th generation (static elitism)*{% end %}
 {{ imager(
     asset='static_elitism.svg',
-    alt='Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with static elitism rate. The curve is centered (median) around 2028 with a standard deviation of 805. The curve is right-tailed.', 
+    alt='Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with static elitism rate. The curve is centered (median) around 6763 with a standard deviation of 2497. The curve is right-tailed.', 
     class='center mt-0'
 ) }}
 {% centerer() %}
@@ -325,7 +319,7 @@ min | max | mean | median | stdev
 {% centerer() %}*n:th generation (adjustable elitism)*{% end %}
 {{ imager(
     asset='adjustable_elitism.svg',
-    alt='Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with adjustable elitism rate. The curve is centered (median) around 2020 with a standard deviation of 862. The curve is right-tailed.', 
+    alt='Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with adjustable elitism rate. The curve is centered (median) around 5991 with a standard deviation of 1847. The curve is right-tailed.', 
     class='center mt-0'
 ) }}
 {% centerer() %}
