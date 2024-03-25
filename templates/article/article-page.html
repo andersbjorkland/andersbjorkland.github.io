@@ -15,3 +15,19 @@
     {{ page.content | safe }}
     </div>
 {% endblock content %}
+
+{% block footer %}
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            {{ page.date }} Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+{% endblock content %}

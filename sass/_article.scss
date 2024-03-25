@@ -5,7 +5,7 @@
   backdrop-filter: blur(4px);
   padding: 1em;
 
-  &-header {
+  &-header, &-footer {
     position: relative;
     width: 100%;
     margin-bottom: 4em;
@@ -31,6 +31,14 @@
         transition: font-size .5s ease-in-out ;
       }
     }
+  }
+
+  &-footer {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+
+    font-style: italic;
+    font-size: 1rem;
   }
 
   .article-header > img {
