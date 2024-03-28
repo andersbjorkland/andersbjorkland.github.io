@@ -1,6 +1,7 @@
 +++
 title = "Discovering the Elixir programming language"
 date = 2023-03-29
+updated = 2024-03-28
 weight = 2
 authors = ["Anders Björkland"]
 description = "Dive into the world of functional programming with Elixir, a dynamic language that offers a fresh perspective for OOP enthusiasts. Explore its unique features through building a Fibonacci sequence function and learn about its immutable nature, pattern matching, and built-in testing capabilities."

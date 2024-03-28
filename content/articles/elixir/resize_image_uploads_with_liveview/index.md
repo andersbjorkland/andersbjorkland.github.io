@@ -1,7 +1,7 @@
 +++
 title = "Resize Image Uploads with LiveView"
 date = 2024-01-31
-updated = 2024-01-31
+updated = 2024-03-28
 weight = 2
 authors = ["Anders Björkland"]
 description = "Learn how to resize and upload images in a Phoenix application. This guide covers schema modification, migrations, file validation, and LiveView integration for a seamless user profile image update."

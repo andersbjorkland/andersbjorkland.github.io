@@ -1,6 +1,7 @@
 +++
 title = "Remembering Limits"
 date = 2023-04-15
+updated = 2024-03-28
 weight = 2
 draft = false
 description = "Dive into the fundamentals of calculus with a focus on limits, a crucial concept for understanding continuity, derivatives, and integrals."

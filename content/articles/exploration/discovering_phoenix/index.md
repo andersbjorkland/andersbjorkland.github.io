@@ -1,6 +1,7 @@
 +++
 title = "Discovering Phoenix"
 date = 2023-04-15
+updated = 2024-03-28
 weight = 2
 draft = false
 authors = ["Anders Björkland"]

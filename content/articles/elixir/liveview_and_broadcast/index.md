@@ -1,7 +1,7 @@
 +++
 title = "Laugh Out Loud with LiveView"
 date = 2023-05-23
-updated = 2023-05-25
+updated = 2024-03-28
 weight = 2
 authors = ["Anders Björkland"]
 description = "Build a hilarious, interactive website with Phoenix LiveView! See jokes evolve in real-time as users vote, powered by database updates and PubSub broadcasts."
