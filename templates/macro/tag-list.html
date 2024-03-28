@@ -10,7 +10,7 @@
 <div class="tag-list {{ additional_class }}">
     {% if page.taxonomies.tags %}
         {% for tag in page.taxonomies.tags %}
-        <div>{{ tag }}</div>
+        <div><a href="{{ get_taxonomy_url(kind='tags', name=tag) }}" class="hover-bold">{{ tag }}</a></div>
         {% endfor %}
     {% endif %}
 </div>

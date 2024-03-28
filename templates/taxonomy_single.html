@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="layour-wrapper mt-4">
+    <h1 class="mb-2">Tag: {{term.name}}</h1>
+    <div class="layout-row">
+{% for page in term.pages %}
+<a href="{{ page.permalink }}" class="hover-bold">{{ page.title }} <i>{{ page.date }}</i></a>
+{% endfor %} 
+    </div>
+</div>
+{% endblock content %}

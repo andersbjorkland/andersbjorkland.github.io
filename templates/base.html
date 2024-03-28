@@ -21,7 +21,9 @@
     {% if section %}
         {{ metatags::page(page=section)}}
     {% else %}
-        {{ metatags::page(page=page)}}
+        {% if page %}
+    {{ metatags::page(page=page)}}
+        {% endif %}
     {% endif %}
 
     <title>{% block title %}{% endblock title %} | abjork.land</title>
