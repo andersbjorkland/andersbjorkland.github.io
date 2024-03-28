@@ -4,6 +4,8 @@ date = 2023-04-15
 weight = 2
 draft = false
 authors = ["Anders Björkland"]
+description = "Dive into web development with Phoenix, a powerful Elixir framework, and build a scalable, fault-tolerant dad-joke machine API. Explore schema generation, controller setup, and database integration in this hands-on guide."
+
 [taxonomies]
 category=["Exploration"]
 tags=["elixir", "phoenix"]

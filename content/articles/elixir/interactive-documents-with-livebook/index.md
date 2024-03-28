@@ -4,6 +4,7 @@ date = 2024-03-02
 updated = 2024-03-02
 weight = 2
 authors = ["Anders Björkland"]
+description = "Discover the power of Elixir's interactive documentation! Learn complex topics with ease thanks to live, executable examples on Hexdocs and Livebook."
 draft = false
 
 [taxonomies] 

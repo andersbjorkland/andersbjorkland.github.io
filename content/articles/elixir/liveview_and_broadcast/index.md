@@ -4,6 +4,7 @@ date = 2023-05-23
 updated = 2023-05-25
 weight = 2
 authors = ["Anders Björkland"]
+description = "Build a hilarious, interactive website with Phoenix LiveView! See jokes evolve in real-time as users vote, powered by database updates and PubSub broadcasts."
 draft = false
 
 [taxonomies] 

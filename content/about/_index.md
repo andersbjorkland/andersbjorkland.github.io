@@ -3,6 +3,7 @@ title = "Showroom"
 sort_by = "date"
 template = "about.html"
 page_template = "about.html"
+description = "Anders Björkland codes PHP, Elixir, Kotlin, and writes about it!"
 +++
 
 A web developer with a focus on backend, but frontend aware. I'm Anders Björkland. I like to navigate the 
@@ -12,6 +13,7 @@ find out here among my articles and showcases.
 
 ## Career background
 * **2022-** [Umain](https://www.umain.com/) - *Web developer*  
+  Build Google Cloud infrastructure and APIs with Kotlin
   Build eCommerce solutions with Sylius/Symfony  
   Build enjoyable content creator experience with SilverStripe CMS  
   Integrate with 3rd party solutions like PIMs (InRiver) and ERPs (SAP Business One)

@@ -3,6 +3,7 @@ title = "Top 6 uses of open source machine learning models (and more)"
 date = 2023-06-23
 weight = 2
 authors = ["Anders Björkland"]
+description = "Explore open source ML models like XLM-RoBERTa, ResNet, and Whisper, and their diverse applications in AI."
 draft = false
 
 [taxonomies] 
