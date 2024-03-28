@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - algorithms</title>
+    <link href="https://abjork.land/tags/algorithms/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://abjork.land"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-03-25T00:00:00+00:00</updated>
+    <id>https://abjork.land/tags/algorithms/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Intro to Genetic Algorithms with Elixir</title>
+        <published>2024-03-21T00:00:00+00:00</published>
+        <updated>2024-03-25T00:00:00+00:00</updated>
+        <author>
+          <name>Anders Björkland</name>
+        </author>
+        <link rel="alternate" href="https://abjork.land/articles/elixir/intro-to-genetic-algorithms-with-elixir/" type="text/html"/>
+        <id>https://abjork.land/articles/elixir/intro-to-genetic-algorithms-with-elixir/</id>
+        <content type="html">&lt;div class=&quot;article-header&quot;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+&lt;img
+        alt=&quot;133&quot;
+        src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.9c60893338d633b5.jpg&quot;
+        srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.38c6b3a9afd8a180.jpg 240w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.9c60893338d633b5.jpg 400w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.0dc6effd0a792513.jpg 600w&quot;
+        sizes=&quot;(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px&quot;
+&#x2F;&gt;
+
+
+    &lt;div class=&quot;text-content&quot;&gt;
+        &lt;h1 class=&quot;article-title&quot;&gt;
+            &lt;div class=&quot;title&quot;&gt;Intro to Genetic Algorithms with Elixir&lt;&#x2F;div&gt;
+            
+        &lt;&#x2F;h1&gt;
+    &lt;&#x2F;div&gt;
+    
+
+ 
+
+ 
+
+&lt;div class=&quot;tag-list absolute&quot;&gt;
+    
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;elixir&#x2F;&quot; class=&quot;hover-bold&quot;&gt;elixir&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;livebook&#x2F;&quot; class=&quot;hover-bold&quot;&gt;livebook&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;algorithms&#x2F;&quot; class=&quot;hover-bold&quot;&gt;algorithms&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+    
+&lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;&lt;div class=&quot;author-container&quot;&gt;
+    &lt;p&gt;Written by Anders Björkland, Web Developer at &lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;www.umain.com&amp;#x2F;&quot;&gt;Umain&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Genetic_algorithm&quot;&gt;Genetic Algorithms (GA)&lt;&#x2F;a&gt; are algorithms inspired by the evolutionary process found in nature. Sometimes these are called Stochastic Algorithms as they make use of randomness to find an optimal solution, but with features such a &amp;quot;natural selection&amp;quot; to remove less suitable solutions while generating new possible ones. &lt;&#x2F;p&gt;
+&lt;p&gt;Genetic Algorithms are found in &lt;a href=&quot;https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;document&#x2F;537939&quot;&gt;route optimzation problems&lt;&#x2F;a&gt;, in engineering (e.g. &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Evolved_antenna&quot;&gt;evolved antennas&lt;&#x2F;a&gt;), in &lt;a href=&quot;https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;1707.05377.pdf&quot;&gt;epidemic mitigation&lt;&#x2F;a&gt;, and much more. &lt;&#x2F;p&gt;
+&lt;p&gt;In this article we will solve a simple problem: &amp;quot;what is the target phrase?&amp;quot;. This is not a real-world problem, but suitable enough to showcase each component of a Genetic Algorithm; like a &amp;quot;Hello World&amp;quot; of Genetic Algorithms. With the foundation provided by this, I hope this can give you a better understanding of GAs, and an appreciation for using Elixir with them.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;anatomy-of-a-genetic-algorithm&quot;&gt;Anatomy of a Genetic Algorithm&lt;&#x2F;h2&gt;
+&lt;p&gt;A genetic algorithm will try to promote the possible soultions (&lt;em&gt;chromosomes&lt;&#x2F;em&gt;) with the best &amp;quot;fitness&amp;quot; and combine them into a new possible solution, which will inherit features of both. While it does this, it may introduce some mutations (small changes that were not part of its &amp;quot;parents&amp;quot; chromosomes). &lt;&#x2F;p&gt;
+&lt;p&gt;In essence, these are the genetic algorithm&#x27;s components:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Chromosomes&lt;&#x2F;em&gt;&lt;br &#x2F;&gt;
+possible solutions&lt;&#x2F;li&gt;
+&lt;li&gt;Initial population&lt;br &#x2F;&gt;
+&lt;em&gt;random chromosomes&lt;&#x2F;em&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Fitness evaluation&lt;&#x2F;li&gt;
+&lt;li&gt;Selection&lt;br &#x2F;&gt;
+&lt;em&gt;better fitness score are more likely to be chosen as &amp;quot;parents&amp;quot;&lt;&#x2F;em&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Crossover&lt;br &#x2F;&gt;
+&lt;em&gt;&amp;quot;mating&amp;quot; of parents to produce an &amp;quot;offspring&amp;quot;, a new chromosome&lt;&#x2F;em&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Mutation&lt;br &#x2F;&gt;
+&lt;em&gt;small random changes in a chromosome&lt;&#x2F;em&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Evolution Loop&lt;br &#x2F;&gt;
+&lt;em&gt;repeating the steps of &lt;strong&gt;selection&lt;&#x2F;strong&gt; -&amp;gt; &lt;strong&gt;crossover&lt;&#x2F;strong&gt; -&amp;gt; &lt;strong&gt;mutation&lt;&#x2F;strong&gt; to arrive at a chromosome that is the best fit for the problem at the hand&lt;&#x2F;em&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;We will add an &amp;quot;elitism&amp;quot; component to this which will make sure that the best possible solutions are never discarded. This is a component that may act dynamic depending on where we are in the evolution loop. But initially we will keep it static. &lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;For anyone who has set up a Livebook application and want to experiment, just &lt;a href=&quot;https:&#x2F;&#x2F;gist.github.com&#x2F;andersbjorkland&#x2F;99a96a26135fea7438ef90cfc354e1ed&quot;&gt;grab the source from my &lt;strong&gt;gist&lt;&#x2F;strong&gt;&lt;&#x2F;a&gt; (copy) and click &lt;em&gt;Open&lt;&#x2F;em&gt;&#x2F;&lt;em&gt;From source&lt;&#x2F;em&gt;. 
+If you haven&#x27;t set up a Livebook application, read about how to do that in my article &lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;elixir&#x2F;interactive-documents-with-livebook&#x2F;#hosting-livebook-on-hugging-face&quot;&gt;Interactive documents with Livebook&lt;&#x2F;a&gt;. You can set it up on free hosting via Hugging Face. &lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;the-target-phrase&quot;&gt;The target phrase&lt;&#x2F;h3&gt;
+&lt;p&gt;Our goal is via random chromosomes start selecting the best fit ones to crossover with each other. They will be selected based on how well they fit with the target phrase. It will be a phrase based on characters from &#x27;a&#x27; to &#x27;z&#x27;, with space included. Let&#x27;s define this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # We define the target phrase here but it might as well be passed in via the evolve function.
+&lt;&#x2F;span&gt;&lt;span&gt;  @&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;target_phrase &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;The solution is yet to emerge&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Defines which characters can be present in the target phrase
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;possible_characters&lt;&#x2F;span&gt;&lt;span&gt;() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.to_list(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?a&lt;&#x2F;span&gt;&lt;span&gt;..&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?z&lt;&#x2F;span&gt;&lt;span&gt;) ++
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.to_list(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?A&lt;&#x2F;span&gt;&lt;span&gt;..&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?Z&lt;&#x2F;span&gt;&lt;span&gt;) ++
+&lt;&#x2F;span&gt;&lt;span&gt;      [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?_&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?\s&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;the-first-chromosome&quot;&gt;The first chromosome&lt;&#x2F;h3&gt;
+&lt;p&gt;The first step towards arriving at a solution is a function to generate a random chromosome. It will produce a chromosome of length &lt;code&gt;length&lt;&#x2F;code&gt; by random characters present in &lt;code&gt;possible_characters&lt;&#x2F;code&gt;. This function will be used to generate the initial population.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Generate a random chromosome (potential solution)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;random_chromosome&lt;&#x2F;span&gt;&lt;span&gt;() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;..&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;target_phrase&lt;&#x2F;span&gt;&lt;span&gt;),  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# We will help the GA along the way by letting it set correct length
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; _ -&amp;gt; possible_characters() |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.random() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;    )
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;List&lt;&#x2F;span&gt;&lt;span&gt;.to_string()
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;evaluating-fitness&quot;&gt;Evaluating fitness&lt;&#x2F;h3&gt;
+&lt;p&gt;The fitness evaluation is an important part in the genetic algorithm. It will tell the algorithm when it is moving closer towards a solution. In our case, we will do a fairly simple evalutaion. The fitness score will represent how many characters are correctly placed in the chromosome when compared to &lt;code&gt;target_phrase&lt;&#x2F;code&gt;. A more evolved fitness evaluation might take into account its length as well as maybe its &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Levenshtein_distance&quot;&gt;Levenshtein distance&lt;&#x2F;a&gt;, and so on. &lt;&#x2F;p&gt;
+&lt;p&gt;We will see that our fitness evaluation will also take a map, a &amp;quot;memo&amp;quot; of already evaluated chromosomes. This way an already evaluated chromosome will not have to be calculated again. This would be a trade-off between memory&#x2F;retrieval and calculation cycles.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Calculate fitness based on if a character is placed in the correct n:th place.
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;fitness_calc&lt;&#x2F;span&gt;&lt;span&gt;(chromosome) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    chromosome
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.graphemes()
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.zip(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.graphemes(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;target_phrase&lt;&#x2F;span&gt;&lt;span&gt;))
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.count(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span&gt;{char1, char2} -&amp;gt; char1 == char2 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Either retrieve fitness score for a chromosome or calculate it and place it in the map
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;fitness&lt;&#x2F;span&gt;&lt;span&gt;(chromosome, memo \\ %{}) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Map&lt;&#x2F;span&gt;&lt;span&gt;.get(memo, chromosome) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;nil &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        fitness = fitness_calc(chromosome)
+&lt;&#x2F;span&gt;&lt;span&gt;        updated_memo = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Map&lt;&#x2F;span&gt;&lt;span&gt;.put(memo, chromosome, fitness)
+&lt;&#x2F;span&gt;&lt;span&gt;        {fitness, updated_memo}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      fitness -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        {fitness, memo}
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Updates the fitness map for all chromosomes
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;memoize_fitness&lt;&#x2F;span&gt;&lt;span&gt;([], memo), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do:&lt;&#x2F;span&gt;&lt;span&gt; memo
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;memoize_fitness&lt;&#x2F;span&gt;&lt;span&gt;([chromosome | tail], memo) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    {_, new_memo} = fitness(chromosome, memo)
+&lt;&#x2F;span&gt;&lt;span&gt;    memoize_fitness(tail, new_memo)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;parents-offsprings-and-mutations&quot;&gt;Parents, offsprings and mutations&lt;&#x2F;h3&gt;
+&lt;p&gt;We have now defined fitness and chromosomes. Let&#x27;s go to the next part, which is selecting parents to produce offsprings via the components &lt;code&gt;crossover&lt;&#x2F;code&gt; and &lt;code&gt;mutation&lt;&#x2F;code&gt;. The idea is to get at least one parent from the ones with the best fitness score, and the other parent from the broader population. Once selected, these will be passed to the crossover function to produce the offspring, and a mutation function that will introduce a bit of variation. Currently we will only make a mutation in one randomly chosen spot.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Randomly select two &amp;quot;parents&amp;quot; from the provided list of chromosomes
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;select_parents&lt;&#x2F;span&gt;&lt;span&gt;([]), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do: &lt;&#x2F;span&gt;&lt;span&gt;[]
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;select_parents&lt;&#x2F;span&gt;&lt;span&gt;(possible_parents) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    possible_parents
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.shuffle()
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.take(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Combine first part of one chromosome to the second part of another. 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # The resulting chromosome will have features from both &amp;quot;parents&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;crossover&lt;&#x2F;span&gt;&lt;span&gt;(chromosome1, chromosome2) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    crossover_point = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.random(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;..(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(chromosome1) - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.slice(chromosome1, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, crossover_point) &amp;lt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.slice(chromosome2, crossover_point, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(chromosome2) - crossover_point)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Introduce a random mutation to a chromsome. 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # The spot where the mutation will happen is randomly chosen, as is the possible character introduced.
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;mutation&lt;&#x2F;span&gt;&lt;span&gt;(chromosome) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    mutation_point = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.random(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;..(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(chromosome) - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.slice(chromosome, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, mutation_point) &amp;lt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;List&lt;&#x2F;span&gt;&lt;span&gt;.to_string([possible_characters() |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.random()]) &amp;lt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.slice(
+&lt;&#x2F;span&gt;&lt;span&gt;        chromosome,
+&lt;&#x2F;span&gt;&lt;span&gt;        mutation_point + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(chromosome) - (mutation_point + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      )
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;evolution-the-iterative-process-to-produce-best-fit-chromosome&quot;&gt;Evolution - the iterative process to produce best fit chromosome&lt;&#x2F;h3&gt;
+&lt;p&gt;We will be using a evolve mechanism where we will initialize a starter population with a radom chromosomes and set an &lt;em&gt;elitism rate&lt;&#x2F;em&gt;. These initial values will be passed into a recursive evolve mechanism (our evolution loop). Once we&#x27;ve either gotten a perfect fitness score, or we have hit the generation limit, we will return the best suited chromosome. &lt;&#x2F;p&gt;
+&lt;p&gt;(While we are at it we will also bundle in which iteration - &lt;em&gt;n&lt;&#x2F;em&gt;:th generation - we were at when the chromosome was produced.)&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Recursive function that will continue evolving the chromosomes until a perfect fitness score is reached, 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # or the generation limit has been reached.
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;evolve_mechanism&lt;&#x2F;span&gt;&lt;span&gt;(generation, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;population: &lt;&#x2F;span&gt;&lt;span&gt;[best_match | _]}, _elitism, _fitness_memo)
+&lt;&#x2F;span&gt;&lt;span&gt;      when generation.limit == generation.i,
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do:&lt;&#x2F;span&gt;&lt;span&gt; %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;chromosome:&lt;&#x2F;span&gt;&lt;span&gt; best_match, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;generation:&lt;&#x2F;span&gt;&lt;span&gt; generation.i}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;evolve_mechanism&lt;&#x2F;span&gt;&lt;span&gt;(generation, population_data, elitism, fitness_memo) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    memoized_fitness = memoize_fitness(population_data.population, fitness_memo)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Sort population based on fitness
+&lt;&#x2F;span&gt;&lt;span&gt;    sorted_population =
+&lt;&#x2F;span&gt;&lt;span&gt;      population_data.population
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.sort_by(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; chromosome -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Map&lt;&#x2F;span&gt;&lt;span&gt;.get(memoized_fitness, chromosome) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:desc&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Select number of population that will have a higher chance to survive, and produce offspring
+&lt;&#x2F;span&gt;&lt;span&gt;    elite_population =
+&lt;&#x2F;span&gt;&lt;span&gt;      sorted_population
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.take(elitism.count)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    rest_population = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.drop(sorted_population, elitism.count) |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.shuffle()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    possible_parents = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span&gt; length(elite_population) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      x when x &amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2 &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt; elite_population ++ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.take(sorted_population, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      _ -&amp;gt; elite_population
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;    [parent1, parent2] = select_parents(possible_parents)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Produce offspring by combining parents and introduce a mutation
+&lt;&#x2F;span&gt;&lt;span&gt;    offspring = crossover(parent1, parent2) |&amp;gt; mutation()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Keep an elite-num of chromosome, and drop less fortunate chromomse before appending the offspring
+&lt;&#x2F;span&gt;&lt;span&gt;    new_population =
+&lt;&#x2F;span&gt;&lt;span&gt;      (elite_population ++ rest_population)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.drop(-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Kernel&lt;&#x2F;span&gt;&lt;span&gt;.++([offspring])
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    [elite | _] = new_population
+&lt;&#x2F;span&gt;&lt;span&gt;    fitness_score = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Map&lt;&#x2F;span&gt;&lt;span&gt;.get(memoized_fitness, elite)
+&lt;&#x2F;span&gt;&lt;span&gt;    max_score = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;target_phrase&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # If perfect fitness score, then return the elite chromosome.
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span&gt; fitness_score &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      x when x == max_score -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;chromosome:&lt;&#x2F;span&gt;&lt;span&gt; elite, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;generation:&lt;&#x2F;span&gt;&lt;span&gt; generation.i}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      _ -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        evolve_mechanism(
+&lt;&#x2F;span&gt;&lt;span&gt;          %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;i:&lt;&#x2F;span&gt;&lt;span&gt; generation.i + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;limit:&lt;&#x2F;span&gt;&lt;span&gt; generation.limit},
+&lt;&#x2F;span&gt;&lt;span&gt;          %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;population:&lt;&#x2F;span&gt;&lt;span&gt; new_population, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;size:&lt;&#x2F;span&gt;&lt;span&gt; population_data.size},
+&lt;&#x2F;span&gt;&lt;span&gt;          elitism,  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Might be switched for adaptive elitism
+&lt;&#x2F;span&gt;&lt;span&gt;          memoized_fitness
+&lt;&#x2F;span&gt;&lt;span&gt;        )
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The &lt;code&gt;evolve_mechanism&lt;&#x2F;code&gt; function is recursive in that it will call itself as long as we either haven&#x27;t gotten a perfect fitness or we have hit a generation limit.&lt;&#x2F;p&gt;
+&lt;p&gt;Now it&#x27;s finally time to define our entry-point to this genetic algorithm. &lt;code&gt;evolve&lt;&#x2F;code&gt; will set up some initial values and start the &lt;code&gt;evolve-mechanism&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  #  Our ENTRY POINT to the evolution
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;evolve&lt;&#x2F;span&gt;&lt;span&gt;(population_size, generation_limit \\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;100&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    population = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;..population_size, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; _ -&amp;gt; random_chromosome() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    elitism_rate = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.01
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    evolve_mechanism(
+&lt;&#x2F;span&gt;&lt;span&gt;      %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;i: 0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;limit:&lt;&#x2F;span&gt;&lt;span&gt; generation_limit}, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# generation data
+&lt;&#x2F;span&gt;&lt;span&gt;      %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;population:&lt;&#x2F;span&gt;&lt;span&gt; population, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;size:&lt;&#x2F;span&gt;&lt;span&gt; population_size}, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# population data
+&lt;&#x2F;span&gt;&lt;span&gt;      %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;rate:&lt;&#x2F;span&gt;&lt;span&gt; elitism_rate, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;count:&lt;&#x2F;span&gt;&lt;span&gt; floor(elitism_rate * population_size)}, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# elitism data (suitable for adding an adaptive mechanism)
+&lt;&#x2F;span&gt;&lt;span&gt;      %{} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# fitness map
+&lt;&#x2F;span&gt;&lt;span&gt;    )
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We can call our Genetic Algorithm with the following command: &lt;code&gt;GeneticString.evolve(50, 20000)&lt;&#x2F;code&gt;. This will set the initial population to &lt;code&gt;50&lt;&#x2F;code&gt; and sets the generation limit to &lt;code&gt;20000&lt;&#x2F;code&gt;. The result will be a map like this: &lt;code&gt;%{generation: 6367, chromosome: &amp;quot;The solution is yet to emerge&amp;quot;}&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Our Genetic Algorithm has multiple points where we can experiment with its different parameters. Instead of a static &lt;code&gt;elitism_rate&lt;&#x2F;code&gt; we can involve a more dynamic or adaptive format. We can also experiment with number of offsprings and parents as well. There are a lot of ways to tweak just this simple Genetic Algorithm, but for now, let&#x27;s explore how it would be like to have elitism that is adjusted according to how far along the generations has come towards the generational limit.&lt;&#x2F;p&gt;
+&lt;p&gt;First we will add a new function that will update the elitism:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;adjust_elitism&lt;&#x2F;span&gt;&lt;span&gt;(elitism, generation, population_size) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    progress = generation.i &#x2F; generation.limit
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    rate = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span&gt; progress &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;      # Less of population considered for elite (aka, in this case, available for reproduction)
+&lt;&#x2F;span&gt;&lt;span&gt;      x when x &amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.2 &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        max(elitism.rate - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.05&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.01&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;      # In later generations, a larger proportion of population will be included in elite population
+&lt;&#x2F;span&gt;&lt;span&gt;      _ -&amp;gt; 
+&lt;&#x2F;span&gt;&lt;span&gt;        min(elitism.rate + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.01&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.25&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;rate:&lt;&#x2F;span&gt;&lt;span&gt; rate, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;count:&lt;&#x2F;span&gt;&lt;span&gt; floor(rate * population_size)}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Then we will update our &lt;code&gt;evolution_mechanism&lt;&#x2F;code&gt; so that in its recursive call will be updating the elitism:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;evolve_mechanism&lt;&#x2F;span&gt;&lt;span&gt;(generation, population_data, elitism, fitness_memo) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # ...
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span&gt; fitness_score &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      x when x == max_score -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;chromosome:&lt;&#x2F;span&gt;&lt;span&gt; elite, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;generation:&lt;&#x2F;span&gt;&lt;span&gt; generation.i}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      _ -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        evolve_mechanism(
+&lt;&#x2F;span&gt;&lt;span&gt;          %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;i:&lt;&#x2F;span&gt;&lt;span&gt; generation.i + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;limit:&lt;&#x2F;span&gt;&lt;span&gt; generation.limit},
+&lt;&#x2F;span&gt;&lt;span&gt;          %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;population:&lt;&#x2F;span&gt;&lt;span&gt; new_population, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;size:&lt;&#x2F;span&gt;&lt;span&gt; population_data.size},
+&lt;&#x2F;span&gt;&lt;span&gt;          adjust_elitism(elitism, generation, population_data.size),  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# We change this row to update elitism
+&lt;&#x2F;span&gt;&lt;span&gt;          memoized_fitness
+&lt;&#x2F;span&gt;&lt;span&gt;        )
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;I test ran our genetic algorithm first with a static elitism, then with an adjusted elitism. Each was run 1000-times. I plotted their density curves and gathered their core descriptive statistics. Let&#x27;s see the result:&lt;&#x2F;p&gt;
+&lt;p&gt;
+&lt;div class=&quot;layout-row center&quot;&gt;
+    &lt;p&gt;&lt;em&gt;n:th generation (static elitism)&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+
+&lt;&#x2F;div&gt;
+
+
+
+
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container center mt-0&quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with static elitism rate. The curve is centered (median) around 6763 with a standard deviation of 2497. The curve is right-tailed.&quot;
+                src=&quot;static_elitism.svg&quot;
+                height=&quot;354&quot; 
+                width=&quot;491&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+
+
+&lt;div class=&quot;layout-row center&quot;&gt;
+    &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;min&lt;&#x2F;th&gt;&lt;th&gt;max&lt;&#x2F;th&gt;&lt;th&gt;mean&lt;&#x2F;th&gt;&lt;th&gt;median&lt;&#x2F;th&gt;&lt;th&gt;stdev&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;2391&lt;&#x2F;td&gt;&lt;td&gt;20000&lt;&#x2F;td&gt;&lt;td&gt;7170&lt;&#x2F;td&gt;&lt;td&gt;6763&lt;&#x2F;td&gt;&lt;td&gt;2497&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;
+&lt;div class=&quot;layout-row center&quot;&gt;
+    &lt;p&gt;&lt;em&gt;n:th generation (adjustable elitism)&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+
+&lt;&#x2F;div&gt;
+
+
+
+
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container center mt-0&quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with adjustable elitism rate. The curve is centered (median) around 5991 with a standard deviation of 1847. The curve is right-tailed.&quot;
+                src=&quot;adjustable_elitism.svg&quot;
+                height=&quot;354&quot; 
+                width=&quot;491&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+
+
+&lt;div class=&quot;layout-row center&quot;&gt;
+    &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;min&lt;&#x2F;th&gt;&lt;th&gt;max&lt;&#x2F;th&gt;&lt;th&gt;mean&lt;&#x2F;th&gt;&lt;th&gt;median&lt;&#x2F;th&gt;&lt;th&gt;stdev&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;2149&lt;&#x2F;td&gt;&lt;td&gt;15078&lt;&#x2F;td&gt;&lt;td&gt;6297&lt;&#x2F;td&gt;&lt;td&gt;5991&lt;&#x2F;td&gt;&lt;td&gt;1847&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;With this adjustable elitism, we got a more narrow distribution and a lower median. We can argue that the inclusion of the adjustable elitism improved our algorithm. But still, there are so many ways we can tinker with it. The elitism can have multiple ways it can be adjusted; different cut-offs, rate changes, minimum and maximum rates, and so on. But there are also many other adjustments we can make. How many parents we will allow getting offsprings, and how many? Perhaps the fitness-evaluation is too simple and need more nuance? Should the crossover be more of a diffusion where one parent&#x27;s feature is scattered in the chromosome? &lt;&#x2F;p&gt;
+&lt;p&gt;The Genetic Algorithm is versatile! We have seen its core components and got to tinker with them. We have explored one way to make it more dynamic and what impact that may have. Even a simple GA as we have built here can be adjusted in many different ways. I therefor welcome you to do so. I have created a GitHub Gist with a Livebook document that you may use in your own Livebook session: &lt;a href=&quot;https:&#x2F;&#x2F;gist.github.com&#x2F;andersbjorkland&#x2F;99a96a26135fea7438ef90cfc354e1ed&quot;&gt;genetic-algorithm.livemd&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+    </entry>
+</feed>
