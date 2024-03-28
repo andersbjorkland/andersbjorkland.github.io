@@ -4,6 +4,7 @@ date = 2024-03-21
 updated = 2024-03-25
 weight = 2
 authors = ["Anders Björkland"]
+description = "Explore the fundamentals of Genetic Algorithms (GA) with a secret-phrase example in Elixir; showcasing the evolution loop, fitness evaluation, and dynamic elitism for optimal solutions."
 draft = false
 
 [taxonomies] 
