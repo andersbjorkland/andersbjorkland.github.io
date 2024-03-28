@@ -36,4 +36,14 @@
 <meta name="publish_date" property="og:publish_date" content="{{ page.date }}"> 
 {% endif %}
 
+{% if page  %} 
+    {% if page.updated %} 
+<meta name="last-updated" content="{{ page.updated | date(format='%Y-%m-%d') }}" />
+    {% else %}
+    {% if page.date %} 
+<meta name="last-updated" content="{{ page.date | date(format='%Y-%m-%d') }}" />
+    {% endif %}
+    {% endif %}
+{% endif %}
+
 {% endmacro %}
