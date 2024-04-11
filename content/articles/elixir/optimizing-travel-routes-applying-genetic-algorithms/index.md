@@ -22,7 +22,7 @@ subtitle='Applying Genetic Algorithms to the Traveling Salesman Problem'
 
 {{ companyAuthor(author="Anders Björkland", occupation="Web Developer", company="Umain", url="https://www.umain.com/") }}
 
-<section>Have you ever watched a delivery driver crisscrossing your neighborhood and wondered if they were taking the most efficient route? That's the Traveling Salesman Problem in action! This classic challenge has entertained mathematicians and coders alike for ages. In this article, we'll see how to tackle it using the power of Elixir and genetic algorithms, mimicking nature's process of evolution to find surprisingly good routes.</section>
+<section class="article-summary"><em>Have you ever watched a delivery driver crisscrossing your neighborhood and wondered if they were taking the most efficient route? That's the Traveling Salesman Problem in action! This classic challenge has entertained mathematicians and coders alike for ages. In this article, we'll see how to tackle it using the power of Elixir and genetic algorithms, mimicking nature's process of evolution to find surprisingly good routes.</em></section>
 
 I was looking out my window and saw a delivery truck passing by on the street the other day. This got me thinking about a classic algorithm challenge: *The Traveler Salesman Problem* (TSP for short).  
  
