@@ -415,7 +415,7 @@ The response would be:
 }
 ```
   
-To me, this looks like a functional algorithm. But don't take my word for it. Take this graphs instead:  
+To me, this looks like a functional algorithm. But don't take my word for it. Take these graphs instead:  
 <div class="layout-grid mb-4">
 {{ imager(
     asset='pop-fitness-rate-0_3.svg',
