@@ -80,7 +80,6 @@ With the Travelling Salesman Problem the solution is a route, and a route is not
   
 I think I've teased you enough. It's time to bring in `the code` (using `Elixir`)! I will represent the cities as a list of coordinates, and the chromosomes shall be the indices for each city. 
 
-
 ```elixir 
   @cities [
     %{x: 10, y: 20}, %{x: 5, y: 15}, %{x: 12, y: 1},
@@ -92,18 +91,14 @@ I think I've teased you enough. It's time to bring in `the code` (using `Elixir`
   ]
 ```
 
-
 A chromosome is the length of the list, with each *gene* representing the index to one of the cities. The foundation is laid when I initialize the population. Let me show you:  
   
 ```elixir
   def initialize_population(population_size) do
     chromosome_template = Enum.to_list(0..(Enum.count(@cities) - 1))
 
-
     Enum.map(1..population_size, fn _ -> Enum.shuffle(chromosome_template) end)
   end
-
-
 ```  
 
 
@@ -124,14 +119,10 @@ Representing this calculation in code:
     dx = abs(x1 - x2)
     dy = abs(y1 - y2)
 
-
     (dx ** 2) + (dy ** 2)
     |> :math.sqrt()
   end
-
-
 ```
-
 
 {% quoter() %}*Oh, the pattern matching* - unpacking values to variables right there in the function definitions!{% end %}
 
@@ -142,42 +133,32 @@ This calculation should be done between each city in a chromosome. If you like s
     city1 = Enum.at(@cities, first)
     city2 = Enum.at(@cities, second)
 
-
     distance(city1, city2)
   end
   def distances([first, second | tail]) do
     city1 = Enum.at(@cities, first)
     city2 = Enum.at(@cities, second)
 
-
     distance(city1, city2) + distances([second | tail])
   end
 ```  
-
 
 *Oh, the pattern matching* - unpacking values to variables right there in the function definitions! The first distances function will catch when a list is passed to it that contains only two elements, so it will return only the distance between the two cities in the list. But the second function will continue calling itself as long as there are more elements in the list.  
   
 And if you are thinking that this does not measure the loop-back distance, you are correct! I saved that fun tidbit for the `fitness_function`:  
 
-
 ```elixir
   def fitness_function(chromosome) do
     last_to_first_elements = Enum.take(chromosome, 1) ++ Enum.take(chromosome, -1) 
 
-
     there = distances(chromosome)
     and_back = distances(last_to_first_elements)
 
-
     there + and_back
   end
-
-
 ```
 
-
 On top of taking the distance between the cities in a chromosome, the `fitness_function` will also take the last and first element and get its distance. Finally it will add up the distance there and back again and return the sum on a silver platter.  
-
 
 With this tidbit, each chromosome can be neatly packaged together with its distance in a data-package. A bit like this:  
 ```elixir
@@ -191,13 +172,10 @@ With this tidbit, each chromosome can be neatly packaged together with its dista
         )
 ```  
 
-
 > As `initialize_population` returns a list of chromosomes, it can be enumerated on and return new elements that package the chromosome with the distance returned from the `fitness_function`. Doing it this way means we will have the chromosome's fitness readily at hand. I do not consider *distance* or *fitness* a part of the chromosome, but rather additional data about the chromosome. 
-
 
 ### The not-a-singles-cruise way of selecting parents  
 "So you want offspring but want someone to do it for you?" Good news, I’ve got the recipe for you! Given that there is a population of random chromosomes, it would be neat if the next generation were a bit better than the one previous. While I personally would like to say that *millennials* have it all figured out, we can still improve upon this generation. But for this to work we want to give a higher chance to chromosomes with shorter routes to produce offspring. This will mean that the offspring inherits the parents' good qualities (or bad, but that's why we want to prefer the parents with shorter routes).  
-
 
 {% quoter() %}Selecting parents is not as much a cruise fare as it is a casino.{% end %
   
@@ -211,10 +189,8 @@ In Elixir, I would do it like this:
     Enum.reduce(population_data, 0, fn data, acc -> acc + 1 / data.distance end)
   end
 
-
   def select_parents(population_data, num_parents \\ 2) do
     general_inverse_fitness =  general_inverse_fitness(population_data)
-
 
     Enum.map(1..num_parents, fn _ -> # Select n parents
       random_value = :rand.uniform() * general_inverse_fitness
@@ -222,15 +198,12 @@ In Elixir, I would do it like this:
     end)
   end
 
-
   defp select_chromosome(population_data, target_fitness, acc_fitness) do
     [chromosome_data | tail] = population_data
-
 
     # The greater value from the distance function the less the new distance will be, 
     # so we promote the shorter routes before the longer routes
     new_fitness = acc_fitness + 1 / chromosome_data.distance
-
 
     if new_fitness >= target_fitness do
       chromosome_data
@@ -238,10 +211,7 @@ In Elixir, I would do it like this:
       select_chromosome(tail, target_fitness, new_fitness)
     end
   end
-
-
 ``` 
-
 
 The `select_parents` function is the entry-point. It will first summarize the inverse distances. In general the sum will become larger the shorter the distances are but it will depend on population size (meaning as a standalone metric it is not useful for comparing between different population sizes, but is meaningful within the population that it is used).  
   
@@ -266,7 +236,6 @@ In a *crossover* I will take a random length of genes from one parent starting f
 >Fill in blanks with available genes: [2, 5, 1, 3, 4, 0]  
 >  
 
-
 {% quoter() %}A beautiful snowflake, if you may. Or a Super Mutant!{% end %
   
 By combining the chromosomes this way I can preserve some of the route information and find new ones. But whichever parent's chromosome is selected first will have a higher impact for the new chromosome. For this reason I will crossover each pair of parents twice. Both parents' chromosomes will get to go first. It will be less fuss that way!  
@@ -275,34 +244,26 @@ But an offspring is not only the combination of parents' chromosomes. Each offsp
   
 This is the role of ***mutation***. To randomly introduce new characteristics to a chromosome. What my mutation function will do is to select at least one gene from the crossover chromosome and insert it at a random position. 
 
-
 ```elixir
   def crossover(chromosome_1, chromosome_2) do
-
 
     # 1. We select the parts of chromosome_1 randomly (the order is important)
     #    It can be [_, _, B, C, A, _]
     #    which means first selection will be [B, C, A], leaving D, E, F 
-
 
     cut_point_1 = :rand.uniform(Enum.count(chromosome_1) - 1) 
     cut_point_2 = :rand.uniform(Enum.count(chromosome_1) - 1) 
     [start_point, end_point] = [cut_point_1, cut_point_2] |> Enum.sort()
     selection = Enum.slice(chromosome_1, start_point..end_point) 
 
-
     # 2. We want to get the relationships that is present in chromosome_2
-
-
     #    It can be [B, C, D, F, E, A]
     #    Be mindful that we do not want to select either A, B, or C again. 
     #    This means that we should filter out every used gene: [D, F, E]
     #    and start filling the missing pieces with the genes that are left.
 
-
     available_genes = Enum.filter(chromosome_2, fn gene -> !Enum.member?(selection, gene) end)
     {prefix, suffix} = Enum.split(available_genes, start_point)
-
 
     # 3. And then we assemble the chromosome from the different parts, 
     #    combining chromosome_1 and chromosome_2 genes
@@ -310,43 +271,34 @@ This is the role of ***mutation***. To randomly introduce new characteristics to
     prefix ++ selection ++ suffix
   end
 
-
   def mutation(chromosome) do
     chromosome_length = Enum.count(chromosome)
     portion_of_mutation = 0.1
     least_num_of_mutations = 1
 
-
     num_of_mutations = 
       round(chromosome_length * portion_of_mutation) 
       |> max(least_num_of_mutations)
-
 
     # For each number of mutations
     # - Take random element
     # - Insert at random position
 
-
     mutating_genes = Enum.take_random(chromosome, num_of_mutations)
     
     template = Enum.filter(chromosome, fn gene -> !Enum.member?(mutating_genes, gene) end)
-
 
     Enum.reduce(mutating_genes, template, fn mutating_gene, acc -> 
       random_pos = Enum.count(acc) - 1 |> :rand.uniform()
       List.insert_at(acc, random_pos, mutating_gene)
     end)
-
-
 ```
  
 I would be amiss if I didn't point out that changing the position of just one element in the chromosome will have a huge impact on the overall chromosome information. One element contains not only the order a city is being visited, but it's also information about a connection from one city via the element to the next city. So keeping the mutation to minimal changes is good, as it otherwise would be resulting in a chromosome that is far different from either parent.  
   
 ### Making space for the new generation  
 
-
 {% quoter() %}Dear *Charles* would be pretty terrified if he knew what I am about to do.{% end %]}
-
 
 *Charles Ingvar Jönsson* would probably know about the Swedish proverb: "Finns det hjärterum så finns det stjärterum". It means that one can always make space for anyone that wants to join, even if it is crowded: the crowd just needs to squeeze together more. So dear *Charles* would be pretty terrified if he knew what I am about to do.  
   
@@ -358,11 +310,9 @@ There are many ways this can be done. Some are more imaginative than others. *Th
   def prune(sorted_population_data, prune_count) do
     preserve_count = Enum.count(sorted_population_data) - prune_count
 
-
     Enum.take(sorted_population_data, preserve_count)
   end
 ```
-
 
 Prune. That sounds pretty *cold*. But that's the process where I simply "cut off" some branches that, in this case, are too long. This allows our population to become ever more fit for its task.  
   
@@ -372,7 +322,6 @@ Prune. That sounds pretty *cold*. But that's the process where I simply "cut off
 The goal is to find a good-enough chromosome, or route, for our salesman. Each component plays a crucial part to get to that goal. But it's a process that requires many trial and errors. That's why there is randomness and pruning involved. The randomness allows the algorithm to try new and innovative routes never before considered. And while many of them are utterly poor, somewhere a nugget of gold is found.  
   
 The evolutionary loop will take in a population of chromosomes, select a cadre of parents and let them reproduce, followed by pruning the population to make space for the next generation. This new population will be passed on to another go at evolution. I reason that it is possible to have this loop continue until a good enough fit has been reached (such as when improvements from one generation to the next are stagnating). However, I've decided to use a hard generational limit instead because I'm feeling lazy.  
-
 
 Once the generational limit is reached, the chromosome with the shortest route in the current population will be returned.  
   
@@ -385,9 +334,7 @@ Once the generational limit is reached, the chromosome with the shortest route i
     
     [chromosome_data] = Enum.take(sorted_population_data, 1)
 
-
     total_fitness = general_inverse_fitness(sorted_population_data)
-
 
     %{
       distance: chromosome_data.distance, 
@@ -398,7 +345,6 @@ Once the generational limit is reached, the chromosome with the shortest route i
   end
   def evolve(sorted_population_data, generation_n, memo) do
     %{num_parents: num_parents} = memo
-
 
     parents = select_parents(sorted_population_data, num_parents)
     offsprings = 
@@ -414,7 +360,6 @@ Once the generational limit is reached, the chromosome with the shortest route i
         %{chromosome: chromosome, distance: fitness_function(chromosome)}
       end)
 
-
     new_population_data = 
       prune(sorted_population_data, num_parents) ++ offsprings
       |> Enum.sort_by(
@@ -422,14 +367,11 @@ Once the generational limit is reached, the chromosome with the shortest route i
         :asc
       )
 
-
     evolve(new_population_data, generation_n + 1, memo)
   end
 
-
   def run(population_size \\ 100, generation_limit \\ 250, reproduction_rate \\ 0.3) do
     population = initialize_population(population_size)
-
 
     population_data = 
       population
@@ -437,16 +379,13 @@ Once the generational limit is reached, the chromosome with the shortest route i
         fn chromosome -> %{chromosome: chromosome, distance: fitness_function(chromosome)} end
         )
 
-
     sorted_population = Enum.sort_by(
       population_data,
       fn %{distance: distance} -> distance  end,
       :asc
     )
 
-
     num_parents = num_parents(population_size, reproduction_rate)
-
 
     evolve(
       sorted_population, 
@@ -459,9 +398,7 @@ Once the generational limit is reached, the chromosome with the shortest route i
   end
 ``` 
 
-
 Let's say that someone like me created all these components and put them in a module called `TSP` (Traveling Salesman Problem in short). The way I would initiate the evolution would be to call the `run` function like this:  
-
 
 ```elixir
 TSP.run(aggregator_pid, 100, 1000, 0.3)
