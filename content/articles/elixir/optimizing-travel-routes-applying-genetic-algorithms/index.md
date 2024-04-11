@@ -37,7 +37,7 @@ This is of course a problem that has been solved in multiple ways,  thousands up
  
 One could say such everyday problems are more fun when applying algorithms to solve them, and I am looking for a reason to pull out my algorithmic toolbox. It's a fair statement! I recently put a new tool in that toolbox and I've been on the lookout for a reason to go nuts with it.  
  
-There are some interesting tools I can use, but there is a specific one I'm on the lookout for. So let me just quitcklu rifle through it:  
+There are some interesting tools I can use, but there is a specific one I'm on the lookout for. So let me just quickly rifle through it:  
  
 * **Brute force**: The hammer of all hammers, *brute forcing* is not elegant but it gets the job done... eventually. If we were to use brute force to solve TSP we would be calculating each possible solution and then select the best one. The number of possible solutions to TSP is given by the formula `(n-1)!/2`. It's a factorial representing each possible combination of visits to the cities, and as it loops back to the beginning, the direction of the loop does not matter. So if the salesman had to visit `18` cities, this would be `(18-1)!/2)` which comes out to <code>1.8 × 10<sup>14</sup></code> possible solutions. It's entirely possible, but I rifle on.  
 
@@ -71,8 +71,8 @@ And we are not going to select them completely at random. This is not a singles'
 * *Crossover* (and I'm so glad that this is the term chosen) between pairs of parents' chromosomes. 
 Each pair of parents will produce 2 *offsprings*, where first offspring will select from parent *a* first, and second offspring will select from parent *b* first.  
 * *Mutation* of chromosomes. This is a natural part of the *parents* producing offspring. This will introduce a unique trait to an offspring that is not necessarily found in the parent. If we are lucky we might see some Super Mutants! 
-* *Pruning* of the population. The least fit chromosomes will leave place to the next generation. This dispassionately called process is less on the nose than "The Purge", and I can't ask for more than that.
-***The Evolutionary Loop***! Each part that I've described is part of evolution. All that is left is passing on the new generation to the next and let nature have its fun. Since I'm not as elegant as dear *Charles Ingvar Jönsson* I will set a generational limit instead of a goal-oriented threshold for the loop.
+* *Pruning* of the population. The least fit chromosomes will leave place to the next generation. This dispassionately called process is less on the nose than "The Purge", and I can't ask for more than that.  
+* ***The Evolutionary Loop***! Each part that I've described is part of evolution. All that is left is passing on the new generation to the next and let nature have its fun. Since I'm not as elegant as dear *Charles Ingvar Jönsson* I will set a generational limit instead of a goal-oriented threshold for the loop.
 
 
 ### Chromosomes are potential solutions  
