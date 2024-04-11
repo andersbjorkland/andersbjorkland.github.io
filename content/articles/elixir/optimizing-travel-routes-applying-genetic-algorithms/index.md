@@ -1,11 +1,11 @@
 +++
-title = "Taking on the Traveler Salesman Problems with Genetic Algorithm"
+title = "Optimizing Travel Routes: Applying Genetic Algorithms to the Traveling Salesman Problem"
 date = 2024-04-11
 updated = 2024-04-11
 weight = 2
 authors = ["Anders Björkland"]
 description = "Explore the application of Genetic Algorithms to solve the Traveling Salesman Problem using Elixir. We find the shortest route among cities with this evolutionary approach."
-draft = true
+draft = false
 
 
 [taxonomies]
@@ -15,10 +15,10 @@ tags=["elixir", "livebook", "algorithms"]
 
 
 {{ articleHeader(
-path='articles/elixir/taking-on-the-traveler-salesman-problem/hero.png'
-title='Intro to Genetic Algorithms with Elixir'
+path='articles/elixir/optimizing-travel-routes-applying-genetic-algorithms/hero.png'
+title='Optimizing Travel Routes'
+subtitle='Applying Genetic Algorithms to the Traveling Salesman Problem'
 ) }}
-
 
 {{ companyAuthor(author="Anders Björkland", occupation="Web Developer", company="Umain", url="https://www.umain.com/") }}
 
@@ -46,12 +46,10 @@ There are some interesting tools I can use, but there is a specific one I'm on t
  
 * **Genetic Algorithm**: Now this is what I'm talking about! Genetic Algorithms (*GA*) might find the best possible route, but they might also find a solution that is just good enough. This is my hammer, saw, and ruler - all combined. It might look a bit freakish, but it's so versatile and fun to use! GA is inspired by evolutionary processes. Survival of the fittest and mutations will play a role in it finding a good enough solution. As long as we can define the solution as a "chromosome" and a way to measure the "fitness", GA will be possible to use.  
 
-
 {{ imager(
     asset='quokka-work.png',
     alt='A quokka holding a weird metal-wood tool'
 ) }}
-
 
 So how would I use a Genetic Algorithm (GA) to find a short enough route for the salesman? Let's consider this; is it possible to describe a possible solution as a "chromosome"? I will say an emphatic **yes!** A route can be described as a series of cities in the order they will be visited. If we have the 3 cities *1*, *2*, and *3*, then a chromosome could be a list: `[1, 2, 3]` or `[2, 1, 3]`, and so on. As long as there are coordinates for each city it will be possible to calculate the distance between them, a.k.a: their "fitness" (where shorter is better).  
  
@@ -480,28 +478,94 @@ The response would be:
 }
 ```
   
-To me, this looks like a functional algorithm. But don't take my word for it. Take this graph instead:  
+To me, this looks like a functional algorithm. But don't take my word for it. Take this graphs instead:  
+<div class="layout-grid mb-4">
+{{ imager(
+    asset='pop-fitness-rate-0_3.svg',
+    alt=''
+) }}  
+{{ imager(
+    asset='distance-rate-0_3.svg',
+    alt=''
+) }}
+</div>
+  
+In general, a population's (inverse) fitness will increase over time, but it will fluctuate as new and untested offsprings are introduced to the mix. A *shortest distance* may remain the current best alternative for generations upon generations, until the seeming equalibirum is punctuated by a burst of improvement. By combining these views, we can see that the population is ever improving - even if we can't detect it right away by the currently shortest route.  
+  
+Here's a peak at the routes (and at which generation) the algorithm discovered them during one run of the code:  
 
+<div class="layout-row center mt-4">
+{{ videoer(
+  source='articles/elixir/optimizing-travel-routes-applying-genetic-algorithms/best-route-gen.webm',
+  type='video/webm'
+)}}   
+</div>
+{{ centerer(body='*`population_size=100, generation_limit=1000, reproduction_rate=0.3`*') }}
 
 ## Testing different scenarios  
 The complete code and [livebook document can be found as a Github Gist](https://gist.github.com/andersbjorkland/3ee7c4dc426fc0d0ab358bb6158080f1). You are free to copy it and experiment with it as you see fit. I've certainly experimented with it, so let me share a few scenarios with you!  
   
-**When population is small** (`population=50, parent_ratio=0.3` )  
- 
-**When population is large** (`population=300, parent_ratio=0.3`)  
-
-
-**When population is large** (`population=300, parent_ratio=0.3`)  
-
-
-**When parent ratio is small** (population=100, parent_ratio=0.1`)  
+Each scenario has either population changed, or parent ratio. Each scenario is showing two charts. The first chart shows how the sum of a population's general (inverse) fitness increases over the generations. The second chart shows the distance of each generation's shortest route.  
   
+Some patterns can be seen for these scenarios. They all follow a taper-off curve, almost a logarithmic curve, for the population fitness; meaning the population see some major improvements through the initial generations and then the improvements are much smaller between generations later on. Another seeming pattern is the impact that a population size have. Small populations might struggle to find routes shorter than 100 before hitting the 1000:th generation. A similar is observed with a small parent ratio.
+
+
+<div class="layout-row center"><b>When population is small</b> (<code>population=50, parent_ratio=0.3</code>)</div>  
+<div class="layout-grid mb-4">
+{{ imager(
+    asset='pop-fitness-pop-50-0_3.svg',
+    alt=''
+) }}  
+{{ imager(
+    asset='distance-pop-50-0_3.svg',
+    alt=''
+) }}
+</div>
+
+ 
+<div class="layout-row center"><b>When population is large</b> (<code>population=300, parent_ratio=0.3</code>)</div>  
+<div class="layout-grid mb-4">
+{{ imager(
+    asset='pop-fitness-pop-300-0_3.svg',
+    alt=''
+) }}  
+{{ imager(
+    asset='distance-pop-300-0_3.svg',
+    alt=''
+) }}
+</div>
+  
+<div class="layout-row center"><b>When parent ratio is small</b> (<code>population=100, parent_ratio=0.1</code>)</div>  
+<div class="layout-grid mb-4">
+{{ imager(
+    asset='pop-fitness-rate-0_01.svg',
+    alt=''
+) }}  
+{{ imager(
+    asset='distance-rate-0_01.svg',
+    alt=''
+) }}
+</div>  
+  
+<div class="layout-row center"><b>When parent ratio is large</b> (<code>population=100, parent_ratio=0.75</code>)</div>  
+<div class="layout-grid mb-4">
+{{ imager(
+    asset='pop-fitness-rate-0_75.svg',
+    alt=''
+) }}  
+{{ imager(
+    asset='distance-rate-0_75.svg',
+    alt=''
+) }}
+</div>  
+
+
 ## Reflecting on the generations past  
-Genetic Algorithms are useful when we might want a solution that is "good enough", or if we don't know what a good solution might even look like. I was lucky today that I withstood the temptation of chasing a hotdog and managed to arrive at a solution. I can't say if you managed it, but I'm happy that you allowed me to draw a route for you.  
+Genetic Algorithms are useful when we might want a solution that is "good enough", or if we don't know what a good solution might even look like. I was lucky today that I withstood the temptation of chasing a hotdog and managed to arrive at a solution (Charles Ingvar Jönsson would be proud, as well as the traveling salesman). I can't say if you managed to withstand it, but I'm happy that you allowed me to draw a route for you.  
   
 I find Genetic Algorithms incredibly fun to work with. This has been the second time that I'm exploring the subject and I would like to do it again. Besides finding solutions to interesting problems I also find these additional benefits:  
-* You can try different data representations and structures.  
-* Recursion, pattern matching, and (if you check out the [Livebook document](https://gist.github.com/andersbjorkland/3ee7c4dc426fc0d0ab358bb6158080f1) concurrency! Working with Genetic Algorithms is a good exercise to deepen Elixir skills.  
-* Fitting each different component together in a recursive loop that makes sense!  
+* Trying different data representations and structures can unlock huge perfomance improvements - which is fun!  
+* Recursion, pattern matching, and (if you check out the [Livebook document](https://gist.github.com/andersbjorkland/3ee7c4dc426fc0d0ab358bb6158080f1)) concurrency! Working with Genetic Algorithms is a good exercise to deepen Elixir skills.  
+* Fitting each different component together in a recursive loop that makes sense is very satisfying!  
   
 I hope you had a good time reading this, and hopefully learned something new. I sure did! 
