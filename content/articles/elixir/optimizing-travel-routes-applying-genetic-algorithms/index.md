@@ -177,7 +177,7 @@ With this tidbit, each chromosome can be neatly packaged together with its dista
 ### The not-a-singles-cruise way of selecting parents  
 "So you want offspring but want someone to do it for you?" Good news, I’ve got the recipe for you! Given that there is a population of random chromosomes, it would be neat if the next generation were a bit better than the one previous. While I personally would like to say that *millennials* have it all figured out, we can still improve upon this generation. But for this to work we want to give a higher chance to chromosomes with shorter routes to produce offspring. This will mean that the offspring inherits the parents' good qualities (or bad, but that's why we want to prefer the parents with shorter routes).  
 
-{% quoter() %}Selecting parents is not as much a cruise fare as it is a casino.{% end %
+{% quoter() %}Selecting parents is not as much a cruise fare as it is a casino.{% end %}
   
 There is this thing called [roulette wheel selection](https://en.wikipedia.org/wiki/Fitness_proportionate_selection). To give a higher chance for the chromosomes with shorter distances to be selected I will just give them a larger pie of the wheel than the chromosome with longer distances. When I spin the wheel, every chromosome has the chance of being the winner but the likelihood that it falls on a chromosome with a longer route is smaller.  
   
@@ -236,7 +236,7 @@ In a *crossover* I will take a random length of genes from one parent starting f
 >Fill in blanks with available genes: [2, 5, 1, 3, 4, 0]  
 >  
 
-{% quoter() %}A beautiful snowflake, if you may. Or a Super Mutant!{% end %
+{% quoter() %}A beautiful snowflake, if you may. Or a Super Mutant!{% end %}
   
 By combining the chromosomes this way I can preserve some of the route information and find new ones. But whichever parent's chromosome is selected first will have a higher impact for the new chromosome. For this reason I will crossover each pair of parents twice. Both parents' chromosomes will get to go first. It will be less fuss that way!  
   
@@ -298,7 +298,7 @@ I would be amiss if I didn't point out that changing the position of just one el
   
 ### Making space for the new generation  
 
-{% quoter() %}Dear *Charles* would be pretty terrified if he knew what I am about to do.{% end %]}
+{% quoter() %}Dear *Charles* would be pretty terrified if he knew what I am about to do.{% end %}
 
 *Charles Ingvar Jönsson* would probably know about the Swedish proverb: "Finns det hjärterum så finns det stjärterum". It means that one can always make space for anyone that wants to join, even if it is crowded: the crowd just needs to squeeze together more. So dear *Charles* would be pretty terrified if he knew what I am about to do.  
   
