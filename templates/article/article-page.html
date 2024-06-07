@@ -16,6 +16,43 @@
     </div>
 {% endblock content %}
 
+{% for asset in page.assets %}
+    {% if asset is matching("hero[.](jpg|jpeg|png|webp)$") %}
+        {% set_global imagePath = asset %}
+        {% break %}
+    {% endif %}
+{% endfor %}
+
+{% block jsonld %}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ page.permalink | safe }}"
+    },
+    "headline": "{{ page.title}}",
+    "description": "{{ page.description }}",
+    {% if imagePath %}"image": "{{ imagePath }}",{% endif %}
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    {% if page.updated %}"dateUpdated": "{{ page.updated }}",{% endif %}
+    "datePublished": "{{ page.date }}"
+}
+    </script>
+{% endblock %}
+
 {% block footer %}
 <footer class="article-footer">
     <div class="layout-wrapper">
