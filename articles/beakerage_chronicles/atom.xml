@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - Beakerage chronicles</title>
+    <link href="https://abjork.land/articles/beakerage_chronicles/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://abjork.land/articles/beakerage_chronicles/"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-12-28T00:00:00+00:00</updated>
+    <id>https://abjork.land/articles/beakerage_chronicles/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Schroedinger&#x27;s Snack Stash</title>
+        <published>2023-12-28T00:00:00+00:00</published>
+        <updated>2023-12-28T00:00:00+00:00</updated>
+        <author>
+          <name>Anders Björkland</name>
+        </author>
+        <link rel="alternate" href="https://abjork.land/articles/beakerage_chronicles/schroedingers-snack-stash/" type="text/html"/>
+        <id>https://abjork.land/articles/beakerage_chronicles/schroedingers-snack-stash/</id>
+        <content type="html">&lt;div class=&quot;article-header&quot;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+&lt;img
+        alt=&quot;133&quot;
+        src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.dcded1a34ce33e34.png&quot;
+        srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.abf64eedea465514.png 240w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.dcded1a34ce33e34.png 400w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.b38b4123a4dc37b5.png 600w&quot;
+        sizes=&quot;(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px&quot;
+&#x2F;&gt;
+
+
+    &lt;div class=&quot;text-content&quot;&gt;
+        &lt;h1 class=&quot;article-title&quot;&gt;
+            &lt;div class=&quot;title&quot;&gt;Schroedinger&amp;#x27;s Snack Stash&lt;&#x2F;div&gt;
+            
+        &lt;&#x2F;h1&gt;
+    &lt;&#x2F;div&gt;
+    
+
+ 
+
+ 
+
+&lt;div class=&quot;tag-list absolute&quot;&gt;
+    
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;elixir&#x2F;&quot; class=&quot;hover-bold&quot;&gt;Elixir&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+    
+&lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;p&gt;&lt;em&gt;In the heart of Beakerage, where sea serpents sunbathed and pocket-sized black holes were as common as gossip at the local bakery, Keith - the Quantum Quokka - awoke with a start! “&lt;strong&gt;May your macarons never vanish into the void&lt;&#x2F;strong&gt;.” The ethereal voice was still echoing in Keith’s mind. He couldn’t recall anyone making such an astute statement, yet here it was: haunting him! His pocket-blackhole had been in a binging phase lately, often pulling each of his emergency snacks beyond the event horizon, leaving barely a crumb for sustenance.&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Beyond Beakerage - Elixir conundrums and learnings&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Module Definition&lt;&#x2F;li&gt;
+&lt;li&gt;Aliasing modules&lt;&#x2F;li&gt;
+&lt;li&gt;Struct Definition&lt;&#x2F;li&gt;
+&lt;li&gt;Struct Manipulation&lt;&#x2F;li&gt;
+&lt;li&gt;Pipelining&lt;&#x2F;li&gt;
+&lt;li&gt;Elixir Documentation&lt;&#x2F;li&gt;
+&lt;li&gt;Function Definition&lt;&#x2F;li&gt;
+&lt;li&gt;Private Function&lt;&#x2F;li&gt;
+&lt;li&gt;Pattern Matching&lt;&#x2F;li&gt;
+&lt;li&gt;DateTime Manipulation&lt;&#x2F;li&gt;
+&lt;li&gt;String Interpolation&lt;&#x2F;li&gt;
+&lt;li&gt;Enum Mapping&lt;&#x2F;li&gt;
+&lt;li&gt;Writing tests&lt;&#x2F;li&gt;
+&lt;li&gt;Test for errors&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;It had been a conundrum, one which he thought he had solved with the help of his sunspot friend, Sylvie. Keith put on his slippers and waddled over to his desk while pondering. He always carried his pocket-blackhole in his ‘emergency’-pocket, and could not make use of his ‘safekeeping’-pocket for his snacks. That would violate the quantum coherence keeping his blackhole functional. But a third pocket would keep a snack in superposition in perpetuity, until observed! He had deftly solved it by adding a &lt;code&gt;QuantumPocket&lt;&#x2F;code&gt;, but feared that it was not as robust as he would like. These thoughts kept bugging his dreams.&lt;&#x2F;p&gt;
+&lt;p&gt;Carefully sorting away his notes on “the great disco ball multiverse theory” (this is a story for another time), he laid down a fresh sheet of paper and sat down. “No sleep tonight, but a solution to behold I hope”, Keith thought to himself as he leaned over the desk and grabbed a pair of safety goggles and put them on. His tiny hands started scribbling furiously. His quokka brain buzzed with ideas. He needed a pocket that defied both entropy and existential uncertainty: a pocket that would not collapse into a probability haze!&lt;&#x2F;p&gt;
+&lt;p&gt;As the night turned to dawn, the first glimpses of a solution appeared on the horizon. Keith had his blueprint ready. He found that his pocket would need three components:
+Stardust Silk, a robust and hardy material that would withstand quantum fluctuations by weaving memories together.
+Time-sprinkled Velcro, would stick to itself across parallel dimensions, fastening past with the future.
+Uncertainty Thread, would surely leave snacks in a delightful superposition by threading memories within a bubble beyond space-time.&lt;&#x2F;p&gt;
+
+
+
+
+
+
+
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;img
+                alt=&quot;A quokka with a lab coat, sitting by a workbench waring safety goggles.&quot;
+                src=&quot;keith_in_goggles_blueprint.png&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;keith_in_goggles_blueprint.b12100f6c758804b.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;keith_in_goggles_blueprint.8b0fc2ce82b8795a.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;keith_in_goggles_blueprint.e6d323107349551a.webp 600w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px&quot;
+        &#x2F;&gt;
+        &lt;div class=&quot;image-subtext&quot;&gt;A typical early day, Keith with sketches for a new invention or discovery [SDXL generation]&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;p&gt;While many would need to cross the Severely Sinister Sea in search of moon spiders and pixieworms, Keith had all he needed in his right pocket: a blackhole with an Elixir interface!&lt;&#x2F;p&gt;
+&lt;p&gt;Setting out to construct the weave, Keith pulled out an otherworldly silk by his fingertips:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;StardustSilk &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;@doc &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  Weave the Stardust Silk, capturing cosmic memories
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;weave&lt;&#x2F;span&gt;&lt;span&gt;(memories) when &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;is_list&lt;&#x2F;span&gt;&lt;span&gt;(memories) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    memories
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;capture_memory&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.join
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;capture_memory&lt;&#x2F;span&gt;&lt;span&gt;(memory) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;🌟 #{&lt;&#x2F;span&gt;&lt;span&gt;memory}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt; 🌟&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;To make sure to keep the nightmares at bay, Keith realized he would need to construct tests for each module as well:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;StardustSilkTest &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ExUnit&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Case
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  test &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;weave memories into Stardust Silk&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    memories = [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Galaxy memories&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Comet sighs&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Black hole laughter&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;]
+&lt;&#x2F;span&gt;&lt;span&gt;    expected_result = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;🌟 Galaxy memories 🌟🌟 Comet sighs 🌟🌟 Black hole laughter 🌟&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    assert &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;StardustSilk&lt;&#x2F;span&gt;&lt;span&gt;.weave(memories) == expected_result
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Keith threaded his tiny needle, its tip sharper than a quasar’s wit. The Stardust Silk shimmered, each strand holding a memory: the birth of a galaxy, the sigh of a comet, the laughter of a black hole. Keith’s quokka brain buzzed with anticipation. He was ready to weave eternity. Safe, knowing it would hold a cosmic weight worth of snacks - as long as it withstood the pressure and tearing of the space-time-continuum.&lt;&#x2F;p&gt;
+&lt;p&gt;Looking over his blueprint again; time-sprinkled velcro would hold the snack secure over past, present, and future - up until the time the bubble would be burst by Keith’s nimble fingers searching for a macaron. Knowing that the velcro will require a datetime, he deftly made use of pattern matching to structure the time-cohesive:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;TimeSprinkledVelcro &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;@doc &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  Attach the Velcro to moments, bridging past and future
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;attach&lt;&#x2F;span&gt;&lt;span&gt;(%&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;DateTime&lt;&#x2F;span&gt;&lt;span&gt;{} = moment) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    past = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;DateTime&lt;&#x2F;span&gt;&lt;span&gt;.add(moment, -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:day&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    future = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;DateTime&lt;&#x2F;span&gt;&lt;span&gt;.add(moment, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:day&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;🕰️ (from #{&lt;&#x2F;span&gt;&lt;span&gt;past}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt; to #{&lt;&#x2F;span&gt;&lt;span&gt;future}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;) 🕰️&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And the accompanying tests:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;TimeSprinkledVelcroTest &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ExUnit&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Case
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  test &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;attach Velcro to moments&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    datetime = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;~U&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2023-12-26T07:51:11Z&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span&gt;    past = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;~U&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2023-12-25T07:51:11Z&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span&gt;    future = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;~U&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2023-12-27T07:51:11Z&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Test the function with a specific moment
+&lt;&#x2F;span&gt;&lt;span&gt;    expected_result = &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;🕰️ (from #{&lt;&#x2F;span&gt;&lt;span&gt;past}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt; to #{&lt;&#x2F;span&gt;&lt;span&gt;future}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;) 🕰️&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    assert &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;TimeSprinkledVelcro&lt;&#x2F;span&gt;&lt;span&gt;.attach(datetime) == expected_result
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  test &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;raises an error for invalid input&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    assert_raise &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;FunctionClauseError&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;TimeSprinkledVelcro&lt;&#x2F;span&gt;&lt;span&gt;.attach(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2023-12-26T07:51:11Z&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Having pulled both the stardust silk and the time-sprinkled velcro from the abyss, the Quantum Quokka contemplated how the uncertainty thread best would keep its characteristics once it was drawn from the blackhole as well. It all would come down to how the thread was observed! So letting something else do its magic with the thread would solve the dilemma: &lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;UncertaintyThread &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;alias &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;StardustSilk&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;as: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Silk
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;alias &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;TimeSprinkledVelcro&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;as: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Velcro
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;@doc &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  Thread each possible outcome together with rigorous uncertainty
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;thread&lt;&#x2F;span&gt;&lt;span&gt;(unknown, %&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Silk&lt;&#x2F;span&gt;&lt;span&gt;{} = silk_struct) when &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;is_function&lt;&#x2F;span&gt;&lt;span&gt;(unknown, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    memories_with_result =
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(silk_struct.memories, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; memory -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        amount = unknown.(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:rand&lt;&#x2F;span&gt;&lt;span&gt;.uniform(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;42&lt;&#x2F;span&gt;&lt;span&gt;))
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;#{&lt;&#x2F;span&gt;&lt;span&gt;memory}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt; (#{&lt;&#x2F;span&gt;&lt;span&gt;amount}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;)&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    silk = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Silk&lt;&#x2F;span&gt;&lt;span&gt;.weave(memories_with_result)
+&lt;&#x2F;span&gt;&lt;span&gt;    velcro = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Velcro&lt;&#x2F;span&gt;&lt;span&gt;.attach(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;DateTime&lt;&#x2F;span&gt;&lt;span&gt;.utc_now)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;silk:&lt;&#x2F;span&gt;&lt;span&gt; silk, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;velcro:&lt;&#x2F;span&gt;&lt;span&gt; velcro}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And testing for the expected behavior:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ExUnit&lt;&#x2F;span&gt;&lt;span&gt;.start()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;UncertaintyThreadTest &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ExUnit&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Case
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  test &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;threads memories and results&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    silk_struct = %&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;StardustSilk&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;memories: &lt;&#x2F;span&gt;&lt;span&gt;[&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Galaxy memories&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Comet sighs&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;]}
+&lt;&#x2F;span&gt;&lt;span&gt;    result = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;UncertaintyThread&lt;&#x2F;span&gt;&lt;span&gt;.thread(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; _ -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;42 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;, silk_struct)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    assert result.silk == &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;🌟 Galaxy memories (42) 🌟🌟 Comet sighs (42) 🌟&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    expected_pattern = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;~r&lt;&#x2F;span&gt;&lt;span&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;🕰️ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;from &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;6&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Z to &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;\d&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;6&lt;&#x2F;span&gt;&lt;span&gt;}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Z&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;\) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;🕰️&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;    assert &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Regex&lt;&#x2F;span&gt;&lt;span&gt;.match?(expected_pattern, result.velcro)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;StardustSilk and TimeSprinkledVelcro with UncertaintyThread weaves a handsomely new pocket under Keith’s nimble fingers. When he attached the new pocket to his coat he already felt a light tingle of anticipation. Schroedingers Snack Stash 2.0! While he could never be certain of the number of snacks he could retrieve, he now knew that the combination of the memories of the universe and the time spent in the past would fix some amount of snacks into the present. No longer was the dilemma whether there would be a snack or not, but whether there would be plenty or a few.&lt;&#x2F;p&gt;
+
+
+
+
+
+
+
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;img
+                alt=&quot;A quokka with a lab coat, looking with wonder around him&quot;
+                src=&quot;keith_in_a_macaron_rain.png&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;keith_in_a_macaron_rain.49d740ba4106e222.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;keith_in_a_macaron_rain.fde777ae8ad1c7db.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;keith_in_a_macaron_rain.c2abe8a6935e166e.webp 600w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px&quot;
+        &#x2F;&gt;
+        &lt;div class=&quot;image-subtext&quot;&gt;Wonder of all wonders, a rain of macarons [SDXL generation]&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;p&gt;And the Quantum Quokka reached into his pocket and found a fistful of probability-flavored macarons. A comet far-away sighed with relief, and on a beach much closer a sea serpent blessed the sun as it turned over to bathe in its rays. Who knew when a day would come when tampering with the space-time continuum would break Beakerage, but today was not that day. The Quantum Quokka looked at the fistful of macarons and thought to himself; “may you never vanish into the void”, and stuffed his mouth full of the delightful confections. &lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Beyond Beakerage - check your Elixir knowledge&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;How do you define a module?&lt;&#x2F;li&gt;
+&lt;li&gt;Why would you use a struct instead of a map?&lt;&#x2F;li&gt;
+&lt;li&gt;Did you see any use of pipelining?&lt;&#x2F;li&gt;
+&lt;li&gt;Would you prefer using pattern matching or a “when” guard for making sure a function gets the correct type of argument?&lt;&#x2F;li&gt;
+&lt;li&gt;How can you test that an error will be thrown?&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;&#x2F;blockquote&gt;
+</content>
+    </entry>
+    <entry xml:lang="en">
+        <title>The Macaron Paradox</title>
+        <published>2023-12-20T00:00:00+00:00</published>
+        <updated>2023-12-20T00:00:00+00:00</updated>
+        <author>
+          <name>Anders Björkland</name>
+        </author>
+        <link rel="alternate" href="https://abjork.land/articles/beakerage_chronicles/macaron-paradox/" type="text/html"/>
+        <id>https://abjork.land/articles/beakerage_chronicles/macaron-paradox/</id>
+        <content type="html">&lt;div class=&quot;article-header&quot;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+&lt;img
+        alt=&quot;133&quot;
+        src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.a5fa4a2f2e255275.png&quot;
+        srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.4d0be7c6357a0c01.png 240w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.a5fa4a2f2e255275.png 400w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.4154a6bde4fa3c6a.png 600w&quot;
+        sizes=&quot;(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px&quot;
+&#x2F;&gt;
+
+
+    &lt;div class=&quot;text-content&quot;&gt;
+        &lt;h1 class=&quot;article-title&quot;&gt;
+            &lt;div class=&quot;title&quot;&gt;The Macaron Paradox&lt;&#x2F;div&gt;
+            
+        &lt;&#x2F;h1&gt;
+    &lt;&#x2F;div&gt;
+    
+
+ 
+
+ 
+
+&lt;div class=&quot;tag-list absolute&quot;&gt;
+    
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;elixir&#x2F;&quot; class=&quot;hover-bold&quot;&gt;Elixir&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+    
+&lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;It was a bustling town tearing by its threads. It was on the cusp of being called a city by the travelers arriving by boatloads each day, were it not for the inhabitants wielding their favorite pastry in a threatening way on even the slightest suggestion that their town was not just a little hamlet by the harbor. Once upon a time it was! And it was the way that many residents would like to keep it; a place separated from the world and the succession of time. But then the sunbathing sea serpents started dwelling on its shores, word spread of its many characters and possibilities, and so the world became aware of the quaint community by the Severely Sinister Sea: Beakerage!&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;On a sunny afternoon, Keith reclined on a beach towel. His coat unbuttoned to reveal his small frame as his fur absorbed the sun’s rays like a solar-powered calculator. Many knew him affectionately as the Quantum Quokka. Next to him was one of the sea serpents; Sylvie. Her scales shimmering in the sun in shades of red and purple. They would often find themselves sharing the sunspots and the occasional algebraic equation. Having just ended a lengthy discussion on the application of Schrödinger Equations for slowing down the time in Beakerage, Keith found himself in a sticky situation: his stomach had started growling. His emergency snack radar pinged - it was time for macarons!&lt;&#x2F;p&gt;
+&lt;p&gt;Jumping up on his two feet, Keith quickly put his hand down his right pocket, the one designated for emergency but found only void - literal void!&lt;&#x2F;p&gt;
+
+
+
+
+
+
+
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;img
+                alt=&quot;A quokka with a lab coat, sitting on a towel on a sunny beach.&quot;
+                src=&quot;keith_quantum_quokka.png&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;keith_quantum_quokka.d76dc4e823c4b600.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;keith_quantum_quokka.e64b94c9e2a6aab9.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;keith_quantum_quokka.38daecccea864c0f.webp 600w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px&quot;
+        &#x2F;&gt;
+        &lt;div class=&quot;image-subtext&quot;&gt;User generated image using SDXL1&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;p&gt;Arching a non-existing eyebrow, Sylvie gave a questioning glance. “The pocket-sized black hole, again?”&lt;&#x2F;p&gt;
+&lt;p&gt;“Curse you, entropy!” Keith muttered, shaking his tiny fist at the void. “Why must you devour my macarons?”&lt;&#x2F;p&gt;
+&lt;p&gt;“Entropy?” Sylvie questioned. “Are you sure it’s not just a hungry singularity?”&lt;&#x2F;p&gt;
+&lt;p&gt;“Same difference.” Keith sighed. “But it’s a conundrum I can’t seem to escape: I can’t put my emergency macarons in my left ‘just for safekeeping’ pocket - that would violate the principles of quantum coherence”&lt;&#x2F;p&gt;
+&lt;p&gt;Sylvie blinked. “You don’t make much of a coherent sense right now!”&lt;&#x2F;p&gt;
+&lt;p&gt;“Quantum coherence,” Keith started. “You see, in our world, pockets exist in a delicate superposition. They’re simultaneously ‘emergency’ and ‘safekeeping.’ If I put an emergency item in my left pocket, it collapses the waveform, and suddenly it’s no longer safekeeping!”&lt;&#x2F;p&gt;
+&lt;p&gt;“That’s not how it is in our world. I think it’s only you. But you would need a third pocket?” Sylvie wondered.&lt;&#x2F;p&gt;
+&lt;p&gt;Keith jumped at the idea. “Exactly! I need a ‘Schroedinger’s Snack Stash’. It’ll exist in both states until observed. That way, my macarons won’t vanish.”&lt;&#x2F;p&gt;
+&lt;p&gt;Opening his pocket-sized black hole (carefully avoiding its event horizon), Keith coded an Elixir module: &lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;QuantumPocket &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defstruct &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;snacks: &lt;&#x2F;span&gt;&lt;span&gt;[]
+&lt;&#x2F;span&gt;&lt;span&gt;  
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;add_snack&lt;&#x2F;span&gt;&lt;span&gt;(pocket, snack) when &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;is_list&lt;&#x2F;span&gt;&lt;span&gt;(snack) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    %{pocket | &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;snacks:&lt;&#x2F;span&gt;&lt;span&gt; pocket.snacks ++ snack}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Keith summoned his freshly baked pocket and stored a little macaron crumb in it:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;keiths_pockets = %&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;QuantumPocket&lt;&#x2F;span&gt;&lt;span&gt;{}
+&lt;&#x2F;span&gt;&lt;span&gt;safekeeping_pocket = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;QuantumPocket&lt;&#x2F;span&gt;&lt;span&gt;.add_snack(keiths_pockets, [&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Emergency Macarons (crumb)&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;])
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;“Are you sure that the little crumb is still there?” Sylvie inquired.&lt;&#x2F;p&gt;
+&lt;p&gt;Keith looked in the pocket to verify:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;IO&lt;&#x2F;span&gt;&lt;span&gt;.inspect(safekeeping_pocket.snacks)  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# [&amp;quot;Emergency Macarons (crumb)&amp;quot;]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;With a sigh of relief Keith looked over at Sylvie. “Yeah, it’s all good. Just wish it was the whole set, a crumb won’t carry me over until lunch.”&lt;&#x2F;p&gt;
+&lt;p&gt;“That’s the beauty of sunspot friends then. It’s not a probability flavored macaron, but have some of my milkshake that probably tastes of strawberry”.&lt;&#x2F;p&gt;
+&lt;p&gt;Keith grinned. “Looks like I’ve cracked the code, but you sure saved the afternoon”. And so, Keith, the Quantum Quokka, reclined once more. Sylvie nodded approvingly and followed suit. &lt;&#x2F;p&gt;
+&lt;p&gt;And thus, the legend of Schroedinger&#x27;s Snack Stash was born - a tale of quantum pockets, sweet paradoxes, and the eternal struggle between hunger and coherence. &lt;&#x2F;p&gt;
+</content>
+    </entry>
+</feed>

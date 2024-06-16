@@ -1,0 +1,750 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/elixir/interactive-documents-with-livebook/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/meta.f1dab30cff1db9b7.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/meta.f1dab30cff1db9b7.webp">
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Interactive documents with Livebook" />
+<meta property="og:description" content="Discover the power of Elixir&#x27;s interactive documentation! Learn complex topics with ease thanks to live, executable examples on Hexdocs and Livebook." />
+<meta property="og:url" content="https://abjork.land/articles/elixir/interactive-documents-with-livebook/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2024-03-02"> 
+
+
+ 
+     
+<meta name="last-updated" content="2024-03-28" />
+    
+
+
+
+        
+    
+
+    <title>
+ Interactive documents with Livebook
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/elixir/interactive-documents-with-livebook/"
+    },
+    "headline": "Interactive documents with Livebook",
+    "description": "Discover the power of Elixir&#x27;s interactive documentation! Learn complex topics with ease thanks to live, executable examples on Hexdocs and Livebook.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2024-03-28",
+    "datePublished": "2024-03-02"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/elixir/">Elixir</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.fd570643f7080b58.jpg"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.887cfca0b1cb954e.jpg 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.fd570643f7080b58.jpg 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.b0560df6f86d4d64.jpg 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Interactive documents with Livebook</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/elixir/" class="hover-bold">elixir</a></div>
+        
+        <div><a href="https://abjork.land/tags/livebook/" class="hover-bold">livebook</a></div>
+        
+    
+</div>
+
+
+
+</div>
+<p>Have you ever wrestled with confusing documentation while trying to learn a new library or language?  The explanations might be sparse, the code examples outdated, or the concepts too advanced for a beginner. It's a common frustration! Take the powerful R visualization library <code>ggplot2</code>. Its complex subject matter and documentation make it a challenge for newcomers.</p>
+<p>The documentation for <code>ggplot2</code> clearly explains this: </p>
+<blockquote>
+<p>If you are new to ggplot2 you are better off starting with a systematic introduction, rather than trying to learn from reading individual documentation pages.</p>
+</blockquote>
+<p>But what if learning about complex subjects could be easier? What if examples were always up-to-date and explanations plentiful? That's where the Elixir ecosystem shines! Imagine a world where package documentation is interactive, intuitive, and beginner-friendly - even when the subject matter is difficult.</p>
+<h2 id="let-s-talk-about-documentation-in-elixir-land">Let’s talk about documentation in Elixir-land!</h2>
+<p>Imagine if you’re visiting your common dependency registry, where you usually would search and find a package and some instructions for how to install it with your project, and of course a link to the package’s main webpage. In Elixir-land, this is where <a href="https://hexdocs.pm">hexdocs.pm</a> enters.</p>
+<p><em>hex</em> is the ordinary Package Manager, but its documentation site is more than a place for installation instructions. Here you can find documentation for Elixir as well as every package available via <em>hex</em>. You would not need to leave <code>hexdocs.pm</code> for reading about more than installation instructions. It contains the API for each package, and in many cases the guides/tutorials for how to use them. And as everything with <code>hexdocs.pm</code> is managed on GitHub, anyone can be on top of any issues with documentation (such as rectifying poor explanations or adding or fixing examples) by issuing PRs.</p>
+<p>Some of these API documents also have guides connected to them; occasionally written in a format called <code>livemd</code>. These are markdown files that also works as <em>live documents</em>; meaning they are able to be launched with Livebook (either locally hosted or in cloud) and experimented with. This way, anyone can see how each function and struct can be used. </p>
+<h2 id="what-is-livebook">What is Livebook</h2>
+<p>Livebook is a format for interactive Elixir notebooks. Like Jupyter, but specialized for Elixir (and Erlang). They are run as web applications. And when you have a Livebook application, you may open any <em>livemd</em>-document in it. You will see a &quot;Run in Livebook&quot; button on these pages. </p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="A button with the text &quot;Run in Livebook&quot;"
+            src="run_in_livebook_btn.webp"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;run_in_livebook_btn.de8af7114a3b1867.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;run_in_livebook_btn.3ec6351d6bd34a3a.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;run_in_livebook_btn.54659afe57fc5a0a.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+<p>Clicking it will open a new page where you can enter a URL to your local or cloud hosted Livebook application. You may also configure <code>hexdocs.pm</code> so it remembers your URL. </p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="Image of choosing to install livebook"
+            src="livebook_install.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;livebook_install.666c4b81d344361a.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;livebook_install.214d0c45ce5ddf21.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;livebook_install.5077c3fa4323cd31.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div><h3 id="hosting-livebook-on-hugging-face">Hosting Livebook on Hugging Face</h3>
+<p>Hugging Face offers many alternatives for hosting. All it requires is that you've registered an account. Then you can onboard to their free hosting alternative. I'm registered as <code>beercan</code>, and let's see how onboarding would look like for me. </p>
+<ol>
+<li>
+<p><em>Create a new Space</em>: Fill in the basic information for the Hugging Face Space.
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="A simple form to select owner, space name, and associated license"
+            src="create_new_space.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;create_new_space.cb033df331344c4b.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;create_new_space.ccc35c48eb999da4.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;create_new_space.c991e1005718a213.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div></p>
+</li>
+<li>
+<p><em>Select the Space SDK</em>: Possibilities are endless, as Hugging Face offers a Docker hosting alternative. Select <strong>Docker</strong> and the <strong>Livebook</strong> template.<br />
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="A simple form to select owner, space name, and associated license"
+            src="docker_choice.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;docker_choice.854bdbcdbe6e1400.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;docker_choice.df5894fb16938749.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;docker_choice.3dd055b7ae4af863.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div></p>
+</li>
+<li>
+<p><em>Select hardware</em>: We will run a basic setup, which offers 2 virtual CPUs with 16GB RAM. Other, priced, alternatives exists. For most cases, vCPUs are enough. If you want to be training your own models or use LLMs, then the need for the GPU alternatives are there for your choosing. You may also upgrade/downgrade at any point. 
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="A select menu with multiple alternatives. The first alternative is selected. It is &quot;CPU basic, 2vCPU, 16GB, free&quot;."
+            src="select_hardware.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;select_hardware.f5bea2f77b7cb37b.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;select_hardware.c0028ce4b750eda1.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;select_hardware.efaf23611e52bcae.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div></p>
+</li>
+<li>
+<p><em>Secrets</em>: Select a password for your Livebook application, and then let <code>XLA_TARGET</code> be <code>cpu</code>. (This should reflect the type of hardware that you are running your application on.)
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="A select menu with multiple alternatives. The first alternative is selected. It is &quot;CPU basic, 2vCPU, 16GB, free&quot;."
+            src="secrets_form.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;secrets_form.c9a0028781b90249.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;secrets_form.8e8c163b7740e15f.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;secrets_form.ae6d50a1a3d9c364.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div></p>
+</li>
+<li>
+<p><em>Make your Livebook Private or Public</em>: Select whatever you are comfortable with. Start with <code>Private</code> if you don't plan to make it visible to anyone.</p>
+</li>
+<li>
+<p><em>Click on <code>Create Space</code></em>. This will build the docker image and spin it up. Per default, the container will sleep after 48 hours of inactivity. Any of the paid alternatives allows to change this. 
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="A screen with logs for docker-building. In the background a information text &quot;Building...&quot;."
+            src="docker_building.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;docker_building.4a1fe346a1531b80.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;docker_building.9a996a2911d7f2f3.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;docker_building.c39ee7eeeeab4de6.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div></p>
+</li>
+</ol>
+<p>When the image is done building, it will be run, and you will be able to see this screen: 
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="A page with two links. One is for &quot;Dashboard&quot;, the other is under the headline &quot;Apps&quot; and says &quot;Livebook [heart] Hugging Face&quot;."
+            src="new_app_running.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;new_app_running.4e8b07b06a7df8db.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;new_app_running.f8f45f1366ad39e3.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;new_app_running.6dc2c409be10d9e8.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div></p>
+<p>Clicking on &quot;Dashboard&quot; will lead you to an authentication page where you will enter the password that you set earlier. Once that is passed, you can start to explore what Livebook is. It has multiple livebook documents teaching the basics of Elixir, Livebook, and some common Livebook components.<br />
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="A dashboard interface with a vertical menu, and a main section. The menu has the alternatives: Home, Apps, Learn, Settings, and My Hub. The Main section has two buttons: open, and &quot;new notebook&quot;, as well as 3 livebook documents: &quot;Welcome to Livebook&quot;, &quot;Distributed portals with Elixir&quot;, and &quot;Deploy a chat app with Kino&quot;"
+            src="dashboard.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;dashboard.febb5b0b1e87833b.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;dashboard.5708f4d06ccbc757.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;dashboard.da28b15784c7063d.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div></p>
+<h2 id="explore-a-livebook-document-bumblebee">Explore a Livebook document - Bumblebee</h2>
+<p>Let's head to <a href="https://hexdocs.pm/bumblebee/examples.html#image-classification">hexdocs.pm/bumblebee/examples.html#image-classification</a>. Click the cog-icon in the upper right corner to access the settings and check &quot;Run in Livebook&quot;. Paste your Livebook URL in the field. It should be something like <code>https://beercan-liveboook.hf.space/</code>, which is <code>https://{username}-{projectName}.hf.space</code>. </p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="A settings menu for Hexdocs.pm"
+            src="hexdocs_settings.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hexdocs_settings.c6a6f72e44854849.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hexdocs_settings.149ff1ddd8c37435.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hexdocs_settings.0b7a5becc89d473e.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+<p>Now when we click on &quot;Run in Livebook&quot; it will initiate a new Livebook document for us in our Huggning Face space. Now we can configure and execute (or <em>evaluate</em>) each Elixir code element in our document. The first Elixir element is where we will install all the dependencies that will be covered in the document. It can be executed by hovering the element and click the <code>Evaluate</code> button that will appear.</p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="Evaluate an Elixir code element"
+            src="evaluate_element.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;evaluate_element.fe2f143f1fb461ff.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;evaluate_element.4c13d8ccbe1d3c65.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;evaluate_element.a37fbccad8109d0a.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+<p>Clicking it will start the code execution. Each element will have access to variables declared in earlier elexir elements, so you may define variables that will be used later in the code. </p>
+<p>With Livebook we have access to a library of Livebook components in the form of the Kino dependency. In this example we will see how it renders an Image input-field:<br />
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="Rendered Livebook component for importing an Image file."
+            src="image_import.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;image_import.cd269a4bb9832ea6.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;image_import.106cf27a128b921e.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;image_import.5e257a6af3d89e12.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div></p>
+<p>And to wrap this gift that is the <code>Bumblebee</code> library in Livebook, let's run an inference model on the image that was imported and see how it classifies the badger laying on the ground.<br />
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="Rendered Livebook component for importing an Image file."
+            src="image_inference.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;image_inference.faed6d4ff6ebe42a.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;image_inference.7c128d10a5821761.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;image_inference.db043e9e45860bfd.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div></p>
+<p>In this case, the model that was used was pretty sure that it indeed was a badger, with a .3% uncertainty about it. </p>
+<h2 id="in-closing">In closing</h2>
+<p>Remember how easy it was to set up a Livebook environment on Hugging Face? And how the interactive examples in <code>Bumblebee</code>'s  documentation made understanding the library a breeze? This is just a taste of how Elixir and Livebook can streamline your learning of complex topics. Whether you're an Elixir beginner or a seasoned developer, there's always something new and exciting to discover. Go forth and explore – you might be surprised by the creative possibilities that await! </p>
+
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2024-03-02 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

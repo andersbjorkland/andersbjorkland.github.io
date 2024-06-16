@@ -1,0 +1,491 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/beakerage_chronicles/schroedingers-snack-stash/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+        
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/meta.ce8e20a5c3419d3d.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/meta.ce8e20a5c3419d3d.webp">
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Schroedinger&#x27;s Snack Stash" />
+<meta property="og:description" content="A tale of Elixir programming, sea serpents, and the legendary Schroedinger’s Snack Stash. Join Keith, the Quantum Quokka, in the quirky town of Beakerage as he finds a way to improve how to store confections in a &#x27;safer&#x27; way." />
+<meta property="og:url" content="https://abjork.land/articles/beakerage_chronicles/schroedingers-snack-stash/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2023-12-28"> 
+
+
+ 
+    
+     
+<meta name="last-updated" content="2023-12-28" />
+    
+    
+
+
+
+        
+    
+
+    <title>
+ Schroedinger&#x27;s Snack Stash
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/beakerage_chronicles/schroedingers-snack-stash/"
+    },
+    "headline": "Schroedinger&#x27;s Snack Stash",
+    "description": "A tale of Elixir programming, sea serpents, and the legendary Schroedinger’s Snack Stash. Join Keith, the Quantum Quokka, in the quirky town of Beakerage as he finds a way to improve how to store confections in a &#x27;safer&#x27; way.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    
+    "datePublished": "2023-12-28"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/beakerage_chronicles/">Beakerage chronicles</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.dcded1a34ce33e34.png"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.abf64eedea465514.png 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.dcded1a34ce33e34.png 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.b38b4123a4dc37b5.png 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Schroedinger&#x27;s Snack Stash</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/elixir/" class="hover-bold">Elixir</a></div>
+        
+    
+</div>
+
+
+
+</div>
+<p><em>In the heart of Beakerage, where sea serpents sunbathed and pocket-sized black holes were as common as gossip at the local bakery, Keith - the Quantum Quokka - awoke with a start! “<strong>May your macarons never vanish into the void</strong>.” The ethereal voice was still echoing in Keith’s mind. He couldn’t recall anyone making such an astute statement, yet here it was: haunting him! His pocket-blackhole had been in a binging phase lately, often pulling each of his emergency snacks beyond the event horizon, leaving barely a crumb for sustenance.</em></p>
+<blockquote>
+<p><strong>Beyond Beakerage - Elixir conundrums and learnings</strong></p>
+<ul>
+<li>Module Definition</li>
+<li>Aliasing modules</li>
+<li>Struct Definition</li>
+<li>Struct Manipulation</li>
+<li>Pipelining</li>
+<li>Elixir Documentation</li>
+<li>Function Definition</li>
+<li>Private Function</li>
+<li>Pattern Matching</li>
+<li>DateTime Manipulation</li>
+<li>String Interpolation</li>
+<li>Enum Mapping</li>
+<li>Writing tests</li>
+<li>Test for errors</li>
+</ul>
+</blockquote>
+<p>It had been a conundrum, one which he thought he had solved with the help of his sunspot friend, Sylvie. Keith put on his slippers and waddled over to his desk while pondering. He always carried his pocket-blackhole in his ‘emergency’-pocket, and could not make use of his ‘safekeeping’-pocket for his snacks. That would violate the quantum coherence keeping his blackhole functional. But a third pocket would keep a snack in superposition in perpetuity, until observed! He had deftly solved it by adding a <code>QuantumPocket</code>, but feared that it was not as robust as he would like. These thoughts kept bugging his dreams.</p>
+<p>Carefully sorting away his notes on “the great disco ball multiverse theory” (this is a story for another time), he laid down a fresh sheet of paper and sat down. “No sleep tonight, but a solution to behold I hope”, Keith thought to himself as he leaned over the desk and grabbed a pair of safety goggles and put them on. His tiny hands started scribbling furiously. His quokka brain buzzed with ideas. He needed a pocket that defied both entropy and existential uncertainty: a pocket that would not collapse into a probability haze!</p>
+<p>As the night turned to dawn, the first glimpses of a solution appeared on the horizon. Keith had his blueprint ready. He found that his pocket would need three components:
+Stardust Silk, a robust and hardy material that would withstand quantum fluctuations by weaving memories together.
+Time-sprinkled Velcro, would stick to itself across parallel dimensions, fastening past with the future.
+Uncertainty Thread, would surely leave snacks in a delightful superposition by threading memories within a bubble beyond space-time.</p>
+
+
+
+
+
+
+
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A quokka with a lab coat, sitting by a workbench waring safety goggles."
+                src="keith_in_goggles_blueprint.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;keith_in_goggles_blueprint.b12100f6c758804b.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;keith_in_goggles_blueprint.8b0fc2ce82b8795a.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;keith_in_goggles_blueprint.e6d323107349551a.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext">A typical early day, Keith with sketches for a new invention or discovery [SDXL generation]</div>
+    </div>
+
+
+<p>While many would need to cross the Severely Sinister Sea in search of moon spiders and pixieworms, Keith had all he needed in his right pocket: a blackhole with an Elixir interface!</p>
+<p>Setting out to construct the weave, Keith pulled out an otherworldly silk by his fingertips:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">StardustSilk </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#65737e;">@doc &quot;&quot;&quot;
+</span><span style="color:#65737e;">  Weave the Stardust Silk, capturing cosmic memories
+</span><span style="color:#65737e;">  &quot;&quot;&quot;
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">weave</span><span>(memories) when </span><span style="color:#b48ead;">is_list</span><span>(memories) </span><span style="color:#b48ead;">do
+</span><span>    memories
+</span><span>    |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.map(&amp;</span><span style="color:#bf616a;">capture_memory</span><span>/</span><span style="color:#d08770;">1</span><span>)
+</span><span>    |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.join
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">capture_memory</span><span>(memory) </span><span style="color:#b48ead;">do
+</span><span>    &quot;</span><span style="color:#a3be8c;">🌟 #{</span><span>memory}</span><span style="color:#a3be8c;"> 🌟</span><span>&quot;
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>To make sure to keep the nightmares at bay, Keith realized he would need to construct tests for each module as well:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">StardustSilkTest </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#b48ead;">use </span><span style="color:#ebcb8b;">ExUnit</span><span>.</span><span style="color:#ebcb8b;">Case
+</span><span>
+</span><span>  test &quot;</span><span style="color:#a3be8c;">weave memories into Stardust Silk</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>    memories = [&quot;</span><span style="color:#a3be8c;">Galaxy memories</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">Comet sighs</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">Black hole laughter</span><span>&quot;]
+</span><span>    expected_result = &quot;</span><span style="color:#a3be8c;">🌟 Galaxy memories 🌟🌟 Comet sighs 🌟🌟 Black hole laughter 🌟</span><span>&quot;
+</span><span>
+</span><span>    assert </span><span style="color:#ebcb8b;">StardustSilk</span><span>.weave(memories) == expected_result
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>Keith threaded his tiny needle, its tip sharper than a quasar’s wit. The Stardust Silk shimmered, each strand holding a memory: the birth of a galaxy, the sigh of a comet, the laughter of a black hole. Keith’s quokka brain buzzed with anticipation. He was ready to weave eternity. Safe, knowing it would hold a cosmic weight worth of snacks - as long as it withstood the pressure and tearing of the space-time-continuum.</p>
+<p>Looking over his blueprint again; time-sprinkled velcro would hold the snack secure over past, present, and future - up until the time the bubble would be burst by Keith’s nimble fingers searching for a macaron. Knowing that the velcro will require a datetime, he deftly made use of pattern matching to structure the time-cohesive:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">TimeSprinkledVelcro </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#65737e;">@doc &quot;&quot;&quot;
+</span><span style="color:#65737e;">  Attach the Velcro to moments, bridging past and future
+</span><span style="color:#65737e;">  &quot;&quot;&quot;
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">attach</span><span>(%</span><span style="color:#ebcb8b;">DateTime</span><span>{} = moment) </span><span style="color:#b48ead;">do
+</span><span>    past = </span><span style="color:#ebcb8b;">DateTime</span><span>.add(moment, -</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#a3be8c;">:day</span><span>)
+</span><span>    future = </span><span style="color:#ebcb8b;">DateTime</span><span>.add(moment, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#a3be8c;">:day</span><span>)
+</span><span>
+</span><span>    &quot;</span><span style="color:#a3be8c;">🕰️ (from #{</span><span>past}</span><span style="color:#a3be8c;"> to #{</span><span>future}</span><span style="color:#a3be8c;">) 🕰️</span><span>&quot;
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>And the accompanying tests:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">TimeSprinkledVelcroTest </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#b48ead;">use </span><span style="color:#ebcb8b;">ExUnit</span><span>.</span><span style="color:#ebcb8b;">Case
+</span><span>
+</span><span>  test &quot;</span><span style="color:#a3be8c;">attach Velcro to moments</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>    datetime = </span><span style="color:#b48ead;">~U</span><span>[</span><span style="color:#a3be8c;">2023-12-26T07:51:11Z</span><span>]
+</span><span>    past = </span><span style="color:#b48ead;">~U</span><span>[</span><span style="color:#a3be8c;">2023-12-25T07:51:11Z</span><span>]
+</span><span>    future = </span><span style="color:#b48ead;">~U</span><span>[</span><span style="color:#a3be8c;">2023-12-27T07:51:11Z</span><span>]
+</span><span>
+</span><span style="color:#65737e;">    # Test the function with a specific moment
+</span><span>    expected_result = &quot;</span><span style="color:#a3be8c;">🕰️ (from #{</span><span>past}</span><span style="color:#a3be8c;"> to #{</span><span>future}</span><span style="color:#a3be8c;">) 🕰️</span><span>&quot;
+</span><span>
+</span><span>    assert </span><span style="color:#ebcb8b;">TimeSprinkledVelcro</span><span>.attach(datetime) == expected_result
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  test &quot;</span><span style="color:#a3be8c;">raises an error for invalid input</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>    assert_raise </span><span style="color:#ebcb8b;">FunctionClauseError</span><span>, </span><span style="color:#b48ead;">fn </span><span>-&gt;
+</span><span>      </span><span style="color:#ebcb8b;">TimeSprinkledVelcro</span><span>.attach(&quot;</span><span style="color:#a3be8c;">2023-12-26T07:51:11Z</span><span>&quot;)
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>Having pulled both the stardust silk and the time-sprinkled velcro from the abyss, the Quantum Quokka contemplated how the uncertainty thread best would keep its characteristics once it was drawn from the blackhole as well. It all would come down to how the thread was observed! So letting something else do its magic with the thread would solve the dilemma: </p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">UncertaintyThread </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#b48ead;">alias </span><span style="color:#ebcb8b;">StardustSilk</span><span>, </span><span style="color:#d08770;">as: </span><span style="color:#ebcb8b;">Silk
+</span><span>  </span><span style="color:#b48ead;">alias </span><span style="color:#ebcb8b;">TimeSprinkledVelcro</span><span>, </span><span style="color:#d08770;">as: </span><span style="color:#ebcb8b;">Velcro
+</span><span>
+</span><span>  </span><span style="color:#65737e;">@doc &quot;&quot;&quot;
+</span><span style="color:#65737e;">  Thread each possible outcome together with rigorous uncertainty
+</span><span style="color:#65737e;">  &quot;&quot;&quot;
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">thread</span><span>(unknown, %</span><span style="color:#ebcb8b;">Silk</span><span>{} = silk_struct) when </span><span style="color:#b48ead;">is_function</span><span>(unknown, </span><span style="color:#d08770;">1</span><span>) </span><span style="color:#b48ead;">do
+</span><span>
+</span><span>    memories_with_result =
+</span><span>      </span><span style="color:#ebcb8b;">Enum</span><span>.map(silk_struct.memories, </span><span style="color:#b48ead;">fn</span><span> memory -&gt;
+</span><span>        amount = unknown.(</span><span style="color:#a3be8c;">:rand</span><span>.uniform(</span><span style="color:#d08770;">42</span><span>))
+</span><span>        &quot;</span><span style="color:#a3be8c;">#{</span><span>memory}</span><span style="color:#a3be8c;"> (#{</span><span>amount}</span><span style="color:#a3be8c;">)</span><span>&quot;
+</span><span>      </span><span style="color:#b48ead;">end</span><span>)
+</span><span>
+</span><span>    silk = </span><span style="color:#ebcb8b;">Silk</span><span>.weave(memories_with_result)
+</span><span>    velcro = </span><span style="color:#ebcb8b;">Velcro</span><span>.attach(</span><span style="color:#ebcb8b;">DateTime</span><span>.utc_now)
+</span><span>
+</span><span>    %{</span><span style="color:#d08770;">silk:</span><span> silk, </span><span style="color:#d08770;">velcro:</span><span> velcro}
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>And testing for the expected behavior:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#ebcb8b;">ExUnit</span><span>.start()
+</span><span>
+</span><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">UncertaintyThreadTest </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#b48ead;">use </span><span style="color:#ebcb8b;">ExUnit</span><span>.</span><span style="color:#ebcb8b;">Case
+</span><span>
+</span><span>  test &quot;</span><span style="color:#a3be8c;">threads memories and results</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>    silk_struct = %</span><span style="color:#ebcb8b;">StardustSilk</span><span>{</span><span style="color:#d08770;">memories: </span><span>[&quot;</span><span style="color:#a3be8c;">Galaxy memories</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">Comet sighs</span><span>&quot;]}
+</span><span>    result = </span><span style="color:#ebcb8b;">UncertaintyThread</span><span>.thread(</span><span style="color:#b48ead;">fn</span><span> _ -&gt; </span><span style="color:#d08770;">42 </span><span style="color:#b48ead;">end</span><span>, silk_struct)
+</span><span>
+</span><span>    assert result.silk == &quot;</span><span style="color:#a3be8c;">🌟 Galaxy memories (42) 🌟🌟 Comet sighs (42) 🌟</span><span>&quot;
+</span><span>
+</span><span>    expected_pattern = </span><span style="color:#b48ead;">~r</span><span>/</span><span style="color:#a3be8c;">🕰️ </span><span style="color:#96b5b4;">\(</span><span style="color:#a3be8c;">from </span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">4</span><span>}</span><span style="color:#a3be8c;">-</span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">2</span><span>}</span><span style="color:#a3be8c;">-</span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">2</span><span>} </span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">2</span><span>}</span><span style="color:#a3be8c;">:</span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">2</span><span>}</span><span style="color:#a3be8c;">:</span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">2</span><span>}</span><span style="color:#96b5b4;">\.</span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">6</span><span>}</span><span style="color:#a3be8c;">Z to </span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">4</span><span>}</span><span style="color:#a3be8c;">-</span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">2</span><span>}</span><span style="color:#a3be8c;">-</span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">2</span><span>} </span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">2</span><span>}</span><span style="color:#a3be8c;">:</span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">2</span><span>}</span><span style="color:#a3be8c;">:</span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">2</span><span>}</span><span style="color:#96b5b4;">\.</span><span style="color:#d08770;">\d</span><span>{</span><span style="color:#d08770;">6</span><span>}</span><span style="color:#a3be8c;">Z</span><span style="color:#96b5b4;">\) </span><span style="color:#a3be8c;">🕰️/
+</span><span>    assert </span><span style="color:#ebcb8b;">Regex</span><span>.match?(expected_pattern, result.velcro)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span><span>
+</span></code></pre>
+<p>StardustSilk and TimeSprinkledVelcro with UncertaintyThread weaves a handsomely new pocket under Keith’s nimble fingers. When he attached the new pocket to his coat he already felt a light tingle of anticipation. Schroedingers Snack Stash 2.0! While he could never be certain of the number of snacks he could retrieve, he now knew that the combination of the memories of the universe and the time spent in the past would fix some amount of snacks into the present. No longer was the dilemma whether there would be a snack or not, but whether there would be plenty or a few.</p>
+
+
+
+
+
+
+
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A quokka with a lab coat, looking with wonder around him"
+                src="keith_in_a_macaron_rain.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;keith_in_a_macaron_rain.49d740ba4106e222.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;keith_in_a_macaron_rain.fde777ae8ad1c7db.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;keith_in_a_macaron_rain.c2abe8a6935e166e.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext">Wonder of all wonders, a rain of macarons [SDXL generation]</div>
+    </div>
+
+
+<p>And the Quantum Quokka reached into his pocket and found a fistful of probability-flavored macarons. A comet far-away sighed with relief, and on a beach much closer a sea serpent blessed the sun as it turned over to bathe in its rays. Who knew when a day would come when tampering with the space-time continuum would break Beakerage, but today was not that day. The Quantum Quokka looked at the fistful of macarons and thought to himself; “may you never vanish into the void”, and stuffed his mouth full of the delightful confections. </p>
+<blockquote>
+<p><strong>Beyond Beakerage - check your Elixir knowledge</strong></p>
+<ul>
+<li>How do you define a module?</li>
+<li>Why would you use a struct instead of a map?</li>
+<li>Did you see any use of pipelining?</li>
+<li>Would you prefer using pattern matching or a “when” guard for making sure a function gets the correct type of argument?</li>
+<li>How can you test that an error will be thrown?</li>
+</ul>
+</blockquote>
+
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2023-12-28 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

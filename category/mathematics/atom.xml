@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - Mathematics</title>
+    <link href="https://abjork.land/category/mathematics/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://abjork.land"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-03-28T00:00:00+00:00</updated>
+    <id>https://abjork.land/category/mathematics/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Remembering Limits</title>
+        <published>2023-04-15T00:00:00+00:00</published>
+        <updated>2024-03-28T00:00:00+00:00</updated>
+        <author>
+          <name>Anders Björkland</name>
+        </author>
+        <link rel="alternate" href="https://abjork.land/articles/mathematics/limits/" type="text/html"/>
+        <id>https://abjork.land/articles/mathematics/limits/</id>
+        <content type="html">&lt;div class=&quot;article-header&quot;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+&lt;img
+        alt=&quot;133&quot;
+        src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.5fa1a79f732ea847.jpg&quot;
+        srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.7f8a4e376b0ecdf0.jpg 240w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.5fa1a79f732ea847.jpg 400w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.c972485a31504455.jpg 600w&quot;
+        sizes=&quot;(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px&quot;
+&#x2F;&gt;
+
+
+    &lt;div class=&quot;text-content&quot;&gt;
+        &lt;h1 class=&quot;article-title&quot;&gt;
+            &lt;div class=&quot;title&quot;&gt;Remembering Limits&lt;&#x2F;div&gt;
+            
+        &lt;&#x2F;h1&gt;
+    &lt;&#x2F;div&gt;
+    
+
+ 
+
+ 
+
+&lt;div class=&quot;tag-list absolute&quot;&gt;
+    
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;calculus&#x2F;&quot; class=&quot;hover-bold&quot;&gt;calculus&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;limits&#x2F;&quot; class=&quot;hover-bold&quot;&gt;limits&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+    
+&lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;p&gt;It’s been a long (loooooo-oooo-oooong) time since I studied mathematics. And with all the rage that is “AI” and machine learning (ML), I thought now would be a good time. I did an initial venture into ML but quickly realized that I do not know a knob from a steering wheel. That was when the YouTube Algo-monster figured I should look at a clip by &lt;a href=&quot;https:&#x2F;&#x2F;youtu.be&#x2F;wtolixa9XTg&quot;&gt;AssemblyAI: “How I would learn Machine Learning (if I could start over)”&lt;&#x2F;a&gt;. And it was just what I needed to hear. So here I am, learning ML by first investing time in… &lt;strong&gt;MATH!&lt;&#x2F;strong&gt; &lt;&#x2F;p&gt;
+&lt;p&gt;Here are 3 points of why some mathematical skills would be an advantage to have going into ML:&lt;br &#x2F;&gt;
+&lt;strong&gt;Calculus&lt;&#x2F;strong&gt; is used for optimization algorithms - a group of algorithms that try to find the best solution to a problem.
+&lt;strong&gt;Linear Algebra&lt;&#x2F;strong&gt; deals with linear equations and matrices. In ML this is used in data preprocessing, feature extraction and dimensionality reduction. 
+&lt;strong&gt;Probability and Statistics&lt;&#x2F;strong&gt; are used for modeling uncertainty and making predictions. &lt;&#x2F;p&gt;
+&lt;p&gt;This will be a series of articles where I delve into some of these Mathematical concepts. Starting with Calculus’s core concept:  Limits!&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;limits&quot;&gt;Limits&lt;&#x2F;h2&gt;
+&lt;p&gt;The essence to defining continuity, derivatives, and integrals comes down to limits. We will definitely see limits when we want to look at derivatives - or the rate of a change at a specific point. But even before we step into that realm, consider the function 
+&lt;code&gt;f(x)=(x-4)&#x2F;(x-4)&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;img
+                alt=&quot;A linear function&quot;
+                src=&quot;limit_1.png&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;limit_1.c9818369fc0dee9b.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;limit_1.f46690abd2e63827.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;limit_1.013953040fe08db3.webp 600w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px&quot;
+        &#x2F;&gt;
+        &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;p&gt;From a cursory glance, we see that the function will equal to 1, for whatever value of &lt;code&gt;x&lt;&#x2F;code&gt;. Well, almost. When we have &lt;code&gt;x=4&lt;&#x2F;code&gt; we will have a &lt;strong&gt;situation&lt;&#x2F;strong&gt;. &lt;&#x2F;p&gt;
+
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;undefined-1.svg&quot;
+                height=&quot;27&quot; 
+                width=&quot;175&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;p&gt;This would mean that we would have 0 divided by 0 which is an undefined concept. We can’t divide anything with 0. But as &lt;code&gt;x&lt;&#x2F;code&gt; approaches &lt;code&gt;4&lt;&#x2F;code&gt; we see that we have &lt;code&gt;1&lt;&#x2F;code&gt;. With &lt;code&gt;x&lt;&#x2F;code&gt; really really close to that undefined, such as 3.9999, we see that we still have &lt;code&gt;y = 1&lt;&#x2F;code&gt;. On the other side we see that &lt;code&gt;y(4.0001) = 1&lt;&#x2F;code&gt;. While &lt;code&gt;x = 4&lt;&#x2F;code&gt; is undefined for our function, we can take the limit of &lt;code&gt;f&lt;&#x2F;code&gt; at &lt;code&gt;x = 4&lt;&#x2F;code&gt; and find that it is &lt;code&gt;1&lt;&#x2F;code&gt;. We will have this expression:&lt;&#x2F;p&gt;
+
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;limit_2.svg&quot;
+                height=&quot;22&quot; 
+                width=&quot;84&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;p&gt;It’s like magic! But keep in mind, this does not say that &lt;code&gt;y(4) = 1&lt;&#x2F;code&gt;, rather it is saying that the equation will behave in such a way that &lt;code&gt;y&lt;&#x2F;code&gt; will be &lt;code&gt;1&lt;&#x2F;code&gt; as we are moving very very close to &lt;code&gt;x = 4&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;But this magic has its &lt;strong&gt;limits&lt;&#x2F;strong&gt;! If we find that as we increase &lt;code&gt;x&lt;&#x2F;code&gt; and moving closer to a point has one value, and decrease &lt;code&gt;x&lt;&#x2F;code&gt; to move closer to that same point from the other directions is moving us closer to a different value, then we have a situation where we can’t apply limits to find the value as we are moving closer to &lt;code&gt;x&lt;&#x2F;code&gt;. Consider the function &lt;code&gt;f(x)=x&#x2F;(x - 2)&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;img
+                alt=&quot;A symptotic function&quot;
+                src=&quot;asymptot.png&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;asymptot.f8d978c6bafe164a.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;asymptot.664052c4bcf12337.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;asymptot.bdd0052eafdfc8a6.webp 600w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px&quot;
+        &#x2F;&gt;
+        &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;p&gt;As we increase &lt;code&gt;x&lt;&#x2F;code&gt; from &lt;code&gt;1&lt;&#x2F;code&gt; and get closer to &lt;code&gt;2&lt;&#x2F;code&gt;, we see that &lt;code&gt;y&lt;&#x2F;code&gt; will decrease dramatically. From the opposite side we see that when we decrease &lt;code&gt;x&lt;&#x2F;code&gt; from &lt;code&gt;3&lt;&#x2F;code&gt; and get closer to &lt;code&gt;2&lt;&#x2F;code&gt;, we see that &lt;code&gt;y&lt;&#x2F;code&gt; will increase dramatically. In this example we do not have a limit for when &lt;code&gt;x&lt;&#x2F;code&gt; gets closer to &lt;code&gt;2&lt;&#x2F;code&gt;, &lt;em&gt;the limit does not exist&lt;&#x2F;em&gt;. This actually showcases 2 ways that a limit does not exist:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;As we get closer to 2, the y-value moves in a different direction depending on the direction from which we approach 2.&lt;&#x2F;li&gt;
+&lt;li&gt;As we get closer to 2, the y-value is unbounded. &lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;h3 id=&quot;one-sided-limits&quot;&gt;One-sided limits&lt;&#x2F;h3&gt;
+&lt;p&gt;We have described how a limit does not exist when the value of y approaches different values depending on the direction we are approaching a value of x from. We can however give ourselves more leeway by describing a one-sided limit. Take this example, a function would have the limit of x approach 4 when we move closer to x = 2. On the other side the x might approach -2. This give us the following expressions:&lt;br &#x2F;&gt;
+
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;limit_3.svg&quot;
+                height=&quot;22&quot; 
+                width=&quot;84&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;br &#x2F;&gt;
+
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;limit_4.svg&quot;
+                height=&quot;23&quot; 
+                width=&quot;105&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;&#x2F;p&gt;
+&lt;p&gt;But as we have described earlier, the two-sided limit does not exist when we approach different values from the two directions.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;the-limit-when-the-function-s-value-do-exist&quot;&gt;The limit when the function’s value do exist&lt;&#x2F;h3&gt;
+&lt;p&gt;The function &lt;code&gt;f(x)=x^2+3&lt;&#x2F;code&gt; is defined when &lt;code&gt;x=2&lt;&#x2F;code&gt;. This does not stop us from looking for its limit. In this case, we arrive at the limit approaching the same value as the defined value for &lt;code&gt;f(x)&lt;&#x2F;code&gt;. But this does not mean that the limit necessarily will approach the defined value.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion-confusion&quot;&gt;Conclusion confusion&lt;&#x2F;h2&gt;
+&lt;p&gt;So there you have it! We’ve seen how limits can help us approach undefined positions in a function using different graphs. This is a really important concept in calculus and mathematical analysis, and it’s also relevant to machine learning. By understanding the basics of limits, we can better understand the math behind machine learning and its optimization algorithms. We hope you found this article helpful and that it encourages you to learn more about this fascinating topic!&lt;&#x2F;p&gt;
+
+
+
+
+
+    
+
+
+
+
+
+
+
+&lt;div class=&quot;image-text-overlay&quot;&gt;
+    &lt;div class=&quot;image-text image-text--up&quot;&gt;Why did the limit go to infinity?&lt;&#x2F;div&gt;
+    &lt;div class=&quot;image-text image-text--down&quot;&gt;To get away from the derivative&lt;&#x2F;div&gt;
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;img
+                alt=&quot;&quot;
+                src=&quot;articles&amp;#x2F;mathematics&amp;#x2F;limits&amp;#x2F;kitten_joke.png&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;kitten_joke.e472ba7b5701eba5.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;kitten_joke.a20c2d153543b679.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;kitten_joke.279e79356964997f.webp 600w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;kitten_joke.95288242ad1810ce.webp 800w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            (max-width: 600px) 550px,
+                            800px&quot;
+        &#x2F;&gt;
+    &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;</content>
+    </entry>
+</feed>

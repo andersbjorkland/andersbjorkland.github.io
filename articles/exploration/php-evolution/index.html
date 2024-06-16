@@ -1,0 +1,577 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/exploration/php-evolution/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+
+
+    
+    
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/hero.18817ef0d55deb45.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/hero.18817ef0d55deb45.webp">
+    
+    
+   
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="How PHP has evolved over the years" />
+<meta property="og:description" content="A look at how PHP has evolved over the years and what has been the driving force behind it." />
+<meta property="og:url" content="https://abjork.land/articles/exploration/php-evolution/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2023-10-06"> 
+
+
+ 
+     
+<meta name="last-updated" content="2023-10-07" />
+    
+
+
+
+        
+    
+
+    <title>
+ How PHP has evolved over the years
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/exploration/php-evolution/"
+    },
+    "headline": "How PHP has evolved over the years",
+    "description": "A look at how PHP has evolved over the years and what has been the driving force behind it.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2023-10-07",
+    "datePublished": "2023-10-06"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/exploration/">Exploration</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.e01a39599c03def9.png"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.79a3ab68c977a388.png 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.e01a39599c03def9.png 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.ce1a3a6e4764f4de.png 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Evolution of PHP</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/php/" class="hover-bold">PHP</a></div>
+        
+    
+</div>
+
+
+
+</div>
+<p><em>While there have been articles before foretelling about both the death and the rebirth of PHP, this time we will simply look at how PHP has evolved over the years and what has been the driving force behind it.</em></p>
+<h2 id="the-beginning">The beginning</h2>
+<p>Let's take a journey back to the early days of the web, when Rasmus Lerdorf created PHP in 1994. It all started with a simple idea - to track visitors to his online resume. Rasmus wrote a collection of C programs to do just that, and thus PHP was born.[1]</p>
+<p>So it started from a very personal need, but Rasmus kept developing and rewriting his PHP scripts. He strived to keep it similar to C, which meant that developers familiar with C and PERL could pick it up with &quot;ease&quot;. </p>
+<p>In 1997, two Israeli developers were using PHP and found that it had some limitations. They decided to approach the creator of PHP, Rasmus Lerdorf, with suggestions for improvement. This was a pivotal moment in the evolution of PHP, as it led to a complete rewrite of the parser in C and the release of PHP 3.</p>
+<p>With PHP 3, the language gained support for multiple database interfaces and Object Oriented Programming. This was a huge leap forward for PHP, and its popularity grew rapidly. People from all around the world started contributing to the development of PHP, adding new features and improving its underlying architecture.</p>
+<p>Today, PHP is a full-fledged programming language that powers a large part of the web. It has come a long way from its humble beginnings as a tool to track visitors to a resume. And the discussions and contributions that have shaped the language are a testament to the power of collaboration and community in software development.</p>
+<h2 id="the-collaborative-nature-of-php">The collaborative nature of PHP</h2>
+<p>PHP is a language that has been shaped by its community. While it started out as one man's effort, it has grown into a language that is developed by the community, for the community. The discussions leading up to new features and improvements to the language are open for public view in the <a href="https://news-web.php.net/php.internals">Internals mailing list.</a>.</p>
+<p>The purpose of these discussions is to inform the community and language feature voters on what features to implement, and how to do that. This is where the community comes together to make <a href="https://wiki.php.net/rfc/voting">suggestions for improvement</a> and request feedback on their ideas.</p>
+<p>The voters in the PHP community are responsible for taking a stand on the features that are being discussed. They vote on the features, and if a feature gets enough votes, it will be implemented. This democratic process ensures that the community has a say in the direction of the language, and that the language continues to evolve to meet the needs of its users.</p>
+<p>So if you're a PHP developer, you have the power to shape the future of the language. You can make suggestions for improvement, provide feedback on other people's ideas, and (if you get recognized as a main contributor) vote on the features that you think are important. By participating in the PHP community, you can help to ensure that PHP continues to be a language that is developed by the community, for the community.</p>
+<p>Let's look at a popular feature which was finally introduced in PHP 7; <a href="https://www.php.net/manual/en/migration70.new-features.php#migration70.new-features.return-type-declarations">Return type declaration</a>. This feature meant that a function now could declare which type it would return.</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">sum</span><span>(</span><span style="color:#bf616a;">int $a</span><span>, </span><span style="color:#bf616a;">int $b</span><span>): int {
+</span><span>    </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$a </span><span>+ </span><span style="color:#bf616a;">$b</span><span>;
+</span><span>}
+</span></code></pre>
+<p>The <a href="https://wiki.php.net/rfc/return_types">return types-RFC</a> shows it being introduced in 2014, but a <a href="https://wiki.php.net/rfc/returntypehint2">pre-cursor</a> to it was introduced in 2011 and withdrawn. The mailing list means that questions and concerns can be raised and discussed before the vote, and thus increasing the likelihood of a successful vote. For example, here's a concern that was raised what return types would mean for using of types in closures:</p>
+<pre style="background-color:#2b303b;color:#c0c5ce;"><code><span>On Fri, Jan 16, 2015 at 4:53 PM, Simon J Welsh &lt;simon@welsh.co.nz&gt; wrote:
+</span><span>
+</span><span>&gt; The tests have it after the use():
+</span><span>&gt; https://github.com/php/php-src/pull/997/files#diff-e306c6e99612ba59b00a4fe435b287e5R9
+</span><span>&gt;
+</span><span>&gt; This was discussed in depth a couple of times in the related threads.
+</span><span>&gt;
+</span><span>
+</span><span>Thank you for the information. It should be in the RFC. IMHO.
+</span><span>I feels natural to have type spec after function parameter definition
+</span><span>rather than
+</span><span>after &quot;use&quot;.
+</span><span>
+</span><span>Anyway, I looked HACK/HHVM manual
+</span><span>http://docs.hhvm.com/manual/en/index.php
+</span><span>and couldn&#39;t find the syntax.
+</span><span>
+</span><span>If it&#39;s the same, then it should be OK.
+</span><span>I&#39;m just making sure before voting.
+</span></code></pre>
+<p><a href="https://news-web.php.net/php.internals/80663">Re: [RFC][Vote] Return Types, 16th January 2015</a></p>
+<p>The final vote ended up with 47 in favor and 3 against. And the feature was introduced in PHP 7.0. </p>
+<blockquote>
+<p><strong>Who can vote?</strong>
+Two type of voters exists: Members of the core team, and members of the community deemed to be major contributors by the core team. </p>
+</blockquote>
+<h2 id="the-evolution-of-php-code">The evolution of PHP code</h2>
+<p>Here's a simple object-oriented example to showcase how PHP has evolved, by providing an example of a code in PHP 4, and then how it would look like in PHP 5, 7, and 8:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#65737e;">// PHP 4
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">User </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">var $name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">var $age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#bf616a;">var $email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">User</span><span>(</span><span style="color:#bf616a;">$name</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">$age</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">$email</span><span>) </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">name </span><span>= </span><span style="color:#bf616a;">$name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">age </span><span>= </span><span style="color:#bf616a;">$age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">email </span><span>= </span><span style="color:#bf616a;">$email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">getName</span><span>() </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">getAge</span><span>() </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">getEmail</span><span>() </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span><span>
+</span><span style="color:#bf616a;">$user </span><span>= new User(&#39;</span><span style="color:#a3be8c;">Anders</span><span>&#39;, </span><span style="color:#d08770;">37</span><span>, &#39;</span><span style="color:#a3be8c;">anders.bjorkland@umain.com</span><span>&#39;);
+</span><span style="color:#bf616a;">echo </span><span>&#39;</span><span style="color:#a3be8c;">Hello </span><span>&#39; . </span><span style="color:#bf616a;">$user</span><span>-&gt;</span><span style="color:#8fa1b3;">getName</span><span>();
+</span></code></pre>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#65737e;">// PHP 5.3
+</span><span style="color:#b48ead;">namespace </span><span>App\Entity; </span><span style="color:#65737e;">// namespaces are introduced
+</span><span>
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">User </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// introduced accessor keywords
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">$name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">$age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">$email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">__construct</span><span>(</span><span style="color:#bf616a;">$name</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">$age</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">$email</span><span>) </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">name </span><span>= </span><span style="color:#bf616a;">$name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">age </span><span>= </span><span style="color:#bf616a;">$age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">email </span><span>= </span><span style="color:#bf616a;">$email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getName</span><span>() </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getAge</span><span>() </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getEmail</span><span>() </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#65737e;">// PHP 7.4
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">User </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// introduced types for properties (7.4)
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">string $name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">string $age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">string $email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// introduced types for parameters (7.0)
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">__construct</span><span>(</span><span style="color:#bf616a;">string $name</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">int $age</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">string $email</span><span>) </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">name </span><span>= </span><span style="color:#bf616a;">$name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">age </span><span>= </span><span style="color:#bf616a;">$age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">email </span><span>= </span><span style="color:#bf616a;">$email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// ...and for return types (7.0)
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getName</span><span>(): </span><span style="color:#eff1f5;">string 
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getAge</span><span>(): </span><span style="color:#eff1f5;">int 
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getEmail</span><span>(): </span><span style="color:#eff1f5;">string 
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#65737e;">// PHP 8
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">User </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// introduced property promotion and named arguments
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">__construct</span><span>(
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">string $name</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">int $age</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">private </span><span>?</span><span style="color:#bf616a;">string $email </span><span>= </span><span style="color:#d08770;">null
+</span><span style="color:#eff1f5;">    </span><span>) </span><span style="color:#eff1f5;">{}
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// introduced union types (8.0)
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getName</span><span>(): </span><span style="color:#eff1f5;">string</span><span>|</span><span style="color:#eff1f5;">int 
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getAge</span><span>(): </span><span style="color:#eff1f5;">int 
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getEmail</span><span>(): ?</span><span style="color:#eff1f5;">string 
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span><span>
+</span><span style="color:#bf616a;">$user </span><span>= new User(
+</span><span>    </span><span style="color:#bf616a;">name</span><span>: &#39;</span><span style="color:#a3be8c;">Anders</span><span>&#39;, 
+</span><span>    </span><span style="color:#bf616a;">age</span><span>: </span><span style="color:#d08770;">37
+</span><span>);
+</span><span>
+</span><span style="color:#bf616a;">echo </span><span>&#39;</span><span style="color:#a3be8c;">Hello </span><span>&#39; . </span><span style="color:#bf616a;">$user</span><span>-&gt;</span><span style="color:#8fa1b3;">getName</span><span>();
+</span></code></pre>
+<p>What we can see is an improved support for types, and a more concise syntax. In addition to this, there have been improvements with the underlying code parser, which has led to <a href="https://onlinephp.io/benchmarks/2023/39">better performance</a>. In a benchmark test (a script is executed 100 times), we can see its execution time going from 237 seconds (PHP 4.0.6) to 17 seconds (PHP 8.0). Which in most worlds would be considered a significant improvement. But then again, this has been a development over 20+ years.</p>
+<h3 id="bonus-features">Bonus-features</h3>
+<h4 id="attributes">Attributes</h4>
+<p>PHP 8.0 also introduced <a href="https://www.php.net/manual/en/language.attributes.php">attributes</a>, which is a way to add metadata to classes, methods, and functions. Its predecessor were annotations via PHPDocs, but this is now the native way to do that.</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">User </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    #[</span><span style="color:#bf616a;">ORM</span><span style="color:#eff1f5;">\</span><span style="color:#8fa1b3;">Column</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">type</span><span style="color:#eff1f5;">: </span><span>&quot;</span><span style="color:#a3be8c;">string</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">length</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">255</span><span style="color:#eff1f5;">)]
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">string $name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    #[</span><span style="color:#bf616a;">ORM</span><span style="color:#eff1f5;">\</span><span style="color:#8fa1b3;">Column</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">type</span><span style="color:#eff1f5;">: </span><span>&quot;</span><span style="color:#a3be8c;">integer</span><span>&quot;</span><span style="color:#eff1f5;">)]
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">int $age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    #[</span><span style="color:#bf616a;">ORM</span><span style="color:#eff1f5;">\</span><span style="color:#8fa1b3;">Column</span><span style="color:#eff1f5;">(</span><span style="color:#bf616a;">type</span><span style="color:#eff1f5;">: </span><span>&quot;</span><span style="color:#a3be8c;">string</span><span>&quot;</span><span style="color:#eff1f5;">, </span><span style="color:#bf616a;">length</span><span style="color:#eff1f5;">: </span><span style="color:#d08770;">255</span><span style="color:#eff1f5;">)]
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">string $email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">__construct</span><span>(
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">string $name</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">int $age</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">string $email
+</span><span style="color:#eff1f5;">    </span><span>) </span><span style="color:#eff1f5;">{}
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<h4 id="arrow-functions">Arrow-functions</h4>
+<p>PHP 7.4 introduced <a href="https://www.php.net/manual/en/functions.arrow.php">arrow-functions</a>, which is a more concise way to write anonymous functions. </p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#65737e;">// PHP 7.4
+</span><span style="color:#bf616a;">$numbers </span><span>= [</span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">4</span><span>, </span><span style="color:#d08770;">5</span><span>];
+</span><span>
+</span><span style="color:#bf616a;">$multiplier </span><span>= </span><span style="color:#d08770;">2</span><span>;
+</span><span>
+</span><span style="color:#bf616a;">$multiplied </span><span>= </span><span style="color:#8fa1b3;">array_map</span><span>(</span><span style="color:#8fa1b3;">fn</span><span>(</span><span style="color:#bf616a;">$x</span><span>) </span><span style="color:#8fa1b3;">use </span><span>(</span><span style="color:#bf616a;">$multiplier</span><span>) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#bf616a;">$x </span><span>* </span><span style="color:#bf616a;">$multiplier</span><span>, </span><span style="color:#bf616a;">$numbers</span><span>);
+</span><span>
+</span><span style="color:#8fa1b3;">var_export</span><span>(</span><span style="color:#bf616a;">$multiplied</span><span>);
+</span><span>
+</span><span style="color:#65737e;">/* Output:
+</span><span style="color:#65737e;">array (
+</span><span style="color:#65737e;">  0 =&gt; 2,
+</span><span style="color:#65737e;">  1 =&gt; 4,
+</span><span style="color:#65737e;">  2 =&gt; 6,
+</span><span style="color:#65737e;">  3 =&gt; 8,
+</span><span style="color:#65737e;">  4 =&gt; 10,
+</span><span style="color:#65737e;">)
+</span><span style="color:#65737e;"> */
+</span></code></pre>
+<h4 id="null-coalescing-assignment-operator">Null coalescing assignment operator</h4>
+<p>PHP 7.4 has also introduced the <a href="https://www.php.net/manual/en/migration74.new-features.php#migration74.new-features.core.null-coalescing-assignment-operator">null coalescing assignment operator</a>, which is a more concise way to assign a value to a variable if it's not already set.</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#bf616a;">$foo </span><span>= </span><span style="color:#bf616a;">$bar </span><span>?? &#39;</span><span style="color:#a3be8c;">default</span><span>&#39;;
+</span></code></pre>
+<h4 id="nullsafe-operator">Nullsafe operator</h4>
+<p>PHP 8.0 introduced the <a href="https://www.php.net/manual/en/migration80.new-features.php#migration80.new-features.core.nullsafe-operator">nullsafe operator</a>, which is a more concise way to check if a property or method exists on a variable.</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#bf616a;">$foo </span><span>= </span><span style="color:#bf616a;">$bar</span><span>?-&gt;</span><span style="color:#8fa1b3;">baz</span><span>();
+</span></code></pre>
+<h4 id="match-expression">Match expression</h4>
+<p>PHP 8.0 also introduced the <a href="https://www.php.net/manual/en/control-structures.match.php">match expression</a>, which (kind-of) is a more concise way to write switch statements.</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#bf616a;">$bar </span><span>= </span><span style="color:#d08770;">5</span><span>;
+</span><span>
+</span><span style="color:#bf616a;">$foo </span><span>= </span><span style="color:#8fa1b3;">match </span><span>(</span><span style="color:#bf616a;">$bar</span><span>) {
+</span><span>    </span><span style="color:#d08770;">1 </span><span style="color:#b48ead;">=&gt; </span><span>&#39;</span><span style="color:#a3be8c;">one</span><span>&#39;,
+</span><span>    </span><span style="color:#d08770;">2 </span><span style="color:#b48ead;">=&gt; </span><span>&#39;</span><span style="color:#a3be8c;">two</span><span>&#39;,
+</span><span>    </span><span style="color:#d08770;">3 </span><span style="color:#b48ead;">=&gt; </span><span>&#39;</span><span style="color:#a3be8c;">three</span><span>&#39;,
+</span><span>    </span><span style="color:#d08770;">4</span><span>, </span><span style="color:#d08770;">5</span><span>, </span><span style="color:#d08770;">6 </span><span style="color:#b48ead;">=&gt; </span><span>&#39;</span><span style="color:#a3be8c;">four to six</span><span>&#39;,
+</span><span>    </span><span style="color:#b48ead;">default =&gt; </span><span>&#39;</span><span style="color:#a3be8c;">unknown</span><span>&#39;
+</span><span>};
+</span><span>
+</span><span style="color:#bf616a;">echo $foo</span><span>; </span><span style="color:#65737e;">// &#39;four to six&#39;
+</span><span>
+</span><span>
+</span><span style="color:#65737e;">// alternate match:
+</span><span style="color:#bf616a;">$foo </span><span>= </span><span style="color:#8fa1b3;">match </span><span>(</span><span style="color:#d08770;">true</span><span>) {
+</span><span>    </span><span style="color:#bf616a;">$bar </span><span>&lt; </span><span style="color:#d08770;">4 </span><span style="color:#b48ead;">=&gt; </span><span>&#39;</span><span style="color:#a3be8c;">less than four</span><span>&#39;,
+</span><span>    </span><span style="color:#bf616a;">$bar </span><span>&gt;= </span><span style="color:#d08770;">4 </span><span style="color:#b48ead;">=&gt; </span><span>&#39;</span><span style="color:#a3be8c;">4 or greater</span><span>&#39;,
+</span><span>    </span><span style="color:#b48ead;">default =&gt; </span><span>&#39;</span><span style="color:#a3be8c;">unknown</span><span>&#39;
+</span><span>};
+</span><span>
+</span><span style="color:#bf616a;">echo $foo</span><span>; </span><span style="color:#65737e;">// &#39;4 or greater&#39;
+</span><span>
+</span></code></pre>
+<h4 id="union-types">Union types</h4>
+<p>PHP 8.0 introduced <a href="https://www.php.net/manual/en/language.types.declarations.php#language.types.declarations.union">union types</a>, which is a way to declare that a variable can be of multiple types.</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">User </span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">__construct</span><span>(
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">string</span><span style="color:#eff1f5;">|</span><span style="color:#bf616a;">int $name</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">private </span><span style="color:#bf616a;">int $age</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">        </span><span style="color:#bf616a;">private </span><span>?</span><span style="color:#bf616a;">string $email </span><span>= </span><span style="color:#d08770;">null
+</span><span style="color:#eff1f5;">    </span><span>) </span><span style="color:#eff1f5;">{}
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getName</span><span>(): </span><span style="color:#eff1f5;">string</span><span>|</span><span style="color:#eff1f5;">int 
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">name</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getAge</span><span>(): </span><span style="color:#eff1f5;">int 
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">age</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getEmail</span><span>(): ?</span><span style="color:#eff1f5;">string 
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">$this</span><span>-&gt;</span><span style="color:#bf616a;">email</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span><span>
+</span><span style="color:#bf616a;">$user </span><span>= new User(</span><span style="color:#d08770;">24</span><span>, </span><span style="color:#d08770;">37</span><span>);
+</span><span>
+</span><span style="color:#bf616a;">echo $user</span><span>-&gt;</span><span style="color:#8fa1b3;">getName</span><span>(); </span><span style="color:#65737e;">// 24
+</span></code></pre>
+<h4 id="enumerations">ENUMERATIONS!!!</h4>
+<p>PHP 8.1 finally introduced <a href="https://www.php.net/manual/en/language.enums.php">enumerations</a>, which is a way to declare a set of named constants.</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">enum </span><span>Fruit {
+</span><span>    </span><span style="color:#bf616a;">case</span><span> Apple;
+</span><span>    </span><span style="color:#bf616a;">case</span><span> Banana;
+</span><span>    </span><span style="color:#bf616a;">case</span><span> Orange;
+</span><span>}
+</span><span>
+</span><span style="color:#b48ead;">function </span><span style="color:#8fa1b3;">eatFruit</span><span>(</span><span style="color:#bf616a;">Fruit $fruit</span><span>) {
+</span><span>    </span><span style="color:#b48ead;">switch </span><span>(</span><span style="color:#bf616a;">$fruit</span><span>) {
+</span><span>        </span><span style="color:#b48ead;">case </span><span style="color:#bf616a;">Fruit</span><span>::Apple:
+</span><span>            </span><span style="color:#bf616a;">echo </span><span>&#39;</span><span style="color:#a3be8c;">Yummy</span><span>&#39;;
+</span><span>            </span><span style="color:#b48ead;">break</span><span>;
+</span><span>        </span><span style="color:#b48ead;">case </span><span style="color:#bf616a;">Fruit</span><span>::Banana:
+</span><span>            </span><span style="color:#bf616a;">echo </span><span>&#39;</span><span style="color:#a3be8c;">B &amp; NaN</span><span>&#39;;
+</span><span>            </span><span style="color:#b48ead;">break</span><span>;
+</span><span>        </span><span style="color:#b48ead;">case </span><span style="color:#bf616a;">Fruit</span><span>::Orange:
+</span><span>            </span><span style="color:#bf616a;">echo </span><span>&#39;</span><span style="color:#a3be8c;">Red-yello treat</span><span>&#39;;
+</span><span>            </span><span style="color:#b48ead;">break</span><span>;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h4 id="fibers">Fibers</h4>
+<p>PHP 8.1 also introduced <a href="https://www.php.net/manual/en/language.fibers.php">fibers</a>, which is a way to create interruptible functions, enhancing PHP's ability to handle asynchronous tasks. This has come to be used to great effect in asynchronous frameworks such as <a href="https://reactphp.org/">ReactPHP</a>.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>In conclusion, PHP has come a long way since its early days as a simple tool for tracking visitors to a resume. Over the years, the language has evolved to become a powerful and feature-rich language that is used by millions of developers around the world.</p>
+<p>One of the key factors in PHP's success has been its ability to evolve with the needs of its users. From the addition of object-oriented programming in PHP 4 to attributes and fibers in PHP 8, PHP has continued to add new features and improve its syntax to make it more powerful and flexible.</p>
+<p>As PHP continues to evolve, it will be interesting to see what new features and improvements are added to the language. But one thing is certain - PHP will continue to be a language that is developed by the community, for the community. And that is what makes it such a powerful and enduring language.</p>
+<p><a href="https://www.php.net/manual/en/history.php.php">1. PHP: History of PHP</a></p>
+<p>Additional tools: <a href="https://onlinephp.io/">onlinephp.io</a></p>
+
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2023-10-06 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

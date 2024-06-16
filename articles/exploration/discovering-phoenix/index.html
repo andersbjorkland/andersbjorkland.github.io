@@ -1,0 +1,605 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/exploration/discovering-phoenix/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/meta.0493b97b8673c926.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/meta.0493b97b8673c926.webp">
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Discovering Phoenix" />
+<meta property="og:description" content="Dive into web development with Phoenix, a powerful Elixir framework, and build a scalable, fault-tolerant dad-joke machine API. Explore schema generation, controller setup, and database integration in this hands-on guide." />
+<meta property="og:url" content="https://abjork.land/articles/exploration/discovering-phoenix/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2023-04-15"> 
+
+
+ 
+     
+<meta name="last-updated" content="2024-03-28" />
+    
+
+
+
+        
+    
+
+    <title>
+ Discovering Phoenix
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/exploration/discovering-phoenix/"
+    },
+    "headline": "Discovering Phoenix",
+    "description": "Dive into web development with Phoenix, a powerful Elixir framework, and build a scalable, fault-tolerant dad-joke machine API. Explore schema generation, controller setup, and database integration in this hands-on guide.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2024-03-28",
+    "datePublished": "2023-04-15"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/exploration/">Exploration</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero-wide.0b8aa2c97336681a.png"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero-wide.b415cdb7fc5b5965.png 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero-wide.0b8aa2c97336681a.png 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero-wide.18771329b7d36c81.png 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Discovering Phoenix</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/elixir/" class="hover-bold">elixir</a></div>
+        
+        <div><a href="https://abjork.land/tags/phoenix/" class="hover-bold">phoenix</a></div>
+        
+    
+</div>
+
+
+
+</div>
+<p>Phoenix is a web development framework written in Elixir that uses a server-side model-view-controller (MVC) pattern. It’s perfect for building highly scalable and fault-tolerant applications. In this article, we’ll explore Phoenix by building a simple RESTful API with it. But not just any API - we’ll build a dad-joke machine! We’ll show you how to generate schemas and controllers in one fell swoop, add new fields to an API endpoint, and rediscover the ancient wisdom of dad-jokers before us.</p>
+
+<div class="reading-time">
+    Reading time: 8 minutes
+</div>
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>What do you get when you cross a phoenix and a unicorn? A magical mystery tour!</p>
+
+    </cite>
+    
+</div><h2 id="project-setup">Project Setup</h2>
+<p>To get smooth sailing with this discovery we will be using <strong>Elixir 1.14</strong> and <strong>Phoenix v1.7</strong>. If you don’t have it setup already you can <a href="https://hexdocs.pm/phoenix/installation.html">follow the instructions over at hexdocs</a>.</p>
+<p>To create a new Phoenix project suitable for an API we will run the following command:<br />
+<code>mix phx.new jokes_api --no-html --no-assets</code></p>
+<p>Here's the anatomy of the command:</p>
+<table><thead><tr><th></th><th></th></tr></thead><tbody>
+<tr><td><strong>mix</strong></td><td>The Elixir build tool and dependency chief-coordinator</td></tr>
+<tr><td><strong>phx.new</strong></td><td>A <em>Mix</em> build task that creates a Phoenix project</td></tr>
+<tr><td><strong>jokes_api</strong></td><td>Our project’s name</td></tr>
+<tr><td><strong>--no-html</strong></td><td>instructs <em>phx.new</em> to not create any templates for us</td></tr>
+<tr><td><strong>--no-assets</strong>   </td><td>instructs <em>phx.new</em> to not create any static assets (such as CSS- and JS-files)</td></tr>
+</tbody></table>
+<p>After creating the project structure with all the necessary dependencies we can take our next step. As we will be doing some reading and writing to a database, let's set it up. We want a PostgreSQL database for the project, so let's add a docker-container for it. We move in to the project directory and create a <em>docker-compose.yaml</em>:</p>
+<pre data-lang="yaml" style="background-color:#2b303b;color:#c0c5ce;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#bf616a;">version</span><span>: &quot;</span><span style="color:#a3be8c;">3.7</span><span>&quot;
+</span><span style="color:#bf616a;">services</span><span>:
+</span><span> </span><span style="color:#bf616a;">db</span><span>:
+</span><span>   </span><span style="color:#bf616a;">image</span><span>: </span><span style="color:#a3be8c;">postgres
+</span><span>   </span><span style="color:#bf616a;">environment</span><span>:
+</span><span>     </span><span style="color:#bf616a;">POSTGRES_USER</span><span>: </span><span style="color:#a3be8c;">postgres
+</span><span>     </span><span style="color:#bf616a;">POSTGRES_PASSWORD</span><span>: </span><span style="color:#a3be8c;">postgres
+</span><span>   </span><span style="color:#bf616a;">ports</span><span>:
+</span><span>     - &quot;</span><span style="color:#a3be8c;">5432:5432</span><span>&quot;
+</span><span>   </span><span style="color:#bf616a;">volumes</span><span>:
+</span><span>     - </span><span style="color:#a3be8c;">pg_db:/var/lib/postgresql/data
+</span><span>
+</span><span>
+</span><span style="color:#bf616a;">volumes</span><span>:
+</span><span> </span><span style="color:#bf616a;">pg_db</span><span>:
+</span></code></pre>
+<p>We specify that we want the database to have a user called <code>postgres</code> and the password <code>postgres</code>. We need to update (or confirm) that our Phoenix project has these credentails as well. We find the configuration for this in <em>config/dev.exs</em></p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span>config </span><span style="color:#a3be8c;">:jokes_api</span><span>, </span><span style="color:#ebcb8b;">JokesApi</span><span>.</span><span style="color:#ebcb8b;">Repo</span><span>,
+</span><span> </span><span style="color:#d08770;">username: </span><span>&quot;</span><span style="color:#a3be8c;">postgres</span><span>&quot;,
+</span><span> </span><span style="color:#d08770;">password: </span><span>&quot;</span><span style="color:#a3be8c;">postgres</span><span>&quot;,
+</span><span> </span><span style="color:#d08770;">hostname: </span><span>&quot;</span><span style="color:#a3be8c;">localhost</span><span>&quot;,
+</span><span> </span><span style="color:#d08770;">database: </span><span>&quot;</span><span style="color:#a3be8c;">jokes_api_dev</span><span>&quot;,
+</span><span> </span><span style="color:#d08770;">stacktrace: true</span><span>,
+</span><span> </span><span style="color:#d08770;">show_sensitive_data_on_connection_error: true</span><span>,
+</span><span> </span><span style="color:#d08770;">pool_size: 10
+</span></code></pre>
+<p>It’s looking good. It has the correct credentials. It's also referenceing a database, <code>jokes_api_dev</code>, which we will create now. From the command line:
+<code>mix ecto.create</code></p>
+<blockquote>
+<p>ecto is the database schema manager that Phoenix relies on. It creates our databases and database schemas. <code>ecto.create</code> is the <code>mix</code> build task which will create the database defined in our configuration. <code>ecto</code> can be used with other types of databases as well, such as MySQL and SQLite3.</p>
+</blockquote>
+<h2 id="the-anatomy-of-a-joke">The anatomy of a joke</h2>
+<p>For our dad-joke machine to get going, we will want a schema for it. Let's imagine that a joke has text-content, and that we will want to be able to rate it. Either we like it, or we dislike it. Our model should be something like this: </p>
+<table><thead><tr><th>field</th><th>type</th></tr></thead><tbody>
+<tr><td>text</td><td>text</td></tr>
+<tr><td>likes</td><td>integer</td></tr>
+<tr><td>dislikes  </td><td>integer</td></tr>
+</tbody></table>
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<div class="image-text-overlay">
+    <div class="image-text image-text--up">What do you call a fish with no eye?</div>
+    <div class="image-text image-text--down">Fsh</div>
+    <div class="image-container ">
+        <img
+                alt=""
+                src="articles&#x2F;exploration&#x2F;discovering_phoenix&#x2F;bad-joke-chick.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;bad-joke-chick.6a5bad3fb5b5159a.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;bad-joke-chick.45ebca12c729b7fa.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;bad-joke-chick.33a7d0e0feb13ad8.webp 600w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;bad-joke-chick.0cef4de696ff3716.webp 800w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            (max-width: 600px) 550px,
+                            800px"
+        />
+    </div>
+</div>
+<p>We will now create both the database schema and the API schema for our Joke model. It's all done with a single command from the terminal:<br />
+<code>mix phx.gen.json Jokes Joke jokes text:text likes:integer dislikes:integer</code></p>
+<p>There are a lot of jokes going around, so what do they mean in this context? Again we are using <code>mix</code>, our Elixir build tool. We are employing Phoenix's <code>phx.gen.json</code> for this task. It will create a controller, JSON API-schema, and via <code>ecto</code> it will also create a migration file to update the database schema. <code>Jokes Joke</code> will define the namespace for our model module. The name for its database table is <code>jokes</code>. And <code>text:text likes:integer dislikes:integer</code> will define the model's fields and their types.</p>
+<p>With a migration file we can update the database. We do that with:<br />
+<code>mix ecto.migrate</code></p>
+<p>We have now defined how a Joke should look like in the API as well as prepared our database to handle it. We are ready for our next steps.</p>
+<h2 id="a-server-walks-into-a-bar">A server walks into a bar</h2>
+<p>We may want to view our small project to get a feel for how far we have come. We will need a server to show our project. Thankfully, Phoenix has a great server that can be used in development as well as in production. We run it with this command:<br />
+<code>mix phx.server</code></p>
+<p>This will per default serve our application to <a href="http://localhost:4000">localhost:4000</a>. As we do not have any HTML templates or assets, we will see Phoenix's development debug view. Which will serve us great here. This is our view:</p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="Phoenix debug view shows some debug routes present but no other routes."
+            src="phoenix-no-routes.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;phoenix-no-routes.9fbb13852635405e.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;phoenix-no-routes.c0d9319805425d47.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;phoenix-no-routes.adde9e88ae9914a7.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+<p>From what we see here, it does not look like we have any new API-endpoints. But we can easily expose the JSON-schema defined for us. We have to map them to a new route, is all.</p>
+<p>In <code>lib/jokes_api_web/router.ex</code> we will expose the endpoints we like on a module called JokeController (which were generated by our earlier mix task):</p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span> scope &quot;</span><span style="color:#a3be8c;">/api</span><span>&quot;, </span><span style="color:#ebcb8b;">JokesApiWeb </span><span style="color:#b48ead;">do
+</span><span>   pipe_through </span><span style="color:#a3be8c;">:api
+</span><span>
+</span><span>   resources &quot;</span><span style="color:#a3be8c;">/jokes</span><span>&quot;, </span><span style="color:#ebcb8b;">JokeController</span><span>, </span><span style="color:#d08770;">except: </span><span>[</span><span style="color:#a3be8c;">:new</span><span>, </span><span style="color:#a3be8c;">:edit</span><span>, </span><span style="color:#a3be8c;">:delete</span><span>]
+</span><span> </span><span style="color:#b48ead;">end
+</span><span>
+</span></code></pre>
+<p>Saving the file and reviewing what we have shows us a bunch of new routes:</p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="Phoenix debug view shows the new joke routes."
+            src="phoenix-joke-routes.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;phoenix-joke-routes.ff319ab15e82b500.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;phoenix-joke-routes.7ce2bc3ceeef2ec0.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;phoenix-joke-routes.0421b350381ed4d9.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+<p>We can try to create a new file now. I’m using Postman, but you might as well use CRUD.</p>
+<p>What do you feel about this:
+“There are 10 types of people in the world: those who understand binary, and those who don’t”</p>
+<p>Let’s try adding it to the database. We make a POST request to http://localhost:4000/api/jokes with the following payload:</p>
+<pre data-lang="json" style="background-color:#2b303b;color:#c0c5ce;" class="language-json "><code class="language-json" data-lang="json"><span>{
+</span><span>   &quot;</span><span style="color:#a3be8c;">joke</span><span>&quot;: {
+</span><span>       &quot;</span><span style="color:#a3be8c;">text</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">There are 10 types of people in the world: those who understand binary, and those who don’t.</span><span>&quot;
+</span><span>   }
+</span><span>}
+</span></code></pre>
+<p>What may the result be? Here’s what:</p>
+<pre data-lang="json" style="background-color:#2b303b;color:#c0c5ce;" class="language-json "><code class="language-json" data-lang="json"><span>{
+</span><span>   &quot;</span><span style="color:#a3be8c;">errors</span><span>&quot;: {
+</span><span>       &quot;</span><span style="color:#a3be8c;">dislikes</span><span>&quot;: [
+</span><span>           &quot;</span><span style="color:#a3be8c;">can&#39;t be blank</span><span>&quot;
+</span><span>       ],
+</span><span>       &quot;</span><span style="color:#a3be8c;">likes</span><span>&quot;: [
+</span><span>           &quot;</span><span style="color:#a3be8c;">can&#39;t be blank</span><span>&quot;
+</span><span>       ]
+</span><span>   }
+</span><span>}
+</span></code></pre>
+<p>Our model requires dislikes and likes to be set. But we don’t want that. We want these to start off with 0 and only be modified incrementally. A way to do that is to define a default value for the model. </p>
+<p><code>lib/jokes_api/jokes/joke.ex</code>:</p>
+<pre data-lang="exs" style="background-color:#2b303b;color:#c0c5ce;" class="language-exs "><code class="language-exs" data-lang="exs"><span> schema &quot;</span><span style="color:#a3be8c;">jokes</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>   field </span><span style="color:#a3be8c;">:dislikes</span><span>, </span><span style="color:#a3be8c;">:integer</span><span>, </span><span style="color:#d08770;">default: 0
+</span><span>   field </span><span style="color:#a3be8c;">:likes</span><span>, </span><span style="color:#a3be8c;">:integer</span><span>, </span><span style="color:#d08770;">default: 0
+</span><span>   field </span><span style="color:#a3be8c;">:text</span><span>, </span><span style="color:#a3be8c;">:string
+</span><span>
+</span><span>
+</span><span>   timestamps()
+</span><span> </span><span style="color:#b48ead;">end
+</span><span>
+</span></code></pre>
+<p>When we retry our POST-request this will be the result:</p>
+<pre data-lang="json" style="background-color:#2b303b;color:#c0c5ce;" class="language-json "><code class="language-json" data-lang="json"><span>{
+</span><span>   &quot;</span><span style="color:#a3be8c;">data</span><span>&quot;: {
+</span><span>       &quot;</span><span style="color:#a3be8c;">dislikes</span><span>&quot;: </span><span style="color:#d08770;">0</span><span>,
+</span><span>       &quot;</span><span style="color:#a3be8c;">id</span><span>&quot;: </span><span style="color:#d08770;">1</span><span>,
+</span><span>       &quot;</span><span style="color:#a3be8c;">likes</span><span>&quot;: </span><span style="color:#d08770;">0</span><span>,
+</span><span>       &quot;</span><span style="color:#a3be8c;">text</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">There are 10 types of people in the world: those who understand binary, and those who don’t.</span><span>&quot;
+</span><span>   }
+</span><span>}
+</span></code></pre>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>Success!</p>
+
+    </cite>
+    
+</div><h3 id="more-routes-and-fields">More routes and fields!</h3>
+<p>Let’s add two new endpoints. One for disliking a joke, and another for liking it!
+In the controller <code>lib/jokes_api_web/controllers/joke_controller.ex</code>:</p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span>
+</span><span> </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">like</span><span>(conn, %{&quot;</span><span style="color:#a3be8c;">id</span><span>&quot; =&gt; id}) </span><span style="color:#b48ead;">do
+</span><span>   joke = </span><span style="color:#ebcb8b;">Jokes</span><span>.get_joke!(id)
+</span><span>
+</span><span>   likes = joke.likes + </span><span style="color:#d08770;">1
+</span><span>   joke_params = %{</span><span style="color:#d08770;">likes:</span><span> likes}
+</span><span>
+</span><span>   </span><span style="color:#b48ead;">with </span><span>{</span><span style="color:#a3be8c;">:ok</span><span>, %</span><span style="color:#ebcb8b;">Joke</span><span>{} = joke} &lt;- </span><span style="color:#ebcb8b;">Jokes</span><span>.update_joke(joke, joke_params) </span><span style="color:#b48ead;">do
+</span><span>     render(conn, </span><span style="color:#a3be8c;">:show</span><span>, </span><span style="color:#d08770;">joke:</span><span> joke)
+</span><span>   </span><span style="color:#b48ead;">end
+</span><span> </span><span style="color:#b48ead;">end
+</span><span>
+</span><span> </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">dislike</span><span>(conn, %{&quot;</span><span style="color:#a3be8c;">id</span><span>&quot; =&gt; id}) </span><span style="color:#b48ead;">do
+</span><span>   joke = </span><span style="color:#ebcb8b;">Jokes</span><span>.get_joke!(id)
+</span><span>
+</span><span>   dislikes = joke.dislikes + </span><span style="color:#d08770;">1
+</span><span>   joke_params = %{</span><span style="color:#d08770;">dislikes:</span><span> dislikes}
+</span><span>
+</span><span>   </span><span style="color:#b48ead;">with </span><span>{</span><span style="color:#a3be8c;">:ok</span><span>, %</span><span style="color:#ebcb8b;">Joke</span><span>{} = joke} &lt;- </span><span style="color:#ebcb8b;">Jokes</span><span>.update_joke(joke, joke_params) </span><span style="color:#b48ead;">do
+</span><span>     render(conn, </span><span style="color:#a3be8c;">:show</span><span>, </span><span style="color:#d08770;">joke:</span><span> joke)
+</span><span>   </span><span style="color:#b48ead;">end
+</span><span> </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>With these new endpoints we can now increment the dislikes or the likes to our hearts content.</p>
+<p>And for a final touch. Let’s add a field to the JSON-response that shows the score, that is the difference between likes and dislikes. The API schema is defined in <code>lib/jokes_api_web/controllers/joke_json.ex</code>. Let’s update it:</p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span> </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">data</span><span>(%</span><span style="color:#ebcb8b;">Joke</span><span>{} = joke) </span><span style="color:#b48ead;">do
+</span><span>   %{
+</span><span>     </span><span style="color:#d08770;">id:</span><span> joke.id,
+</span><span>     </span><span style="color:#d08770;">text:</span><span> joke.text,
+</span><span>     </span><span style="color:#d08770;">likes:</span><span> joke.likes,
+</span><span>     </span><span style="color:#d08770;">dislikes:</span><span> joke.dislikes,
+</span><span>     </span><span style="color:#d08770;">score:</span><span> joke.likes - joke.dislikes
+</span><span>   }
+</span><span> </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>We can like any joke we like by making a <code>PATCH</code> request to <code>http://localhost:4000/api/jokes/1/like</code>. This will increment the joke's <code>likes</code>. Similarly, we can dislike a joke by substituting <code>like</code> for <code>dislike</code> in the URL. After a couple of votes we can see its score at <code>4</code>:</p>
+<pre data-lang="json" style="background-color:#2b303b;color:#c0c5ce;" class="language-json "><code class="language-json" data-lang="json"><span>{
+</span><span>   &quot;</span><span style="color:#a3be8c;">data</span><span>&quot;: {
+</span><span>       &quot;</span><span style="color:#a3be8c;">dislikes</span><span>&quot;: </span><span style="color:#d08770;">1</span><span>,
+</span><span>       &quot;</span><span style="color:#a3be8c;">id</span><span>&quot;: </span><span style="color:#d08770;">1</span><span>,
+</span><span>       &quot;</span><span style="color:#a3be8c;">likes</span><span>&quot;: </span><span style="color:#d08770;">5</span><span>,
+</span><span>       &quot;</span><span style="color:#a3be8c;">score</span><span>&quot;: </span><span style="color:#d08770;">4</span><span>,
+</span><span>       &quot;</span><span style="color:#a3be8c;">text</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">There are 10 types of people in the world: those who understand binary, and those who don’t.</span><span>&quot;
+</span><span>   }
+</span><span>}
+</span></code></pre>
+<p>We have successfully created a simple API with potential of becoming a fearsome dad-jokes machine. A couple of commands and some modifications to the code has gotten us here. In my opinion a pretty swell experience. With a tool like Phoenix it's easy to feel top of your game.</p>
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<div class="image-text-overlay">
+    <div class="image-text image-text--up"></div>
+    <div class="image-text image-text--down">I&#x27;m outstanding in my field!</div>
+    <div class="image-container ">
+        <img
+                alt=""
+                src="articles&#x2F;exploration&#x2F;discovering_phoenix&#x2F;chicken-outstanding-in-a-field.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;chicken-outstanding-in-a-field.cbaf6e5bbdfad0b6.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;chicken-outstanding-in-a-field.30dbaf1303ce88b2.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;chicken-outstanding-in-a-field.0dedeb714f335959.webp 600w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;chicken-outstanding-in-a-field.2c9f87b6aef46ddd.webp 800w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            (max-width: 600px) 550px,
+                            800px"
+        />
+    </div>
+</div>
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2023-04-15 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

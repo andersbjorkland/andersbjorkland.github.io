@@ -1,0 +1,1762 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - livebook</title>
+    <link href="https://abjork.land/tags/livebook/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://abjork.land"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-04-11T00:00:00+00:00</updated>
+    <id>https://abjork.land/tags/livebook/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Optimizing Travel Routes: Applying Genetic Algorithms to the Traveling Salesman Problem</title>
+        <published>2024-04-11T00:00:00+00:00</published>
+        <updated>2024-04-11T00:00:00+00:00</updated>
+        <author>
+          <name>Anders Björkland</name>
+        </author>
+        <link rel="alternate" href="https://abjork.land/articles/elixir/optimizing-travel-routes-applying-genetic-algorithms/" type="text/html"/>
+        <id>https://abjork.land/articles/elixir/optimizing-travel-routes-applying-genetic-algorithms/</id>
+        <content type="html">&lt;div class=&quot;article-header&quot;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+&lt;img
+        alt=&quot;133&quot;
+        src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.cbe9b583434775d6.png&quot;
+        srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.383d1420643becd7.png 240w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.cbe9b583434775d6.png 400w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.2de9699b222a5cc0.png 600w&quot;
+        sizes=&quot;(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px&quot;
+&#x2F;&gt;
+
+
+    &lt;div class=&quot;text-content&quot;&gt;
+        &lt;h1 class=&quot;article-title&quot;&gt;
+            &lt;div class=&quot;title&quot;&gt;Optimizing Travel Routes&lt;&#x2F;div&gt;
+            
+                &lt;div class=&quot;subtitle&quot;&gt;Applying Genetic Algorithms to the Traveling Salesman Problem&lt;&#x2F;div&gt;
+            
+        &lt;&#x2F;h1&gt;
+    &lt;&#x2F;div&gt;
+    
+
+ 
+
+ 
+
+&lt;div class=&quot;tag-list absolute&quot;&gt;
+    
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;elixir&#x2F;&quot; class=&quot;hover-bold&quot;&gt;elixir&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;livebook&#x2F;&quot; class=&quot;hover-bold&quot;&gt;livebook&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;algorithms&#x2F;&quot; class=&quot;hover-bold&quot;&gt;algorithms&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+    
+&lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;&lt;div class=&quot;author-container&quot;&gt;
+    &lt;p&gt;Written by Anders Björkland, Web Developer at &lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;www.umain.com&amp;#x2F;&quot;&gt;Umain&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;section class=&quot;article-summary&quot;&gt;&lt;em&gt;Have you ever watched a delivery driver crisscrossing your neighborhood and wondered if they were taking the most efficient route? That&#x27;s the Traveling Salesman Problem in action! This classic challenge has entertained mathematicians and coders alike for ages. In this article, we&#x27;ll see how to tackle it using the power of Elixir and genetic algorithms, mimicking nature&#x27;s process of evolution to find surprisingly good routes.&lt;&#x2F;em&gt;&lt;&#x2F;section&gt;
+&lt;p&gt;I was looking out my window and saw a delivery truck passing by on the street the other day. This got me thinking about a classic algorithm challenge: &lt;em&gt;The Traveler Salesman Problem&lt;&#x2F;em&gt; (TSP for short).&lt;&#x2F;p&gt;
+&lt;p&gt;The challenge goes like this: &lt;em&gt;A salesman has a list of cities they need to visit. They must visit each of them and return to their starting position. &lt;strong&gt;What is the shortest route they can take?&lt;&#x2F;strong&gt;&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+
+    
+
+
+
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;city plots&quot;
+                src=&quot;cities-map.svg&quot;
+                height=&quot;332&quot; 
+                width=&quot;416&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;p&gt;This is of course a problem that has been solved in multiple ways,  thousands upon thousands of times over. The delivery driver has a route already preprogrammed - they don&#x27;t need my help mulling it over. &lt;em&gt;So why am I thinking about it?&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;One could say such everyday problems are more fun when applying algorithms to solve them, and I am looking for a reason to pull out my algorithmic toolbox. It&#x27;s a fair statement! I recently put a new tool in that toolbox and I&#x27;ve been on the lookout for a reason to go nuts with it.&lt;&#x2F;p&gt;
+&lt;p&gt;There are some interesting tools I can use, but there is a specific one I&#x27;m on the lookout for. So let me just quickly rifle through it:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Brute force&lt;&#x2F;strong&gt;: The hammer of all hammers, &lt;em&gt;brute forcing&lt;&#x2F;em&gt; is not elegant but it gets the job done... eventually. If we were to use brute force to solve TSP we would be calculating each possible solution and then select the best one. The number of possible solutions to TSP is given by the formula &lt;code&gt;(n-1)!&#x2F;2&lt;&#x2F;code&gt;. It&#x27;s a factorial representing each possible combination of visits to the cities, and as it loops back to the beginning, the direction of the loop does not matter. So if the salesman had to visit &lt;code&gt;18&lt;&#x2F;code&gt; cities, this would be &lt;code&gt;(18-1)!&#x2F;2)&lt;&#x2F;code&gt; which comes out to &lt;code&gt;1.8 × 10&lt;sup&gt;14&lt;&#x2F;sup&gt;&lt;&#x2F;code&gt; possible solutions. It&#x27;s entirely possible, but I rifle on.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Nearest neighbor&lt;&#x2F;strong&gt;: A screwdriver in comparison, this algorithm is focused on the here-and-now with disregard for the larger picture. With a &lt;em&gt;nearest neighbor&lt;&#x2F;em&gt; the salesman would always travel to whichever city is closest to the city they are currently in. While this might see them cover a larger distance than brute forcing, it is much faster and can be good enough. But if you&#x27;ve read &lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;elixir&#x2F;intro-to-genetic-algorithms-with-elixir&#x2F;&quot;&gt;my previous article&lt;&#x2F;a&gt;, you might suspect that I&#x27;m on the lookout for another tool.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Genetic Algorithm&lt;&#x2F;strong&gt;: Now this is what I&#x27;m talking about! Genetic Algorithms (&lt;em&gt;GA&lt;&#x2F;em&gt;) might find the best possible route, but they might also find a solution that is just good enough. This is my hammer, saw, and ruler - all combined. It might look a bit freakish, but it&#x27;s so versatile and fun to use! GA is inspired by evolutionary processes. Survival of the fittest and mutations will play a role in it finding a good enough solution. As long as we can define the solution as a &amp;quot;chromosome&amp;quot; and a way to measure the &amp;quot;fitness&amp;quot;, GA will be possible to use.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+
+    
+
+
+
+
+
+
+    
+
+
+
+    
+        
+    
+    
+
+    
+    
+    
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;img
+                alt=&quot;A quokka holding a weird metal-wood tool&quot;
+                src=&quot;quokka-work.png&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;quokka-work.a84fd94b25289714.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;quokka-work.f18e52dc9338f3d1.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;quokka-work.5b40e40166623de3.webp 600w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px&quot;
+        &#x2F;&gt;
+        &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;p&gt;So how would I use a Genetic Algorithm (GA) to find a short enough route for the salesman? Let&#x27;s consider this; is it possible to describe a possible solution as a &amp;quot;chromosome&amp;quot;? I will say an emphatic &lt;strong&gt;yes!&lt;&#x2F;strong&gt; A route can be described as a series of cities in the order they will be visited. If we have the 3 cities &lt;em&gt;1&lt;&#x2F;em&gt;, &lt;em&gt;2&lt;&#x2F;em&gt;, and &lt;em&gt;3&lt;&#x2F;em&gt;, then a chromosome could be a list: &lt;code&gt;[1, 2, 3]&lt;&#x2F;code&gt; or &lt;code&gt;[2, 1, 3]&lt;&#x2F;code&gt;, and so on. As long as there are coordinates for each city it will be possible to calculate the distance between them, a.k.a: their &amp;quot;fitness&amp;quot; (where shorter is better).&lt;&#x2F;p&gt;
+&lt;p&gt;Knowing that I have a reasonable enough representation of a possible solution and a way to measure its fitness, let me share with you the plan!&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-plan&quot;&gt;The Plan&lt;&#x2F;h2&gt;
+&lt;p&gt;There is a classic movie series here in Sweden called &amp;quot;The Jönsson Gang&amp;quot;. It&#x27;s about a gang of mainly 3 thieves aiming for heists beyond their competence. Their leader, Charles Ingvar Jönsson, had an iconic line: &amp;quot;I have a plan!&amp;quot; His plans were very detailed, and would probably work most of the time. That is, if he and his gang weren&#x27;t distracted by anything from a hotdog to a beer. Well, let me tell you: &lt;strong&gt;I have a plan and I&#x27;m all out of sausages!&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+
+
+    
+
+
+&lt;div class=&quot;quote &quot;&gt;
+    &lt;cite&gt;
+        &lt;p&gt;Less on the nose than &amp;quot;The Purge&amp;quot;, and I can’t ask for more than that.&lt;&#x2F;p&gt;
+
+    &lt;&#x2F;cite&gt;
+    
+&lt;&#x2F;div&gt;
+&lt;p&gt;We are going to need:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Chromosomes&lt;&#x2F;em&gt; and a way to generate them for the initial population.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Fitness function&lt;&#x2F;em&gt; that will be able to give a measure to the &lt;em&gt;chromosomes&#x27;&lt;&#x2F;em&gt; &amp;quot;fitness&amp;quot;.
+Which means we need a function to measure the distance between each city in the &lt;em&gt;chromosome&lt;&#x2F;em&gt;, and not forget to measure the distance between the last city in the &lt;em&gt;chromosome&lt;&#x2F;em&gt; with the first. &lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Parents&lt;&#x2F;em&gt; and how we select them. OK, that sounds weird, but if we are going to have a new generation of chromosomes we need something to base them off of. 
+And we are not going to select them completely at random. This is not a singles&#x27; cruise!&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Crossover&lt;&#x2F;em&gt; (and I&#x27;m so glad that this is the term chosen) between pairs of parents&#x27; chromosomes. 
+Each pair of parents will produce 2 &lt;em&gt;offsprings&lt;&#x2F;em&gt;, where first offspring will select from parent &lt;em&gt;a&lt;&#x2F;em&gt; first, and second offspring will select from parent &lt;em&gt;b&lt;&#x2F;em&gt; first.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Mutation&lt;&#x2F;em&gt; of chromosomes. This is a natural part of the &lt;em&gt;parents&lt;&#x2F;em&gt; producing offspring. This will introduce a unique trait to an offspring that is not necessarily found in the parent. If we are lucky we might see some Super Mutants! &lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Pruning&lt;&#x2F;em&gt; of the population. The least fit chromosomes will leave place to the next generation. This dispassionately called process is less on the nose than &amp;quot;The Purge&amp;quot;, and I can&#x27;t ask for more than that.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;The Evolutionary Loop&lt;&#x2F;strong&gt;&lt;&#x2F;em&gt;! Each part that I&#x27;ve described is part of evolution. All that is left is passing on the new generation to the next and let nature have its fun. Since I&#x27;m not as elegant as dear &lt;em&gt;Charles Ingvar Jönsson&lt;&#x2F;em&gt; I will set a generational limit instead of a goal-oriented threshold for the loop.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;chromosomes-are-potential-solutions&quot;&gt;Chromosomes are potential solutions&lt;&#x2F;h3&gt;
+&lt;p&gt;With the Travelling Salesman Problem the solution is a route, and a route is nothing but a series of places to visit. And by randomly selecting cities to visit, there is a potential that these routes collectively hold the key to the shortest route. And eventually, through evolution, the collection of randomly generated routes, survival of the fittest, and mutation, a generation will produce a good enough route.&lt;&#x2F;p&gt;
+&lt;p&gt;I think I&#x27;ve teased you enough. It&#x27;s time to bring in &lt;code&gt;the code&lt;&#x2F;code&gt; (using &lt;code&gt;Elixir&lt;&#x2F;code&gt;)! I will represent the cities as a list of coordinates, and the chromosomes shall be the indices for each city. &lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  @&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cities &lt;&#x2F;span&gt;&lt;span&gt;[
+&lt;&#x2F;span&gt;&lt;span&gt;    %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 10&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 20&lt;&#x2F;span&gt;&lt;span&gt;}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 5&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 15&lt;&#x2F;span&gt;&lt;span&gt;}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 12&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 1&lt;&#x2F;span&gt;&lt;span&gt;},
+&lt;&#x2F;span&gt;&lt;span&gt;    %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 20&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 10&lt;&#x2F;span&gt;&lt;span&gt;}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 7&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 14&lt;&#x2F;span&gt;&lt;span&gt;}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 15&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 3&lt;&#x2F;span&gt;&lt;span&gt;},
+&lt;&#x2F;span&gt;&lt;span&gt;    %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 15&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 12&lt;&#x2F;span&gt;&lt;span&gt;}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 15&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 10&lt;&#x2F;span&gt;&lt;span&gt;}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 20&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 8&lt;&#x2F;span&gt;&lt;span&gt;},
+&lt;&#x2F;span&gt;&lt;span&gt;    %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 2&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 14&lt;&#x2F;span&gt;&lt;span&gt;},  %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 3&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 11&lt;&#x2F;span&gt;&lt;span&gt;}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 14&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 7&lt;&#x2F;span&gt;&lt;span&gt;},
+&lt;&#x2F;span&gt;&lt;span&gt;    %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 5&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 11&lt;&#x2F;span&gt;&lt;span&gt;}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 5&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 23&lt;&#x2F;span&gt;&lt;span&gt;}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 20&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 23&lt;&#x2F;span&gt;&lt;span&gt;}, 
+&lt;&#x2F;span&gt;&lt;span&gt;    %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 7&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 23&lt;&#x2F;span&gt;&lt;span&gt;}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 16&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 12&lt;&#x2F;span&gt;&lt;span&gt;}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x: 25&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y: 12&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;  ]
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;A chromosome is the length of the list, with each &lt;em&gt;gene&lt;&#x2F;em&gt; representing the index to one of the cities. The foundation is laid when I initialize the population. Let me show you:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;initialize_population&lt;&#x2F;span&gt;&lt;span&gt;(population_size) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    chromosome_template = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.to_list(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;..(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.count(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cities&lt;&#x2F;span&gt;&lt;span&gt;) - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;..population_size, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; _ -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.shuffle(chromosome_template) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Not to toot my own horn here, but doesn’t that look very simple? I introduce the &lt;code&gt;chromosome_template&lt;&#x2F;code&gt; that contains all the indices and shuffle it until I have created enough chromosomes.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;While we are talking about population and chromosomes, let me just warn you that we will see an addition on top of this. I will store a chromosome along with its distance (introduced just below this paragraph) in a map so we get a &lt;code&gt;chromosome_data&lt;&#x2F;code&gt; variable with a value like &lt;code&gt;%{chromosome: [0,1,2], distance: 4.321}&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;the-shorter-the-better-the-fitness-function-edition&quot;&gt;The shorter the better - the fitness function edition&lt;&#x2F;h3&gt;
+&lt;p&gt;Just like Bilbo, it&#x27;s not enough to go &amp;quot;there&amp;quot; - you need to have &amp;quot;and back again&amp;quot; too! The traveling salesman will be visiting each city and then return to their starting city, making a complete loop. The fitness function will sum up all the distances between each city and return that.&lt;&#x2F;p&gt;
+&lt;p&gt;A city&#x27;s coordinate is represented by a map: &lt;code&gt;%{x: 10, y: 20}&lt;&#x2F;code&gt;. When we have two cities they can be: &lt;code&gt;%{x: 10, y: 20}&lt;&#x2F;code&gt; and &lt;code&gt;%{x: 5, y: 15}&lt;&#x2F;code&gt;. The distance between the cities requires a touch of math (or &lt;em&gt;magic&lt;&#x2F;em&gt; if you just want to skim this). The distance between two coordinated in a 2D field can be calculated with the help of Pythagoras: &lt;em&gt;a^2^ + b^2^ = c^2^&lt;&#x2F;em&gt; (or 2D Euclidean). And reframed for the two cities it would be the same as &lt;code&gt;(x&lt;sub&gt;1&lt;&#x2F;sub&gt; - x&lt;sub&gt;2&lt;&#x2F;sub&gt;)&lt;sup&gt;2&lt;&#x2F;sup&gt; + (y&lt;sub&gt;1&lt;&#x2F;sub&gt; - y&lt;sub&gt;2&lt;&#x2F;sub&gt;)&lt;sup&gt;2&lt;&#x2F;sup&gt; = c&lt;sup&gt;2&lt;&#x2F;sup&gt;&lt;&#x2F;code&gt;. Then the distance is &lt;code&gt;d=√(c&lt;sup&gt;2&lt;&#x2F;sup&gt;)&lt;&#x2F;code&gt;. And when we insert the values: &lt;code&gt;d=√((10-5)&lt;sup&gt;2&lt;&#x2F;sup&gt; + (20-15)&lt;sup&gt;2&lt;&#x2F;sup&gt;)≈7&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;Representing this calculation in code:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Calculate the distance between two cities 
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;distance&lt;&#x2F;span&gt;&lt;span&gt;(%{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x:&lt;&#x2F;span&gt;&lt;span&gt; x1, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y:&lt;&#x2F;span&gt;&lt;span&gt; y1}, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;x:&lt;&#x2F;span&gt;&lt;span&gt; x2, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;y:&lt;&#x2F;span&gt;&lt;span&gt; y2}) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Using 2D Euclidean distance
+&lt;&#x2F;span&gt;&lt;span&gt;    dx = abs(x1 - x2)
+&lt;&#x2F;span&gt;&lt;span&gt;    dy = abs(y1 - y2)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    (dx ** &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;) + (dy ** &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:math&lt;&#x2F;span&gt;&lt;span&gt;.sqrt()
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+
+
+    
+
+
+&lt;div class=&quot;quote &quot;&gt;
+    &lt;cite&gt;
+        &lt;p&gt;&lt;em&gt;Oh, the pattern matching&lt;&#x2F;em&gt; - unpacking values to variables right there in the function definitions!&lt;&#x2F;p&gt;
+
+    &lt;&#x2F;cite&gt;
+    
+&lt;&#x2F;div&gt;
+&lt;p&gt;This calculation should be done between each city in a chromosome. If you like some recursion and pattern matching, you will like this bit:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;​​  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def&lt;&#x2F;span&gt;&lt;span&gt; distances([first, second]) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    city1 = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.at(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cities&lt;&#x2F;span&gt;&lt;span&gt;, first)
+&lt;&#x2F;span&gt;&lt;span&gt;    city2 = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.at(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cities&lt;&#x2F;span&gt;&lt;span&gt;, second)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    distance(city1, city2)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;distances&lt;&#x2F;span&gt;&lt;span&gt;([first, second | tail]) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    city1 = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.at(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cities&lt;&#x2F;span&gt;&lt;span&gt;, first)
+&lt;&#x2F;span&gt;&lt;span&gt;    city2 = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.at(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;cities&lt;&#x2F;span&gt;&lt;span&gt;, second)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    distance(city1, city2) + distances([second | tail])
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;em&gt;Oh, the pattern matching&lt;&#x2F;em&gt; - unpacking values to variables right there in the function definitions! The first distances function will catch when a list is passed to it that contains only two elements, so it will return only the distance between the two cities in the list. But the second function will continue calling itself as long as there are more elements in the list.&lt;&#x2F;p&gt;
+&lt;p&gt;And if you are thinking that this does not measure the loop-back distance, you are correct! I saved that fun tidbit for the &lt;code&gt;fitness_function&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;fitness_function&lt;&#x2F;span&gt;&lt;span&gt;(chromosome) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    last_to_first_elements = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.take(chromosome, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) ++ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.take(chromosome, -&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) 
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    there = distances(chromosome)
+&lt;&#x2F;span&gt;&lt;span&gt;    and_back = distances(last_to_first_elements)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    there + and_back
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;On top of taking the distance between the cities in a chromosome, the &lt;code&gt;fitness_function&lt;&#x2F;code&gt; will also take the last and first element and get its distance. Finally it will add up the distance there and back again and return the sum on a silver platter.&lt;&#x2F;p&gt;
+&lt;p&gt;With this tidbit, each chromosome can be neatly packaged together with its distance in a data-package. A bit like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;    population = initialize_population(population_size)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    chromosome_datas = 
+&lt;&#x2F;span&gt;&lt;span&gt;      population
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; chromosome -&amp;gt; %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;chromosome:&lt;&#x2F;span&gt;&lt;span&gt; chromosome, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;distance:&lt;&#x2F;span&gt;&lt;span&gt; fitness_function(chromosome)} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;        )
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;blockquote&gt;
+&lt;p&gt;As &lt;code&gt;initialize_population&lt;&#x2F;code&gt; returns a list of chromosomes, it can be enumerated on and return new elements that package the chromosome with the distance returned from the &lt;code&gt;fitness_function&lt;&#x2F;code&gt;. Doing it this way means we will have the chromosome&#x27;s fitness readily at hand. I do not consider &lt;em&gt;distance&lt;&#x2F;em&gt; or &lt;em&gt;fitness&lt;&#x2F;em&gt; a part of the chromosome, but rather additional data about the chromosome. &lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;the-not-a-singles-cruise-way-of-selecting-parents&quot;&gt;The not-a-singles-cruise way of selecting parents&lt;&#x2F;h3&gt;
+&lt;p&gt;&amp;quot;So you want offspring but want someone to do it for you?&amp;quot; Good news, I’ve got the recipe for you! Given that there is a population of random chromosomes, it would be neat if the next generation were a bit better than the one previous. While I personally would like to say that &lt;em&gt;millennials&lt;&#x2F;em&gt; have it all figured out, we can still improve upon this generation. But for this to work we want to give a higher chance to chromosomes with shorter routes to produce offspring. This will mean that the offspring inherits the parents&#x27; good qualities (or bad, but that&#x27;s why we want to prefer the parents with shorter routes).&lt;&#x2F;p&gt;
+
+
+    
+
+
+&lt;div class=&quot;quote &quot;&gt;
+    &lt;cite&gt;
+        &lt;p&gt;Selecting parents is not as much a cruise fare as it is a casino.&lt;&#x2F;p&gt;
+
+    &lt;&#x2F;cite&gt;
+    
+&lt;&#x2F;div&gt;
+&lt;p&gt;There is this thing called &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Fitness_proportionate_selection&quot;&gt;roulette wheel selection&lt;&#x2F;a&gt;. To give a higher chance for the chromosomes with shorter distances to be selected I will just give them a larger pie of the wheel than the chromosome with longer distances. When I spin the wheel, every chromosome has the chance of being the winner but the likelihood that it falls on a chromosome with a longer route is smaller.&lt;&#x2F;p&gt;
+&lt;p&gt;My foolproof plan for this is to summarize every route&#x27;s distance and make an inverse ratio for them. On each spin of the &lt;em&gt;wheel&lt;&#x2F;em&gt;, there is a chance that a chromosome will be selected. The higher the inverse ratio is, the higher the chance that the wheel will stop at the chromosome.&lt;&#x2F;p&gt;
+&lt;p&gt;In Elixir, I would do it like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;general_inverse_fitness&lt;&#x2F;span&gt;&lt;span&gt;(population_data) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.reduce(population_data, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; data, acc -&amp;gt; acc + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span&gt;&#x2F; data.distance &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;select_parents&lt;&#x2F;span&gt;&lt;span&gt;(population_data, num_parents \\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    general_inverse_fitness =  general_inverse_fitness(population_data)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;..num_parents, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; _ -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Select n parents
+&lt;&#x2F;span&gt;&lt;span&gt;      random_value = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:rand&lt;&#x2F;span&gt;&lt;span&gt;.uniform() * general_inverse_fitness
+&lt;&#x2F;span&gt;&lt;span&gt;      select_chromosome(population_data, random_value, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;select_chromosome&lt;&#x2F;span&gt;&lt;span&gt;(population_data, target_fitness, acc_fitness) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    [chromosome_data | tail] = population_data
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # The greater value from the distance function the less the new distance will be, 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # so we promote the shorter routes before the longer routes
+&lt;&#x2F;span&gt;&lt;span&gt;    new_fitness = acc_fitness + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span&gt;&#x2F; chromosome_data.distance
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span&gt; new_fitness &amp;gt;= target_fitness &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      chromosome_data
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;      select_chromosome(tail, target_fitness, new_fitness)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The &lt;code&gt;select_parents&lt;&#x2F;code&gt; function is the entry-point. It will first summarize the inverse distances. In general the sum will become larger the shorter the distances are but it will depend on population size (meaning as a standalone metric it is not useful for comparing between different population sizes, but is meaningful within the population that it is used).&lt;&#x2F;p&gt;
+&lt;p&gt;With the &lt;code&gt;general_inverse_fitness&lt;&#x2F;code&gt;, the function can continue with selecting parents. Whenever a new parent is selected, a new random value will be the target that a chromosome should achieve. If a chromosome does not achieve the target it will add to an accumulator that is added to the next chromosome&#x27;s calculation. This is like the slowing of the roulette wheel. So selecting parents is not as much a cruise fare as it is a casino! &lt;&#x2F;p&gt;
+&lt;h3 id=&quot;crossover-and-mutation-the-offsprings&quot;&gt;Crossover and mutation: The Offsprings&lt;&#x2F;h3&gt;
+&lt;p&gt;Before we let the parents do what defines them in the evolutionary process, let&#x27;s consider who should be pairing up with who? In the previous step I let the roulette wheel select parents. I will let the order in which they were selected define the pair of parents. Though it could be any kind of parental constellation - we are not limited to two parents, really - I feel like I want to keep it simple.&lt;&#x2F;p&gt;
+&lt;p&gt;Each pair of two parents will combine their chromosomes with each other in a &lt;em&gt;crossover&lt;&#x2F;em&gt; process. &lt;strong&gt;This part is important!&lt;&#x2F;strong&gt; So if you&#x27;ve skimmed this far, focus-up!&lt;&#x2F;p&gt;
+&lt;p&gt;In a &lt;em&gt;crossover&lt;&#x2F;em&gt; I will take a random length of genes from one parent starting from a random position. The genes will be a subarray of cities, preserving the order from the parent chromosome. Then I will assemble a new chromosome and fill in the blanks for each element that is missing from the first subarray.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Example&lt;&#x2F;strong&gt; 
+A chromosome has length 6, the &lt;em&gt;crossover&lt;&#x2F;em&gt; will have a starting index of 2, and subarray length of 3. &lt;&#x2F;p&gt;
+&lt;p&gt;Parent Chromosome A:                 [2, 0, 1, 3, 4, 5]&lt;br &#x2F;&gt;
+Parent Chromosome B:                 [1, 2, 3, 5, 4, 0]&lt;&#x2F;p&gt;
+&lt;p&gt;Subarray 1:                          [_, _, 1, 3, 4, _]&lt;&#x2F;p&gt;
+&lt;p&gt;Available genes from Chromosome B:   [2, 5, 0]&lt;br &#x2F;&gt;
+Fill in blanks with available genes: [2, 5, 1, 3, 4, 0]&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+
+
+    
+
+
+&lt;div class=&quot;quote &quot;&gt;
+    &lt;cite&gt;
+        &lt;p&gt;A beautiful snowflake, if you may. Or a Super Mutant!&lt;&#x2F;p&gt;
+
+    &lt;&#x2F;cite&gt;
+    
+&lt;&#x2F;div&gt;
+&lt;p&gt;By combining the chromosomes this way I can preserve some of the route information and find new ones. But whichever parent&#x27;s chromosome is selected first will have a higher impact for the new chromosome. For this reason I will crossover each pair of parents twice. Both parents&#x27; chromosomes will get to go first. It will be less fuss that way!&lt;&#x2F;p&gt;
+&lt;p&gt;But an offspring is not only the combination of parents&#x27; chromosomes. Each offspring has the potential of being unique: a beautiful snowflake, if you may. Or a Super Mutant!&lt;&#x2F;p&gt;
+&lt;p&gt;This is the role of &lt;em&gt;&lt;strong&gt;mutation&lt;&#x2F;strong&gt;&lt;&#x2F;em&gt;. To randomly introduce new characteristics to a chromosome. What my mutation function will do is to select at least one gene from the crossover chromosome and insert it at a random position. &lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;crossover&lt;&#x2F;span&gt;&lt;span&gt;(chromosome_1, chromosome_2) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # 1. We select the parts of chromosome_1 randomly (the order is important)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    #    It can be [_, _, B, C, A, _]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    #    which means first selection will be [B, C, A], leaving D, E, F 
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    cut_point_1 = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:rand&lt;&#x2F;span&gt;&lt;span&gt;.uniform(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.count(chromosome_1) - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) 
+&lt;&#x2F;span&gt;&lt;span&gt;    cut_point_2 = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:rand&lt;&#x2F;span&gt;&lt;span&gt;.uniform(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.count(chromosome_1) - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) 
+&lt;&#x2F;span&gt;&lt;span&gt;    [start_point, end_point] = [cut_point_1, cut_point_2] |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.sort()
+&lt;&#x2F;span&gt;&lt;span&gt;    selection = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.slice(chromosome_1, start_point..end_point) 
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # 2. We want to get the relationships that is present in chromosome_2
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    #    It can be [B, C, D, F, E, A]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    #    Be mindful that we do not want to select either A, B, or C again. 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    #    This means that we should filter out every used gene: [D, F, E]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    #    and start filling the missing pieces with the genes that are left.
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    available_genes = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.filter(chromosome_2, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; gene -&amp;gt; !&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.member?(selection, gene) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    {prefix, suffix} = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.split(available_genes, start_point)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # 3. And then we assemble the chromosome from the different parts, 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    #    combining chromosome_1 and chromosome_2 genes
+&lt;&#x2F;span&gt;&lt;span&gt;    
+&lt;&#x2F;span&gt;&lt;span&gt;    prefix ++ selection ++ suffix
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;mutation&lt;&#x2F;span&gt;&lt;span&gt;(chromosome) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    chromosome_length = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.count(chromosome)
+&lt;&#x2F;span&gt;&lt;span&gt;    portion_of_mutation = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.1
+&lt;&#x2F;span&gt;&lt;span&gt;    least_num_of_mutations = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    num_of_mutations = 
+&lt;&#x2F;span&gt;&lt;span&gt;      round(chromosome_length * portion_of_mutation) 
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; max(least_num_of_mutations)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # For each number of mutations
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # - Take random element
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # - Insert at random position
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    mutating_genes = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.take_random(chromosome, num_of_mutations)
+&lt;&#x2F;span&gt;&lt;span&gt;    
+&lt;&#x2F;span&gt;&lt;span&gt;    template = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.filter(chromosome, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; gene -&amp;gt; !&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.member?(mutating_genes, gene) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.reduce(mutating_genes, template, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; mutating_gene, acc -&amp;gt; 
+&lt;&#x2F;span&gt;&lt;span&gt;      random_pos = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.count(acc) - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span&gt;|&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:rand&lt;&#x2F;span&gt;&lt;span&gt;.uniform()
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;List&lt;&#x2F;span&gt;&lt;span&gt;.insert_at(acc, random_pos, mutating_gene)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;I would be amiss if I didn&#x27;t point out that changing the position of just one element in the chromosome will have a huge impact on the overall chromosome information. One element contains not only the order a city is being visited, but it&#x27;s also information about a connection from one city via the element to the next city. So keeping the mutation to minimal changes is good, as it otherwise would be resulting in a chromosome that is far different from either parent.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;making-space-for-the-new-generation&quot;&gt;Making space for the new generation&lt;&#x2F;h3&gt;
+
+
+    
+
+
+&lt;div class=&quot;quote &quot;&gt;
+    &lt;cite&gt;
+        &lt;p&gt;Dear &lt;em&gt;Charles&lt;&#x2F;em&gt; would be pretty terrified if he knew what I am about to do.&lt;&#x2F;p&gt;
+
+    &lt;&#x2F;cite&gt;
+    
+&lt;&#x2F;div&gt;
+&lt;p&gt;&lt;em&gt;Charles Ingvar Jönsson&lt;&#x2F;em&gt; would probably know about the Swedish proverb: &amp;quot;Finns det hjärterum så finns det stjärterum&amp;quot;. It means that one can always make space for anyone that wants to join, even if it is crowded: the crowd just needs to squeeze together more. So dear &lt;em&gt;Charles&lt;&#x2F;em&gt; would be pretty terrified if he knew what I am about to do.&lt;&#x2F;p&gt;
+&lt;p&gt;In nature the population size would continuously fluctuate. But in my synthetically created world the size will be constant. That means: for any number of new offsprings, as many of the old population need to scoot over, and out!&lt;&#x2F;p&gt;
+&lt;p&gt;There are many ways this can be done. Some are more imaginative than others. &lt;em&gt;The Purge&lt;&#x2F;em&gt; might have an idea on how this should be done. But I will just sort the old population by their &lt;em&gt;fitness&lt;&#x2F;em&gt; and keep just so many as are needed to keep a constant population size when the new generation is added. &lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;prune&lt;&#x2F;span&gt;&lt;span&gt;(sorted_population_data, prune_count) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    preserve_count = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.count(sorted_population_data) - prune_count
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.take(sorted_population_data, preserve_count)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Prune. That sounds pretty &lt;em&gt;cold&lt;&#x2F;em&gt;. But that&#x27;s the process where I simply &amp;quot;cut off&amp;quot; some branches that, in this case, are too long. This allows our population to become ever more fit for its task.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;The snapshot of the process: &lt;code&gt;prune(sorted_population_data, num_parents) ++ offsprings&lt;&#x2F;code&gt;&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;evolving-a-better-fit&quot;&gt;Evolving a better fit&lt;&#x2F;h3&gt;
+&lt;p&gt;The goal is to find a good-enough chromosome, or route, for our salesman. Each component plays a crucial part to get to that goal. But it&#x27;s a process that requires many trial and errors. That&#x27;s why there is randomness and pruning involved. The randomness allows the algorithm to try new and innovative routes never before considered. And while many of them are utterly poor, somewhere a nugget of gold is found.&lt;&#x2F;p&gt;
+&lt;p&gt;The evolutionary loop will take in a population of chromosomes, select a cadre of parents and let them reproduce, followed by pruning the population to make space for the next generation. This new population will be passed on to another go at evolution. I reason that it is possible to have this loop continue until a good enough fit has been reached (such as when improvements from one generation to the next are stagnating). However, I&#x27;ve decided to use a hard generational limit instead because I&#x27;m feeling lazy.&lt;&#x2F;p&gt;
+&lt;p&gt;Once the generational limit is reached, the chromosome with the shortest route in the current population will be returned.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;evolve&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;      sorted_population_data, 
+&lt;&#x2F;span&gt;&lt;span&gt;      generation_n,  
+&lt;&#x2F;span&gt;&lt;span&gt;      %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;generation_limit:&lt;&#x2F;span&gt;&lt;span&gt; generation_limit}
+&lt;&#x2F;span&gt;&lt;span&gt;    ) when generation_n == generation_limit &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    
+&lt;&#x2F;span&gt;&lt;span&gt;    [chromosome_data] = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.take(sorted_population_data, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    total_fitness = general_inverse_fitness(sorted_population_data)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    %{
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;distance:&lt;&#x2F;span&gt;&lt;span&gt; chromosome_data.distance, 
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;chromosome:&lt;&#x2F;span&gt;&lt;span&gt; chromosome_data.chromosome, 
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;generation:&lt;&#x2F;span&gt;&lt;span&gt; generation_n, 
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;population_fitness:&lt;&#x2F;span&gt;&lt;span&gt; total_fitness
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;evolve&lt;&#x2F;span&gt;&lt;span&gt;(sorted_population_data, generation_n, memo) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;num_parents:&lt;&#x2F;span&gt;&lt;span&gt; num_parents} = memo
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    parents = select_parents(sorted_population_data, num_parents)
+&lt;&#x2F;span&gt;&lt;span&gt;    offsprings = 
+&lt;&#x2F;span&gt;&lt;span&gt;      parents 
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.chunk_every(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.flat_map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span&gt;[parent_1, parent_2] -&amp;gt; 
+&lt;&#x2F;span&gt;&lt;span&gt;        [
+&lt;&#x2F;span&gt;&lt;span&gt;          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;TSP&lt;&#x2F;span&gt;&lt;span&gt;.crossover(parent_1.chromosome, parent_2.chromosome) |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;TSP&lt;&#x2F;span&gt;&lt;span&gt;.mutation(),
+&lt;&#x2F;span&gt;&lt;span&gt;          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;TSP&lt;&#x2F;span&gt;&lt;span&gt;.crossover(parent_2.chromosome, parent_1.chromosome) |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;TSP&lt;&#x2F;span&gt;&lt;span&gt;.mutation()
+&lt;&#x2F;span&gt;&lt;span&gt;        ]
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; chromosome -&amp;gt; 
+&lt;&#x2F;span&gt;&lt;span&gt;        %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;chromosome:&lt;&#x2F;span&gt;&lt;span&gt; chromosome, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;distance:&lt;&#x2F;span&gt;&lt;span&gt; fitness_function(chromosome)}
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    new_population_data = 
+&lt;&#x2F;span&gt;&lt;span&gt;      prune(sorted_population_data, num_parents) ++ offsprings
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.sort_by(
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; chromosome_data -&amp;gt; chromosome_data.distance &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:asc
+&lt;&#x2F;span&gt;&lt;span&gt;      )
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    evolve(new_population_data, generation_n + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, memo)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;run&lt;&#x2F;span&gt;&lt;span&gt;(population_size \\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;100&lt;&#x2F;span&gt;&lt;span&gt;, generation_limit \\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;250&lt;&#x2F;span&gt;&lt;span&gt;, reproduction_rate \\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.3&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    population = initialize_population(population_size)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    population_data = 
+&lt;&#x2F;span&gt;&lt;span&gt;      population
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; chromosome -&amp;gt; %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;chromosome:&lt;&#x2F;span&gt;&lt;span&gt; chromosome, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;distance:&lt;&#x2F;span&gt;&lt;span&gt; fitness_function(chromosome)} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;        )
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    sorted_population = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.sort_by(
+&lt;&#x2F;span&gt;&lt;span&gt;      population_data,
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;distance:&lt;&#x2F;span&gt;&lt;span&gt; distance} -&amp;gt; distance  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:asc
+&lt;&#x2F;span&gt;&lt;span&gt;    )
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    num_parents = num_parents(population_size, reproduction_rate)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    evolve(
+&lt;&#x2F;span&gt;&lt;span&gt;      sorted_population, 
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, 
+&lt;&#x2F;span&gt;&lt;span&gt;      %{
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;num_parents:&lt;&#x2F;span&gt;&lt;span&gt; num_parents, 
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;generation_limit:&lt;&#x2F;span&gt;&lt;span&gt; generation_limit
+&lt;&#x2F;span&gt;&lt;span&gt;      }
+&lt;&#x2F;span&gt;&lt;span&gt;    )
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Let&#x27;s say that someone like me created all these components and put them in a module called &lt;code&gt;TSP&lt;&#x2F;code&gt; (Traveling Salesman Problem in short). The way I would initiate the evolution would be to call the &lt;code&gt;run&lt;&#x2F;code&gt; function like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;TSP&lt;&#x2F;span&gt;&lt;span&gt;.run(aggregator_pid, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;100&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1000&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.3&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The response would be:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;%{
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;distance: 87.68567015836446&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;chromosome: &lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;10&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;9&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;4&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;13&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;15&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;14&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;17&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;3&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;8&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;16&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;6&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;7&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;11&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;5&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;12&lt;&#x2F;span&gt;&lt;span&gt;],
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;generation: 1000&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;population_fitness: 0.946812150303661
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;To me, this looks like a functional algorithm. But don&#x27;t take my word for it. Take these graphs instead:&lt;&#x2F;p&gt;
+&lt;div class=&quot;layout-grid mb-4&quot;&gt;
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;pop-fitness-rate-0_3.svg&quot;
+                height=&quot;254&quot; 
+                width=&quot;265&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+  
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;distance-rate-0_3.svg&quot;
+                height=&quot;254&quot; 
+                width=&quot;269&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;p&gt;In general, a population&#x27;s (inverse) fitness will increase over time, but it will fluctuate as new and untested offsprings are introduced to the mix. A &lt;em&gt;shortest distance&lt;&#x2F;em&gt; may remain the current best alternative for generations upon generations, until the seeming equalibirum is punctuated by a burst of improvement. By combining these views, we can see that the population is ever improving - even if we can&#x27;t detect it right away by the currently shortest route.&lt;&#x2F;p&gt;
+&lt;p&gt;Here&#x27;s a peak at the routes (and at which generation) the algorithm discovered them during one run of the code:&lt;&#x2F;p&gt;
+&lt;div class=&quot;layout-row center mt-4&quot;&gt;
+
+
+
+&lt;video width=&quot;600&quot; height=&quot;337&quot; muted controls&gt;
+    &lt;source src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;articles&amp;#x2F;elixir&amp;#x2F;optimizing-travel-routes-applying-genetic-algorithms&amp;#x2F;best-route-gen.webm&quot; type=&quot;video&amp;#x2F;webm&quot;&gt;
+    
+    Your browser does not support this video
+&lt;&#x2F;video&gt;   
+&lt;&#x2F;div&gt;
+
+&lt;div class=&quot;layout-row center&quot;&gt;
+    &lt;p&gt;&lt;em&gt;&lt;code&gt;population_size=100, generation_limit=1000, reproduction_rate=0.3&lt;&#x2F;code&gt;&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+
+&lt;&#x2F;div&gt;
+&lt;h2 id=&quot;testing-different-scenarios&quot;&gt;Testing different scenarios&lt;&#x2F;h2&gt;
+&lt;p&gt;The complete code and &lt;a href=&quot;https:&#x2F;&#x2F;gist.github.com&#x2F;andersbjorkland&#x2F;3ee7c4dc426fc0d0ab358bb6158080f1&quot;&gt;livebook document can be found as a Github Gist&lt;&#x2F;a&gt;. You are free to copy it and experiment with it as you see fit. I&#x27;ve certainly experimented with it, so let me share a few scenarios with you!&lt;&#x2F;p&gt;
+&lt;p&gt;Each scenario has either population changed, or parent ratio. Each scenario is showing two charts. The first chart shows how the sum of a population&#x27;s general (inverse) fitness increases over the generations. The second chart shows the distance of each generation&#x27;s shortest route.&lt;&#x2F;p&gt;
+&lt;p&gt;Some patterns can be seen for these scenarios. They all follow a taper-off curve, almost a logarithmic curve, for the population fitness; meaning the population see some major improvements through the initial generations and then the improvements are much smaller between generations later on. Another seeming pattern is the impact that a population size have. Small populations might struggle to find routes shorter than 100 before hitting the 1000:th generation. A similar is observed with a small parent ratio.&lt;&#x2F;p&gt;
+&lt;div class=&quot;layout-row center&quot;&gt;&lt;b&gt;When population is small&lt;&#x2F;b&gt; (&lt;code&gt;population=50, parent_ratio=0.3&lt;&#x2F;code&gt;)&lt;&#x2F;div&gt;  
+&lt;div class=&quot;layout-grid mb-4&quot;&gt;
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;pop-fitness-pop-50-0_3.svg&quot;
+                height=&quot;254&quot; 
+                width=&quot;265&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+  
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;distance-pop-50-0_3.svg&quot;
+                height=&quot;254&quot; 
+                width=&quot;269&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;layout-row center&quot;&gt;&lt;b&gt;When population is large&lt;&#x2F;b&gt; (&lt;code&gt;population=300, parent_ratio=0.3&lt;&#x2F;code&gt;)&lt;&#x2F;div&gt;  
+&lt;div class=&quot;layout-grid mb-4&quot;&gt;
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;pop-fitness-pop-300-0_3.svg&quot;
+                height=&quot;248&quot; 
+                width=&quot;265&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+  
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;distance-pop-300-0_3.svg&quot;
+                height=&quot;254&quot; 
+                width=&quot;269&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;div class=&quot;layout-row center&quot;&gt;&lt;b&gt;When parent ratio is small&lt;&#x2F;b&gt; (&lt;code&gt;population=100, parent_ratio=0.1&lt;&#x2F;code&gt;)&lt;&#x2F;div&gt;  
+&lt;div class=&quot;layout-grid mb-4&quot;&gt;
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;pop-fitness-rate-0_01.svg&quot;
+                height=&quot;254&quot; 
+                width=&quot;265&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+  
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;distance-rate-0_01.svg&quot;
+                height=&quot;254&quot; 
+                width=&quot;269&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;  
+&lt;div class=&quot;layout-row center&quot;&gt;&lt;b&gt;When parent ratio is large&lt;&#x2F;b&gt; (&lt;code&gt;population=100, parent_ratio=0.75&lt;&#x2F;code&gt;)&lt;&#x2F;div&gt;  
+&lt;div class=&quot;layout-grid mb-4&quot;&gt;
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;pop-fitness-rate-0_75.svg&quot;
+                height=&quot;254&quot; 
+                width=&quot;265&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+  
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;&quot;
+                src=&quot;distance-rate-0_75.svg&quot;
+                height=&quot;254&quot; 
+                width=&quot;269&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;  
+&lt;h2 id=&quot;reflecting-on-the-generations-past&quot;&gt;Reflecting on the generations past&lt;&#x2F;h2&gt;
+&lt;p&gt;Genetic Algorithms are useful when we might want a solution that is &amp;quot;good enough&amp;quot;, or if we don&#x27;t know what a good solution might even look like. I was lucky today that I withstood the temptation of chasing a hotdog and managed to arrive at a solution (Charles Ingvar Jönsson would be proud, as well as the traveling salesman). I can&#x27;t say if you managed to withstand it, but I&#x27;m happy that you allowed me to draw a route for you.&lt;&#x2F;p&gt;
+&lt;p&gt;I find Genetic Algorithms incredibly fun to work with. This has been the second time that I&#x27;m exploring the subject and I would like to do it again. Besides finding solutions to interesting problems I also find these additional benefits:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Trying different data representations and structures can unlock huge perfomance improvements - which is fun!&lt;&#x2F;li&gt;
+&lt;li&gt;Recursion, pattern matching, and (if you check out the &lt;a href=&quot;https:&#x2F;&#x2F;gist.github.com&#x2F;andersbjorkland&#x2F;3ee7c4dc426fc0d0ab358bb6158080f1&quot;&gt;Livebook document&lt;&#x2F;a&gt;) concurrency! Working with Genetic Algorithms is a good exercise to deepen Elixir skills.&lt;&#x2F;li&gt;
+&lt;li&gt;Fitting each different component together in a recursive loop that makes sense is very satisfying!&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;I hope you had a good time reading this, and hopefully learned something new. I sure did! &lt;&#x2F;p&gt;
+</content>
+    </entry>
+    <entry xml:lang="en">
+        <title>Intro to Genetic Algorithms with Elixir</title>
+        <published>2024-03-21T00:00:00+00:00</published>
+        <updated>2024-03-25T00:00:00+00:00</updated>
+        <author>
+          <name>Anders Björkland</name>
+        </author>
+        <link rel="alternate" href="https://abjork.land/articles/elixir/intro-to-genetic-algorithms-with-elixir/" type="text/html"/>
+        <id>https://abjork.land/articles/elixir/intro-to-genetic-algorithms-with-elixir/</id>
+        <content type="html">&lt;div class=&quot;article-header&quot;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+&lt;img
+        alt=&quot;133&quot;
+        src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.9c60893338d633b5.jpg&quot;
+        srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.38c6b3a9afd8a180.jpg 240w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.9c60893338d633b5.jpg 400w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.0dc6effd0a792513.jpg 600w&quot;
+        sizes=&quot;(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px&quot;
+&#x2F;&gt;
+
+
+    &lt;div class=&quot;text-content&quot;&gt;
+        &lt;h1 class=&quot;article-title&quot;&gt;
+            &lt;div class=&quot;title&quot;&gt;Intro to Genetic Algorithms with Elixir&lt;&#x2F;div&gt;
+            
+        &lt;&#x2F;h1&gt;
+    &lt;&#x2F;div&gt;
+    
+
+ 
+
+ 
+
+&lt;div class=&quot;tag-list absolute&quot;&gt;
+    
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;elixir&#x2F;&quot; class=&quot;hover-bold&quot;&gt;elixir&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;livebook&#x2F;&quot; class=&quot;hover-bold&quot;&gt;livebook&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;algorithms&#x2F;&quot; class=&quot;hover-bold&quot;&gt;algorithms&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+    
+&lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;&lt;div class=&quot;author-container&quot;&gt;
+    &lt;p&gt;Written by Anders Björkland, Web Developer at &lt;a href=&quot;https:&amp;#x2F;&amp;#x2F;www.umain.com&amp;#x2F;&quot;&gt;Umain&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Genetic_algorithm&quot;&gt;Genetic Algorithms (GA)&lt;&#x2F;a&gt; are algorithms inspired by the evolutionary process found in nature. Sometimes these are called Stochastic Algorithms as they make use of randomness to find an optimal solution, but with features such a &amp;quot;natural selection&amp;quot; to remove less suitable solutions while generating new possible ones. &lt;&#x2F;p&gt;
+&lt;p&gt;Genetic Algorithms are found in &lt;a href=&quot;https:&#x2F;&#x2F;ieeexplore.ieee.org&#x2F;document&#x2F;537939&quot;&gt;route optimzation problems&lt;&#x2F;a&gt;, in engineering (e.g. &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Evolved_antenna&quot;&gt;evolved antennas&lt;&#x2F;a&gt;), in &lt;a href=&quot;https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;1707.05377.pdf&quot;&gt;epidemic mitigation&lt;&#x2F;a&gt;, and much more. &lt;&#x2F;p&gt;
+&lt;p&gt;In this article we will solve a simple problem: &amp;quot;what is the target phrase?&amp;quot;. This is not a real-world problem, but suitable enough to showcase each component of a Genetic Algorithm; like a &amp;quot;Hello World&amp;quot; of Genetic Algorithms. With the foundation provided by this, I hope this can give you a better understanding of GAs, and an appreciation for using Elixir with them.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;anatomy-of-a-genetic-algorithm&quot;&gt;Anatomy of a Genetic Algorithm&lt;&#x2F;h2&gt;
+&lt;p&gt;A genetic algorithm will try to promote the possible soultions (&lt;em&gt;chromosomes&lt;&#x2F;em&gt;) with the best &amp;quot;fitness&amp;quot; and combine them into a new possible solution, which will inherit features of both. While it does this, it may introduce some mutations (small changes that were not part of its &amp;quot;parents&amp;quot; chromosomes). &lt;&#x2F;p&gt;
+&lt;p&gt;In essence, these are the genetic algorithm&#x27;s components:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;Chromosomes&lt;&#x2F;em&gt;&lt;br &#x2F;&gt;
+possible solutions&lt;&#x2F;li&gt;
+&lt;li&gt;Initial population&lt;br &#x2F;&gt;
+&lt;em&gt;random chromosomes&lt;&#x2F;em&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Fitness evaluation&lt;&#x2F;li&gt;
+&lt;li&gt;Selection&lt;br &#x2F;&gt;
+&lt;em&gt;better fitness score are more likely to be chosen as &amp;quot;parents&amp;quot;&lt;&#x2F;em&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Crossover&lt;br &#x2F;&gt;
+&lt;em&gt;&amp;quot;mating&amp;quot; of parents to produce an &amp;quot;offspring&amp;quot;, a new chromosome&lt;&#x2F;em&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Mutation&lt;br &#x2F;&gt;
+&lt;em&gt;small random changes in a chromosome&lt;&#x2F;em&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Evolution Loop&lt;br &#x2F;&gt;
+&lt;em&gt;repeating the steps of &lt;strong&gt;selection&lt;&#x2F;strong&gt; -&amp;gt; &lt;strong&gt;crossover&lt;&#x2F;strong&gt; -&amp;gt; &lt;strong&gt;mutation&lt;&#x2F;strong&gt; to arrive at a chromosome that is the best fit for the problem at the hand&lt;&#x2F;em&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;We will add an &amp;quot;elitism&amp;quot; component to this which will make sure that the best possible solutions are never discarded. This is a component that may act dynamic depending on where we are in the evolution loop. But initially we will keep it static. &lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;For anyone who has set up a Livebook application and want to experiment, just &lt;a href=&quot;https:&#x2F;&#x2F;gist.github.com&#x2F;andersbjorkland&#x2F;99a96a26135fea7438ef90cfc354e1ed&quot;&gt;grab the source from my &lt;strong&gt;gist&lt;&#x2F;strong&gt;&lt;&#x2F;a&gt; (copy) and click &lt;em&gt;Open&lt;&#x2F;em&gt;&#x2F;&lt;em&gt;From source&lt;&#x2F;em&gt;. 
+If you haven&#x27;t set up a Livebook application, read about how to do that in my article &lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;elixir&#x2F;interactive-documents-with-livebook&#x2F;#hosting-livebook-on-hugging-face&quot;&gt;Interactive documents with Livebook&lt;&#x2F;a&gt;. You can set it up on free hosting via Hugging Face. &lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;h3 id=&quot;the-target-phrase&quot;&gt;The target phrase&lt;&#x2F;h3&gt;
+&lt;p&gt;Our goal is via random chromosomes start selecting the best fit ones to crossover with each other. They will be selected based on how well they fit with the target phrase. It will be a phrase based on characters from &#x27;a&#x27; to &#x27;z&#x27;, with space included. Let&#x27;s define this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # We define the target phrase here but it might as well be passed in via the evolve function.
+&lt;&#x2F;span&gt;&lt;span&gt;  @&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;target_phrase &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;The solution is yet to emerge&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Defines which characters can be present in the target phrase
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;possible_characters&lt;&#x2F;span&gt;&lt;span&gt;() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.to_list(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?a&lt;&#x2F;span&gt;&lt;span&gt;..&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?z&lt;&#x2F;span&gt;&lt;span&gt;) ++
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.to_list(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?A&lt;&#x2F;span&gt;&lt;span&gt;..&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?Z&lt;&#x2F;span&gt;&lt;span&gt;) ++
+&lt;&#x2F;span&gt;&lt;span&gt;      [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?_&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;?\s&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;the-first-chromosome&quot;&gt;The first chromosome&lt;&#x2F;h3&gt;
+&lt;p&gt;The first step towards arriving at a solution is a function to generate a random chromosome. It will produce a chromosome of length &lt;code&gt;length&lt;&#x2F;code&gt; by random characters present in &lt;code&gt;possible_characters&lt;&#x2F;code&gt;. This function will be used to generate the initial population.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Generate a random chromosome (potential solution)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;random_chromosome&lt;&#x2F;span&gt;&lt;span&gt;() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;..&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;target_phrase&lt;&#x2F;span&gt;&lt;span&gt;),  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# We will help the GA along the way by letting it set correct length
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; _ -&amp;gt; possible_characters() |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.random() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;    )
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;List&lt;&#x2F;span&gt;&lt;span&gt;.to_string()
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;evaluating-fitness&quot;&gt;Evaluating fitness&lt;&#x2F;h3&gt;
+&lt;p&gt;The fitness evaluation is an important part in the genetic algorithm. It will tell the algorithm when it is moving closer towards a solution. In our case, we will do a fairly simple evalutaion. The fitness score will represent how many characters are correctly placed in the chromosome when compared to &lt;code&gt;target_phrase&lt;&#x2F;code&gt;. A more evolved fitness evaluation might take into account its length as well as maybe its &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Levenshtein_distance&quot;&gt;Levenshtein distance&lt;&#x2F;a&gt;, and so on. &lt;&#x2F;p&gt;
+&lt;p&gt;We will see that our fitness evaluation will also take a map, a &amp;quot;memo&amp;quot; of already evaluated chromosomes. This way an already evaluated chromosome will not have to be calculated again. This would be a trade-off between memory&#x2F;retrieval and calculation cycles.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Calculate fitness based on if a character is placed in the correct n:th place.
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;fitness_calc&lt;&#x2F;span&gt;&lt;span&gt;(chromosome) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    chromosome
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.graphemes()
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.zip(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.graphemes(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;target_phrase&lt;&#x2F;span&gt;&lt;span&gt;))
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.count(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn &lt;&#x2F;span&gt;&lt;span&gt;{char1, char2} -&amp;gt; char1 == char2 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Either retrieve fitness score for a chromosome or calculate it and place it in the map
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;fitness&lt;&#x2F;span&gt;&lt;span&gt;(chromosome, memo \\ %{}) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Map&lt;&#x2F;span&gt;&lt;span&gt;.get(memo, chromosome) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;nil &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        fitness = fitness_calc(chromosome)
+&lt;&#x2F;span&gt;&lt;span&gt;        updated_memo = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Map&lt;&#x2F;span&gt;&lt;span&gt;.put(memo, chromosome, fitness)
+&lt;&#x2F;span&gt;&lt;span&gt;        {fitness, updated_memo}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      fitness -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        {fitness, memo}
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Updates the fitness map for all chromosomes
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;memoize_fitness&lt;&#x2F;span&gt;&lt;span&gt;([], memo), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do:&lt;&#x2F;span&gt;&lt;span&gt; memo
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;memoize_fitness&lt;&#x2F;span&gt;&lt;span&gt;([chromosome | tail], memo) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    {_, new_memo} = fitness(chromosome, memo)
+&lt;&#x2F;span&gt;&lt;span&gt;    memoize_fitness(tail, new_memo)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;parents-offsprings-and-mutations&quot;&gt;Parents, offsprings and mutations&lt;&#x2F;h3&gt;
+&lt;p&gt;We have now defined fitness and chromosomes. Let&#x27;s go to the next part, which is selecting parents to produce offsprings via the components &lt;code&gt;crossover&lt;&#x2F;code&gt; and &lt;code&gt;mutation&lt;&#x2F;code&gt;. The idea is to get at least one parent from the ones with the best fitness score, and the other parent from the broader population. Once selected, these will be passed to the crossover function to produce the offspring, and a mutation function that will introduce a bit of variation. Currently we will only make a mutation in one randomly chosen spot.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Randomly select two &amp;quot;parents&amp;quot; from the provided list of chromosomes
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;select_parents&lt;&#x2F;span&gt;&lt;span&gt;([]), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do: &lt;&#x2F;span&gt;&lt;span&gt;[]
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;select_parents&lt;&#x2F;span&gt;&lt;span&gt;(possible_parents) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    possible_parents
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.shuffle()
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.take(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Combine first part of one chromosome to the second part of another. 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # The resulting chromosome will have features from both &amp;quot;parents&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;crossover&lt;&#x2F;span&gt;&lt;span&gt;(chromosome1, chromosome2) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    crossover_point = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.random(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;..(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(chromosome1) - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.slice(chromosome1, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, crossover_point) &amp;lt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.slice(chromosome2, crossover_point, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(chromosome2) - crossover_point)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Introduce a random mutation to a chromsome. 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # The spot where the mutation will happen is randomly chosen, as is the possible character introduced.
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;mutation&lt;&#x2F;span&gt;&lt;span&gt;(chromosome) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    mutation_point = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.random(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;..(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(chromosome) - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.slice(chromosome, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, mutation_point) &amp;lt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;List&lt;&#x2F;span&gt;&lt;span&gt;.to_string([possible_characters() |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.random()]) &amp;lt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.slice(
+&lt;&#x2F;span&gt;&lt;span&gt;        chromosome,
+&lt;&#x2F;span&gt;&lt;span&gt;        mutation_point + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(chromosome) - (mutation_point + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      )
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h3 id=&quot;evolution-the-iterative-process-to-produce-best-fit-chromosome&quot;&gt;Evolution - the iterative process to produce best fit chromosome&lt;&#x2F;h3&gt;
+&lt;p&gt;We will be using a evolve mechanism where we will initialize a starter population with a radom chromosomes and set an &lt;em&gt;elitism rate&lt;&#x2F;em&gt;. These initial values will be passed into a recursive evolve mechanism (our evolution loop). Once we&#x27;ve either gotten a perfect fitness score, or we have hit the generation limit, we will return the best suited chromosome. &lt;&#x2F;p&gt;
+&lt;p&gt;(While we are at it we will also bundle in which iteration - &lt;em&gt;n&lt;&#x2F;em&gt;:th generation - we were at when the chromosome was produced.)&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # Recursive function that will continue evolving the chromosomes until a perfect fitness score is reached, 
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # or the generation limit has been reached.
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;evolve_mechanism&lt;&#x2F;span&gt;&lt;span&gt;(generation, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;population: &lt;&#x2F;span&gt;&lt;span&gt;[best_match | _]}, _elitism, _fitness_memo)
+&lt;&#x2F;span&gt;&lt;span&gt;      when generation.limit == generation.i,
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do:&lt;&#x2F;span&gt;&lt;span&gt; %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;chromosome:&lt;&#x2F;span&gt;&lt;span&gt; best_match, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;generation:&lt;&#x2F;span&gt;&lt;span&gt; generation.i}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;evolve_mechanism&lt;&#x2F;span&gt;&lt;span&gt;(generation, population_data, elitism, fitness_memo) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    memoized_fitness = memoize_fitness(population_data.population, fitness_memo)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Sort population based on fitness
+&lt;&#x2F;span&gt;&lt;span&gt;    sorted_population =
+&lt;&#x2F;span&gt;&lt;span&gt;      population_data.population
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.sort_by(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; chromosome -&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Map&lt;&#x2F;span&gt;&lt;span&gt;.get(memoized_fitness, chromosome) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:desc&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Select number of population that will have a higher chance to survive, and produce offspring
+&lt;&#x2F;span&gt;&lt;span&gt;    elite_population =
+&lt;&#x2F;span&gt;&lt;span&gt;      sorted_population
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.take(elitism.count)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    rest_population = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.drop(sorted_population, elitism.count) |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.shuffle()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    possible_parents = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span&gt; length(elite_population) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      x when x &amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2 &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt; elite_population ++ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.take(sorted_population, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      _ -&amp;gt; elite_population
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;    [parent1, parent2] = select_parents(possible_parents)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Produce offspring by combining parents and introduce a mutation
+&lt;&#x2F;span&gt;&lt;span&gt;    offspring = crossover(parent1, parent2) |&amp;gt; mutation()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Keep an elite-num of chromosome, and drop less fortunate chromomse before appending the offspring
+&lt;&#x2F;span&gt;&lt;span&gt;    new_population =
+&lt;&#x2F;span&gt;&lt;span&gt;      (elite_population ++ rest_population)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.drop(-&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Kernel&lt;&#x2F;span&gt;&lt;span&gt;.++([offspring])
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    [elite | _] = new_population
+&lt;&#x2F;span&gt;&lt;span&gt;    fitness_score = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Map&lt;&#x2F;span&gt;&lt;span&gt;.get(memoized_fitness, elite)
+&lt;&#x2F;span&gt;&lt;span&gt;    max_score = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;target_phrase&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # If perfect fitness score, then return the elite chromosome.
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span&gt; fitness_score &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      x when x == max_score -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;chromosome:&lt;&#x2F;span&gt;&lt;span&gt; elite, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;generation:&lt;&#x2F;span&gt;&lt;span&gt; generation.i}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      _ -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        evolve_mechanism(
+&lt;&#x2F;span&gt;&lt;span&gt;          %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;i:&lt;&#x2F;span&gt;&lt;span&gt; generation.i + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;limit:&lt;&#x2F;span&gt;&lt;span&gt; generation.limit},
+&lt;&#x2F;span&gt;&lt;span&gt;          %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;population:&lt;&#x2F;span&gt;&lt;span&gt; new_population, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;size:&lt;&#x2F;span&gt;&lt;span&gt; population_data.size},
+&lt;&#x2F;span&gt;&lt;span&gt;          elitism,  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Might be switched for adaptive elitism
+&lt;&#x2F;span&gt;&lt;span&gt;          memoized_fitness
+&lt;&#x2F;span&gt;&lt;span&gt;        )
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The &lt;code&gt;evolve_mechanism&lt;&#x2F;code&gt; function is recursive in that it will call itself as long as we either haven&#x27;t gotten a perfect fitness or we have hit a generation limit.&lt;&#x2F;p&gt;
+&lt;p&gt;Now it&#x27;s finally time to define our entry-point to this genetic algorithm. &lt;code&gt;evolve&lt;&#x2F;code&gt; will set up some initial values and start the &lt;code&gt;evolve-mechanism&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  #  Our ENTRY POINT to the evolution
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;evolve&lt;&#x2F;span&gt;&lt;span&gt;(population_size, generation_limit \\ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;100&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    population = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;..population_size, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn&lt;&#x2F;span&gt;&lt;span&gt; _ -&amp;gt; random_chromosome() &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    elitism_rate = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.01
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    evolve_mechanism(
+&lt;&#x2F;span&gt;&lt;span&gt;      %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;i: 0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;limit:&lt;&#x2F;span&gt;&lt;span&gt; generation_limit}, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# generation data
+&lt;&#x2F;span&gt;&lt;span&gt;      %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;population:&lt;&#x2F;span&gt;&lt;span&gt; population, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;size:&lt;&#x2F;span&gt;&lt;span&gt; population_size}, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# population data
+&lt;&#x2F;span&gt;&lt;span&gt;      %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;rate:&lt;&#x2F;span&gt;&lt;span&gt; elitism_rate, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;count:&lt;&#x2F;span&gt;&lt;span&gt; floor(elitism_rate * population_size)}, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# elitism data (suitable for adding an adaptive mechanism)
+&lt;&#x2F;span&gt;&lt;span&gt;      %{} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# fitness map
+&lt;&#x2F;span&gt;&lt;span&gt;    )
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We can call our Genetic Algorithm with the following command: &lt;code&gt;GeneticString.evolve(50, 20000)&lt;&#x2F;code&gt;. This will set the initial population to &lt;code&gt;50&lt;&#x2F;code&gt; and sets the generation limit to &lt;code&gt;20000&lt;&#x2F;code&gt;. The result will be a map like this: &lt;code&gt;%{generation: 6367, chromosome: &amp;quot;The solution is yet to emerge&amp;quot;}&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Our Genetic Algorithm has multiple points where we can experiment with its different parameters. Instead of a static &lt;code&gt;elitism_rate&lt;&#x2F;code&gt; we can involve a more dynamic or adaptive format. We can also experiment with number of offsprings and parents as well. There are a lot of ways to tweak just this simple Genetic Algorithm, but for now, let&#x27;s explore how it would be like to have elitism that is adjusted according to how far along the generations has come towards the generational limit.&lt;&#x2F;p&gt;
+&lt;p&gt;First we will add a new function that will update the elitism:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;adjust_elitism&lt;&#x2F;span&gt;&lt;span&gt;(elitism, generation, population_size) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    progress = generation.i &#x2F; generation.limit
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    rate = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span&gt; progress &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;      # Less of population considered for elite (aka, in this case, available for reproduction)
+&lt;&#x2F;span&gt;&lt;span&gt;      x when x &amp;lt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.2 &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        max(elitism.rate - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.05&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.01&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;      # In later generations, a larger proportion of population will be included in elite population
+&lt;&#x2F;span&gt;&lt;span&gt;      _ -&amp;gt; 
+&lt;&#x2F;span&gt;&lt;span&gt;        min(elitism.rate + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.01&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0.25&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;rate:&lt;&#x2F;span&gt;&lt;span&gt; rate, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;count:&lt;&#x2F;span&gt;&lt;span&gt; floor(rate * population_size)}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Then we will update our &lt;code&gt;evolution_mechanism&lt;&#x2F;code&gt; so that in its recursive call will be updating the elitism:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;GeneticString &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;evolve_mechanism&lt;&#x2F;span&gt;&lt;span&gt;(generation, population_data, elitism, fitness_memo) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # ...
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span&gt; fitness_score &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      x when x == max_score -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;chromosome:&lt;&#x2F;span&gt;&lt;span&gt; elite, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;generation:&lt;&#x2F;span&gt;&lt;span&gt; generation.i}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      _ -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        evolve_mechanism(
+&lt;&#x2F;span&gt;&lt;span&gt;          %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;i:&lt;&#x2F;span&gt;&lt;span&gt; generation.i + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;limit:&lt;&#x2F;span&gt;&lt;span&gt; generation.limit},
+&lt;&#x2F;span&gt;&lt;span&gt;          %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;population:&lt;&#x2F;span&gt;&lt;span&gt; new_population, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;size:&lt;&#x2F;span&gt;&lt;span&gt; population_data.size},
+&lt;&#x2F;span&gt;&lt;span&gt;          adjust_elitism(elitism, generation, population_data.size),  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# We change this row to update elitism
+&lt;&#x2F;span&gt;&lt;span&gt;          memoized_fitness
+&lt;&#x2F;span&gt;&lt;span&gt;        )
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;I test ran our genetic algorithm first with a static elitism, then with an adjusted elitism. Each was run 1000-times. I plotted their density curves and gathered their core descriptive statistics. Let&#x27;s see the result:&lt;&#x2F;p&gt;
+&lt;p&gt;
+&lt;div class=&quot;layout-row center&quot;&gt;
+    &lt;p&gt;&lt;em&gt;n:th generation (static elitism)&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+
+&lt;&#x2F;div&gt;
+
+
+
+
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container center mt-0&quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with static elitism rate. The curve is centered (median) around 6763 with a standard deviation of 2497. The curve is right-tailed.&quot;
+                src=&quot;static_elitism.svg&quot;
+                height=&quot;354&quot; 
+                width=&quot;491&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+
+
+&lt;div class=&quot;layout-row center&quot;&gt;
+    &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;min&lt;&#x2F;th&gt;&lt;th&gt;max&lt;&#x2F;th&gt;&lt;th&gt;mean&lt;&#x2F;th&gt;&lt;th&gt;median&lt;&#x2F;th&gt;&lt;th&gt;stdev&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;2391&lt;&#x2F;td&gt;&lt;td&gt;20000&lt;&#x2F;td&gt;&lt;td&gt;7170&lt;&#x2F;td&gt;&lt;td&gt;6763&lt;&#x2F;td&gt;&lt;td&gt;2497&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;
+&lt;div class=&quot;layout-row center&quot;&gt;
+    &lt;p&gt;&lt;em&gt;n:th generation (adjustable elitism)&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+
+&lt;&#x2F;div&gt;
+
+
+
+
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container center mt-0&quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with adjustable elitism rate. The curve is centered (median) around 5991 with a standard deviation of 1847. The curve is right-tailed.&quot;
+                src=&quot;adjustable_elitism.svg&quot;
+                height=&quot;354&quot; 
+                width=&quot;491&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+
+
+&lt;div class=&quot;layout-row center&quot;&gt;
+    &lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;min&lt;&#x2F;th&gt;&lt;th&gt;max&lt;&#x2F;th&gt;&lt;th&gt;mean&lt;&#x2F;th&gt;&lt;th&gt;median&lt;&#x2F;th&gt;&lt;th&gt;stdev&lt;&#x2F;th&gt;&lt;&#x2F;tr&gt;&lt;&#x2F;thead&gt;&lt;tbody&gt;
+&lt;tr&gt;&lt;td&gt;2149&lt;&#x2F;td&gt;&lt;td&gt;15078&lt;&#x2F;td&gt;&lt;td&gt;6297&lt;&#x2F;td&gt;&lt;td&gt;5991&lt;&#x2F;td&gt;&lt;td&gt;1847&lt;&#x2F;td&gt;&lt;&#x2F;tr&gt;
+&lt;&#x2F;tbody&gt;&lt;&#x2F;table&gt;
+
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;With this adjustable elitism, we got a more narrow distribution and a lower median. We can argue that the inclusion of the adjustable elitism improved our algorithm. But still, there are so many ways we can tinker with it. The elitism can have multiple ways it can be adjusted; different cut-offs, rate changes, minimum and maximum rates, and so on. But there are also many other adjustments we can make. How many parents we will allow getting offsprings, and how many? Perhaps the fitness-evaluation is too simple and need more nuance? Should the crossover be more of a diffusion where one parent&#x27;s feature is scattered in the chromosome? &lt;&#x2F;p&gt;
+&lt;p&gt;The Genetic Algorithm is versatile! We have seen its core components and got to tinker with them. We have explored one way to make it more dynamic and what impact that may have. Even a simple GA as we have built here can be adjusted in many different ways. I therefor welcome you to do so. I have created a GitHub Gist with a Livebook document that you may use in your own Livebook session: &lt;a href=&quot;https:&#x2F;&#x2F;gist.github.com&#x2F;andersbjorkland&#x2F;99a96a26135fea7438ef90cfc354e1ed&quot;&gt;genetic-algorithm.livemd&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+</content>
+    </entry>
+    <entry xml:lang="en">
+        <title>Interactive documents with Livebook</title>
+        <published>2024-03-02T00:00:00+00:00</published>
+        <updated>2024-03-28T00:00:00+00:00</updated>
+        <author>
+          <name>Anders Björkland</name>
+        </author>
+        <link rel="alternate" href="https://abjork.land/articles/elixir/interactive-documents-with-livebook/" type="text/html"/>
+        <id>https://abjork.land/articles/elixir/interactive-documents-with-livebook/</id>
+        <content type="html">&lt;div class=&quot;article-header&quot;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+&lt;img
+        alt=&quot;133&quot;
+        src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.fd570643f7080b58.jpg&quot;
+        srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.887cfca0b1cb954e.jpg 240w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.fd570643f7080b58.jpg 400w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.b0560df6f86d4d64.jpg 600w&quot;
+        sizes=&quot;(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px&quot;
+&#x2F;&gt;
+
+
+    &lt;div class=&quot;text-content&quot;&gt;
+        &lt;h1 class=&quot;article-title&quot;&gt;
+            &lt;div class=&quot;title&quot;&gt;Interactive documents with Livebook&lt;&#x2F;div&gt;
+            
+        &lt;&#x2F;h1&gt;
+    &lt;&#x2F;div&gt;
+    
+
+ 
+
+ 
+
+&lt;div class=&quot;tag-list absolute&quot;&gt;
+    
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;elixir&#x2F;&quot; class=&quot;hover-bold&quot;&gt;elixir&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;livebook&#x2F;&quot; class=&quot;hover-bold&quot;&gt;livebook&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+    
+&lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;p&gt;Have you ever wrestled with confusing documentation while trying to learn a new library or language?  The explanations might be sparse, the code examples outdated, or the concepts too advanced for a beginner. It&#x27;s a common frustration! Take the powerful R visualization library &lt;code&gt;ggplot2&lt;&#x2F;code&gt;. Its complex subject matter and documentation make it a challenge for newcomers.&lt;&#x2F;p&gt;
+&lt;p&gt;The documentation for &lt;code&gt;ggplot2&lt;&#x2F;code&gt; clearly explains this: &lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If you are new to ggplot2 you are better off starting with a systematic introduction, rather than trying to learn from reading individual documentation pages.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;But what if learning about complex subjects could be easier? What if examples were always up-to-date and explanations plentiful? That&#x27;s where the Elixir ecosystem shines! Imagine a world where package documentation is interactive, intuitive, and beginner-friendly - even when the subject matter is difficult.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;let-s-talk-about-documentation-in-elixir-land&quot;&gt;Let’s talk about documentation in Elixir-land!&lt;&#x2F;h2&gt;
+&lt;p&gt;Imagine if you’re visiting your common dependency registry, where you usually would search and find a package and some instructions for how to install it with your project, and of course a link to the package’s main webpage. In Elixir-land, this is where &lt;a href=&quot;https:&#x2F;&#x2F;hexdocs.pm&quot;&gt;hexdocs.pm&lt;&#x2F;a&gt; enters.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;em&gt;hex&lt;&#x2F;em&gt; is the ordinary Package Manager, but its documentation site is more than a place for installation instructions. Here you can find documentation for Elixir as well as every package available via &lt;em&gt;hex&lt;&#x2F;em&gt;. You would not need to leave &lt;code&gt;hexdocs.pm&lt;&#x2F;code&gt; for reading about more than installation instructions. It contains the API for each package, and in many cases the guides&#x2F;tutorials for how to use them. And as everything with &lt;code&gt;hexdocs.pm&lt;&#x2F;code&gt; is managed on GitHub, anyone can be on top of any issues with documentation (such as rectifying poor explanations or adding or fixing examples) by issuing PRs.&lt;&#x2F;p&gt;
+&lt;p&gt;Some of these API documents also have guides connected to them; occasionally written in a format called &lt;code&gt;livemd&lt;&#x2F;code&gt;. These are markdown files that also works as &lt;em&gt;live documents&lt;&#x2F;em&gt;; meaning they are able to be launched with Livebook (either locally hosted or in cloud) and experimented with. This way, anyone can see how each function and struct can be used. &lt;&#x2F;p&gt;
+&lt;h2 id=&quot;what-is-livebook&quot;&gt;What is Livebook&lt;&#x2F;h2&gt;
+&lt;p&gt;Livebook is a format for interactive Elixir notebooks. Like Jupyter, but specialized for Elixir (and Erlang). They are run as web applications. And when you have a Livebook application, you may open any &lt;em&gt;livemd&lt;&#x2F;em&gt;-document in it. You will see a &amp;quot;Run in Livebook&amp;quot; button on these pages. &lt;&#x2F;p&gt;
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;A button with the text &amp;quot;Run in Livebook&amp;quot;&quot;
+            src=&quot;run_in_livebook_btn.webp&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;run_in_livebook_btn.de8af7114a3b1867.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;run_in_livebook_btn.3ec6351d6bd34a3a.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;run_in_livebook_btn.54659afe57fc5a0a.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;Clicking it will open a new page where you can enter a URL to your local or cloud hosted Livebook application. You may also configure &lt;code&gt;hexdocs.pm&lt;&#x2F;code&gt; so it remembers your URL. &lt;&#x2F;p&gt;
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;Image of choosing to install livebook&quot;
+            src=&quot;livebook_install.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;livebook_install.666c4b81d344361a.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;livebook_install.214d0c45ce5ddf21.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;livebook_install.5077c3fa4323cd31.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;h3 id=&quot;hosting-livebook-on-hugging-face&quot;&gt;Hosting Livebook on Hugging Face&lt;&#x2F;h3&gt;
+&lt;p&gt;Hugging Face offers many alternatives for hosting. All it requires is that you&#x27;ve registered an account. Then you can onboard to their free hosting alternative. I&#x27;m registered as &lt;code&gt;beercan&lt;&#x2F;code&gt;, and let&#x27;s see how onboarding would look like for me. &lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Create a new Space&lt;&#x2F;em&gt;: Fill in the basic information for the Hugging Face Space.
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;A simple form to select owner, space name, and associated license&quot;
+            src=&quot;create_new_space.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;create_new_space.cb033df331344c4b.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;create_new_space.ccc35c48eb999da4.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;create_new_space.c991e1005718a213.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Select the Space SDK&lt;&#x2F;em&gt;: Possibilities are endless, as Hugging Face offers a Docker hosting alternative. Select &lt;strong&gt;Docker&lt;&#x2F;strong&gt; and the &lt;strong&gt;Livebook&lt;&#x2F;strong&gt; template.&lt;br &#x2F;&gt;
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;A simple form to select owner, space name, and associated license&quot;
+            src=&quot;docker_choice.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;docker_choice.854bdbcdbe6e1400.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;docker_choice.df5894fb16938749.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;docker_choice.3dd055b7ae4af863.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Select hardware&lt;&#x2F;em&gt;: We will run a basic setup, which offers 2 virtual CPUs with 16GB RAM. Other, priced, alternatives exists. For most cases, vCPUs are enough. If you want to be training your own models or use LLMs, then the need for the GPU alternatives are there for your choosing. You may also upgrade&#x2F;downgrade at any point. 
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;A select menu with multiple alternatives. The first alternative is selected. It is &amp;quot;CPU basic, 2vCPU, 16GB, free&amp;quot;.&quot;
+            src=&quot;select_hardware.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;select_hardware.f5bea2f77b7cb37b.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;select_hardware.c0028ce4b750eda1.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;select_hardware.efaf23611e52bcae.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Secrets&lt;&#x2F;em&gt;: Select a password for your Livebook application, and then let &lt;code&gt;XLA_TARGET&lt;&#x2F;code&gt; be &lt;code&gt;cpu&lt;&#x2F;code&gt;. (This should reflect the type of hardware that you are running your application on.)
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;A select menu with multiple alternatives. The first alternative is selected. It is &amp;quot;CPU basic, 2vCPU, 16GB, free&amp;quot;.&quot;
+            src=&quot;secrets_form.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;secrets_form.c9a0028781b90249.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;secrets_form.8e8c163b7740e15f.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;secrets_form.ae6d50a1a3d9c364.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Make your Livebook Private or Public&lt;&#x2F;em&gt;: Select whatever you are comfortable with. Start with &lt;code&gt;Private&lt;&#x2F;code&gt; if you don&#x27;t plan to make it visible to anyone.&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;em&gt;Click on &lt;code&gt;Create Space&lt;&#x2F;code&gt;&lt;&#x2F;em&gt;. This will build the docker image and spin it up. Per default, the container will sleep after 48 hours of inactivity. Any of the paid alternatives allows to change this. 
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;A screen with logs for docker-building. In the background a information text &amp;quot;Building...&amp;quot;.&quot;
+            src=&quot;docker_building.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;docker_building.4a1fe346a1531b80.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;docker_building.9a996a2911d7f2f3.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;docker_building.c39ee7eeeeab4de6.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;When the image is done building, it will be run, and you will be able to see this screen: 
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;A page with two links. One is for &amp;quot;Dashboard&amp;quot;, the other is under the headline &amp;quot;Apps&amp;quot; and says &amp;quot;Livebook [heart] Hugging Face&amp;quot;.&quot;
+            src=&quot;new_app_running.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;new_app_running.4e8b07b06a7df8db.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;new_app_running.f8f45f1366ad39e3.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;new_app_running.6dc2c409be10d9e8.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Clicking on &amp;quot;Dashboard&amp;quot; will lead you to an authentication page where you will enter the password that you set earlier. Once that is passed, you can start to explore what Livebook is. It has multiple livebook documents teaching the basics of Elixir, Livebook, and some common Livebook components.&lt;br &#x2F;&gt;
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;A dashboard interface with a vertical menu, and a main section. The menu has the alternatives: Home, Apps, Learn, Settings, and My Hub. The Main section has two buttons: open, and &amp;quot;new notebook&amp;quot;, as well as 3 livebook documents: &amp;quot;Welcome to Livebook&amp;quot;, &amp;quot;Distributed portals with Elixir&amp;quot;, and &amp;quot;Deploy a chat app with Kino&amp;quot;&quot;
+            src=&quot;dashboard.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;dashboard.febb5b0b1e87833b.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;dashboard.5708f4d06ccbc757.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;dashboard.da28b15784c7063d.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;explore-a-livebook-document-bumblebee&quot;&gt;Explore a Livebook document - Bumblebee&lt;&#x2F;h2&gt;
+&lt;p&gt;Let&#x27;s head to &lt;a href=&quot;https:&#x2F;&#x2F;hexdocs.pm&#x2F;bumblebee&#x2F;examples.html#image-classification&quot;&gt;hexdocs.pm&#x2F;bumblebee&#x2F;examples.html#image-classification&lt;&#x2F;a&gt;. Click the cog-icon in the upper right corner to access the settings and check &amp;quot;Run in Livebook&amp;quot;. Paste your Livebook URL in the field. It should be something like &lt;code&gt;https:&#x2F;&#x2F;beercan-liveboook.hf.space&#x2F;&lt;&#x2F;code&gt;, which is &lt;code&gt;https:&#x2F;&#x2F;{username}-{projectName}.hf.space&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;A settings menu for Hexdocs.pm&quot;
+            src=&quot;hexdocs_settings.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hexdocs_settings.c6a6f72e44854849.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hexdocs_settings.149ff1ddd8c37435.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hexdocs_settings.0b7a5becc89d473e.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;Now when we click on &amp;quot;Run in Livebook&amp;quot; it will initiate a new Livebook document for us in our Huggning Face space. Now we can configure and execute (or &lt;em&gt;evaluate&lt;&#x2F;em&gt;) each Elixir code element in our document. The first Elixir element is where we will install all the dependencies that will be covered in the document. It can be executed by hovering the element and click the &lt;code&gt;Evaluate&lt;&#x2F;code&gt; button that will appear.&lt;&#x2F;p&gt;
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;Evaluate an Elixir code element&quot;
+            src=&quot;evaluate_element.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;evaluate_element.fe2f143f1fb461ff.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;evaluate_element.4c13d8ccbe1d3c65.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;evaluate_element.a37fbccad8109d0a.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;Clicking it will start the code execution. Each element will have access to variables declared in earlier elexir elements, so you may define variables that will be used later in the code. &lt;&#x2F;p&gt;
+&lt;p&gt;With Livebook we have access to a library of Livebook components in the form of the Kino dependency. In this example we will see how it renders an Image input-field:&lt;br &#x2F;&gt;
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;Rendered Livebook component for importing an Image file.&quot;
+            src=&quot;image_import.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;image_import.cd269a4bb9832ea6.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;image_import.106cf27a128b921e.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;image_import.5e257a6af3d89e12.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;And to wrap this gift that is the &lt;code&gt;Bumblebee&lt;&#x2F;code&gt; library in Livebook, let&#x27;s run an inference model on the image that was imported and see how it classifies the badger laying on the ground.&lt;br &#x2F;&gt;
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;Rendered Livebook component for importing an Image file.&quot;
+            src=&quot;image_inference.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;image_inference.faed6d4ff6ebe42a.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;image_inference.7c128d10a5821761.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;image_inference.db043e9e45860bfd.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;In this case, the model that was used was pretty sure that it indeed was a badger, with a .3% uncertainty about it. &lt;&#x2F;p&gt;
+&lt;h2 id=&quot;in-closing&quot;&gt;In closing&lt;&#x2F;h2&gt;
+&lt;p&gt;Remember how easy it was to set up a Livebook environment on Hugging Face? And how the interactive examples in &lt;code&gt;Bumblebee&lt;&#x2F;code&gt;&#x27;s  documentation made understanding the library a breeze? This is just a taste of how Elixir and Livebook can streamline your learning of complex topics. Whether you&#x27;re an Elixir beginner or a seasoned developer, there&#x27;s always something new and exciting to discover. Go forth and explore – you might be surprised by the creative possibilities that await! &lt;&#x2F;p&gt;
+</content>
+    </entry>
+</feed>

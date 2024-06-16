@@ -1,0 +1,803 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/exploration/discovering-elixir/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/hero.b12ee6181cb0b7b5.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/hero.b12ee6181cb0b7b5.webp">
+    
+    
+    
+    
+    
+    
+   
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Discovering the Elixir programming language" />
+<meta property="og:description" content="Dive into the world of functional programming with Elixir, a dynamic language that offers a fresh perspective for OOP enthusiasts. Explore its unique features through building a Fibonacci sequence function and learn about its immutable nature, pattern matching, and built-in testing capabilities." />
+<meta property="og:url" content="https://abjork.land/articles/exploration/discovering-elixir/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2023-03-29"> 
+
+
+ 
+     
+<meta name="last-updated" content="2024-03-28" />
+    
+
+
+
+        
+    
+
+    <title>
+ Discovering the Elixir programming language
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/exploration/discovering-elixir/"
+    },
+    "headline": "Discovering the Elixir programming language",
+    "description": "Dive into the world of functional programming with Elixir, a dynamic language that offers a fresh perspective for OOP enthusiasts. Explore its unique features through building a Fibonacci sequence function and learn about its immutable nature, pattern matching, and built-in testing capabilities.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2024-03-28",
+    "datePublished": "2023-03-29"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/exploration/">Exploration</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.072f529ca9d7e4ba.png"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.90abc3a22c01bd40.png 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.072f529ca9d7e4ba.png 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.5552db772dc76c9d.png 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Discovering the Elixir programming language</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/elixir/" class="hover-bold">elixir</a></div>
+        
+        <div><a href="https://abjork.land/tags/phoenix/" class="hover-bold">phoenix</a></div>
+        
+    
+</div>
+
+
+
+</div>
+<p>Elixir is an exciting programming language to learn. Especially coming from an Object Oriented Programming (OOP) background. 
+There is so much to discover, because for many, it has flown under the radar. Just look at this chart!<br />
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>Look at it 👇</p>
+
+    </cite>
+    
+</div>
+
+<div class="layout-row center">
+    <p>(<em>ignore the cats</em>)</p>
+
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="Two charts, where one is clearly higher than the other."
+                src="cute-cats-chart.jpeg"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cute-cats-chart.0cf6bf35edc06f22.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cute-cats-chart.db0b040b46682b14.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cute-cats-chart.052e34af20870951.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+</p>
+<p>While OOP is a popular thing, functional programming is growing in usage and being used in more contexts. While some 
+languages allows for many approaches, Elixir locks you into its functional approach. We won't see any classes or loops,
+and we will soon find out why!</p>
+<p>Today we will explore some basic structures of the language by building a <a href="https://en.wikipedia.org/wiki/Fibonacci_sequence">Fibonacci sequence</a>
+function and a few tests for it. But before we do. A quick run-down of the Fibonacci Sequence. It follows a principle of 
+every number being the sum of the one just before and the one before that. To start off, it is stipulated that the first 
+and second number are 1. This means that the third number is (1 + 1) = 2. The fourth will be (2 + 1) = 3. So the first 
+7 numbers will be: <code>1 1 2 3 5 8 13</code>.</p>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>Let's <em><strong>purr</strong></em> some Elixir</p>
+
+    </cite>
+    
+</div>
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A cat in a lab coat is pouring a liquid out of a beaker."
+                src="cat-pouring.jpeg"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-pouring.fc11cd94ead8bda3.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-pouring.ddf85dfd85303766.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-pouring.b1bc23df413d1a5b.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+<p>We create a new file called <code>fibonacci.ex</code> and define a module called <code>Fibonacci</code>:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">Fibonacci </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">fib</span><span>(n) when </span><span style="color:#b48ead;">is_integer</span><span>(n) and n &gt;= </span><span style="color:#d08770;">0 </span><span style="color:#b48ead;">do
+</span><span>    fib_helper(n)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">fib_helper</span><span>(</span><span style="color:#d08770;">0</span><span>), </span><span style="color:#d08770;">do: 0
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">fib_helper</span><span>(</span><span style="color:#d08770;">1</span><span>), </span><span style="color:#d08770;">do: 1
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">fib_helper</span><span>(n), </span><span style="color:#d08770;">do:</span><span> fib_helper(n - </span><span style="color:#d08770;">1</span><span>) + fib_helper(n - </span><span style="color:#d08770;">2</span><span>)
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>The Module contains a function called <code>fib</code> with a <a href="https://elixirschool.com/en/lessons/basics/functions#guards-6">guard</a> 
+defined for it. This means that the function will only be run on arguments that are positive integers. Inside the 
+function is another function-call. We make use of a function called <code>fib_helper</code>. This function has 3 definitions;</p>
+<ol>
+<li>One is matching an argument that is 0 and returns 0.</li>
+<li>One is matching an argument that is 1 and returns 1.</li>
+<li>One is the Fibonacci sequence logic all wrapped up in recursion.</li>
+</ol>
+<p>When we pass it 3, we will match with the third fib_helper, it will first call, fib_helper(2) + fib_helper(1). 
+The first function call will again match the 3rd definition, so recursion, and the second function call will match the 
+2nd definition. It will continue to do recursive calls until it does not call itself again. Such as is the case for the 
+calls that match either the first or the second definition of <code>fib_helper</code>.</p>
+<blockquote>
+<p>A fun detail about <code>fib_helper</code> is that it is private within the module. We can make functions private by using <code>defp</code>
+instead of <code>def</code>.</p>
+<p>An even more fun (as in fundamental) detail is how Elixir just returns values from our functions without us having to 
+tell it to do so.</p>
+</blockquote>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>If you don't like recursions, you gonna have a bad time</p>
+
+    </cite>
+    
+</div>
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A cat in a lab coat is pouring a liquid out of a beaker."
+                src="cat-falling.jpeg"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-falling.a8dc7fb87d48936c.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-falling.fe35476c3a1c11e8.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-falling.32a6f8a921adc492.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+<p>To run our function we can run <code>iex</code> from the terminal where the files are located. This will open up the interactive 
+Elixir interface, or a <a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPL</a>. From this we will 
+compile our file: <code>c(&quot;fibonacci.ex&quot;)</code>. This will compile the module for us so we can call the <code>fib</code> function on it.</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span> 
+</span><span style="color:#bf616a;">iex</span><span>(1)&gt; c(&quot;</span><span style="color:#a3be8c;">fibonacci.ex</span><span>&quot;)
+</span><span style="color:#bf616a;">[Fibonacci]
+</span><span style="color:#bf616a;">iex</span><span>(2)&gt; Fibonacci.fib(</span><span style="color:#bf616a;">5</span><span>)
+</span><span style="color:#bf616a;">5
+</span><span style="color:#bf616a;">iex</span><span>(3)&gt; Fibonacci.fib(</span><span style="color:#bf616a;">7</span><span>)
+</span><span style="color:#bf616a;">13
+</span></code></pre>
+<p>How do we know that our function really works correctly? Usually we would write tests. While many programming languages has excellent 
+unit testing frameworks available to them as third party libraries, this is not necessary in Elixir. <strong>Because every 
+line of code in Elixir is perfect!</strong> Well, mine are. As long as I keep the number of lines to <strong>0</strong>. </p>
+<p>Well, if we do really want tests (and we do), we have a built-in testing-tool called 
+<a href="https://hexdocs.pm/ex_unit/ExUnit.html">ExUnit</a>. This means we can start writing tests just by starting a new file. 
+Let's create <code>fibonacci_test.exs</code>. It will start the ExUnit testing application and make some assertions with the help 
+of a module called <code>ExUnit.Case</code>. This will make it possible for us to assert that we get the correct Fibonacci value 
+for n-th position of the sequence.</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#ebcb8b;">Code</span><span>.require_file(&quot;</span><span style="color:#a3be8c;">./fibonacci.ex</span><span>&quot;)
+</span><span>
+</span><span style="color:#ebcb8b;">ExUnit</span><span>.start()
+</span><span>
+</span><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">FibonacciTest </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#b48ead;">use </span><span style="color:#ebcb8b;">ExUnit</span><span>.</span><span style="color:#ebcb8b;">Case
+</span><span>
+</span><span>  test &quot;</span><span style="color:#a3be8c;">fibonacci of 0 is 0</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>    assert </span><span style="color:#ebcb8b;">Fibonacci</span><span>.fib(</span><span style="color:#d08770;">0</span><span>) == </span><span style="color:#d08770;">0
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  test &quot;</span><span style="color:#a3be8c;">fibonacci of 1 is 1</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>    assert </span><span style="color:#ebcb8b;">Fibonacci</span><span>.fib(</span><span style="color:#d08770;">1</span><span>) == </span><span style="color:#d08770;">1
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  test &quot;</span><span style="color:#a3be8c;">fibonacci of n is correct</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>    assert </span><span style="color:#ebcb8b;">Fibonacci</span><span>.fib(</span><span style="color:#d08770;">10</span><span>) == </span><span style="color:#d08770;">55
+</span><span>    assert </span><span style="color:#ebcb8b;">Fibonacci</span><span>.fib(</span><span style="color:#d08770;">20</span><span>) == </span><span style="color:#d08770;">6765
+</span><span>    assert </span><span style="color:#ebcb8b;">Fibonacci</span><span>.fib(</span><span style="color:#d08770;">30</span><span>) == </span><span style="color:#d08770;">832040
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>  
+</span><span>  test &quot;</span><span style="color:#a3be8c;">fibonacci of float is not allowed</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>    catch_error </span><span style="color:#ebcb8b;">Fibonacci</span><span>.fib(</span><span style="color:#d08770;">1.2</span><span>)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  test &quot;</span><span style="color:#a3be8c;">fibonacci of negative is not allowed</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>    catch_error </span><span style="color:#ebcb8b;">Fibonacci</span><span>.fib(-</span><span style="color:#d08770;">2</span><span>)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span><span>
+</span></code></pre>
+<p>For the test file to be aware of the module we want to test, we first have to import the file. Next, we are starting the 
+testing application in the file for it to be able to run the module's test-cases. We define a few test-cases, just to 
+see that we have defined the constraints for the sequence correctly, and that a few n-th positions returns correct values. </p>
+<p>To run the test-file, we will run this in the terminal (not in <em>iex</em>):
+<code>elixir fibonacci_test.exs</code></p>
+<p>Giving us the following output:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">.....
+</span><span style="color:#bf616a;">Finished</span><span> in 0.04 seconds (0.04s on load, 0.00s async, 0.00s sync)
+</span><span style="color:#bf616a;">5</span><span> tests, 0 failures
+</span></code></pre>
+<p>To dip a bit further into the Elixir pond, let's create a function to return a list of all the values in a sequence up 
+to a n-th number, but limit to maximum of 30 numbers. The test for it would look like this: </p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  test &quot;</span><span style="color:#a3be8c;">fibonacci sequence up to 8</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>    assert </span><span style="color:#ebcb8b;">Fibonacci</span><span>.seq(</span><span style="color:#d08770;">8</span><span>) == [</span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">5</span><span>, </span><span style="color:#d08770;">8</span><span>, </span><span style="color:#d08770;">13</span><span>, </span><span style="color:#d08770;">21</span><span>]
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<blockquote>
+<p>As a matter of the modern take on Fibonacci sequence, the 0-th number is included. </p>
+</blockquote>
+<p>We create the <code>seq</code> function in <code>fibonacci.ex</code>. It will make use of our already defined <code>fib</code> function. We will see some 
+esoteric language, but we will be able to discern the meaning.</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">seq</span><span>(n) when </span><span style="color:#b48ead;">is_integer</span><span>(n) and n &gt;= </span><span style="color:#d08770;">0 </span><span>and n &lt;= </span><span style="color:#d08770;">30 </span><span style="color:#b48ead;">do
+</span><span>    </span><span style="color:#ebcb8b;">Enum</span><span>.map(</span><span style="color:#d08770;">0</span><span>..n, &amp;</span><span style="color:#bf616a;">fib</span><span>/</span><span style="color:#d08770;">1</span><span>)
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>We define the function <code>seq</code> to take an integer between (and including) 0 and 30. We then define a list of 
+numbers from 0 up to the supplied number (<code>0..n</code>) and have a map-function (from <code>Enum</code>) to have a function 
+applied for each number on the sequence (<code>&amp;fib/1</code>). Let's unpack that series of characters a bit!</p>
+<ul>
+<li><code>&amp;</code> in this context means <em>(anonymous) function</em>. </li>
+<li><code>fib/1</code> is the function with an 
+<a href="https://elixirschool.com/en/lessons/basics/functions/#function-naming-and-arity-3">arity of 1</a> - which means the 
+function <code>fib</code> that takes 1 argument (no more or less)</li>
+<li>Which means that <code>&amp;fib/1</code> is shorthand for writing <code>fn (n) -&gt; fib n end</code>.</li>
+</ul>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>Is that all it takes?</p>
+
+    </cite>
+    
+</div>
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="Two cats looking up, a bit questioning."
+                src="cat-puzzled.jpeg"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-puzzled.874983017edfb2f5.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-puzzled.5fc6b600441e7c91.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-puzzled.093fbffab96394c7.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+<p>While this looks neat, let's run the tests:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">elixir</span><span> fibonacci_test.exs                                                                                                                                                                         
+</span><span style="color:#bf616a;">......
+</span><span style="color:#bf616a;">Finished</span><span> in 0.04 seconds (0.03s on load, 0.00s async, 0.01s sync)
+</span><span style="color:#bf616a;">6</span><span> tests, 0 failures
+</span></code></pre>
+<p><em><strong>...and all was good!</strong></em></p>
+<p>Let us now create a print function to print out each value in a sequence. We will see one <em>convoluted</em> way of doing it
+and refine it later. What we will see is a <a href="https://elixir-lang.org/getting-started/enumerables-and-streams.html#the-pipe-operator">pipe operator</a> 
+for passing the result of one function in to the other, <a href="https://elixir-lang.org/getting-started/enumerables-and-streams.html#the-pipe-operator">pattern matching</a> 
+to unpack a list, the <a href="https://elixir-lang.org/getting-started/case-cond-and-if.html#if-and-unless">unless-condition</a> 
+to check if a pattern match is not true and a perfectly good for-loop nowhere to be seen and in its place, <strong>recursion</strong>!</p>
+<p>In the module <code>Fibonacci</code> (<code>fibonacci.ex</code>-file) we add these functions:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">print_seq</span><span>(n) </span><span style="color:#b48ead;">do
+</span><span>    seq(n) |&gt; print_seq_helper
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">print_seq_helper</span><span>([head|tail]) </span><span style="color:#b48ead;">do
+</span><span>    </span><span style="color:#ebcb8b;">IO</span><span>.puts(head)
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">unless </span><span>[] == tail </span><span style="color:#b48ead;">do
+</span><span>      print_seq_helper(tail)
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>    </span><span style="color:#a3be8c;">:ok
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>The first function is the public facing function <code>print_seq</code>. This will take an argument and pass it to the <code>seq</code> function. 
+With <code>n = 3</code> the <code>seq</code> function would return a list with the value <code>[0, 1, 2, 3]</code>. We <strong>pipe</strong> <code>|&gt; </code> this to the next 
+function; <code>print_seq_helper</code>. Something incredible happens when we do that. We will <strong>pattern match</strong>  the incoming 
+argument and have the first element of the list signed onto <code>head</code> and keep the rest of the elements as a list in <code>tail</code>.</p>
+<p>When we call <code>IO.puts(head)</code> it will print out the value that is currently in <code>head</code>. Next we check that the <code>tail</code> is 
+not an empty list and again call <code>print_seq_helper</code> and let it take the next element in the list to the <code>head</code>. And so 
+on it goes until the list is empty and a &quot;simple&quot; <code>:ok</code> is returned.</p>
+<p>The <code>:ok</code> is called an 
+<a href="https://elixir-lang.org/getting-started/basic-types.html#atoms">atom</a>. It is a constant that has the same value as it is 
+named. The name can be most anything we want. We could return <code>:cat_in_a_hat</code> if we wanted to! </p>
+<p>When we return to <code>iex</code> we can compile the latest changes and see what our output will be:</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">iex</span><span>(1)&gt; c(&quot;</span><span style="color:#a3be8c;">fibonacci.ex</span><span>&quot;)
+</span><span style="color:#bf616a;">warning:</span><span> redefining module Fibonacci (current version defined in memory)
+</span><span>  </span><span style="color:#bf616a;">fibonacci.ex:1
+</span><span>
+</span><span style="color:#bf616a;">[Fibonacci]
+</span><span style="color:#bf616a;">iex</span><span>(2)&gt; Fibonacci.print_seq(</span><span style="color:#bf616a;">8</span><span>)
+</span><span style="color:#bf616a;">0
+</span><span style="color:#bf616a;">1
+</span><span style="color:#bf616a;">1
+</span><span style="color:#bf616a;">2
+</span><span style="color:#bf616a;">3
+</span><span style="color:#bf616a;">5
+</span><span style="color:#bf616a;">8
+</span><span style="color:#bf616a;">13
+</span><span style="color:#bf616a;">21
+</span><span style="color:#bf616a;">:cat_in_a_hat
+</span></code></pre>
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A cat in a hat on top of a table with a few beakers surrounding it."
+                src="cat-in-a-hat.jpeg"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-in-a-hat.13cf91be1bb3dc19.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-in-a-hat.e98eda4330b2eabe.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-in-a-hat.cdbbc93023636d70.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+<p>Great! It's just the way we wanted it. And we got a cat in a hat as well. But why no for loop to go through the list? 
+The thing about Elixir is immutability. It just has a complete loathing of variables that are <em><strong>variable</strong></em>... anything 
+that changes what they once have said they are. It rather have you trash your variable and replace it with a new than 
+you were to change the value of the variable. A for-loop or a for-each-loop would have a variable hold the current 
+iteration or element without replacing the variable. So a loop like this would constantly be changing the value of the 
+loop variable. </p>
+<p>With all of that now out of the way, how could we rewrite the print-function to be a bit more neat? How about this?!</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">print_seq</span><span>(n) </span><span style="color:#b48ead;">do
+</span><span>    </span><span style="color:#ebcb8b;">Enum</span><span>.each(seq(n), &amp;</span><span style="color:#ebcb8b;">IO</span><span>.puts/</span><span style="color:#d08770;">1</span><span>)
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>No need for a helper-function and everything done in a single row. It looks very nice, and  it has a pretty good 
+replacement for a for-each loop. The sad news though: we lost the <code>:cat_in_a_hat</code>, but it's <strong>:ok</strong>!</p>
+<pre data-lang="zsh" style="background-color:#2b303b;color:#c0c5ce;" class="language-zsh "><code class="language-zsh" data-lang="zsh"><span style="color:#bf616a;">iex</span><span>(3)&gt; r(</span><span style="color:#bf616a;">Fibonacci</span><span>)
+</span><span style="color:#bf616a;">warning:</span><span> redefining module Fibonacci (current version defined in memory)
+</span><span>  </span><span style="color:#bf616a;">fibonacci.ex:1
+</span><span>
+</span><span style="color:#bf616a;">{:reloaded, </span><span style="color:#b48ead;">[</span><span>Fibonacci</span><span style="color:#b48ead;">]</span><span>}
+</span><span style="color:#bf616a;">iex</span><span>(4)&gt; Fibonacci.print_seq(</span><span style="color:#bf616a;">8</span><span>)
+</span><span style="color:#bf616a;">0
+</span><span style="color:#bf616a;">1
+</span><span style="color:#bf616a;">1
+</span><span style="color:#bf616a;">2
+</span><span style="color:#bf616a;">3
+</span><span style="color:#bf616a;">5
+</span><span style="color:#bf616a;">8
+</span><span style="color:#bf616a;">13
+</span><span style="color:#bf616a;">21
+</span><span style="color:#bf616a;">:ok
+</span></code></pre>
+<p>In this article, we have made some pretty astounding discoveries!</p>
+<ul>
+<li>There are other programming languages out there beside [insert your favourite language here]</li>
+<li>Functional programming is <strong>do-able</strong></li>
+<li>For-loops are mutable, and mutations are loathed</li>
+<li>Recursions everywhere!</li>
+<li>Pattern matching can be used for unpacking values of a list</li>
+<li>Functions can have guards</li>
+<li>Arity is apparently a thing</li>
+<li>Pipe operators gives this to that</li>
+<li><code>fn</code> needs shortening to <code>&amp;</code></li>
+<li>Tests are right there to be written, if you don't write perfect code from line 0</li>
+<li>The author of this article has a weird fixation to include cats in this article. It has nothing to do with Elixir, 
+so why keep it going? Was it so he could have a cat_in_a_hat in the end? Or was it to end it with a pun? In either way,
+Elixir looks <strong>purr</strong>fect!</li>
+</ul>
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A happy cat in a top hat on top of a table holding up a vile with liquid in it. The cat, despite doing this, looks professional."
+                src="happy-cat.jpeg"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;happy-cat.b4b575ef7388d6d6.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;happy-cat.f6f36f83b5f01b6e.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;happy-cat.74e253cd580364ee.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2023-03-29 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

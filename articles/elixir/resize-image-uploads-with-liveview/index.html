@@ -1,0 +1,800 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/elixir/resize-image-uploads-with-liveview/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+
+
+    
+    
+    
+    
+    
+    
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/hero.f675ce607ecb9004.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/hero.f675ce607ecb9004.webp">
+    
+    
+    
+    
+   
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Resize Image Uploads with LiveView" />
+<meta property="og:description" content="Learn how to resize and upload images in a Phoenix application. This guide covers schema modification, migrations, file validation, and LiveView integration for a seamless user profile image update." />
+<meta property="og:url" content="https://abjork.land/articles/elixir/resize-image-uploads-with-liveview/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2024-01-31"> 
+
+
+ 
+     
+<meta name="last-updated" content="2024-03-28" />
+    
+
+
+
+        
+    
+
+    <title>
+ Resize Image Uploads with LiveView
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/elixir/resize-image-uploads-with-liveview/"
+    },
+    "headline": "Resize Image Uploads with LiveView",
+    "description": "Learn how to resize and upload images in a Phoenix application. This guide covers schema modification, migrations, file validation, and LiveView integration for a seamless user profile image update.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2024-03-28",
+    "datePublished": "2024-01-31"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/elixir/">Elixir</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.997da961180fa2bd.png"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.f27f81c956b2ac4f.png 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.997da961180fa2bd.png 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.cc31884f85fbc20f.png 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Resize Image Uploads with LiveView</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/elixir/" class="hover-bold">elixir</a></div>
+        
+        <div><a href="https://abjork.land/tags/phoenix/" class="hover-bold">phoenix</a></div>
+        
+        <div><a href="https://abjork.land/tags/liveview/" class="hover-bold">liveview</a></div>
+        
+    
+</div>
+
+
+
+</div>
+<p>In this article we will see how to resize an image before uploading it to a Phoenix backend. We will do this by adding a profile image to the user in a basic Phoenix setup. This will take us through the process of modifying an existing schema, create and run a migration, write custom hooks, add file validation, and ultimately create a new file. So if you are up for the task and would like to follow along, here’s the resize/upload flow:</p>
+<div class="white-bg">
+
+
+
+
+
+
+
+    
+
+
+
+    
+    <div class="image-container center">
+        <div>
+            <img
+                alt="The logic flow of uploading an image. A user selects an image, it is then resized. This will initialize a validation from the client on the server. If it is valid the User will be allowed to submit the image, otherwise must choose another image."
+                src="flow.svg"
+                height="1262" 
+                width="681"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+
+</div>
+<h2 id="prerequisites-and-setup">Prerequisites and Setup</h2>
+<ul>
+<li>Docker</li>
+<li>Elixir</li>
+<li>Mix</li>
+</ul>
+<p>Run a postgres container: 
+<code>docker run --name phoenix_db -e POSTGRES_PASSWORD=phoenix_pwd -e POSTGRES_USER=phoenix_usr -d -p 5432:5432 postgres</code></p>
+<p>If you do not have a Phoenix application, run:
+<code>mix phx.new my_app</code> </p>
+<blockquote>
+<p>If <code>phx.new</code> is not a recognized mix-command, install the command with <code>mix archive.install hex phx_new</code>. At the time of writing, this will install version <code>1.7.10</code>.</p>
+</blockquote>
+<p>Setup the application to use the correct database credentails in <code>./config/dev.exs</code>. Adjust in the top of the file so it corresponds with your docker container setup:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#65737e;"># …
+</span><span style="color:#65737e;"># Configure your database
+</span><span>config </span><span style="color:#a3be8c;">:my_app</span><span>, </span><span style="color:#ebcb8b;">MyApp</span><span>.</span><span style="color:#ebcb8b;">Repo</span><span>,
+</span><span>  </span><span style="color:#d08770;">username: </span><span>&quot;</span><span style="color:#a3be8c;">phoenix_usr</span><span>&quot;,
+</span><span>  </span><span style="color:#d08770;">password: </span><span>&quot;</span><span style="color:#a3be8c;">phoenix_pwd</span><span>&quot;,
+</span><span>  </span><span style="color:#d08770;">hostname: </span><span>&quot;</span><span style="color:#a3be8c;">localhost</span><span>&quot;,
+</span><span>  </span><span style="color:#d08770;">database: </span><span>&quot;</span><span style="color:#a3be8c;">my_app_dev</span><span>&quot;,
+</span><span>  </span><span style="color:#d08770;">stacktrace: true</span><span>,
+</span><span>  </span><span style="color:#d08770;">show_sensitive_data_on_connection_error: true</span><span>,
+</span><span>  </span><span style="color:#d08770;">pool_size: 10
+</span><span>
+</span><span style="color:#65737e;"># …
+</span></code></pre>
+<p>With database configuration ready we can set up the database with <code>mix ecto.create</code>. We will then add a Phoenix LiveView <strong>authentication</strong> system by first running <code>mix phx.gen.auth Accounts User users</code>. And then run <code>mix ecto.migrate</code>.</p>
+<h2 id="modify-the-user-schema">Modify the User schema</h2>
+<p>We will have a profile image added to our new User model. The user will only ever have one of these and we will not preserve any kind of history beyond what the user currently has as their profile image. We plan to add a string field to the User model and schema to store the path for the image. Let’s create a migration file for this.</p>
+<p>From the CLI we run <code>mix ecto.gen.migration add_profile_image</code>.</p>
+<p>This creates a new file <code> priv/repo/migrations/[timestamp]_add_profile_image.exs</code> with the backbone for a migration-change. We will alter the table for <code>users</code> by adding a new field:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">ArchAngler</span><span>.</span><span style="color:#ebcb8b;">Repo</span><span>.</span><span style="color:#ebcb8b;">Migrations</span><span>.</span><span style="color:#ebcb8b;">AddProfileImage </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#b48ead;">use </span><span style="color:#ebcb8b;">Ecto</span><span>.</span><span style="color:#ebcb8b;">Migration
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">change </span><span style="color:#b48ead;">do
+</span><span>    alter table(</span><span style="color:#a3be8c;">:users</span><span>) </span><span style="color:#b48ead;">do
+</span><span>      add </span><span style="color:#a3be8c;">:profile_image</span><span>, </span><span style="color:#a3be8c;">:string
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>Next we will run this migration with <code>mix ecto.migrate</code>. 
+Having updated the database schema for the <code>users</code> table, we now turn to update our model accordingly. The model is defined in <code>./lib/my_app/accounts/user.ex</code>. Let’s adjust the schema:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">MyApp</span><span>.</span><span style="color:#ebcb8b;">Accounts</span><span>.</span><span style="color:#ebcb8b;">User </span><span style="color:#b48ead;">do
+</span><span>
+</span><span style="color:#65737e;">  # …
+</span><span>  schema &quot;</span><span style="color:#a3be8c;">users</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">    # add the profile_image field here
+</span><span>    field </span><span style="color:#a3be8c;">:profile_image</span><span>, </span><span style="color:#a3be8c;">:string
+</span><span>
+</span><span>    timestamps()
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#65737e;">  #...
+</span><span>
+</span><span style="color:#65737e;">  # add a new changeset function for the new field by the end of the module:
+</span><span>  </span><span style="color:#65737e;">@doc &quot;&quot;&quot;
+</span><span style="color:#65737e;">  A User changeset for updating Profile Image
+</span><span style="color:#65737e;">  &quot;&quot;&quot;
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">profile_image_changeset</span><span>(user, attrs, _opts \\ []) </span><span style="color:#b48ead;">do
+</span><span>    user
+</span><span>    |&gt; cast(attrs, [</span><span style="color:#a3be8c;">:profile_image</span><span>])
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>With the updated User model, we should update the context as well. We find it in <code>./lib/my_app/accounts.ex</code>. Add the following function to the module:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span> </span><span style="color:#65737e;">@doc &quot;&quot;&quot;
+</span><span style="color:#65737e;">  Returns an `%Ecto.Chageset{}` for updating the user profile_image.
+</span><span style="color:#65737e;">  &quot;&quot;&quot;
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">change_profile_image</span><span>(user, attrs \\ %{}) </span><span style="color:#b48ead;">do
+</span><span>    </span><span style="color:#ebcb8b;">User</span><span>.profile_image_changeset(user, attrs)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">update_profile_image</span><span>(%</span><span style="color:#ebcb8b;">User</span><span>{} = user, attrs) </span><span style="color:#b48ead;">do
+</span><span>    user
+</span><span>    |&gt; </span><span style="color:#ebcb8b;">User</span><span>.profile_image_changeset(attrs)
+</span><span>    |&gt; </span><span style="color:#ebcb8b;">Repo</span><span>.update()
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>
+</span></code></pre>
+<p>This will be used to create a form for the LiveView component.</p>
+<h2 id="update-user-settings-page">Update User Settings page</h2>
+<p>With updates to the User model, we can now update the LiveView component for the User Settings page. Currently the view has two forms: One for changing <code>Email</code>, and another for changing <code>Password</code>. We will add a new form for uploading and changing the <code>Profile Image</code>.</p>
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="The logic flow of uploading an image. A user selects an image, it is then resized. This will initialize a validation from the client on the server. If it is valid the User will be allowed to submit the image, otherwise must choose another image."
+            src="user-settings.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;user-settings.014fd3d636fb5603.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;user-settings.1c9c547d67791390.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;user-settings.aeb03949d69019ff.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+<p>We will find the LiveView component in <code>./lib/my_app_web/live/user_settings_live.ex</code>. In its <code>render</code> function, we will add our new form. Insert the following code above the email-form.</p>
+<pre data-lang="heex" style="background-color:#2b303b;color:#c0c5ce;" class="language-heex "><code class="language-heex" data-lang="heex"><span>      &lt;div&gt;
+</span><span>        &lt;div id=&quot;image-uploader-container&quot;&gt;
+</span><span>          &lt;label&gt;
+</span><span>            &lt;div class=&quot;block text-sm font-semibold leading-6 text-zinc-800&quot;&gt;Profile Image&lt;/div&gt;
+</span><span>            &lt;input
+</span><span>              id=&quot;profile-image-uploader&quot;
+</span><span>              type=&quot;file&quot;
+</span><span>              accept=&quot;image/png, image/jpeg, image/jpg, image/webp&quot;
+</span><span>              phx-hook=&quot;Resize&quot;
+</span><span>            /&gt;
+</span><span>          &lt;/label&gt;
+</span><span>
+</span><span>          &lt;%= if @image_error do %&gt;
+</span><span>            &lt;p class=&quot;text-red-500&quot;&gt;&lt;%= @image_error %&gt;&lt;/p&gt;
+</span><span>          &lt;% end %&gt;
+</span><span>        &lt;/div&gt;
+</span><span>        
+</span><span>        &lt;.simple_form
+</span><span>          for={@image_form}
+</span><span>          id=&quot;profile_image_form&quot;
+</span><span>          phx-submit=&quot;update_profile_image&quot;
+</span><span>          phx-change=&quot;validate_profile_image&quot;
+</span><span>        &gt;
+</span><span>          &lt;%= if @profile_image do %&gt;
+</span><span>            &lt;img src={@profile_image} alt=&quot;Profile Image&quot; /&gt;
+</span><span>          &lt;% end %&gt;
+</span><span>          &lt;div class=&quot;&quot;&gt;
+</span><span>            &lt;div id=&quot;image-preview-container&quot;&gt;
+</span><span>              &lt;%= if @resized_image_src do %&gt;
+</span><span>                &lt;img src={@resized_image_src} alt=&quot;preview resized image&quot; /&gt;
+</span><span>              &lt;% end %&gt;
+</span><span>            &lt;/div&gt;
+</span><span>          &lt;/div&gt;
+</span><span>
+</span><span>          &lt;.input
+</span><span>            id=&quot;profile-image-src-input&quot;
+</span><span>            field={@image_form[:profile_image]}
+</span><span>            type=&quot;hidden&quot;
+</span><span>            value={@resized_image_src}
+</span><span>            required
+</span><span>          /&gt;
+</span><span>
+</span><span>          &lt;:actions&gt;
+</span><span>            &lt;%= if @allow_image_upload do %&gt;
+</span><span>              &lt;.button phx-disable-with=&quot;Changing...&quot; id=&quot;submit-image-btn&quot; class=&quot;&quot;&gt;
+</span><span>                Submit image
+</span><span>              &lt;/.button&gt;
+</span><span>            &lt;% end %&gt;
+</span><span>          &lt;/:actions&gt;
+</span><span>        &lt;/.simple_form&gt;
+</span><span>      &lt;/div&gt;
+</span><span>
+</span><span>      &lt;%!-- below is Email-form --%&gt;
+</span></code></pre>
+<p>Couple of things to note here: we are currently referring to Phoenix functions and socket assignments that currently do not exist. We are missing these functions in the LiveView component:
+<code>validate_profile_image</code>, which will be called for every change in the form.
+<code>update_profile_image</code>, which will be called upon form-submit.</p>
+<p>The following socket assignments are missing: 
+<code>image_form</code>, a form-map that holds the field we want to parse.
+<code>image_error</code>, a variable that we will add an error message to, if needed.
+<code>profile_image</code>, a variable that will hold the current profile image.
+<code>resized_image_src</code>, will hold a data URL of a resized image if validated.
+<code>allow_image_upload</code>, will be false until validated.</p>
+<p>On top of these Elixir-related changes, we will also make use of <a href="https://hexdocs.pm/phoenix_live_view/js-interop.html">LiveView’s JavaScript Interoperability</a> capabilities via its hooks. We will need a <code>Resize</code> hook, which will be responsible to resize an image to within specified parameters, and once that is done, it will update the value of the hidden input field.
+Let’s start with the Elixir updates in the LiveView component (<code>user_settings_live.ex</code>). We will add the assignments first. These are added into the second <code>mount</code> function of the component:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">mount</span><span>(_params, _session, socket) </span><span style="color:#b48ead;">do
+</span><span>    user = socket.assigns.current_user
+</span><span>    email_changeset = </span><span style="color:#ebcb8b;">Accounts</span><span>.change_user_email(user)
+</span><span>    password_changeset = </span><span style="color:#ebcb8b;">Accounts</span><span>.change_user_password(user)
+</span><span>
+</span><span style="color:#65737e;">    # Let’s get the changeset for the image
+</span><span>    profile_image_changset = </span><span style="color:#ebcb8b;">Accounts</span><span>.change_profile_image(user)
+</span><span>
+</span><span>    socket =
+</span><span>      socket
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:current_password</span><span>, </span><span style="color:#d08770;">nil</span><span>)
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:email_form_current_password</span><span>, </span><span style="color:#d08770;">nil</span><span>)
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:current_email</span><span>, user.email)
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:email_form</span><span>, to_form(email_changeset))
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:password_form</span><span>, to_form(password_changeset))
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:trigger_submit</span><span>, </span><span style="color:#d08770;">false</span><span>)
+</span><span>     
+</span><span style="color:#65737e;">     # Our new assigns are added here
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:image_form</span><span>, to_form(profile_image_changset))
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:image_error</span><span>, </span><span style="color:#d08770;">false</span><span>)
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:profile_image</span><span>, user.profile_image)
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:resized_image_src</span><span>, </span><span style="color:#d08770;">false</span><span>)
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:allow_image_upload</span><span>, </span><span style="color:#d08770;">false</span><span>)
+</span><span>
+</span><span>    {</span><span style="color:#a3be8c;">:ok</span><span>, socket}
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>Next up would be adding the event handlers for <code>validate_profile_image</code> and <code>update_profile_image</code>. But for the validation part it would be best to have a separate module that can validate by file size and type. This module’s <code>validate</code> function can then be called in our LiveView component. Create the file <code>./lib/my_app/image_validator.ex</code> with the following content:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">MyApp</span><span>.</span><span style="color:#ebcb8b;">ImageValidator </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">validate_image</span><span>(data_url, allowed_file_size, allowed_file_types)
+</span><span>      when </span><span style="color:#b48ead;">is_binary</span><span>(data_url) and </span><span style="color:#b48ead;">is_integer</span><span>(allowed_file_size) and </span><span style="color:#b48ead;">is_list</span><span>(allowed_file_types) </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">    # Extract the media type and the base64 part from the data_url
+</span><span>    [meta_data, base64] = </span><span style="color:#ebcb8b;">String</span><span>.split(data_url, &quot;</span><span style="color:#a3be8c;">,</span><span>&quot;)
+</span><span>
+</span><span>    [media_type, _] = </span><span style="color:#ebcb8b;">String</span><span>.replace(meta_data, &quot;</span><span style="color:#a3be8c;">data:</span><span>&quot;, &quot;&quot;) |&gt; </span><span style="color:#ebcb8b;">String</span><span>.split(&quot;</span><span style="color:#a3be8c;">;</span><span>&quot;)
+</span><span>
+</span><span style="color:#65737e;">    # Decode the base64 part and get the binary data
+</span><span>    binary_data = </span><span style="color:#ebcb8b;">Base</span><span>.decode64!(base64)
+</span><span>
+</span><span style="color:#65737e;">    # Get the file size in bytes
+</span><span>    file_size = byte_size(binary_data)
+</span><span>
+</span><span style="color:#65737e;">    # Get the file extension from the media type
+</span><span>    file_ext = </span><span style="color:#ebcb8b;">String</span><span>.split(media_type, &quot;</span><span style="color:#a3be8c;">/</span><span>&quot;) |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.at(</span><span style="color:#d08770;">1</span><span>) |&gt; </span><span style="color:#ebcb8b;">String</span><span>.replace_suffix(&quot;&quot;, &quot;&quot;)
+</span><span>
+</span><span style="color:#65737e;">    # Check if the file extension is allowed
+</span><span>    </span><span style="color:#b48ead;">case </span><span style="color:#ebcb8b;">Enum</span><span>.member?(allowed_file_types, file_ext) </span><span style="color:#b48ead;">do
+</span><span>      </span><span style="color:#d08770;">true </span><span>-&gt;
+</span><span style="color:#65737e;">        # Check if the file size is less than or equal to 2MB
+</span><span>        </span><span style="color:#b48ead;">case</span><span> file_size &lt;= allowed_file_size </span><span style="color:#b48ead;">do
+</span><span>          </span><span style="color:#d08770;">true </span><span>-&gt;
+</span><span>            {</span><span style="color:#a3be8c;">:ok</span><span>, data_url}
+</span><span>
+</span><span>          </span><span style="color:#d08770;">false </span><span>-&gt;
+</span><span style="color:#65737e;">            # Return an error message for invalid file size
+</span><span>            {</span><span style="color:#a3be8c;">:error</span><span>, &quot;</span><span style="color:#a3be8c;">Image size must be less than or equal to #{</span><span>allowed_file_size}&quot;}
+</span><span>        </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>      </span><span style="color:#d08770;">false </span><span>-&gt;
+</span><span style="color:#65737e;">        # Return an error message for invalid file extension
+</span><span>        {</span><span style="color:#a3be8c;">:error</span><span>, &quot;</span><span style="color:#a3be8c;">Image file type must be jpg, jpeg, png, or gif</span><span>&quot;}
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span><span>
+</span></code></pre>
+<p>Let’s write out our <em>event handler</em> for <code>validate_profile_image</code> back in <code>user_settings_live.ex</code>:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">handle_event</span><span>(
+</span><span>        &quot;</span><span style="color:#a3be8c;">validate_profile_image</span><span>&quot;,
+</span><span>        %{&quot;</span><span style="color:#a3be8c;">user</span><span>&quot; =&gt; %{&quot;</span><span style="color:#a3be8c;">profile_image</span><span>&quot; =&gt; profile_image}},
+</span><span>        socket
+</span><span>      ) </span><span style="color:#b48ead;">do
+</span><span>    </span><span style="color:#b48ead;">case </span><span style="color:#ebcb8b;">MyApp</span><span>.</span><span style="color:#ebcb8b;">ImageValidator</span><span>.validate_image(profile_image, </span><span style="color:#d08770;">2 </span><span>* </span><span style="color:#d08770;">1024 </span><span>* </span><span style="color:#d08770;">1024</span><span>, </span><span style="color:#b48ead;">~w</span><span>(</span><span style="color:#a3be8c;">jpg jpeg gif png webp</span><span>)) </span><span style="color:#b48ead;">do
+</span><span>      {</span><span style="color:#a3be8c;">:ok</span><span>, data_url} -&gt;
+</span><span>        {</span><span style="color:#a3be8c;">:noreply</span><span>,
+</span><span>         socket
+</span><span>         |&gt; assign(</span><span style="color:#d08770;">resized_image_src:</span><span> data_url, </span><span style="color:#d08770;">allow_image_upload: true</span><span>, </span><span style="color:#d08770;">image_error: false</span><span>)}
+</span><span>
+</span><span>      {</span><span style="color:#a3be8c;">:error</span><span>, message} -&gt;
+</span><span>        {</span><span style="color:#a3be8c;">:noreply</span><span>, socket |&gt; assign(</span><span style="color:#d08770;">allow_image_upload: false</span><span>, </span><span style="color:#d08770;">image_error:</span><span> message)}
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span></code></pre>
+<p>We can see how we are using pattern matching to unpack <code>profile_image</code> from the incoming parameters variable. This data is passed into the <code>validate_image</code> function, along with the maximum allowed file size (<em>2MB</em>) and allowed file types. As the function returns either an <code>ok</code> atom along with the image data, or an <code>error</code> and message, we will adjust the socket assignments accordingly. </p>
+<p>Now, let’s add the event handler for <code>update_profile_image</code> in the same <code>user_settings_live.ex</code>, along with two helper functions:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">handle_event</span><span>(
+</span><span>        &quot;</span><span style="color:#a3be8c;">update_profile_image</span><span>&quot;,
+</span><span>        %{&quot;</span><span style="color:#a3be8c;">user</span><span>&quot; =&gt; %{&quot;</span><span style="color:#a3be8c;">profile_image</span><span>&quot; =&gt; profile_image}},
+</span><span>        socket
+</span><span>      ) </span><span style="color:#b48ead;">do
+</span><span>    
+</span><span style="color:#65737e;">    # Make sure that the image data is still valid
+</span><span>    </span><span style="color:#b48ead;">case </span><span style="color:#ebcb8b;">MyApp</span><span>.</span><span style="color:#ebcb8b;">ImageValidator</span><span>.validate_image(
+</span><span>           profile_image,
+</span><span>           </span><span style="color:#d08770;">2 </span><span>* </span><span style="color:#d08770;">1024 </span><span>* </span><span style="color:#d08770;">1024</span><span>,
+</span><span>           </span><span style="color:#b48ead;">~w</span><span>(</span><span style="color:#a3be8c;">jpg jpeg gif png webp</span><span>)
+</span><span>         ) </span><span style="color:#b48ead;">do
+</span><span>     
+</span><span>      {</span><span style="color:#a3be8c;">:ok</span><span>, data_url} -&gt;
+</span><span>        handle_update_profile_image(data_url, socket)
+</span><span>
+</span><span>      {</span><span style="color:#a3be8c;">:error</span><span>, message} -&gt;
+</span><span>        {</span><span style="color:#a3be8c;">:noreply</span><span>, socket |&gt; assign(</span><span style="color:#d08770;">allow_image_upload: false</span><span>, </span><span style="color:#d08770;">image_error:</span><span> message)}
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">handle_update_profile_image</span><span>(profile_image, socket) </span><span style="color:#b48ead;">do
+</span><span>    [meta_data, base64] = </span><span style="color:#ebcb8b;">String</span><span>.split(profile_image, &quot;</span><span style="color:#a3be8c;">,</span><span>&quot;)
+</span><span>
+</span><span>    file_name = generate_file_name()
+</span><span>
+</span><span>    image_binary = </span><span style="color:#ebcb8b;">Base</span><span>.decode64!(base64)
+</span><span>
+</span><span>    destination =
+</span><span>      </span><span style="color:#ebcb8b;">Path</span><span>.join([</span><span style="color:#a3be8c;">:code</span><span>.priv_dir(</span><span style="color:#a3be8c;">:my_app</span><span>), &quot;</span><span style="color:#a3be8c;">static</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">uploads</span><span>&quot;, </span><span style="color:#ebcb8b;">Path</span><span>.basename(file_name)])
+</span><span>
+</span><span>    </span><span style="color:#ebcb8b;">File</span><span>.write!(destination, image_binary)
+</span><span>
+</span><span>    src_path = </span><span style="color:#b48ead;">~p</span><span>&quot;</span><span style="color:#a3be8c;">/uploads/#{</span><span style="color:#ebcb8b;">Path</span><span>.basename(destination)}&quot;
+</span><span>
+</span><span>    prev_file_name = socket.assigns.current_user.profile_image
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">case </span><span style="color:#ebcb8b;">Accounts</span><span>.update_profile_image(socket.assigns.current_user, %{</span><span style="color:#d08770;">profile_image:</span><span> src_path}) </span><span style="color:#b48ead;">do
+</span><span>      {</span><span style="color:#a3be8c;">:ok</span><span>, _} -&gt;
+</span><span style="color:#65737e;">        # If update was ok, then remove previous image
+</span><span>        </span><span style="color:#b48ead;">case </span><span style="color:#ebcb8b;">String</span><span>.length(prev_file_name) &gt; </span><span style="color:#d08770;">0 </span><span style="color:#b48ead;">do
+</span><span>          </span><span style="color:#d08770;">true </span><span>-&gt;
+</span><span>            previous_file_path =
+</span><span>              </span><span style="color:#ebcb8b;">Path</span><span>.join([
+</span><span>                </span><span style="color:#a3be8c;">:code</span><span>.priv_dir(</span><span style="color:#a3be8c;">:my_app</span><span>),
+</span><span>                &quot;</span><span style="color:#a3be8c;">static</span><span>&quot;,
+</span><span>                &quot;</span><span style="color:#a3be8c;">uploads</span><span>&quot;,
+</span><span>                </span><span style="color:#ebcb8b;">Path</span><span>.basename(prev_file_name)
+</span><span>              ])
+</span><span>
+</span><span>            </span><span style="color:#ebcb8b;">File</span><span>.rm!(previous_file_path)
+</span><span>        </span><span style="color:#b48ead;">end
+</span><span>
+</span><span style="color:#65737e;">        # Send back the updated image path and reset upload assignments
+</span><span>        {
+</span><span>          </span><span style="color:#a3be8c;">:noreply</span><span>,
+</span><span>          socket
+</span><span>          |&gt; assign(</span><span style="color:#a3be8c;">:profile_image</span><span>, src_path)
+</span><span>          |&gt; assign(</span><span style="color:#a3be8c;">:resized_image_src</span><span>, </span><span style="color:#d08770;">false</span><span>)
+</span><span>          |&gt; assign(</span><span style="color:#a3be8c;">:allow_image_upload</span><span>, </span><span style="color:#d08770;">false</span><span>)
+</span><span>        }
+</span><span>
+</span><span>      {</span><span style="color:#a3be8c;">:error</span><span>, _} -&gt;
+</span><span>        {</span><span style="color:#a3be8c;">:noreply</span><span>, socket |&gt; assign(</span><span style="color:#d08770;">image_error: </span><span>&quot;</span><span style="color:#a3be8c;">Could not update new image to user.</span><span>&quot;)}
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>  
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">generate_file_name </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">    # Get the current timestamp in milliseconds
+</span><span>    timestamp = </span><span style="color:#ebcb8b;">DateTime</span><span>.utc_now() |&gt; </span><span style="color:#ebcb8b;">DateTime</span><span>.to_unix(</span><span style="color:#a3be8c;">:millisecond</span><span>)
+</span><span>
+</span><span style="color:#65737e;">    # Generate a random string of 8 characters
+</span><span>    random_string = </span><span style="color:#a3be8c;">:crypto</span><span>.strong_rand_bytes(</span><span style="color:#d08770;">8</span><span>) |&gt; </span><span style="color:#ebcb8b;">Base</span><span>.encode64(</span><span style="color:#d08770;">padding: false</span><span>)
+</span><span>
+</span><span style="color:#65737e;">    # Concatenate the timestamp and the random string with a dash
+</span><span>    &quot;</span><span style="color:#a3be8c;">#{</span><span>timestamp}</span><span style="color:#a3be8c;">-#{</span><span>random_string}&quot;
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>
+</span></code></pre>
+<p>The new function will create a file in the directory at <code>./priv/static/uploads</code>. Create the directory if it does not exist. Then define it as one of the allowed static directories with the function <code>static_paths</code> in <code>./lib/my_app_web.ex</code>:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">static_paths</span><span>, </span><span style="color:#d08770;">do: </span><span style="color:#b48ead;">~w</span><span>(</span><span style="color:#a3be8c;">assets fonts images uploads favicon.ico robots.txt</span><span>)
+</span></code></pre>
+<p>We will be making use of a JavaScript LiveView Hook here as well. It will be mounted on a file-input and resize any incoming images and set the resulting data URL (including base64 bytestring) to the hidden input-field. When that is done, it will trigger a change-event on the form which in turn will trigger the validate-change hook in Phoenix. </p>
+<p>Lets first create a JavaScript module that can resize an image. Create the file <code>./assets/js/image_resizer.js</code> with the following content:</p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#b48ead;">export function </span><span style="color:#8fa1b3;">resizeImage</span><span>(</span><span style="color:#bf616a;">image</span><span>, </span><span style="color:#bf616a;">maxWidth</span><span>, </span><span style="color:#bf616a;">maxHeight</span><span>) {
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">scale </span><span>= </span><span style="color:#d08770;">1
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">width </span><span>= </span><span style="color:#bf616a;">image</span><span>.</span><span style="color:#bf616a;">naturalWidth
+</span><span>    </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">height </span><span>= </span><span style="color:#bf616a;">image</span><span>.</span><span style="color:#bf616a;">naturalHeight
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">if </span><span>(</span><span style="color:#bf616a;">width </span><span>&gt; </span><span style="color:#bf616a;">maxWidth</span><span>) {
+</span><span>        </span><span style="color:#bf616a;">scale </span><span>= </span><span style="color:#bf616a;">image</span><span>.width / </span><span style="color:#bf616a;">maxWidth
+</span><span>        </span><span style="color:#bf616a;">width </span><span>= </span><span style="color:#bf616a;">maxWidth
+</span><span>        </span><span style="color:#bf616a;">height </span><span>= </span><span style="color:#bf616a;">image</span><span>.height / </span><span style="color:#bf616a;">scale
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">if </span><span>(</span><span style="color:#bf616a;">height </span><span>&gt; </span><span style="color:#bf616a;">maxHeight</span><span>) {
+</span><span>        </span><span style="color:#bf616a;">scale </span><span>= </span><span style="color:#bf616a;">image</span><span>.height / </span><span style="color:#bf616a;">maxHeight
+</span><span>        </span><span style="color:#bf616a;">height </span><span>= </span><span style="color:#bf616a;">maxHeight
+</span><span>        </span><span style="color:#bf616a;">width </span><span>= </span><span style="color:#bf616a;">image</span><span>.width / </span><span style="color:#bf616a;">scale
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#bf616a;">width </span><span>= Math.</span><span style="color:#96b5b4;">floor</span><span>(</span><span style="color:#bf616a;">width</span><span>)
+</span><span>    </span><span style="color:#bf616a;">height </span><span>= Math.</span><span style="color:#96b5b4;">floor</span><span>(</span><span style="color:#bf616a;">height</span><span>)
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">canvas </span><span>= document.</span><span style="color:#96b5b4;">createElement</span><span>(&quot;</span><span style="color:#a3be8c;">canvas</span><span>&quot;)
+</span><span>    </span><span style="color:#bf616a;">canvas</span><span>.width = </span><span style="color:#bf616a;">width
+</span><span>    </span><span style="color:#bf616a;">canvas</span><span>.height = </span><span style="color:#bf616a;">height
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">context2D </span><span>= </span><span style="color:#bf616a;">canvas</span><span>.</span><span style="color:#96b5b4;">getContext</span><span>(&quot;</span><span style="color:#a3be8c;">2d</span><span>&quot;)
+</span><span>    </span><span style="color:#bf616a;">context2D</span><span>.</span><span style="color:#8fa1b3;">drawImage</span><span>(</span><span style="color:#bf616a;">image</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#bf616a;">width</span><span>, </span><span style="color:#bf616a;">height</span><span>)
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">return </span><span style="color:#bf616a;">canvas</span><span>.</span><span style="color:#96b5b4;">toDataURL</span><span>();
+</span><span>}
+</span></code></pre>
+<p>The let’s create the Resize hook and use this function in <code>./assets/js/app.js</code>: </p>
+<pre data-lang="js" style="background-color:#2b303b;color:#c0c5ce;" class="language-js "><code class="language-js" data-lang="js"><span style="color:#65737e;">// …
+</span><span style="color:#65737e;">// add import for the resizeImage function
+</span><span style="color:#b48ead;">import </span><span>{ </span><span style="color:#bf616a;">resizeImage </span><span>} </span><span style="color:#b48ead;">from </span><span>&quot;</span><span style="color:#a3be8c;">./image_resizer</span><span>&quot;
+</span><span>
+</span><span style="color:#65737e;">// Then create our hook
+</span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">Hooks </span><span>= {}
+</span><span style="color:#bf616a;">Hooks</span><span>.</span><span style="color:#bf616a;">Resize </span><span>= {
+</span><span>    </span><span style="color:#8fa1b3;">mounted</span><span>() {
+</span><span>        
+</span><span>        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">maxWidth </span><span>= </span><span style="color:#d08770;">250
+</span><span>        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">maxHeight </span><span>= </span><span style="color:#d08770;">250
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">imageInput </span><span>= document.</span><span style="color:#96b5b4;">getElementById</span><span>(&quot;</span><span style="color:#a3be8c;">profile-image-uploader</span><span>&quot;)
+</span><span>
+</span><span>        </span><span style="color:#65737e;">// Inspired by blog-post https://imagekit.io/blog/how-to-resize-image-in-javascript/
+</span><span>        </span><span style="color:#bf616a;">imageInput</span><span>.</span><span style="color:#96b5b4;">addEventListener</span><span>(&#39;</span><span style="color:#a3be8c;">change</span><span>&#39;, </span><span style="color:#b48ead;">function </span><span>(</span><span style="color:#bf616a;">e</span><span>) {
+</span><span>            </span><span style="color:#b48ead;">if </span><span>(</span><span style="color:#bf616a;">e</span><span>.target.</span><span style="color:#bf616a;">files</span><span>) {
+</span><span>
+</span><span>                </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">imageFile </span><span>= </span><span style="color:#bf616a;">e</span><span>.target.</span><span style="color:#bf616a;">files</span><span>[</span><span style="color:#d08770;">0</span><span>];
+</span><span>    
+</span><span>                </span><span style="color:#b48ead;">var </span><span style="color:#bf616a;">reader </span><span>= new FileReader();
+</span><span>                </span><span style="color:#bf616a;">reader</span><span>.</span><span style="color:#8fa1b3;">onload </span><span>= </span><span style="color:#b48ead;">function </span><span>(</span><span style="color:#bf616a;">e</span><span>) {
+</span><span>                    </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">image </span><span>= new Image()
+</span><span>                    </span><span style="color:#bf616a;">image</span><span>.</span><span style="color:#8fa1b3;">onload </span><span>= () </span><span style="color:#b48ead;">=&gt; </span><span>{
+</span><span>                        </span><span style="color:#b48ead;">const </span><span style="color:#bf616a;">dataUrl </span><span>= </span><span style="color:#8fa1b3;">resizeImage</span><span>(</span><span style="color:#bf616a;">image</span><span>, </span><span style="color:#bf616a;">maxWidth</span><span>, </span><span style="color:#bf616a;">maxHeight</span><span>)
+</span><span>
+</span><span>                        </span><span style="color:#b48ead;">if </span><span>(</span><span style="color:#bf616a;">dataUrl</span><span>.length === </span><span style="color:#d08770;">0</span><span>) {
+</span><span>                            </span><span style="color:#b48ead;">return</span><span>;
+</span><span>                        }
+</span><span>
+</span><span>                        </span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">resizedImage </span><span>= document.</span><span style="color:#96b5b4;">getElementById</span><span>(&quot;</span><span style="color:#a3be8c;">image-preview</span><span>&quot;) ?? new Image()
+</span><span>                        </span><span style="color:#bf616a;">resizedImage</span><span>.</span><span style="color:#96b5b4;">setAttribute</span><span>(&quot;</span><span style="color:#a3be8c;">id</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">image-preview</span><span>&quot;)
+</span><span>                        </span><span style="color:#bf616a;">resizedImage</span><span>.</span><span style="color:#96b5b4;">setAttribute</span><span>(&quot;</span><span style="color:#a3be8c;">alt</span><span>&quot;, &quot;</span><span style="color:#a3be8c;">Preview</span><span>&quot;)
+</span><span>                        </span><span style="color:#bf616a;">resizedImage</span><span>.</span><span style="color:#bf616a;">src </span><span>= </span><span style="color:#bf616a;">dataUrl
+</span><span>
+</span><span>                        document.</span><span style="color:#96b5b4;">getElementById</span><span>(&quot;</span><span style="color:#a3be8c;">image-preview-container</span><span>&quot;).</span><span style="color:#96b5b4;">appendChild</span><span>(</span><span style="color:#bf616a;">resizedImage</span><span>)
+</span><span>
+</span><span>                        </span><span style="color:#bf616a;">hiddenInput </span><span>= document.</span><span style="color:#96b5b4;">getElementById</span><span>(&quot;</span><span style="color:#a3be8c;">profile-image-src-input</span><span>&quot;)
+</span><span>                        </span><span style="color:#bf616a;">hiddenInput</span><span>.value = </span><span style="color:#bf616a;">dataUrl
+</span><span>                        </span><span style="color:#bf616a;">hiddenInput</span><span>.</span><span style="color:#96b5b4;">dispatchEvent</span><span>(
+</span><span>                            new Event(&quot;</span><span style="color:#a3be8c;">input</span><span>&quot;, {bubbles: </span><span style="color:#d08770;">true</span><span>})
+</span><span>                        )
+</span><span>                    }
+</span><span>
+</span><span>                    </span><span style="color:#bf616a;">image</span><span>.</span><span style="color:#bf616a;">src </span><span>= </span><span style="color:#bf616a;">e</span><span>.target.</span><span style="color:#bf616a;">result
+</span><span>                }
+</span><span>
+</span><span>                </span><span style="color:#bf616a;">reader</span><span>.</span><span style="color:#8fa1b3;">readAsDataURL</span><span>(</span><span style="color:#bf616a;">imageFile</span><span>);
+</span><span>            }
+</span><span>        })
+</span><span>    }
+</span><span>}
+</span><span>
+</span><span style="color:#65737e;">// and let’s make it available to our LiveView socket:
+</span><span style="color:#b48ead;">let </span><span style="color:#bf616a;">liveSocket </span><span>= new LiveSocket(&quot;</span><span style="color:#a3be8c;">/live</span><span>&quot;, </span><span style="color:#ebcb8b;">Socket</span><span>, {params: {_csrf_token: </span><span style="color:#bf616a;">csrfToken</span><span>}, hooks: </span><span style="color:#bf616a;">Hooks</span><span>})
+</span><span>
+</span><span style="color:#65737e;">// …
+</span></code></pre>
+<p>We see how we can set a preview image from the <code>dataUrl</code> produced by the <code>resizeImage</code> function and append it into a container in the DOM. We are also setting it as a value on the hidden input element. This alone won’t trigger the form to emit a <code>change</code> event, so we explicitly do that with a <code>dispatchEvent</code> on the element. That in turn will trigger the <code>phx-change</code> instruction which will emit the <code>validate_profile_image</code> event, and if all is valid then a “Submit image” button will appear. </p>
+<h2 id="in-summary">In summary</h2>
+<p>Phoenix LiveView is all about reacting to events. We can attach hooks and event handlers on most elements we choose. In this scenario we upload a file indirectly via a LiveView form, which has hooks and events that takes care of resizing and validating uploads whenever a new file has been chosen.</p>
+<p>We take care of resizing on the client-side. We emit a change-event on the form to initialize a server-side validation on the resized image data. If everything appears OK, the upload is greenlit on the client and the user may submit the image. Upon submitting a new event is taking place and we will again reaffirm that the image data is valid before we create a file, store the updated image path to the user and then remove the old image.</p>
+<p>Here’s our updated User Settings page:
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="The current profile image is shown. It is a quokka in a lab coat hunched over a table with papers on it. The incoming file for uploading is below it. It shows a quokka in a labcoat holding a handful of macarons. All around it is raining macarons."
+            src="submit-image.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;submit-image.05625f4824ce936f.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;submit-image.827481acc741db6c.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;submit-image.0b163a11618b1ee5.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div></p>
+
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2024-01-31 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

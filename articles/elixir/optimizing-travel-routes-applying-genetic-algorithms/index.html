@@ -1,0 +1,1077 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/elixir/optimizing-travel-routes-applying-genetic-algorithms/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/meta.ca8017fe2fe332f5.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/meta.ca8017fe2fe332f5.webp">
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Optimizing Travel Routes: Applying Genetic Algorithms to the Traveling Salesman Problem" />
+<meta property="og:description" content="Explore the application of Genetic Algorithms to solve the Traveling Salesman Problem using Elixir. We find the shortest route among cities with this evolutionary approach." />
+<meta property="og:url" content="https://abjork.land/articles/elixir/optimizing-travel-routes-applying-genetic-algorithms/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2024-04-11"> 
+
+
+ 
+     
+<meta name="last-updated" content="2024-04-11" />
+    
+
+
+
+        
+    
+
+    <title>
+ Optimizing Travel Routes: Applying Genetic Algorithms to the Traveling Salesman Problem
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/elixir/optimizing-travel-routes-applying-genetic-algorithms/"
+    },
+    "headline": "Optimizing Travel Routes: Applying Genetic Algorithms to the Traveling Salesman Problem",
+    "description": "Explore the application of Genetic Algorithms to solve the Traveling Salesman Problem using Elixir. We find the shortest route among cities with this evolutionary approach.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2024-04-11",
+    "datePublished": "2024-04-11"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/elixir/">Elixir</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.cbe9b583434775d6.png"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.383d1420643becd7.png 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.cbe9b583434775d6.png 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.2de9699b222a5cc0.png 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Optimizing Travel Routes</div>
+            
+                <div class="subtitle">Applying Genetic Algorithms to the Traveling Salesman Problem</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/elixir/" class="hover-bold">elixir</a></div>
+        
+        <div><a href="https://abjork.land/tags/livebook/" class="hover-bold">livebook</a></div>
+        
+        <div><a href="https://abjork.land/tags/algorithms/" class="hover-bold">algorithms</a></div>
+        
+    
+</div>
+
+
+
+</div><div class="author-container">
+    <p>Written by Anders Björkland, Web Developer at <a href="https:&#x2F;&#x2F;www.umain.com&#x2F;">Umain</a></p>
+</div>
+<section class="article-summary"><em>Have you ever watched a delivery driver crisscrossing your neighborhood and wondered if they were taking the most efficient route? That's the Traveling Salesman Problem in action! This classic challenge has entertained mathematicians and coders alike for ages. In this article, we'll see how to tackle it using the power of Elixir and genetic algorithms, mimicking nature's process of evolution to find surprisingly good routes.</em></section>
+<p>I was looking out my window and saw a delivery truck passing by on the street the other day. This got me thinking about a classic algorithm challenge: <em>The Traveler Salesman Problem</em> (TSP for short).</p>
+<p>The challenge goes like this: <em>A salesman has a list of cities they need to visit. They must visit each of them and return to their starting position. <strong>What is the shortest route they can take?</strong></em></p>
+
+    
+
+
+
+
+
+
+    
+
+
+
+    
+    <div class="image-container ">
+        <div>
+            <img
+                alt="city plots"
+                src="cities-map.svg"
+                height="332" 
+                width="416"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+<p>This is of course a problem that has been solved in multiple ways,  thousands upon thousands of times over. The delivery driver has a route already preprogrammed - they don't need my help mulling it over. <em>So why am I thinking about it?</em></p>
+<p>One could say such everyday problems are more fun when applying algorithms to solve them, and I am looking for a reason to pull out my algorithmic toolbox. It's a fair statement! I recently put a new tool in that toolbox and I've been on the lookout for a reason to go nuts with it.</p>
+<p>There are some interesting tools I can use, but there is a specific one I'm on the lookout for. So let me just quickly rifle through it:</p>
+<ul>
+<li>
+<p><strong>Brute force</strong>: The hammer of all hammers, <em>brute forcing</em> is not elegant but it gets the job done... eventually. If we were to use brute force to solve TSP we would be calculating each possible solution and then select the best one. The number of possible solutions to TSP is given by the formula <code>(n-1)!/2</code>. It's a factorial representing each possible combination of visits to the cities, and as it loops back to the beginning, the direction of the loop does not matter. So if the salesman had to visit <code>18</code> cities, this would be <code>(18-1)!/2)</code> which comes out to <code>1.8 × 10<sup>14</sup></code> possible solutions. It's entirely possible, but I rifle on.</p>
+</li>
+<li>
+<p><strong>Nearest neighbor</strong>: A screwdriver in comparison, this algorithm is focused on the here-and-now with disregard for the larger picture. With a <em>nearest neighbor</em> the salesman would always travel to whichever city is closest to the city they are currently in. While this might see them cover a larger distance than brute forcing, it is much faster and can be good enough. But if you've read <a href="https://abjork.land/articles/elixir/intro-to-genetic-algorithms-with-elixir/">my previous article</a>, you might suspect that I'm on the lookout for another tool.</p>
+</li>
+<li>
+<p><strong>Genetic Algorithm</strong>: Now this is what I'm talking about! Genetic Algorithms (<em>GA</em>) might find the best possible route, but they might also find a solution that is just good enough. This is my hammer, saw, and ruler - all combined. It might look a bit freakish, but it's so versatile and fun to use! GA is inspired by evolutionary processes. Survival of the fittest and mutations will play a role in it finding a good enough solution. As long as we can define the solution as a &quot;chromosome&quot; and a way to measure the &quot;fitness&quot;, GA will be possible to use.</p>
+</li>
+</ul>
+
+    
+
+
+
+
+
+
+    
+
+
+
+    
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container ">
+        <img
+                alt="A quokka holding a weird metal-wood tool"
+                src="quokka-work.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;quokka-work.a84fd94b25289714.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;quokka-work.f18e52dc9338f3d1.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;quokka-work.5b40e40166623de3.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+<p>So how would I use a Genetic Algorithm (GA) to find a short enough route for the salesman? Let's consider this; is it possible to describe a possible solution as a &quot;chromosome&quot;? I will say an emphatic <strong>yes!</strong> A route can be described as a series of cities in the order they will be visited. If we have the 3 cities <em>1</em>, <em>2</em>, and <em>3</em>, then a chromosome could be a list: <code>[1, 2, 3]</code> or <code>[2, 1, 3]</code>, and so on. As long as there are coordinates for each city it will be possible to calculate the distance between them, a.k.a: their &quot;fitness&quot; (where shorter is better).</p>
+<p>Knowing that I have a reasonable enough representation of a possible solution and a way to measure its fitness, let me share with you the plan!</p>
+<h2 id="the-plan">The Plan</h2>
+<p>There is a classic movie series here in Sweden called &quot;The Jönsson Gang&quot;. It's about a gang of mainly 3 thieves aiming for heists beyond their competence. Their leader, Charles Ingvar Jönsson, had an iconic line: &quot;I have a plan!&quot; His plans were very detailed, and would probably work most of the time. That is, if he and his gang weren't distracted by anything from a hotdog to a beer. Well, let me tell you: <strong>I have a plan and I'm all out of sausages!</strong></p>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>Less on the nose than &quot;The Purge&quot;, and I can’t ask for more than that.</p>
+
+    </cite>
+    
+</div>
+<p>We are going to need:</p>
+<ul>
+<li>
+<p><em>Chromosomes</em> and a way to generate them for the initial population.</p>
+</li>
+<li>
+<p><em>Fitness function</em> that will be able to give a measure to the <em>chromosomes'</em> &quot;fitness&quot;.
+Which means we need a function to measure the distance between each city in the <em>chromosome</em>, and not forget to measure the distance between the last city in the <em>chromosome</em> with the first. </p>
+</li>
+<li>
+<p><em>Parents</em> and how we select them. OK, that sounds weird, but if we are going to have a new generation of chromosomes we need something to base them off of. 
+And we are not going to select them completely at random. This is not a singles' cruise!</p>
+</li>
+<li>
+<p><em>Crossover</em> (and I'm so glad that this is the term chosen) between pairs of parents' chromosomes. 
+Each pair of parents will produce 2 <em>offsprings</em>, where first offspring will select from parent <em>a</em> first, and second offspring will select from parent <em>b</em> first.</p>
+</li>
+<li>
+<p><em>Mutation</em> of chromosomes. This is a natural part of the <em>parents</em> producing offspring. This will introduce a unique trait to an offspring that is not necessarily found in the parent. If we are lucky we might see some Super Mutants! </p>
+</li>
+<li>
+<p><em>Pruning</em> of the population. The least fit chromosomes will leave place to the next generation. This dispassionately called process is less on the nose than &quot;The Purge&quot;, and I can't ask for more than that.</p>
+</li>
+<li>
+<p><em><strong>The Evolutionary Loop</strong></em>! Each part that I've described is part of evolution. All that is left is passing on the new generation to the next and let nature have its fun. Since I'm not as elegant as dear <em>Charles Ingvar Jönsson</em> I will set a generational limit instead of a goal-oriented threshold for the loop.</p>
+</li>
+</ul>
+<h3 id="chromosomes-are-potential-solutions">Chromosomes are potential solutions</h3>
+<p>With the Travelling Salesman Problem the solution is a route, and a route is nothing but a series of places to visit. And by randomly selecting cities to visit, there is a potential that these routes collectively hold the key to the shortest route. And eventually, through evolution, the collection of randomly generated routes, survival of the fittest, and mutation, a generation will produce a good enough route.</p>
+<p>I think I've teased you enough. It's time to bring in <code>the code</code> (using <code>Elixir</code>)! I will represent the cities as a list of coordinates, and the chromosomes shall be the indices for each city. </p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  @</span><span style="color:#bf616a;">cities </span><span>[
+</span><span>    %{</span><span style="color:#d08770;">x: 10</span><span>, </span><span style="color:#d08770;">y: 20</span><span>}, %{</span><span style="color:#d08770;">x: 5</span><span>, </span><span style="color:#d08770;">y: 15</span><span>}, %{</span><span style="color:#d08770;">x: 12</span><span>, </span><span style="color:#d08770;">y: 1</span><span>},
+</span><span>    %{</span><span style="color:#d08770;">x: 20</span><span>, </span><span style="color:#d08770;">y: 10</span><span>}, %{</span><span style="color:#d08770;">x: 7</span><span>, </span><span style="color:#d08770;">y: 14</span><span>}, %{</span><span style="color:#d08770;">x: 15</span><span>, </span><span style="color:#d08770;">y: 3</span><span>},
+</span><span>    %{</span><span style="color:#d08770;">x: 15</span><span>, </span><span style="color:#d08770;">y: 12</span><span>}, %{</span><span style="color:#d08770;">x: 15</span><span>, </span><span style="color:#d08770;">y: 10</span><span>}, %{</span><span style="color:#d08770;">x: 20</span><span>, </span><span style="color:#d08770;">y: 8</span><span>},
+</span><span>    %{</span><span style="color:#d08770;">x: 2</span><span>, </span><span style="color:#d08770;">y: 14</span><span>},  %{</span><span style="color:#d08770;">x: 3</span><span>, </span><span style="color:#d08770;">y: 11</span><span>}, %{</span><span style="color:#d08770;">x: 14</span><span>, </span><span style="color:#d08770;">y: 7</span><span>},
+</span><span>    %{</span><span style="color:#d08770;">x: 5</span><span>, </span><span style="color:#d08770;">y: 11</span><span>}, %{</span><span style="color:#d08770;">x: 5</span><span>, </span><span style="color:#d08770;">y: 23</span><span>}, %{</span><span style="color:#d08770;">x: 20</span><span>, </span><span style="color:#d08770;">y: 23</span><span>}, 
+</span><span>    %{</span><span style="color:#d08770;">x: 7</span><span>, </span><span style="color:#d08770;">y: 23</span><span>}, %{</span><span style="color:#d08770;">x: 16</span><span>, </span><span style="color:#d08770;">y: 12</span><span>}, %{</span><span style="color:#d08770;">x: 25</span><span>, </span><span style="color:#d08770;">y: 12</span><span>}
+</span><span>  ]
+</span></code></pre>
+<p>A chromosome is the length of the list, with each <em>gene</em> representing the index to one of the cities. The foundation is laid when I initialize the population. Let me show you:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">initialize_population</span><span>(population_size) </span><span style="color:#b48ead;">do
+</span><span>    chromosome_template = </span><span style="color:#ebcb8b;">Enum</span><span>.to_list(</span><span style="color:#d08770;">0</span><span>..(</span><span style="color:#ebcb8b;">Enum</span><span>.count(@</span><span style="color:#bf616a;">cities</span><span>) - </span><span style="color:#d08770;">1</span><span>))
+</span><span>
+</span><span>    </span><span style="color:#ebcb8b;">Enum</span><span>.map(</span><span style="color:#d08770;">1</span><span>..population_size, </span><span style="color:#b48ead;">fn</span><span> _ -&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.shuffle(chromosome_template) </span><span style="color:#b48ead;">end</span><span>)
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>Not to toot my own horn here, but doesn’t that look very simple? I introduce the <code>chromosome_template</code> that contains all the indices and shuffle it until I have created enough chromosomes.</p>
+<blockquote>
+<p>While we are talking about population and chromosomes, let me just warn you that we will see an addition on top of this. I will store a chromosome along with its distance (introduced just below this paragraph) in a map so we get a <code>chromosome_data</code> variable with a value like <code>%{chromosome: [0,1,2], distance: 4.321}</code>.</p>
+</blockquote>
+<h3 id="the-shorter-the-better-the-fitness-function-edition">The shorter the better - the fitness function edition</h3>
+<p>Just like Bilbo, it's not enough to go &quot;there&quot; - you need to have &quot;and back again&quot; too! The traveling salesman will be visiting each city and then return to their starting city, making a complete loop. The fitness function will sum up all the distances between each city and return that.</p>
+<p>A city's coordinate is represented by a map: <code>%{x: 10, y: 20}</code>. When we have two cities they can be: <code>%{x: 10, y: 20}</code> and <code>%{x: 5, y: 15}</code>. The distance between the cities requires a touch of math (or <em>magic</em> if you just want to skim this). The distance between two coordinated in a 2D field can be calculated with the help of Pythagoras: <em>a^2^ + b^2^ = c^2^</em> (or 2D Euclidean). And reframed for the two cities it would be the same as <code>(x<sub>1</sub> - x<sub>2</sub>)<sup>2</sup> + (y<sub>1</sub> - y<sub>2</sub>)<sup>2</sup> = c<sup>2</sup></code>. Then the distance is <code>d=√(c<sup>2</sup>)</code>. And when we insert the values: <code>d=√((10-5)<sup>2</sup> + (20-15)<sup>2</sup>)≈7</code>.</p>
+<p>Representing this calculation in code:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#65737e;">  # Calculate the distance between two cities 
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">distance</span><span>(%{</span><span style="color:#d08770;">x:</span><span> x1, </span><span style="color:#d08770;">y:</span><span> y1}, %{</span><span style="color:#d08770;">x:</span><span> x2, </span><span style="color:#d08770;">y:</span><span> y2}) </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">    # Using 2D Euclidean distance
+</span><span>    dx = abs(x1 - x2)
+</span><span>    dy = abs(y1 - y2)
+</span><span>
+</span><span>    (dx ** </span><span style="color:#d08770;">2</span><span>) + (dy ** </span><span style="color:#d08770;">2</span><span>)
+</span><span>    |&gt; </span><span style="color:#a3be8c;">:math</span><span>.sqrt()
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p><em>Oh, the pattern matching</em> - unpacking values to variables right there in the function definitions!</p>
+
+    </cite>
+    
+</div>
+<p>This calculation should be done between each city in a chromosome. If you like some recursion and pattern matching, you will like this bit:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>​​  </span><span style="color:#b48ead;">def</span><span> distances([first, second]) </span><span style="color:#b48ead;">do
+</span><span>    city1 = </span><span style="color:#ebcb8b;">Enum</span><span>.at(@</span><span style="color:#bf616a;">cities</span><span>, first)
+</span><span>    city2 = </span><span style="color:#ebcb8b;">Enum</span><span>.at(@</span><span style="color:#bf616a;">cities</span><span>, second)
+</span><span>
+</span><span>    distance(city1, city2)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">distances</span><span>([first, second | tail]) </span><span style="color:#b48ead;">do
+</span><span>    city1 = </span><span style="color:#ebcb8b;">Enum</span><span>.at(@</span><span style="color:#bf616a;">cities</span><span>, first)
+</span><span>    city2 = </span><span style="color:#ebcb8b;">Enum</span><span>.at(@</span><span style="color:#bf616a;">cities</span><span>, second)
+</span><span>
+</span><span>    distance(city1, city2) + distances([second | tail])
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p><em>Oh, the pattern matching</em> - unpacking values to variables right there in the function definitions! The first distances function will catch when a list is passed to it that contains only two elements, so it will return only the distance between the two cities in the list. But the second function will continue calling itself as long as there are more elements in the list.</p>
+<p>And if you are thinking that this does not measure the loop-back distance, you are correct! I saved that fun tidbit for the <code>fitness_function</code>:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">fitness_function</span><span>(chromosome) </span><span style="color:#b48ead;">do
+</span><span>    last_to_first_elements = </span><span style="color:#ebcb8b;">Enum</span><span>.take(chromosome, </span><span style="color:#d08770;">1</span><span>) ++ </span><span style="color:#ebcb8b;">Enum</span><span>.take(chromosome, -</span><span style="color:#d08770;">1</span><span>) 
+</span><span>
+</span><span>    there = distances(chromosome)
+</span><span>    and_back = distances(last_to_first_elements)
+</span><span>
+</span><span>    there + and_back
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>On top of taking the distance between the cities in a chromosome, the <code>fitness_function</code> will also take the last and first element and get its distance. Finally it will add up the distance there and back again and return the sum on a silver platter.</p>
+<p>With this tidbit, each chromosome can be neatly packaged together with its distance in a data-package. A bit like this:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>    population = initialize_population(population_size)
+</span><span>
+</span><span>
+</span><span>    chromosome_datas = 
+</span><span>      population
+</span><span>      |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.map(
+</span><span>        </span><span style="color:#b48ead;">fn</span><span> chromosome -&gt; %{</span><span style="color:#d08770;">chromosome:</span><span> chromosome, </span><span style="color:#d08770;">distance:</span><span> fitness_function(chromosome)} </span><span style="color:#b48ead;">end
+</span><span>        )
+</span></code></pre>
+<blockquote>
+<p>As <code>initialize_population</code> returns a list of chromosomes, it can be enumerated on and return new elements that package the chromosome with the distance returned from the <code>fitness_function</code>. Doing it this way means we will have the chromosome's fitness readily at hand. I do not consider <em>distance</em> or <em>fitness</em> a part of the chromosome, but rather additional data about the chromosome. </p>
+</blockquote>
+<h3 id="the-not-a-singles-cruise-way-of-selecting-parents">The not-a-singles-cruise way of selecting parents</h3>
+<p>&quot;So you want offspring but want someone to do it for you?&quot; Good news, I’ve got the recipe for you! Given that there is a population of random chromosomes, it would be neat if the next generation were a bit better than the one previous. While I personally would like to say that <em>millennials</em> have it all figured out, we can still improve upon this generation. But for this to work we want to give a higher chance to chromosomes with shorter routes to produce offspring. This will mean that the offspring inherits the parents' good qualities (or bad, but that's why we want to prefer the parents with shorter routes).</p>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>Selecting parents is not as much a cruise fare as it is a casino.</p>
+
+    </cite>
+    
+</div>
+<p>There is this thing called <a href="https://en.wikipedia.org/wiki/Fitness_proportionate_selection">roulette wheel selection</a>. To give a higher chance for the chromosomes with shorter distances to be selected I will just give them a larger pie of the wheel than the chromosome with longer distances. When I spin the wheel, every chromosome has the chance of being the winner but the likelihood that it falls on a chromosome with a longer route is smaller.</p>
+<p>My foolproof plan for this is to summarize every route's distance and make an inverse ratio for them. On each spin of the <em>wheel</em>, there is a chance that a chromosome will be selected. The higher the inverse ratio is, the higher the chance that the wheel will stop at the chromosome.</p>
+<p>In Elixir, I would do it like this:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">general_inverse_fitness</span><span>(population_data) </span><span style="color:#b48ead;">do
+</span><span>    </span><span style="color:#ebcb8b;">Enum</span><span>.reduce(population_data, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#b48ead;">fn</span><span> data, acc -&gt; acc + </span><span style="color:#d08770;">1 </span><span>/ data.distance </span><span style="color:#b48ead;">end</span><span>)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">select_parents</span><span>(population_data, num_parents \\ </span><span style="color:#d08770;">2</span><span>) </span><span style="color:#b48ead;">do
+</span><span>    general_inverse_fitness =  general_inverse_fitness(population_data)
+</span><span>
+</span><span>    </span><span style="color:#ebcb8b;">Enum</span><span>.map(</span><span style="color:#d08770;">1</span><span>..num_parents, </span><span style="color:#b48ead;">fn</span><span> _ -&gt; </span><span style="color:#65737e;"># Select n parents
+</span><span>      random_value = </span><span style="color:#a3be8c;">:rand</span><span>.uniform() * general_inverse_fitness
+</span><span>      select_chromosome(population_data, random_value, </span><span style="color:#d08770;">0</span><span>)
+</span><span>    </span><span style="color:#b48ead;">end</span><span>)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">select_chromosome</span><span>(population_data, target_fitness, acc_fitness) </span><span style="color:#b48ead;">do
+</span><span>    [chromosome_data | tail] = population_data
+</span><span>
+</span><span style="color:#65737e;">    # The greater value from the distance function the less the new distance will be, 
+</span><span style="color:#65737e;">    # so we promote the shorter routes before the longer routes
+</span><span>    new_fitness = acc_fitness + </span><span style="color:#d08770;">1 </span><span>/ chromosome_data.distance
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">if</span><span> new_fitness &gt;= target_fitness </span><span style="color:#b48ead;">do
+</span><span>      chromosome_data
+</span><span>    </span><span style="color:#b48ead;">else
+</span><span>      select_chromosome(tail, target_fitness, new_fitness)
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>The <code>select_parents</code> function is the entry-point. It will first summarize the inverse distances. In general the sum will become larger the shorter the distances are but it will depend on population size (meaning as a standalone metric it is not useful for comparing between different population sizes, but is meaningful within the population that it is used).</p>
+<p>With the <code>general_inverse_fitness</code>, the function can continue with selecting parents. Whenever a new parent is selected, a new random value will be the target that a chromosome should achieve. If a chromosome does not achieve the target it will add to an accumulator that is added to the next chromosome's calculation. This is like the slowing of the roulette wheel. So selecting parents is not as much a cruise fare as it is a casino! </p>
+<h3 id="crossover-and-mutation-the-offsprings">Crossover and mutation: The Offsprings</h3>
+<p>Before we let the parents do what defines them in the evolutionary process, let's consider who should be pairing up with who? In the previous step I let the roulette wheel select parents. I will let the order in which they were selected define the pair of parents. Though it could be any kind of parental constellation - we are not limited to two parents, really - I feel like I want to keep it simple.</p>
+<p>Each pair of two parents will combine their chromosomes with each other in a <em>crossover</em> process. <strong>This part is important!</strong> So if you've skimmed this far, focus-up!</p>
+<p>In a <em>crossover</em> I will take a random length of genes from one parent starting from a random position. The genes will be a subarray of cities, preserving the order from the parent chromosome. Then I will assemble a new chromosome and fill in the blanks for each element that is missing from the first subarray.</p>
+<blockquote>
+<p><strong>Example</strong> 
+A chromosome has length 6, the <em>crossover</em> will have a starting index of 2, and subarray length of 3. </p>
+<p>Parent Chromosome A:                 [2, 0, 1, 3, 4, 5]<br />
+Parent Chromosome B:                 [1, 2, 3, 5, 4, 0]</p>
+<p>Subarray 1:                          [_, _, 1, 3, 4, _]</p>
+<p>Available genes from Chromosome B:   [2, 5, 0]<br />
+Fill in blanks with available genes: [2, 5, 1, 3, 4, 0]</p>
+</blockquote>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>A beautiful snowflake, if you may. Or a Super Mutant!</p>
+
+    </cite>
+    
+</div>
+<p>By combining the chromosomes this way I can preserve some of the route information and find new ones. But whichever parent's chromosome is selected first will have a higher impact for the new chromosome. For this reason I will crossover each pair of parents twice. Both parents' chromosomes will get to go first. It will be less fuss that way!</p>
+<p>But an offspring is not only the combination of parents' chromosomes. Each offspring has the potential of being unique: a beautiful snowflake, if you may. Or a Super Mutant!</p>
+<p>This is the role of <em><strong>mutation</strong></em>. To randomly introduce new characteristics to a chromosome. What my mutation function will do is to select at least one gene from the crossover chromosome and insert it at a random position. </p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">crossover</span><span>(chromosome_1, chromosome_2) </span><span style="color:#b48ead;">do
+</span><span>
+</span><span style="color:#65737e;">    # 1. We select the parts of chromosome_1 randomly (the order is important)
+</span><span style="color:#65737e;">    #    It can be [_, _, B, C, A, _]
+</span><span style="color:#65737e;">    #    which means first selection will be [B, C, A], leaving D, E, F 
+</span><span>
+</span><span>    cut_point_1 = </span><span style="color:#a3be8c;">:rand</span><span>.uniform(</span><span style="color:#ebcb8b;">Enum</span><span>.count(chromosome_1) - </span><span style="color:#d08770;">1</span><span>) 
+</span><span>    cut_point_2 = </span><span style="color:#a3be8c;">:rand</span><span>.uniform(</span><span style="color:#ebcb8b;">Enum</span><span>.count(chromosome_1) - </span><span style="color:#d08770;">1</span><span>) 
+</span><span>    [start_point, end_point] = [cut_point_1, cut_point_2] |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.sort()
+</span><span>    selection = </span><span style="color:#ebcb8b;">Enum</span><span>.slice(chromosome_1, start_point..end_point) 
+</span><span>
+</span><span style="color:#65737e;">    # 2. We want to get the relationships that is present in chromosome_2
+</span><span style="color:#65737e;">    #    It can be [B, C, D, F, E, A]
+</span><span style="color:#65737e;">    #    Be mindful that we do not want to select either A, B, or C again. 
+</span><span style="color:#65737e;">    #    This means that we should filter out every used gene: [D, F, E]
+</span><span style="color:#65737e;">    #    and start filling the missing pieces with the genes that are left.
+</span><span>
+</span><span>    available_genes = </span><span style="color:#ebcb8b;">Enum</span><span>.filter(chromosome_2, </span><span style="color:#b48ead;">fn</span><span> gene -&gt; !</span><span style="color:#ebcb8b;">Enum</span><span>.member?(selection, gene) </span><span style="color:#b48ead;">end</span><span>)
+</span><span>    {prefix, suffix} = </span><span style="color:#ebcb8b;">Enum</span><span>.split(available_genes, start_point)
+</span><span>
+</span><span style="color:#65737e;">    # 3. And then we assemble the chromosome from the different parts, 
+</span><span style="color:#65737e;">    #    combining chromosome_1 and chromosome_2 genes
+</span><span>    
+</span><span>    prefix ++ selection ++ suffix
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">mutation</span><span>(chromosome) </span><span style="color:#b48ead;">do
+</span><span>    chromosome_length = </span><span style="color:#ebcb8b;">Enum</span><span>.count(chromosome)
+</span><span>    portion_of_mutation = </span><span style="color:#d08770;">0.1
+</span><span>    least_num_of_mutations = </span><span style="color:#d08770;">1
+</span><span>
+</span><span>    num_of_mutations = 
+</span><span>      round(chromosome_length * portion_of_mutation) 
+</span><span>      |&gt; max(least_num_of_mutations)
+</span><span>
+</span><span style="color:#65737e;">    # For each number of mutations
+</span><span style="color:#65737e;">    # - Take random element
+</span><span style="color:#65737e;">    # - Insert at random position
+</span><span>
+</span><span>    mutating_genes = </span><span style="color:#ebcb8b;">Enum</span><span>.take_random(chromosome, num_of_mutations)
+</span><span>    
+</span><span>    template = </span><span style="color:#ebcb8b;">Enum</span><span>.filter(chromosome, </span><span style="color:#b48ead;">fn</span><span> gene -&gt; !</span><span style="color:#ebcb8b;">Enum</span><span>.member?(mutating_genes, gene) </span><span style="color:#b48ead;">end</span><span>)
+</span><span>
+</span><span>    </span><span style="color:#ebcb8b;">Enum</span><span>.reduce(mutating_genes, template, </span><span style="color:#b48ead;">fn</span><span> mutating_gene, acc -&gt; 
+</span><span>      random_pos = </span><span style="color:#ebcb8b;">Enum</span><span>.count(acc) - </span><span style="color:#d08770;">1 </span><span>|&gt; </span><span style="color:#a3be8c;">:rand</span><span>.uniform()
+</span><span>      </span><span style="color:#ebcb8b;">List</span><span>.insert_at(acc, random_pos, mutating_gene)
+</span><span>    </span><span style="color:#b48ead;">end</span><span>)
+</span></code></pre>
+<p>I would be amiss if I didn't point out that changing the position of just one element in the chromosome will have a huge impact on the overall chromosome information. One element contains not only the order a city is being visited, but it's also information about a connection from one city via the element to the next city. So keeping the mutation to minimal changes is good, as it otherwise would be resulting in a chromosome that is far different from either parent.</p>
+<h3 id="making-space-for-the-new-generation">Making space for the new generation</h3>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>Dear <em>Charles</em> would be pretty terrified if he knew what I am about to do.</p>
+
+    </cite>
+    
+</div>
+<p><em>Charles Ingvar Jönsson</em> would probably know about the Swedish proverb: &quot;Finns det hjärterum så finns det stjärterum&quot;. It means that one can always make space for anyone that wants to join, even if it is crowded: the crowd just needs to squeeze together more. So dear <em>Charles</em> would be pretty terrified if he knew what I am about to do.</p>
+<p>In nature the population size would continuously fluctuate. But in my synthetically created world the size will be constant. That means: for any number of new offsprings, as many of the old population need to scoot over, and out!</p>
+<p>There are many ways this can be done. Some are more imaginative than others. <em>The Purge</em> might have an idea on how this should be done. But I will just sort the old population by their <em>fitness</em> and keep just so many as are needed to keep a constant population size when the new generation is added. </p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">prune</span><span>(sorted_population_data, prune_count) </span><span style="color:#b48ead;">do
+</span><span>    preserve_count = </span><span style="color:#ebcb8b;">Enum</span><span>.count(sorted_population_data) - prune_count
+</span><span>
+</span><span>    </span><span style="color:#ebcb8b;">Enum</span><span>.take(sorted_population_data, preserve_count)
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>Prune. That sounds pretty <em>cold</em>. But that's the process where I simply &quot;cut off&quot; some branches that, in this case, are too long. This allows our population to become ever more fit for its task.</p>
+<p><em>The snapshot of the process: <code>prune(sorted_population_data, num_parents) ++ offsprings</code></em></p>
+<h3 id="evolving-a-better-fit">Evolving a better fit</h3>
+<p>The goal is to find a good-enough chromosome, or route, for our salesman. Each component plays a crucial part to get to that goal. But it's a process that requires many trial and errors. That's why there is randomness and pruning involved. The randomness allows the algorithm to try new and innovative routes never before considered. And while many of them are utterly poor, somewhere a nugget of gold is found.</p>
+<p>The evolutionary loop will take in a population of chromosomes, select a cadre of parents and let them reproduce, followed by pruning the population to make space for the next generation. This new population will be passed on to another go at evolution. I reason that it is possible to have this loop continue until a good enough fit has been reached (such as when improvements from one generation to the next are stagnating). However, I've decided to use a hard generational limit instead because I'm feeling lazy.</p>
+<p>Once the generational limit is reached, the chromosome with the shortest route in the current population will be returned.</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">evolve</span><span>(
+</span><span>      sorted_population_data, 
+</span><span>      generation_n,  
+</span><span>      %{</span><span style="color:#d08770;">generation_limit:</span><span> generation_limit}
+</span><span>    ) when generation_n == generation_limit </span><span style="color:#b48ead;">do
+</span><span>    
+</span><span>    [chromosome_data] = </span><span style="color:#ebcb8b;">Enum</span><span>.take(sorted_population_data, </span><span style="color:#d08770;">1</span><span>)
+</span><span>
+</span><span>    total_fitness = general_inverse_fitness(sorted_population_data)
+</span><span>
+</span><span>    %{
+</span><span>      </span><span style="color:#d08770;">distance:</span><span> chromosome_data.distance, 
+</span><span>      </span><span style="color:#d08770;">chromosome:</span><span> chromosome_data.chromosome, 
+</span><span>      </span><span style="color:#d08770;">generation:</span><span> generation_n, 
+</span><span>      </span><span style="color:#d08770;">population_fitness:</span><span> total_fitness
+</span><span>    }
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">evolve</span><span>(sorted_population_data, generation_n, memo) </span><span style="color:#b48ead;">do
+</span><span>    %{</span><span style="color:#d08770;">num_parents:</span><span> num_parents} = memo
+</span><span>
+</span><span>    parents = select_parents(sorted_population_data, num_parents)
+</span><span>    offsprings = 
+</span><span>      parents 
+</span><span>      |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.chunk_every(</span><span style="color:#d08770;">2</span><span>)
+</span><span>      |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.flat_map(</span><span style="color:#b48ead;">fn </span><span>[parent_1, parent_2] -&gt; 
+</span><span>        [
+</span><span>          </span><span style="color:#ebcb8b;">TSP</span><span>.crossover(parent_1.chromosome, parent_2.chromosome) |&gt; </span><span style="color:#ebcb8b;">TSP</span><span>.mutation(),
+</span><span>          </span><span style="color:#ebcb8b;">TSP</span><span>.crossover(parent_2.chromosome, parent_1.chromosome) |&gt; </span><span style="color:#ebcb8b;">TSP</span><span>.mutation()
+</span><span>        ]
+</span><span>      </span><span style="color:#b48ead;">end</span><span>)
+</span><span>      |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.map(</span><span style="color:#b48ead;">fn</span><span> chromosome -&gt; 
+</span><span>        %{</span><span style="color:#d08770;">chromosome:</span><span> chromosome, </span><span style="color:#d08770;">distance:</span><span> fitness_function(chromosome)}
+</span><span>      </span><span style="color:#b48ead;">end</span><span>)
+</span><span>
+</span><span>    new_population_data = 
+</span><span>      prune(sorted_population_data, num_parents) ++ offsprings
+</span><span>      |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.sort_by(
+</span><span>        </span><span style="color:#b48ead;">fn</span><span> chromosome_data -&gt; chromosome_data.distance </span><span style="color:#b48ead;">end</span><span>,
+</span><span>        </span><span style="color:#a3be8c;">:asc
+</span><span>      )
+</span><span>
+</span><span>    evolve(new_population_data, generation_n + </span><span style="color:#d08770;">1</span><span>, memo)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">run</span><span>(population_size \\ </span><span style="color:#d08770;">100</span><span>, generation_limit \\ </span><span style="color:#d08770;">250</span><span>, reproduction_rate \\ </span><span style="color:#d08770;">0.3</span><span>) </span><span style="color:#b48ead;">do
+</span><span>    population = initialize_population(population_size)
+</span><span>
+</span><span>    population_data = 
+</span><span>      population
+</span><span>      |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.map(
+</span><span>        </span><span style="color:#b48ead;">fn</span><span> chromosome -&gt; %{</span><span style="color:#d08770;">chromosome:</span><span> chromosome, </span><span style="color:#d08770;">distance:</span><span> fitness_function(chromosome)} </span><span style="color:#b48ead;">end
+</span><span>        )
+</span><span>
+</span><span>    sorted_population = </span><span style="color:#ebcb8b;">Enum</span><span>.sort_by(
+</span><span>      population_data,
+</span><span>      </span><span style="color:#b48ead;">fn</span><span> %{</span><span style="color:#d08770;">distance:</span><span> distance} -&gt; distance  </span><span style="color:#b48ead;">end</span><span>,
+</span><span>      </span><span style="color:#a3be8c;">:asc
+</span><span>    )
+</span><span>
+</span><span>    num_parents = num_parents(population_size, reproduction_rate)
+</span><span>
+</span><span>    evolve(
+</span><span>      sorted_population, 
+</span><span>      </span><span style="color:#d08770;">0</span><span>, 
+</span><span>      %{
+</span><span>        </span><span style="color:#d08770;">num_parents:</span><span> num_parents, 
+</span><span>        </span><span style="color:#d08770;">generation_limit:</span><span> generation_limit
+</span><span>      }
+</span><span>    )
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>Let's say that someone like me created all these components and put them in a module called <code>TSP</code> (Traveling Salesman Problem in short). The way I would initiate the evolution would be to call the <code>run</code> function like this:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#ebcb8b;">TSP</span><span>.run(aggregator_pid, </span><span style="color:#d08770;">100</span><span>, </span><span style="color:#d08770;">1000</span><span>, </span><span style="color:#d08770;">0.3</span><span>)
+</span></code></pre>
+<p>The response would be:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>%{
+</span><span>  </span><span style="color:#d08770;">distance: 87.68567015836446</span><span>,
+</span><span>  </span><span style="color:#d08770;">chromosome: </span><span>[</span><span style="color:#d08770;">10</span><span>, </span><span style="color:#d08770;">9</span><span>, </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">4</span><span>, </span><span style="color:#d08770;">13</span><span>, </span><span style="color:#d08770;">15</span><span>, </span><span style="color:#d08770;">0</span><span>, </span><span style="color:#d08770;">14</span><span>, </span><span style="color:#d08770;">17</span><span>, </span><span style="color:#d08770;">3</span><span>, </span><span style="color:#d08770;">8</span><span>, </span><span style="color:#d08770;">16</span><span>, </span><span style="color:#d08770;">6</span><span>, </span><span style="color:#d08770;">7</span><span>, </span><span style="color:#d08770;">11</span><span>, </span><span style="color:#d08770;">5</span><span>, </span><span style="color:#d08770;">2</span><span>, </span><span style="color:#d08770;">12</span><span>],
+</span><span>  </span><span style="color:#d08770;">generation: 1000</span><span>,
+</span><span>  </span><span style="color:#d08770;">population_fitness: 0.946812150303661
+</span><span>}
+</span></code></pre>
+<p>To me, this looks like a functional algorithm. But don't take my word for it. Take these graphs instead:</p>
+<div class="layout-grid mb-4">
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container ">
+        <div>
+            <img
+                alt=""
+                src="pop-fitness-rate-0_3.svg"
+                height="254" 
+                width="265"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+  
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container ">
+        <div>
+            <img
+                alt=""
+                src="distance-rate-0_3.svg"
+                height="254" 
+                width="269"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+
+</div>
+<p>In general, a population's (inverse) fitness will increase over time, but it will fluctuate as new and untested offsprings are introduced to the mix. A <em>shortest distance</em> may remain the current best alternative for generations upon generations, until the seeming equalibirum is punctuated by a burst of improvement. By combining these views, we can see that the population is ever improving - even if we can't detect it right away by the currently shortest route.</p>
+<p>Here's a peak at the routes (and at which generation) the algorithm discovered them during one run of the code:</p>
+<div class="layout-row center mt-4">
+
+
+
+<video width="600" height="337" muted controls>
+    <source src="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;elixir&#x2F;optimizing-travel-routes-applying-genetic-algorithms&#x2F;best-route-gen.webm" type="video&#x2F;webm">
+    
+    Your browser does not support this video
+</video>   
+</div>
+
+<div class="layout-row center">
+    <p><em><code>population_size=100, generation_limit=1000, reproduction_rate=0.3</code></em></p>
+
+</div>
+<h2 id="testing-different-scenarios">Testing different scenarios</h2>
+<p>The complete code and <a href="https://gist.github.com/andersbjorkland/3ee7c4dc426fc0d0ab358bb6158080f1">livebook document can be found as a Github Gist</a>. You are free to copy it and experiment with it as you see fit. I've certainly experimented with it, so let me share a few scenarios with you!</p>
+<p>Each scenario has either population changed, or parent ratio. Each scenario is showing two charts. The first chart shows how the sum of a population's general (inverse) fitness increases over the generations. The second chart shows the distance of each generation's shortest route.</p>
+<p>Some patterns can be seen for these scenarios. They all follow a taper-off curve, almost a logarithmic curve, for the population fitness; meaning the population see some major improvements through the initial generations and then the improvements are much smaller between generations later on. Another seeming pattern is the impact that a population size have. Small populations might struggle to find routes shorter than 100 before hitting the 1000:th generation. A similar is observed with a small parent ratio.</p>
+<div class="layout-row center"><b>When population is small</b> (<code>population=50, parent_ratio=0.3</code>)</div>  
+<div class="layout-grid mb-4">
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container ">
+        <div>
+            <img
+                alt=""
+                src="pop-fitness-pop-50-0_3.svg"
+                height="254" 
+                width="265"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+  
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container ">
+        <div>
+            <img
+                alt=""
+                src="distance-pop-50-0_3.svg"
+                height="254" 
+                width="269"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+
+</div>
+<div class="layout-row center"><b>When population is large</b> (<code>population=300, parent_ratio=0.3</code>)</div>  
+<div class="layout-grid mb-4">
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container ">
+        <div>
+            <img
+                alt=""
+                src="pop-fitness-pop-300-0_3.svg"
+                height="248" 
+                width="265"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+  
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container ">
+        <div>
+            <img
+                alt=""
+                src="distance-pop-300-0_3.svg"
+                height="254" 
+                width="269"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+
+</div>
+<div class="layout-row center"><b>When parent ratio is small</b> (<code>population=100, parent_ratio=0.1</code>)</div>  
+<div class="layout-grid mb-4">
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container ">
+        <div>
+            <img
+                alt=""
+                src="pop-fitness-rate-0_01.svg"
+                height="254" 
+                width="265"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+  
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container ">
+        <div>
+            <img
+                alt=""
+                src="distance-rate-0_01.svg"
+                height="254" 
+                width="269"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+
+</div>  
+<div class="layout-row center"><b>When parent ratio is large</b> (<code>population=100, parent_ratio=0.75</code>)</div>  
+<div class="layout-grid mb-4">
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container ">
+        <div>
+            <img
+                alt=""
+                src="pop-fitness-rate-0_75.svg"
+                height="254" 
+                width="265"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+  
+
+    
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container ">
+        <div>
+            <img
+                alt=""
+                src="distance-rate-0_75.svg"
+                height="254" 
+                width="269"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+
+</div>  
+<h2 id="reflecting-on-the-generations-past">Reflecting on the generations past</h2>
+<p>Genetic Algorithms are useful when we might want a solution that is &quot;good enough&quot;, or if we don't know what a good solution might even look like. I was lucky today that I withstood the temptation of chasing a hotdog and managed to arrive at a solution (Charles Ingvar Jönsson would be proud, as well as the traveling salesman). I can't say if you managed to withstand it, but I'm happy that you allowed me to draw a route for you.</p>
+<p>I find Genetic Algorithms incredibly fun to work with. This has been the second time that I'm exploring the subject and I would like to do it again. Besides finding solutions to interesting problems I also find these additional benefits:</p>
+<ul>
+<li>Trying different data representations and structures can unlock huge perfomance improvements - which is fun!</li>
+<li>Recursion, pattern matching, and (if you check out the <a href="https://gist.github.com/andersbjorkland/3ee7c4dc426fc0d0ab358bb6158080f1">Livebook document</a>) concurrency! Working with Genetic Algorithms is a good exercise to deepen Elixir skills.</li>
+<li>Fitting each different component together in a recursive loop that makes sense is very satisfying!</li>
+</ul>
+<p>I hope you had a good time reading this, and hopefully learned something new. I sure did! </p>
+
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2024-04-11 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

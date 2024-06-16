@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - Sylius</title>
+    <link href="https://abjork.land/tags/sylius/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://abjork.land"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-04-09T00:00:00+00:00</updated>
+    <id>https://abjork.land/tags/sylius/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Stock Limits? No Problem! Add availability check to your Sylius Storefront</title>
+        <published>2023-04-09T00:00:00+00:00</published>
+        <updated>2023-04-09T00:00:00+00:00</updated>
+        <author>
+          <name>Anders Björkland</name>
+        </author>
+        <link rel="alternate" href="https://abjork.land/articles/eCommerce/stock-limit/" type="text/html"/>
+        <id>https://abjork.land/articles/eCommerce/stock-limit/</id>
+        <content type="html">&lt;div class=&quot;article-header&quot;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+&lt;img
+        alt=&quot;133&quot;
+        src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.528502d259687844.jpg&quot;
+        srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.4cf6c80342ceaf27.jpg 240w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.528502d259687844.jpg 400w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.a50db115ea4e853f.jpg 600w&quot;
+        sizes=&quot;(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px&quot;
+&#x2F;&gt;
+
+
+    &lt;div class=&quot;text-content&quot;&gt;
+        &lt;h1 class=&quot;article-title&quot;&gt;
+            &lt;div class=&quot;title&quot;&gt;Stock Limits? No Problem!&lt;&#x2F;div&gt;
+            
+                &lt;div class=&quot;subtitle&quot;&gt;Add availability check to your Sylius Storefront&lt;&#x2F;div&gt;
+            
+        &lt;&#x2F;h1&gt;
+    &lt;&#x2F;div&gt;
+    
+
+ 
+
+ 
+
+&lt;div class=&quot;tag-list absolute&quot;&gt;
+    
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;sylius&#x2F;&quot; class=&quot;hover-bold&quot;&gt;Sylius&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+    
+&lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;p&gt;Are you missing a stock limit in your Sylius storefront? Say no more! In this article, we’ll show you how to add a Stock Limit to your Sylius Storefront with ease. With Sylius’ flexibility and malleability, you can enhance your inventory in ways you never thought possible. And who knows? You might even have some fun along the way 😉. 
+
+&lt;div class=&quot;reading-time&quot;&gt;
+    Reading time: 13 minutes
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Table of content&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;eCommerce&#x2F;stock-limit&#x2F;#article-start&quot;&gt;How it starts&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;eCommerce&#x2F;stock-limit&#x2F;#article-step-0&quot;&gt;Step 0&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;eCommerce&#x2F;stock-limit&#x2F;#article-update-ui&quot;&gt;Behold the new field - update the UI&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;eCommerce&#x2F;stock-limit&#x2F;#article-validate-stock&quot;&gt;Validating Stock Limit&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;article-start&quot;&gt;How it starts&lt;&#x2F;h2&gt;
+The &#x27;Track&#x27; button is Sylius’ trusty sidekick to keep your inventory in check with. With it you can ensure that you only sell what is in your stock.  
+&lt;p&gt;So what is it? It’s Sylius’ inventory feature! With this feature, you can set how many items are available for each product variant you have. By setting &#x27;Track&#x27; on it, Sylius will add a validation check when a customer wants to add that item to their cart. This way, you will never sell more than what you have. But is it enough?&lt;&#x2F;p&gt;
+&lt;p&gt;Sometimes, you just need a little extra something to feel like a true eCommerce master. Perhaps you don&#x27;t want to sell all the items in stock, but keep some in store for later. Such a neat buffer-feature would be truly great to have. As this does not come out-of-the box for us, we will make it ourselves!&lt;&#x2F;p&gt;
+&lt;p&gt;To reach our aim to feel like that eCommerce master we all strive to be, here is what we will do:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create a &lt;code&gt;StockLimitInterface&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;Implement the interface on &lt;code&gt;ProductVariant&lt;&#x2F;code&gt; and add a &lt;code&gt;stockLimit&lt;&#x2F;code&gt; field&lt;&#x2F;li&gt;
+&lt;li&gt;Update the UI for setting the limit&lt;&#x2F;li&gt;
+&lt;li&gt;Create an &lt;code&gt;AvailabilityCheckerDecorator&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+
+
+    
+
+
+&lt;div class=&quot;quote &quot;&gt;
+    &lt;cite&gt;
+        &lt;p&gt;I shop therefore I am. It’s like Descartes but with more bags.&lt;&#x2F;p&gt;
+
+    &lt;&#x2F;cite&gt;
+    
+&lt;&#x2F;div&gt;
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;A swan with sun glasses holding a shopping bag&quot;
+            src=&quot;swan-with-bag1.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;swan-with-bag1.a7e136ce0b8abd03.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;swan-with-bag1.fddf246a1a08d747.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;swan-with-bag1.8ec21ad09c74e84f.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;By the end of this article, you’ll be able to take advantage of our new, fresh-from-the-press, feature: individual stock limits for each product variant. With this feature, you’ll be able to set limits on how many of each product variant can be added to a cart. You’ll also be able to see when a product variant has less than the limit in stock. This new feature is perfect for businesses that want to manage their inventory more effectively and avoid overselling products. So let’s dive in and see how it all works!&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;article-step-0&quot;&gt;Step 0&lt;&#x2F;h2&gt;  
+&lt;p&gt;In this tutorial we will have PHP 8.1 and Sylius 1.12. If ever you need to compare your code, or rightfully snatch a whole lot of it, you can checkout the GitHub repository &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;andersbjorkland&#x2F;SomeLimitsShop&#x2F;tree&#x2F;start&quot;&gt;SomeLimitsShop:start&lt;&#x2F;a&gt; (the start-branch has the initial setup).&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Additional details:&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;A docker-container for serving a MariaDB database. Remove all the configurations in the docker-compose.yml if you are starting from scratch and keep configuration for the database. See the &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;andersbjorkland&#x2F;SomeLimitsShop&#x2F;blob&#x2F;start&#x2F;docker-compose.yml&quot;&gt;GitHub repository for reference&lt;&#x2F;a&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;As a development server we will use the Symfony development server. A good alternative is using the built-in PHP development server: &lt;code&gt;php -S localhost -t &#x2F;public&lt;&#x2F;code&gt;&lt;&#x2F;li&gt;
+&lt;li&gt;We will use Sylius default fixtures to load the database (&lt;code&gt;php bin&#x2F;console sylius:install&lt;&#x2F;code&gt; will set it up for us)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;creating-potential-with-a-stocklimitinterface&quot;&gt;Creating potential with a StockLimitInterface&lt;&#x2F;h2&gt;
+&lt;p&gt;Our starting point is defining the means for which we will check stock limits. Let’s get this in writing with a new interface, &lt;code&gt;StockLimitInterface&lt;&#x2F;code&gt;. We create this file at &lt;code&gt;.&#x2F;src&#x2F;Inventory&#x2F;StockLimitInterface&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;namespace &lt;&#x2F;span&gt;&lt;span&gt;App\Inventory;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;interface &lt;&#x2F;span&gt;&lt;span&gt;StockLimitInterface
+&lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;getStockLimit&lt;&#x2F;span&gt;&lt;span&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;int&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;make-productvariant-meatier&quot;&gt;Make ProductVariant meatier&lt;&#x2F;h2&gt;
+&lt;p&gt;We enhance ProductVariant with the StockLimitInterface and add the accompanying field &lt;code&gt;stockLimit&lt;&#x2F;code&gt;. We will let it be nullable in the database but we will check its value before returning it in the getter. This way we will stay true to the interface and avoid any beef with our code.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;declare&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;strict_types&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;namespace &lt;&#x2F;span&gt;&lt;span&gt;App\Entity\Product;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;App\Inventory\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;StockLimitInterface&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;Doctrine\ORM\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Mapping &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;as &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ORM&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;Sylius\Component\Core\Model\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ProductVariant &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;as &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;BaseProductVariant&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;Sylius\Component\Product\Model\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ProductVariantTranslationInterface&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;**
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;* @ORM\Entity
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;* @ORM\Table(name=&amp;quot;sylius_product_variant&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;*&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#[ORM\Entity]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;#[ORM\Table(name: &amp;#39;sylius_product_variant&amp;#39;)]
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ProductVariant &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;extends &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;BaseProductVariant &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;implements &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;StockLimitInterface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;**
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    * @ORM\Column(type=&amp;quot;integer&amp;quot;, nullable=true, options={&amp;quot;default&amp;quot; : 0})
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    *&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;private &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockLimit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;protected function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;createTranslation&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ProductVariantTranslationInterface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;       &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return new &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ProductVariantTranslation&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;getStockLimit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;int
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;       &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockLimit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt; ?? &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;**
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    * &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;@param&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt; mixed $stockLimit
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    *&#x2F;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;setStockLimit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;?int &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockLimit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;void
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;       &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockLimit &lt;&#x2F;span&gt;&lt;span&gt;= $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockLimit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Whenever we make a modification to an entity like this, we want to update the database schema accordingly. As Sylius is running with Doctrine, we have a couple of handy CLI commands at our disposal. Run these commands to update the database:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;php bin&#x2F;console doctrine:migrations:diff&lt;&#x2F;code&gt; - to create a migrations-file with details for Doctrine on how to update the schema.&lt;&#x2F;li&gt;
+&lt;li&gt;&lt;code&gt;php bin&#x2F;console doctrine:migrations:migrate&lt;&#x2F;code&gt; - to run the migration file.&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h2 id=&quot;article-update-ui&quot;&gt;Behold the new field - update the UI&lt;&#x2F;h2&gt;
+If we go to the Sylius Admin view and navigate to a product variant and its inventory-tab, we see that they may have a stock value, and per the default fixture it will not be set to be “tracked”. We will add a field to this view to set the Stock Limit. We will also add a field to the variants list-view so we can at a glance see if current stock is below the limit.  
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;An admin view for a product variant where Inventory is selected. It shows 9 items in current stock. &amp;quot;Tracked&amp;quot; is switched off.&quot;
+            src=&quot;product-variant-000f-s.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;product-variant-000f-s.6de3c2361c7f1d1e.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;product-variant-000f-s.49d5677965526d72.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;product-variant-000f-s.a498ad55075f5264.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;While we are at the product variant view, let us update the Inventory to be tracked! Simply switch the slider and click “Save Changes”. When an inventory for a variant is tracked, we can see its current status in the product variants list. In the image below, we see that the first variant has 9 Available on hand. This field will also show the Stock Limit when we’re done here.&lt;&#x2F;p&gt;
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;An admin view for a product variant where Inventory is selected. It shows 9 items in current stock. &amp;quot;Tracked&amp;quot; is switched off.&quot;
+            src=&quot;product-variants.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;product-variants.b70449802b66bbb5.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;product-variants.afa411efe1faf487.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;product-variants.77ab2c691fc0274b.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;What we will need:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Enhance the form for ProductVariant to map the field &lt;code&gt;stockLimit&lt;&#x2F;code&gt; to a form field&lt;&#x2F;li&gt;
+&lt;li&gt;Override the tab-template for inventory to add the form-field&lt;&#x2F;li&gt;
+&lt;li&gt;Override the grid-template for inventory to show the stock-limit on variants-view&lt;&#x2F;li&gt;
+&lt;li&gt;Also, we will add a translation field!&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;h3 id=&quot;enhancing-productvariant-s-form-type&quot;&gt;Enhancing ProductVariant’s form type&lt;&#x2F;h3&gt;
+&lt;p&gt;It is a nice day when we don’t have to start from scratch. Since Sylius already has defined a Form type for ProductVariant, we will extend it through form type extensions! This will let us define just the field we have added to the ProductVariant and specify what type of form-field it should be. Let&#x27;s create a new file at &lt;code&gt;src&#x2F;Form&#x2F;ProductVariantTypeExtension.php&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;declare&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;strict_types&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;namespace &lt;&#x2F;span&gt;&lt;span&gt;App\Form;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;Sylius\Bundle\ProductBundle\Form\Type\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ProductVariantType&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;Symfony\Component\Form\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;AbstractTypeExtension&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;Symfony\Component\Form\Extension\Core\Type\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;IntegerType&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;Symfony\Component\Form\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;FormBuilderInterface&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ProductVariantTypeExtension &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;extends &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;AbstractTypeExtension
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;__construct&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   ){}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;buildForm&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;FormBuilderInterface &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;builder&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;array &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;options&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;void
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;       &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;builder&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;add&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;stockLimit&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;IntegerType&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;, [
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;           &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;label&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; =&amp;gt; &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;app.ui.stock_limit&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;           &lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;required&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39; =&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;,
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;       ]);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public static function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;getExtendedTypes&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;iterable
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;       &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ProductVariantType&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;::&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;];
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This declares that the &lt;code&gt;stockLimit&lt;&#x2F;code&gt; field should be an take integers as input. We also set its label to &lt;code&gt;app.ui.stock_limit&lt;&#x2F;code&gt;. This can be used when we want to add translations to it, but we could just have called it &lt;code&gt;Stock Limit&lt;&#x2F;code&gt; if we don&#x27;t want to use the translation feature.&lt;&#x2F;p&gt;
+
+
+
+
+&lt;div class=&quot;quote mb-4&quot;&gt;
+    &lt;cite&gt;
+        &lt;p&gt;The only thing necessary for the triumph of bugs is for good developers to not specify data types&lt;&#x2F;p&gt;
+
+    &lt;&#x2F;cite&gt;
+    
+&lt;&#x2F;div&gt;&lt;h3 id=&quot;override-tab-template-for-inventory&quot;&gt;Override tab-template for inventory&lt;&#x2F;h3&gt;
+&lt;p&gt;If you ever want to update the Sylius admin view, there is a folder called &lt;code&gt;.&#x2F;templates&#x2F;bundles&#x2F;SyliusAdminBundle&lt;&#x2F;code&gt; in your Sylius project. Here we can override any template or partial-template we like. As long as we mirror its original folder structure. For our case, we want to override the inventory template on a ProductVariant. It’s original template lies at this location: &lt;code&gt;.&#x2F;vendor&#x2F;sylius&#x2F;sylius&#x2F;src&#x2F;Sylius&#x2F;Bundle&#x2F;AdminBundle&#x2F;Resources&#x2F;views&#x2F;ProductVariant&#x2F;Tab&#x2F;_inventoryContent.html.twig&lt;&#x2F;code&gt;. It may be a bit mouthful, but that’s where it lies. Luckily, when we mirror the structure, we can just take anything after &lt;code&gt;&#x2F;views&#x2F;&lt;&#x2F;code&gt; and replicate the structure to our project at &lt;code&gt;.&#x2F;templates&#x2F;bundles&#x2F;SyliusAdminBundle&lt;&#x2F;code&gt;.  So we will copy the file &lt;code&gt;_inventoryContent.html.twig&lt;&#x2F;code&gt; and paste it to &lt;code&gt;.&#x2F;templates&#x2F;bundles&#x2F;SyliusAdminBundle&#x2F;ProductVariant&#x2F;Tab&#x2F;&lt;&#x2F;code&gt;. Then We will add the line {{ form_row(form.stockLimit) }} to our &lt;code&gt;_inventoryContent.html.twig&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;html&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-html &quot;&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;h3 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;ui dividing header&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;{{ &amp;#39;sylius.ui.inventory&amp;#39;|trans }}&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;h3&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;ui segment&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;   {{ form_row(form.onHand) }}
+&lt;&#x2F;span&gt;&lt;span&gt;   {{ form_row(form.stockLimit) }}
+&lt;&#x2F;span&gt;&lt;span&gt;   {{ form_row(form.tracked) }}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;   &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;ui pointing above ignored label&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;       {{ form_help(form.tracked) }}
+&lt;&#x2F;span&gt;&lt;span&gt;   &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;   {{ form_row(form.version) }}
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;{{ sylius_template_event([&amp;#39;sylius.admin.product_variant.&amp;#39; ~ action ~ &amp;#39;.tab_inventory&amp;#39;, &amp;#39;sylius.admin.product_variant.tab_inventory&amp;#39;], {&amp;#39;form&amp;#39;: form}) }}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And Voila! We have just customized the admin view. Congrats! This will make it possible for us to set the Stock Limit. Let’s edit the same product variant as before, go to Inventory, and set Stock Limit to 10 (or whatever value is higher than current stock) and save the changes again.&lt;&#x2F;p&gt;
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;An admin view for a product variant where Inventory is selected. It shows a new field with a label &amp;quot;app.ui.stock_limit&amp;quot; and its input field with a value of 10.&quot;
+            src=&quot;update-stock-limit.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;update-stock-limit.6ca332c6916ad65c.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;update-stock-limit.7bf9f32050252f67.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;update-stock-limit.ba7a18392f5e8d8f.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Notice our label “app.ui.stock_limit”? It’s not yet time, but soon we will update it to something speakable.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Next we will update the grid-view for product variants. In a similar fashion we find the template we want to override. Let’s create the file &lt;code&gt;.&#x2F;templates&#x2F;bundles&#x2F;SyliusAdminBundle&#x2F;ProductVariant&#x2F;Grid&#x2F;Field&#x2F;inventory.html.twig&lt;&#x2F;code&gt; and add this content:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;html&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-html &quot;&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&lt;span&gt;{% if data.isTracked %}
+&lt;&#x2F;span&gt;&lt;span&gt;   &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;ui {{ (data.onHand - data.stockLimit) &amp;gt; 0 ? &amp;#39;green&amp;#39; : &amp;#39;red&amp;#39; }} icon label&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;       &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;cube icon&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;i&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;       &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;onHand&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;data-product-variant-id&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{{ data.id }}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;{{ data.onHand }}&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt; {{ &amp;#39;sylius.ui.available_on_hand&amp;#39;|trans }}
+&lt;&#x2F;span&gt;&lt;span&gt;       {% if data.onHold &amp;gt; 0 %}
+&lt;&#x2F;span&gt;&lt;span&gt;           &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;detail&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;               &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;onHold&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;data-product-variant-id&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{{ data.id }}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;{{ data.onHold }}&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt; {{ &amp;#39;sylius.ui.reserved&amp;#39;|trans }}
+&lt;&#x2F;span&gt;&lt;span&gt;           &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;       {% endif %}
+&lt;&#x2F;span&gt;&lt;span&gt;       {% if data.stockLimit &amp;gt; 0 %}
+&lt;&#x2F;span&gt;&lt;span&gt;           &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;detail&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;               &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;onHold&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;data-product-variant-id&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;{{ data.id }}&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;{{ data.stockLimit }}&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt; {{ &amp;#39;app.ui.stock_limit&amp;#39;|trans }}
+&lt;&#x2F;span&gt;&lt;span&gt;           &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;       {% endif %}
+&lt;&#x2F;span&gt;&lt;span&gt;   &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;div&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;{% else %}
+&lt;&#x2F;span&gt;&lt;span&gt;   &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;ui red label&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;       &amp;lt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;i &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;class&lt;&#x2F;span&gt;&lt;span&gt;=&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;remove icon&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&amp;gt;&amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;i&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;       {{ &amp;#39;sylius.ui.not_tracked&amp;#39;|trans }}
+&lt;&#x2F;span&gt;&lt;span&gt;   &amp;lt;&#x2F;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span&lt;&#x2F;span&gt;&lt;span&gt;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;{% endif %}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The Sylius grid-system will pass in a &lt;code&gt;data&lt;&#x2F;code&gt; twig object to the form. In this case it will be an instance of a ProductVariant. So we can access its fields by using &lt;code&gt;data.stockLimit&lt;&#x2F;code&gt;. With this template we will change the color from green to red if a tracked inventory has less items on hand than the limit.&lt;&#x2F;p&gt;
+&lt;p&gt;This will be the result:&lt;&#x2F;p&gt;
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;An admin view for a list of product variants. It shows Inventory column with 9 available on hand, and 10 &amp;quot;app.ui.stock_limit&amp;quot;. It is coloured red to indicate that it is unavailable.&quot;
+            src=&quot;updated-variants-view.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;updated-variants-view.2cb5bab22ff998fa.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;updated-variants-view.d443263321610865.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;updated-variants-view.fb9a915c78f63e17.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;This is just cosmetic still but we will add a validation for it later. But now to translation!&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;strong&gt;Add translation for &lt;em&gt;app.ui.stock_limit&lt;&#x2F;em&gt;&lt;&#x2F;strong&gt;&lt;br &#x2F;&gt;
+As a Symfony project, we will use the same translation system as we can find at other places in the Symfony-world. We will create a new file for English translations &lt;code&gt;.&#x2F;translations&#x2F;messages.en.yaml&lt;&#x2F;code&gt; and add the translation:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;yaml&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;app&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ui&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;       &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stock_limit&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Stock Limit
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We can reload the page and find that &lt;code&gt;app.ui.stock_limit&lt;&#x2F;code&gt; is replaced with &lt;code&gt;Stock Limit&lt;&#x2F;code&gt;!&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Sometimes it is required to clear the cache with &lt;code&gt;php bin&#x2F;console cache:clear&lt;&#x2F;code&gt; for translations to show.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+
+
+
+
+&lt;div class=&quot;quote mb-4&quot;&gt;
+    &lt;cite&gt;
+        &lt;p&gt;One language sets you in a corridor for life. Two languages open every door along the way. Three languages make you a target for Vogon poetry.&lt;&#x2F;p&gt;
+
+    &lt;&#x2F;cite&gt;
+    
+&lt;&#x2F;div&gt;
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;img
+                alt=&quot;An alien, looking like a Vogon reading poetry for an unwilling listener.&quot;
+                src=&quot;vogan-poem.jpeg&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;vogan-poem.fe1383a4c11edc41.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;vogan-poem.fe4cae634588525c.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;vogan-poem.6f39a4fa3a5d066b.webp 600w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px&quot;
+        &#x2F;&gt;
+        &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;h2 id=&quot;article-validate-stock&quot;&gt;Validating Stock Limit&lt;&#x2F;h2&gt;
+An item will appear as available for purchase as long as one item is available. And if a customer were to add multiple items to their cart, Sylius will first validate that it has that many items available before allowing the customer that purchase. In the example for “office grey jeans” we have 9 items in stock. So when adding 10 of these we get an error. But it will allow us to add 1. We want it to stop that as well, if it hits the Stock Limit.
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;img
+                alt=&quot;An alien, looking like a Vogon reading poetry for an unwilling listener.&quot;
+                src=&quot;add-to-cart-limited.png&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;add-to-cart-limited.6625e8f38590a36e.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;add-to-cart-limited.5286fae65f4204a8.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;add-to-cart-limited.242ba321a7d1b00a.webp 600w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px&quot;
+        &#x2F;&gt;
+        &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;p&gt;What we need is to enhance the default behaviour. We want to add a feature so it checks not only if the number of items in stock reaches 0, we want it to check if it reaches the Stock Limit. &lt;&#x2F;p&gt;
+&lt;p&gt;There is a very good design pattern for this. It is called &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Decorator_pattern&quot;&gt;Decorator pattern&lt;&#x2F;a&gt;. This allows us to use the already present class that handles the validation of stock and add new features to it. The service used for this is called &lt;code&gt;sylius.availability_checker.default&lt;&#x2F;code&gt;. It is alias for the class &lt;code&gt;Sylius\Component\Inventory\Checker\AvailabilityChecker&lt;&#x2F;code&gt; which uses an interface called &lt;code&gt;Sylius\Component\Inventory\Checker\AvailabilityCheckerInterface&lt;&#x2F;code&gt;. We will create a decorator for this, which will implement the &lt;code&gt;AvailabilityCheckerInterface&lt;&#x2F;code&gt; and take an instance of &lt;code&gt;AvailabilityChecker&lt;&#x2F;code&gt; in its constructor. This will let our decorator use the already present class when we want just the default behaviour, otherwise we will enhance it. Here is how.&lt;&#x2F;p&gt;
+&lt;p&gt;We create a new file &lt;code&gt;.&#x2F;src&#x2F;Inventory&#x2F;AvailabilityCheckerDecorator.php&lt;&#x2F;code&gt; with this content:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;php&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-php &quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span style=&quot;color:#ab7967;&quot;&gt;&amp;lt;?php
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;declare&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;strict_types&lt;&#x2F;span&gt;&lt;span&gt;=&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;namespace &lt;&#x2F;span&gt;&lt;span&gt;App\Inventory;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;Sylius\Component\Inventory\Checker\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;AvailabilityCheckerInterface&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span&gt;Sylius\Component\Inventory\Model\&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;StockableInterface&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;class &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;AvailabilityCheckerDecorator &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;implements &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;AvailabilityCheckerInterface
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;{
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;__construct&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;       &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;private AvailabilityCheckerInterface &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;availabilityChecker
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   ){}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;isStockAvailable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;StockableInterface &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;bool
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;       &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;isStockSufficient&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;public function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;isStockSufficient&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;StockableInterface &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;int &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;quantity&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;): &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;bool
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;       &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;isTracked&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;() &lt;&#x2F;span&gt;&lt;span&gt;&amp;amp;&amp;amp; $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockable &lt;&#x2F;span&gt;&lt;span&gt;instanceof &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;StockLimitInterface&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;) {
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;           &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;currentStock &lt;&#x2F;span&gt;&lt;span&gt;= $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;getOnHand&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;() &lt;&#x2F;span&gt;&lt;span&gt;- $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;getOnHold&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;           &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;availableStock &lt;&#x2F;span&gt;&lt;span&gt;= $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;currentStock &lt;&#x2F;span&gt;&lt;span&gt;- $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;getStockLimit&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;();
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;           &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;quantity &lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;= $&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;availableStock&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;       }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;       &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;this&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;availabilityChecker&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;-&amp;gt;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;isStockSufficient&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;(&lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;stockable&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;, &lt;&#x2F;span&gt;&lt;span&gt;$&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;quantity&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;);
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;   }
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#eff1f5;&quot;&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We see that we have two methods in this decorator. The first method is a simple availability check. It determines if at least 1 item is available. But instead of letting the default &lt;code&gt;AvailabilityChecker&lt;&#x2F;code&gt; handle it, we pass it to our second method; &lt;code&gt;isStockSufficient&lt;&#x2F;code&gt;. We add our logic to check that the Stock Limit is not surpassed if the item has implemented the &lt;code&gt;StockLimitInterface&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+&lt;p&gt;To wire a decorator in a Symfony project (which Sylius is), is by defining it in our &lt;em&gt;services.yaml&lt;&#x2F;em&gt; and use an &lt;code&gt;@.inner&lt;&#x2F;code&gt;-argument, which will pass the decorated class to our decorator. Add the following decorator definition to &lt;code&gt;.&#x2F;config&#x2F;services.yaml&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;yaml&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;App\Inventory\AvailabilityCheckerDecorator&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;     &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;decorates&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;sylius.availability_checker.default
+&lt;&#x2F;span&gt;&lt;span&gt;     &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;arguments&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;         - &amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;@.inner&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;If we now were to try to add 1 item of “office grey jeans” we will get the same message as when we tried to add 10! &lt;&#x2F;p&gt;
+&lt;p&gt;Sylius may not have a Stock Limit feature built-in, but that’s okay. We can bend it, tweak it, and make it do what we want. That’s why we love Sylius. It’s not just an eCommerce platform, it’s an eCommerce playground. And we are having fun playing with it and becoming eCommerce masters.&lt;&#x2F;p&gt;
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;img
+                alt=&quot;An alien, looking like a Vogon reading poetry for an unwilling listener.&quot;
+                src=&quot;king-swan.jpeg&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;king-swan.2c331a78e88ba28b.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;king-swan.801074af7c107380.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;king-swan.122bbea1dd32eab6.webp 600w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px&quot;
+        &#x2F;&gt;
+        &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+  </content>
+    </entry>
+</feed>

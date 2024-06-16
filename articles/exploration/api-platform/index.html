@@ -1,0 +1,1140 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/exploration/api-platform/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/hero.95b1c42448274c9d.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/hero.95b1c42448274c9d.webp">
+    
+    
+    
+    
+    
+    
+   
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Discovering API Platform" />
+<meta property="og:description" content="API Platform is your RESTful API framework that let&#x27;s you build API&#x27;s in most any ways you want, as long as you are in the PHP world." />
+<meta property="og:url" content="https://abjork.land/articles/exploration/api-platform/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2023-03-27"> 
+
+
+ 
+     
+<meta name="last-updated" content="2023-03-29" />
+    
+
+
+
+        
+    
+
+    <title>
+ Discovering API Platform
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/exploration/api-platform/"
+    },
+    "headline": "Discovering API Platform",
+    "description": "API Platform is your RESTful API framework that let&#x27;s you build API&#x27;s in most any ways you want, as long as you are in the PHP world.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2023-03-29",
+    "datePublished": "2023-03-27"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/exploration/">Exploration</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.fdc4676c1de8a179.png"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.496102a5a6f2550d.png 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.fdc4676c1de8a179.png 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.7e84ea726767b79a.png 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Discovering API Platform</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/symfony/" class="hover-bold">symfony</a></div>
+        
+        <div><a href="https://abjork.land/tags/api-platform/" class="hover-bold">api platform</a></div>
+        
+    
+</div>
+
+
+
+</div>
+<p>The story of API Platform is a story of standards. Some would say it is best-in-class API framework! 
+It is a stand-alone library in the PHP flora, and is a popular pairing with Symfony projects. 
+In this article we will discover what API Platform is, from initial setup to basic usage.
+Let's tickle some endpoints!</p>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>REST is for data what SOAP is for dirt.</p>
+
+    </cite>
+    
+    <div><p>Dave Winer, pioneer of web services (including SOAP)</p>
+</div>
+    
+</div> 
+<p>A RESTful API is the starting point for any API Framework project. 
+While GraphQL may be related to REST the way that REST was to SOAP, RESTful API:s are still popular. And in fact,
+API Platform supports both. So let's get acquainted with this PHP library!</p>
+<h2 id="the-setup">The setup</h2>
+<p>We will leverage Symfony for building APIs. As API Platform is paired with Symfony the same way that wine and cheese is, 
+this will be our starting point:</p>
+<p><code>composer create-project symfony/skeleton:&quot;6.2.*&quot; apiplatform</code></p>
+<p>Symfony loves to make a developer's life easy, something called <code>symfony/flex</code> has been installed for us, so we can move 
+in to the project directory (<code>cd apiplatform</code>) and install API Platform: <code>composer require api</code>. Not only will this 
+install API Platform, it also adds some additional configurations such as exposing an api-route, such as <code>/api</code>.</p>
+<p>Visiting the <code>api</code> route right now will display an OpenAPI (<em>swagger</em>) UI 👇</p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="Swagger UI, but no resources available"
+            src="api-platform-0.jpeg"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;api-platform-0.d375a5e468755651.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;api-platform-0.f0f416398a939b69.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;api-platform-0.afd2d2ca38e12f03.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>We don't do this because it is easy, we do it because we thought it would be easy.</p>
+
+    </cite>
+    
+</div><h2 id="adding-resources">Adding resources</h2>
+<p>Being a lazy developer, it is nice being spoiled by Symfony. We just saw that we have set up API Platform just by the virtue 
+of having <code>symfony/flex</code> handling setting up the configurations for us. We also saw that we do not have any resources or 
+operations available in our API. So would it not be so very endearing to have another tool helping us out here? </p>
+<p><strong>Indeed</strong>, it would! It is called <em>maker-bundle</em> and it allows us to specify an entity, its fields, and if it should be available 
+in our API. We install it with <code>symfony require maker</code> (again, <code>symfony/flex</code> allows us to be so incredible lazy as not even 
+typing out the whole package name).</p>
+<p>Once it is installed, we will make use of it with <code>bin/console make:entity</code> to create our first entity: a <em>cassette tape</em>.
+It will be called <code>Cassette</code>, it will be exposed in the API, and it will have a single field to start with:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">apiplatform</span><span> ➤ bin/console make:entity
+</span><span>
+</span><span style="color:#bf616a;">Class</span><span> name of the entity to create or update (e.g. AgreeableElephant)</span><span style="color:#96b5b4;">:
+</span><span>&gt; Cassette
+</span><span>
+</span><span style="color:#bf616a;">Mark</span><span> this class as an API Platform resource (expose a CRUD API for it) (</span><span style="color:#bf616a;">yes/no</span><span>) </span><span style="color:#b48ead;">[</span><span>no</span><span style="color:#b48ead;">]</span><span>:
+</span><span>&gt; yes
+</span><span>
+</span><span style="color:#bf616a;">created:</span><span> src/Entity/Cassette.php
+</span><span style="color:#bf616a;">created:</span><span> src/Repository/CassetteRepository.php
+</span><span>
+</span><span style="color:#bf616a;">Entity</span><span> generated! Now lets add some fields!
+</span><span style="color:#bf616a;">You</span><span> can always add more fields later manually or by re-running this command.
+</span><span>
+</span><span style="color:#bf616a;">New</span><span> property name (press &lt;return&gt; to stop adding fields)</span><span style="color:#96b5b4;">:
+</span><span>&gt; title
+</span><span>
+</span><span style="color:#bf616a;">Field</span><span> type (enter ? to see all types) </span><span style="color:#bf616a;">[string]:
+</span><span>&gt;
+</span><span>
+</span><span style="color:#bf616a;">Field</span><span> length </span><span style="color:#b48ead;">[</span><span>255</span><span style="color:#b48ead;">]</span><span>:
+</span><span>&gt;
+</span><span>
+</span><span style="color:#bf616a;">Can</span><span> this field be null in the database (nullable) (</span><span style="color:#bf616a;">yes/no</span><span>) </span><span style="color:#b48ead;">[</span><span>no</span><span style="color:#b48ead;">]</span><span>:
+</span><span>&gt;
+</span><span>
+</span><span style="color:#bf616a;">updated:</span><span> src/Entity/Cassette.php
+</span><span>
+</span><span style="color:#bf616a;">Add</span><span> another property? Enter the property name (or press &lt;return&gt; to stop adding fields)</span><span style="color:#96b5b4;">:
+</span><span>&gt;
+</span><span>
+</span><span style="color:#bf616a;">Success!
+</span><span>
+</span><span style="color:#bf616a;">Next:</span><span> When you are ready, create a migration with php bin/console make:migration
+</span></code></pre>
+<p>We are about to start using a database. Our basic project comes with a Docker Compose setup configured to run a 
+PostgreSQL database, so let's get the container started: <code>docker-compose up -d</code> </p>
+<blockquote>
+<p>Alternatively we can switch the database to a MariaDB from the comfort of the CLI:<br />
+<code>bin/console make:docker:database</code></p>
+</blockquote>
+<p>Our next task is to make a migration file. This will contain our Entity schema and will be available at <code>./migrations/</code>. We create it with:<br />
+<code>symfony php bin/console make:migration</code></p>
+<blockquote>
+<p><code>symfony</code> is a CLI-tool that in this context will infer docker environments for us, such as database connection details. Without it, you would get a &quot;<em>connection refused</em>&quot; error until you update your .env-file with the correct connection details.</p>
+</blockquote>
+<p>Having a new migration-file, we will execute it by running <code>symfony php bin/console doctrine:migrations:migrate</code>. If we revisit our <code>/api</code> route, we will see that we have all the possible operations available to us that we might like. Maybe too many? 🤔</p>
+<p>
+    
+    
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    
+
+
+<div class="image-container ">
+    <img
+            alt="Swagger UI with a cassette resource, and POST, GET, PUT, DELETE, PATCH operations available"
+            src="api-platform-cassette-1.jpeg"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;api-platform-cassette-1.770f7995b8d15af9.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;api-platform-cassette-1.376bfc902f034d42.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;api-platform-cassette-1.8b917b0d6563f910.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div><br />
+<em>You might have noticed a spider in your API. Don't worry, it's just Webby.</em></p>
+<p>Either through an API client like Postman or from the comfort of the browser, API Platform is already allowing us to interact with our defined entity. And we haven't written a line of code yet. Let's give it a try! </p>
+
+
+
+<video width="600" height="337" muted controls>
+    <source src="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;exploration&#x2F;api-platform&#x2F;api-platform-create-cassette-1.webm" type="video&#x2F;webm">
+    
+    Your browser does not support this video
+</video>
+<p>Now let's imagine, this is just too much freedom for us. We rather not have all these options, or these <em>vocabularies</em> at our fingertips. Let's say that we never ever want to replace a Cassette; <strong>PUT</strong> will not be in our API repertoire!</p>
+<p>This is our current <code>Cassette</code> entity (previously generated by the <code>make:entity</code> command):</p>
+<pre data-lang="php" style="background-color:#2b303b;color:#c0c5ce;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span style="color:#b48ead;">namespace </span><span>App\Entity;
+</span><span>
+</span><span style="color:#b48ead;">use </span><span>ApiPlatform\Metadata\</span><span style="color:#ebcb8b;">ApiResource</span><span>;
+</span><span style="color:#b48ead;">use </span><span>App\Repository\</span><span style="color:#ebcb8b;">CassetteRepository</span><span>;
+</span><span style="color:#b48ead;">use </span><span>Doctrine\ORM\</span><span style="color:#ebcb8b;">Mapping </span><span style="color:#b48ead;">as </span><span style="color:#ebcb8b;">ORM</span><span>;
+</span><span>
+</span><span style="color:#65737e;">#[ORM\Entity(repositoryClass: CassetteRepository::class)]
+</span><span style="color:#65737e;">#[ApiResource]
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">Cassette
+</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">#[ORM\Id]
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">#[ORM\GeneratedValue]
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">#[ORM\Column]
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private ?</span><span style="color:#ebcb8b;">int </span><span>$</span><span style="color:#bf616a;">id </span><span>= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">#[ORM\Column(length: 255)]
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private ?</span><span style="color:#ebcb8b;">string </span><span>$</span><span style="color:#bf616a;">title </span><span>= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getId</span><span style="color:#eff1f5;">(): </span><span style="color:#b48ead;">?int
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">id</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getTitle</span><span style="color:#eff1f5;">(): </span><span style="color:#b48ead;">?string
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">title</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">setTitle</span><span style="color:#eff1f5;">(</span><span style="color:#b48ead;">string </span><span>$</span><span style="color:#bf616a;">title</span><span style="color:#eff1f5;">): </span><span style="color:#ebcb8b;">self
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">title </span><span>= $</span><span style="color:#bf616a;">title</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span><span>
+</span></code></pre>
+<p>We see some metadata about this entity in the form of <a href="https://www.php.net/manual/en/language.attributes.overview.php">PHP attributes</a>. We have ORM-mapping in the form of marking the class as an Entity along with which repository it should use. We also see that it is marked as an <code>ApiResource</code>. API Platform will infer all relevant fields to expose and the methods to interact with them. It really wants to help us. But how can we define that API Platform should not have a <strong>PUT</strong> request available for it?</p>
+<p>By expanding the <code>ApiResource</code> attribute with an <code>operations</code> argument we can specify which requests we want to enable for the entity.</p>
+<pre data-lang="php" style="background-color:#2b303b;color:#c0c5ce;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php 
+</span><span style="color:#65737e;">// ...
+</span><span style="color:#65737e;">#[ApiResource(
+</span><span>    operations: [
+</span><span>        </span><span style="color:#b48ead;">new </span><span style="color:#ebcb8b;">Get</span><span>(),
+</span><span>        </span><span style="color:#b48ead;">new </span><span style="color:#ebcb8b;">GetCollection</span><span>(),
+</span><span>        </span><span style="color:#b48ead;">new </span><span style="color:#ebcb8b;">Post</span><span>(),
+</span><span>        </span><span style="color:#b48ead;">new </span><span style="color:#ebcb8b;">Delete</span><span>(),
+</span><span>        </span><span style="color:#b48ead;">new </span><span style="color:#ebcb8b;">Patch</span><span>()
+</span><span>    ]
+</span><span>)]
+</span></code></pre>
+<p>These operations are brought from the <code>ApiPlatform\Metadata</code> namespace and correspond with each type of request we want to enable. We bring in all the operations here but for the <strong>PUT</strong> operation.</p>
+<blockquote>
+<p>Most of these operations are straight forward, but they hint at something fundamental. There is something called Collection operations, so there are also something called Item operations. <code>Post</code> och <code>GetCollection</code> are collection operations. This means that they do not require any item identificator, which Item operations do. </p>
+</blockquote>
+<p>
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>No body puts <strong>PUT</strong> in a corner!</p>
+
+    </cite>
+    
+</div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="Swagger UI, but no resources available"
+            src="baby-in-a-corner.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;baby-in-a-corner.f06deb5b67f7f0dc.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;baby-in-a-corner.9a6de2f2c84b2aac.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;baby-in-a-corner.fba7fd250c1aacd5.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div></p>
+<p>So a mixtape is not much without any songs. We will create an entity for this and create two collections on Cassette to relate to the songs. It will have a sideA collection of songs, and a sideB collection of songs. We will againg enjoy the ease that is the <code>bin/console make:entity</code> command by adding the following fields:</p>
+<ul>
+<li>
+<p><code>bin/console make:entity Song</code>:</p>
+<ul>
+<li><em>title</em> [<code>string</code>]</li>
+<li><em>artist</em> [<code>string</code>]</li>
+<li><em>duration</em> [<code>integer</code>] (duration in seconds)</li>
+</ul>
+</li>
+<li>
+<p>update database for the new entity:</p>
+<ul>
+<li><code>symfony php bin/console make:entity</code></li>
+<li><code>symfony php bin/console doctrine:migrations:migrate</code></li>
+</ul>
+</li>
+<li>
+<p><code>bin/console make:entity Cassette</code> (allows us to update its fields): </p>
+<ul>
+<li><em>sideA</em> [<code>ManyToMany -&gt; Song</code>, no corresponding field on <code>Song</code>]</li>
+<li><em>sideB</em> [<code>ManyToMany -&gt; Song</code>, no corresponding field on <code>Song</code>]</li>
+</ul>
+</li>
+<li>
+<p>Modify the <code>ManyToMany</code> mapping on Cassette with <code>JoinTable</code> (<em>brought in from the <code>Doctrine\ORM\Mapping</code> namespace</em>):</p>
+</li>
+</ul>
+<pre data-lang="php" style="background-color:#2b303b;color:#c0c5ce;" class="language-php "><code class="language-php" data-lang="php"><span>    #[ORM\ManyToMany(targetEntity: Song::class)]
+</span><span>    #[JoinTable(name: &#39;side_a_songs&#39;)]
+</span><span>    private Collection $sideA;
+</span><span>
+</span><span>    #[ORM\ManyToMany(targetEntity: Song::class)]
+</span><span>    #[JoinTable(name: &#39;side_b_songs&#39;)]
+</span><span>    private Collection $sideB;
+</span></code></pre>
+<ul>
+<li>Update the new relations.
+<ul>
+<li><code>symfony php bin/console make:entity</code></li>
+<li><code>symfony php bin/console doctrine:migrations:migrate</code></li>
+</ul>
+</li>
+</ul>
+<p>It may be that the new entity has not been marked as an ApiResource, to remedy that we will simply prepend the <code>Song</code> class with the <code>ApiResource</code> attribute. This will again expose all the operations we might want. So taking this opportunity to populate our database with some songs we can make a <code>POST</code> request to <code>https://localhost:8000/api/songs</code> (or whatever port you have your local server running at). May I suggest adding the following payload with the request:</p>
+<pre data-lang="json" style="background-color:#2b303b;color:#c0c5ce;" class="language-json "><code class="language-json" data-lang="json"><span>{
+</span><span>  &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Never Gonna Give You Up</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">artist</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Rick Astley</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">duration</span><span>&quot;: </span><span style="color:#d08770;">214
+</span><span>}
+</span></code></pre>
+<p>After adding a few songs, we can fetch them at <code>https://localhost:8000/api/songs</code> with a <code>GET</code> request. It would return the following response:</p>
+<pre data-lang="json" style="background-color:#2b303b;color:#c0c5ce;" class="language-json "><code class="language-json" data-lang="json"><span>{
+</span><span>  &quot;</span><span style="color:#a3be8c;">@context</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/contexts/Song</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">@id</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/songs</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">@type</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">hydra:Collection</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">hydra:totalItems</span><span>&quot;: </span><span style="color:#d08770;">4</span><span>,
+</span><span>  &quot;</span><span style="color:#a3be8c;">hydra:member</span><span>&quot;: [
+</span><span>    {
+</span><span>      &quot;</span><span style="color:#a3be8c;">@id</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/songs/1</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">@type</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Song</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">id</span><span>&quot;: </span><span style="color:#d08770;">1</span><span>,
+</span><span>      &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Never Gonna Give You Up</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">artist</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Rick Astley</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">duration</span><span>&quot;: </span><span style="color:#d08770;">214
+</span><span>    },
+</span><span>    {
+</span><span>      &quot;</span><span style="color:#a3be8c;">@id</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/songs/2</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">@type</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Song</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">id</span><span>&quot;: </span><span style="color:#d08770;">2</span><span>,
+</span><span>      &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">If I Could Turn Back Time</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">artist</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Cher</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">duration</span><span>&quot;: </span><span style="color:#d08770;">239
+</span><span>    },
+</span><span>    {
+</span><span>      &quot;</span><span style="color:#a3be8c;">@id</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/songs/3</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">@type</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Song</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">id</span><span>&quot;: </span><span style="color:#d08770;">3</span><span>,
+</span><span>      &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Walking On Sunshine</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">artist</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Katrina &amp; The Waves</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">duration</span><span>&quot;: </span><span style="color:#d08770;">239
+</span><span>    },
+</span><span>    {
+</span><span>      &quot;</span><span style="color:#a3be8c;">@id</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/songs/4</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">@type</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Song</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">id</span><span>&quot;: </span><span style="color:#d08770;">4</span><span>,
+</span><span>      &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Like a Virgin</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">artist</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Madonna</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">duration</span><span>&quot;: </span><span style="color:#d08770;">219
+</span><span>    }
+</span><span>  ]
+</span><span>}
+</span></code></pre>
+<p>Perhaps we could improve the response for the songs so we could get duration in a minute:seconds format? We could do that by adding a dynamic field! As long as we use a language that API Platform understands, we won't have to add any special configurations!</p>
+<p>Add the following method to <code>App\Entity\Song</code>:</p>
+<pre data-lang="php" style="background-color:#2b303b;color:#c0c5ce;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span style="color:#65737e;">// ...
+</span><span>    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getFormattedDuration</span><span>(): </span><span style="color:#b48ead;">?string
+</span><span>    {
+</span><span>        $</span><span style="color:#bf616a;">duration </span><span>= $</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">duration</span><span> ?? </span><span style="color:#d08770;">0</span><span>;
+</span><span>        $</span><span style="color:#bf616a;">minutes </span><span>= $</span><span style="color:#bf616a;">duration </span><span>&gt; </span><span style="color:#d08770;">60</span><span> ? (</span><span style="color:#b48ead;">int</span><span>)($</span><span style="color:#bf616a;">duration </span><span>/ </span><span style="color:#d08770;">60</span><span>) : </span><span style="color:#d08770;">0</span><span>;
+</span><span>        $</span><span style="color:#bf616a;">seconds </span><span>= $</span><span style="color:#bf616a;">duration </span><span>&gt; </span><span style="color:#d08770;">60</span><span> ? $</span><span style="color:#bf616a;">duration </span><span>% </span><span style="color:#d08770;">60</span><span> : $</span><span style="color:#bf616a;">duration</span><span>;
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">return </span><span style="color:#96b5b4;">sprintf</span><span>(&#39;</span><span style="color:#a3be8c;">%d:%02d</span><span>&#39;, $</span><span style="color:#bf616a;">minutes</span><span>, $</span><span style="color:#bf616a;">seconds</span><span>);
+</span><span>    }
+</span></code></pre>
+<p>And just like that we get back the following for the first <em>song</em>:</p>
+<pre data-lang="json" style="background-color:#2b303b;color:#c0c5ce;" class="language-json "><code class="language-json" data-lang="json"><span>    {
+</span><span>      &quot;</span><span style="color:#a3be8c;">@id</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/songs/14</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">@type</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Song</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">id</span><span>&quot;: </span><span style="color:#d08770;">14</span><span>,
+</span><span>      &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Never Gonna Give You Up</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">artist</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Rick Astley</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">duration</span><span>&quot;: </span><span style="color:#d08770;">214</span><span>,
+</span><span>      &quot;</span><span style="color:#a3be8c;">formattedDuration</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">3:34</span><span>&quot;
+</span><span>    }
+</span></code></pre>
+<p>So far, this has been a pleasant journey. But can we add a song at a time to the cassette and get a list of songs from the Cassette resource? This will require a bit more work. While we have an endpoint to setup the whole lists of songs with a one-off <code>PATCH</code> request, we do not have an endpoint to add one song at a time. Another challenge is the nature of cassettes! </p>
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A cassette in a purple neon light"
+                src="cassette_1.jpeg"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cassette_1.86d0c392f3547d63.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cassette_1.7681e147129c5aa0.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cassette_1.9e92702bfae211a7.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+<p>A traditional cassette has 2 sides; an A-side and a B-side. Each side can contain upto about 30 minutes of audio. We will add a method called <code>addSong</code> which will add songs to the A-side until it is full and then continue to add to the B-side. We will have a method to calculate the length occupied for each side called <code>totalLength</code> and another method called <code>sideAddable</code> to the <code>Cassette</code> class. We will modify the methods <code>addSideA</code> and <code>addSideB</code> to add the control if it can add another song.</p>
+<pre data-lang="php" style="background-color:#2b303b;color:#c0c5ce;" class="language-php "><code class="language-php" data-lang="php"><span>    // ./src/Entity/Cassette
+</span><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// ...
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">addSong</span><span>(</span><span style="color:#ebcb8b;">Song </span><span>$</span><span style="color:#bf616a;">song</span><span>): </span><span style="color:#ebcb8b;">self
+</span><span>    {
+</span><span>        </span><span style="color:#b48ead;">if </span><span>(!$</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">sideA</span><span>-&gt;</span><span style="color:#bf616a;">contains</span><span>($</span><span style="color:#bf616a;">song</span><span>) &amp;&amp; $</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">sideAddable</span><span>($</span><span style="color:#bf616a;">song</span><span>, $</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">sideA</span><span>)) {
+</span><span>            $</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">addSideA</span><span>($</span><span style="color:#bf616a;">song</span><span>);
+</span><span>        } </span><span style="color:#b48ead;">else </span><span>{
+</span><span>            $</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">addSideB</span><span>($</span><span style="color:#bf616a;">song</span><span>);
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">this</span><span>;
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">addSideA</span><span>(</span><span style="color:#ebcb8b;">Song </span><span>$</span><span style="color:#bf616a;">song</span><span>): </span><span style="color:#ebcb8b;">self
+</span><span>    {
+</span><span>        </span><span style="color:#b48ead;">if </span><span>(!$</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">sideA</span><span>-&gt;</span><span style="color:#bf616a;">contains</span><span>($</span><span style="color:#bf616a;">song</span><span>) &amp;&amp; $</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">sideAddable</span><span>($</span><span style="color:#bf616a;">song</span><span>, $</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">sideA</span><span>)) {
+</span><span>            $</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">sideA</span><span>-&gt;</span><span style="color:#bf616a;">add</span><span>($</span><span style="color:#bf616a;">song</span><span>);
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">this</span><span>;
+</span><span>    }
+</span><span>    
+</span><span>    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">addSideB</span><span>(</span><span style="color:#ebcb8b;">Song </span><span>$</span><span style="color:#bf616a;">song</span><span>): </span><span style="color:#ebcb8b;">self
+</span><span>    {
+</span><span>        </span><span style="color:#b48ead;">if </span><span>(!$</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">sideB</span><span>-&gt;</span><span style="color:#bf616a;">contains</span><span>($</span><span style="color:#bf616a;">song</span><span>) &amp;&amp; $</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">sideAddable</span><span>($</span><span style="color:#bf616a;">song</span><span>, $</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">sideB</span><span>)) {
+</span><span>            $</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">sideB</span><span>-&gt;</span><span style="color:#bf616a;">add</span><span>($</span><span style="color:#bf616a;">song</span><span>);
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">this</span><span>;
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#65737e;">/**
+</span><span style="color:#65737e;">     * </span><span style="color:#b48ead;">@param</span><span style="color:#65737e;"> Collection&lt;Song&gt; $songs
+</span><span style="color:#65737e;">     * </span><span style="color:#b48ead;">@return</span><span style="color:#65737e;"> int
+</span><span style="color:#65737e;">     */
+</span><span>    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">totalLength</span><span>(</span><span style="color:#ebcb8b;">Collection </span><span>$</span><span style="color:#bf616a;">songs</span><span>): </span><span style="color:#b48ead;">int
+</span><span>    {
+</span><span>        $</span><span style="color:#bf616a;">sum </span><span>= </span><span style="color:#d08770;">0</span><span>;
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">foreach </span><span>($</span><span style="color:#bf616a;">songs </span><span>as $</span><span style="color:#bf616a;">song</span><span>) {
+</span><span>            $</span><span style="color:#bf616a;">sum </span><span>+= $</span><span style="color:#bf616a;">song</span><span>-&gt;</span><span style="color:#bf616a;">getDuration</span><span>() ?? </span><span style="color:#d08770;">0</span><span>;
+</span><span>        }
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">sum</span><span>;
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">protected function </span><span style="color:#8fa1b3;">sideAddable</span><span>(</span><span style="color:#ebcb8b;">Song </span><span>$</span><span style="color:#bf616a;">candidateSong</span><span>, </span><span style="color:#ebcb8b;">Collection </span><span>$</span><span style="color:#bf616a;">sideSongs</span><span>): </span><span style="color:#b48ead;">bool
+</span><span>    {
+</span><span>        $</span><span style="color:#bf616a;">allowedLength </span><span>= </span><span style="color:#d08770;">30 </span><span>* </span><span style="color:#d08770;">60</span><span>;
+</span><span>
+</span><span>        </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">allowedLength </span><span>&gt; ($</span><span style="color:#bf616a;">this</span><span>-&gt;</span><span style="color:#bf616a;">totalLength</span><span>($</span><span style="color:#bf616a;">sideSongs</span><span>) + $</span><span style="color:#bf616a;">candidateSong</span><span>-&gt;</span><span style="color:#bf616a;">getDuration</span><span>());
+</span><span>    }
+</span></code></pre>
+<p>We will add a controller to handle when songs are added to a cassette. After this, we will use the controller when we register a new API route. You will see that we pass an EntityManagerInterface to the controller. This will be automaticallly resolved by Symsony's Dependency Injection container. It will be used to loop up the song in the database and store it to a cassette. The controller will return a <code>201 OK</code> status for successful creation of a new relation, <code>400 BAD REQUEST</code> for requests without a required body parameter (<em>songId</em>), or <code>404 NOT FOUND</code> if a song is not found. If you look oveer the class you will see that we don't look up the Cassette to see if it is present. In a __invoke method we assume a cassette has already been found, this means that Symfony in conjunction with the ORM will already have processed the lookup and will handle returning a <code>404</code> for us if it was not found. </p>
+<pre data-lang="php" style="background-color:#2b303b;color:#c0c5ce;" class="language-php "><code class="language-php" data-lang="php"><span>//  ./src/Controller/CassetteSongController.php
+</span><span>
+</span><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span style="color:#b48ead;">declare</span><span>(</span><span style="color:#d08770;">strict_types</span><span>=</span><span style="color:#d08770;">1</span><span>);
+</span><span>
+</span><span style="color:#b48ead;">namespace </span><span>App\Controller;
+</span><span>
+</span><span style="color:#b48ead;">use </span><span>App\Entity\</span><span style="color:#ebcb8b;">Cassette</span><span>;
+</span><span style="color:#b48ead;">use </span><span>App\Entity\</span><span style="color:#ebcb8b;">Song</span><span>;
+</span><span style="color:#b48ead;">use </span><span>Doctrine\ORM\</span><span style="color:#ebcb8b;">EntityManagerInterface</span><span>;
+</span><span style="color:#b48ead;">use </span><span>Symfony\Bundle\FrameworkBundle\Controller\</span><span style="color:#ebcb8b;">AbstractController</span><span>;
+</span><span style="color:#b48ead;">use </span><span>Symfony\Component\HttpFoundation\</span><span style="color:#ebcb8b;">Request</span><span>;
+</span><span style="color:#b48ead;">use </span><span>Symfony\Component\HttpFoundation\</span><span style="color:#ebcb8b;">Response</span><span>;
+</span><span>
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">CassetteSongController </span><span style="color:#b48ead;">extends </span><span style="color:#a3be8c;">AbstractController
+</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#96b5b4;">__construct</span><span style="color:#eff1f5;">(
+</span><span style="color:#eff1f5;">        </span><span style="color:#ebcb8b;">private readonly EntityManagerInterface </span><span>$</span><span style="color:#bf616a;">entityManager
+</span><span style="color:#eff1f5;">    ){}
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">public function </span><span style="color:#96b5b4;">__invoke</span><span style="color:#eff1f5;">(</span><span style="color:#ebcb8b;">Cassette </span><span>$</span><span style="color:#bf616a;">cassette</span><span style="color:#eff1f5;">, </span><span style="color:#ebcb8b;">Request </span><span>$</span><span style="color:#bf616a;">request </span><span>= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">): </span><span style="color:#ebcb8b;">Response
+</span><span style="color:#eff1f5;">    {
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span>$</span><span style="color:#bf616a;">request </span><span>!== </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">) {
+</span><span style="color:#eff1f5;">            </span><span>$</span><span style="color:#bf616a;">content </span><span>= $</span><span style="color:#bf616a;">request</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">getContent</span><span style="color:#eff1f5;">();
+</span><span style="color:#eff1f5;">            </span><span>$</span><span style="color:#bf616a;">data </span><span>= </span><span style="color:#96b5b4;">json_decode</span><span style="color:#eff1f5;">(</span><span>$</span><span style="color:#bf616a;">content</span><span style="color:#eff1f5;">, </span><span style="color:#d08770;">true</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span>$</span><span style="color:#bf616a;">songId </span><span>= $</span><span style="color:#bf616a;">data</span><span style="color:#eff1f5;">[</span><span>&#39;</span><span style="color:#a3be8c;">songId</span><span>&#39;</span><span style="color:#eff1f5;">] ?? </span><span style="color:#d08770;">false</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span>!$</span><span style="color:#bf616a;">songId</span><span style="color:#eff1f5;">) {
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">json</span><span style="color:#eff1f5;">(
+</span><span style="color:#eff1f5;">                    [</span><span>&#39;</span><span style="color:#a3be8c;">description</span><span>&#39; =&gt; &#39;</span><span style="color:#a3be8c;">Missing required key &quot;songId&quot;</span><span>&#39;</span><span style="color:#eff1f5;">],
+</span><span style="color:#eff1f5;">                    </span><span style="color:#ebcb8b;">Response</span><span style="color:#eff1f5;">::</span><span style="color:#d08770;">HTTP_BAD_REQUEST
+</span><span style="color:#eff1f5;">                );
+</span><span style="color:#eff1f5;">            }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">            </span><span>$</span><span style="color:#bf616a;">songRepository </span><span>= $</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">entityManager</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">getRepository</span><span style="color:#eff1f5;">(</span><span style="color:#ebcb8b;">Song</span><span style="color:#eff1f5;">::</span><span style="color:#d08770;">class</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span>$</span><span style="color:#bf616a;">song </span><span>= $</span><span style="color:#bf616a;">songRepository</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">findOneBy</span><span style="color:#eff1f5;">([</span><span>&#39;</span><span style="color:#a3be8c;">id</span><span>&#39; =&gt; $</span><span style="color:#bf616a;">songId</span><span style="color:#eff1f5;">]);
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">            </span><span style="color:#b48ead;">if </span><span style="color:#eff1f5;">(</span><span>$</span><span style="color:#bf616a;">song </span><span>=== </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">) {
+</span><span style="color:#eff1f5;">                </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">json</span><span style="color:#eff1f5;">([</span><span>&#39;</span><span style="color:#a3be8c;">description</span><span>&#39; =&gt; &#39;</span><span style="color:#a3be8c;">Song was not found</span><span>&#39;</span><span style="color:#eff1f5;">], </span><span style="color:#ebcb8b;">Response</span><span style="color:#eff1f5;">::</span><span style="color:#d08770;">HTTP_BAD_REQUEST</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">            </span><span>$</span><span style="color:#bf616a;">cassette </span><span>= $</span><span style="color:#bf616a;">cassette</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">addSong</span><span style="color:#eff1f5;">(</span><span>$</span><span style="color:#bf616a;">song</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">            </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">entityManager</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">flush</span><span style="color:#eff1f5;">(</span><span>$</span><span style="color:#bf616a;">cassette</span><span style="color:#eff1f5;">);
+</span><span style="color:#eff1f5;">        }
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">        </span><span style="color:#b48ead;">return </span><span>$</span><span style="color:#bf616a;">this</span><span style="color:#eff1f5;">-&gt;</span><span style="color:#bf616a;">json</span><span style="color:#eff1f5;">(
+</span><span style="color:#eff1f5;">            [
+</span><span style="color:#eff1f5;">                </span><span>&#39;</span><span style="color:#a3be8c;">description</span><span>&#39; =&gt; &#39;</span><span style="color:#a3be8c;">Song was added!</span><span>&#39;</span><span style="color:#eff1f5;">,
+</span><span style="color:#eff1f5;">            ],
+</span><span style="color:#eff1f5;">            </span><span style="color:#ebcb8b;">Response</span><span style="color:#eff1f5;">::</span><span style="color:#d08770;">HTTP_CREATED
+</span><span style="color:#eff1f5;">        );
+</span><span style="color:#eff1f5;">    }
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<p>
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>To be or not to be, that is the question. Well, actually, there are many other questions, like &quot;why that controller though?&quot;</p>
+
+    </cite>
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A cassette in a purple neon light"
+                src="hamlet-controller.jpeg"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hamlet-controller.c3d90a83de01d6fb.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hamlet-controller.af6bda8255ee29b8.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hamlet-controller.ab56874228dc6954.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+</p>
+<p>So what to do with that controller? As we see, it will take an instance of the Cassette class and a request object. We will go into the Cassette class and expand the API definitions. This will be less magic (but not totally without some sourcery), and more definitions. We add a new Post-request to the API Resource, define its route, the controller to handle it, and its response values.</p>
+<pre data-lang="php" style="background-color:#2b303b;color:#c0c5ce;" class="language-php "><code class="language-php" data-lang="php"><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span style="color:#65737e;">#[ApiResource(
+</span><span>    operations: [
+</span><span>        </span><span style="color:#65737e;">// ... 
+</span><span>        </span><span style="color:#b48ead;">new </span><span style="color:#ebcb8b;">Post</span><span>(
+</span><span>            </span><span style="color:#d08770;">uriTemplate</span><span>: &#39;</span><span style="color:#a3be8c;">/cassettes/{id}/songs</span><span>&#39;,
+</span><span>            </span><span style="color:#d08770;">controller</span><span>: </span><span style="color:#ebcb8b;">CassetteSongController</span><span>::</span><span style="color:#d08770;">class</span><span>,
+</span><span>            </span><span style="color:#d08770;">openapiContext</span><span>: [
+</span><span>                &#39;</span><span style="color:#a3be8c;">summary</span><span>&#39; =&gt; &#39;</span><span style="color:#a3be8c;">Add a Song to a cassette</span><span>&#39;,
+</span><span>                &#39;</span><span style="color:#a3be8c;">requestBody</span><span>&#39; =&gt; [
+</span><span>                    &#39;</span><span style="color:#a3be8c;">content</span><span>&#39; =&gt; [
+</span><span>                        &#39;</span><span style="color:#a3be8c;">application/json</span><span>&#39; =&gt; [
+</span><span>                            &#39;</span><span style="color:#a3be8c;">schema</span><span>&#39; =&gt; [
+</span><span>                                &#39;</span><span style="color:#a3be8c;">type</span><span>&#39; =&gt; &#39;</span><span style="color:#a3be8c;">object</span><span>&#39;,
+</span><span>                                &#39;</span><span style="color:#a3be8c;">properties</span><span>&#39; =&gt; [
+</span><span>                                    &#39;</span><span style="color:#a3be8c;">songId</span><span>&#39; =&gt; [
+</span><span>                                        &#39;</span><span style="color:#a3be8c;">type</span><span>&#39; =&gt; &#39;</span><span style="color:#a3be8c;">integer</span><span>&#39;
+</span><span>                                    ]
+</span><span>                                ]
+</span><span>                            ]
+</span><span>                        ]
+</span><span>                    ]
+</span><span>                ],
+</span><span>                &#39;</span><span style="color:#a3be8c;">responses</span><span>&#39; =&gt; [
+</span><span>                    &#39;</span><span style="color:#a3be8c;">201</span><span>&#39; =&gt; [
+</span><span>                        &#39;</span><span style="color:#a3be8c;">description</span><span>&#39; =&gt; &#39;</span><span style="color:#a3be8c;">Song added successfully</span><span>&#39;
+</span><span>                    ],
+</span><span>                    &#39;</span><span style="color:#a3be8c;">400</span><span>&#39; =&gt; [
+</span><span>                        &#39;</span><span style="color:#a3be8c;">description</span><span>&#39; =&gt; &#39;</span><span style="color:#a3be8c;">Missing required key</span><span>&#39;
+</span><span>                    ],
+</span><span>                    &#39;</span><span style="color:#a3be8c;">404</span><span>&#39; =&gt; [
+</span><span>                        &#39;</span><span style="color:#a3be8c;">description</span><span>&#39; =&gt; &#39;</span><span style="color:#a3be8c;">Cassette or Song not found</span><span>&#39;
+</span><span>                    ]
+</span><span>                ]
+</span><span>            ]
+</span><span>        )
+</span><span>    ]
+</span><span>)]
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">Cassette
+</span><span style="color:#65737e;">// ...
+</span></code></pre>
+<p>In the route for the endpoint we have added a placeholder, <code>{id}</code>. This id corresponds to the Cassette entity we want to add to, and Symfony will fetch the correct one for us and insert into the controller's <code>__invoke</code> method. In the POST body we define the schema to have a <code>songId</code> with an <code>integer</code>. Having added this, we will see a new route and schema for it on <code>localhost:8000/api</code>.</p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="The swagger ui has an with the description &quot;Add a Song to a cassette&quot;"
+            src="new-post-route.jpeg"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;new-post-route.40ba0810d898ad53.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;new-post-route.12ea6c5c3e53614b.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;new-post-route.a00c21bfda3b6179.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+<p>We can now create a Cassette, multiple songs, and add songs to a cassette. Having done that, when we fetch a Cassette with a GET request we will get back the songs it has. But something looks a bit off.</p>
+<p><code>GET https://127.0.0.1:8000/api/cassettes/1</code></p>
+<pre data-lang="yaml" style="background-color:#2b303b;color:#c0c5ce;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span>{
+</span><span>  &quot;</span><span style="color:#a3be8c;">@context</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/contexts/Cassette</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">@id</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/cassettes/1</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">@type</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Cassette</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">id</span><span>&quot;: </span><span style="color:#d08770;">1</span><span>,
+</span><span>  &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Mix Tape #1</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">sideA</span><span>&quot;: [
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/1</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/2</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/3</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/4</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/5</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/6</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/7</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/8</span><span>&quot;
+</span><span>  ],
+</span><span>  &quot;</span><span style="color:#a3be8c;">sideB</span><span>&quot;: [
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/10</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/11</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/12</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/13</span><span>&quot;,
+</span><span>    &quot;</span><span style="color:#a3be8c;">/api/songs/14</span><span>&quot;
+</span><span>  ]
+</span><span>}
+</span></code></pre>
+<p>We can see that we have 8 songs on side A, and 5 on side B. But we would like to get the song, artist, and duration for each. So what are these strings we get? It looks like URLs, and while they functions as this too they are API Platform's way to identify each entity, or IRIs (<em>International Resource Identifiers</em>).</p>
+<p>We will modify how API Platform returns the songs when we fetch a cassette. We will do this by defining a normalization-group in Cassette and map the Song class to also use this group.</p>
+<pre data-lang="php" style="background-color:#2b303b;color:#c0c5ce;" class="language-php "><code class="language-php" data-lang="php"><span>// ./src/Entity/Cassette
+</span><span style="color:#ab7967;">&lt;?php
+</span><span style="color:#65737e;">// ...
+</span><span style="color:#b48ead;">use </span><span>Symfony\Component\Serializer\Annotation\</span><span style="color:#ebcb8b;">Groups</span><span>;
+</span><span style="color:#65737e;">// ...
+</span><span>
+</span><span style="color:#65737e;">#[ApiResource(
+</span><span>    </span><span style="color:#65737e;">// ...
+</span><span>    normalizationContext: [
+</span><span>        &#39;</span><span style="color:#a3be8c;">groups</span><span>&#39; =&gt; [&#39;</span><span style="color:#a3be8c;">read:cassette</span><span>&#39;]
+</span><span>    ]
+</span><span>)]
+</span><span style="color:#b48ead;">class </span><span style="color:#ebcb8b;">Cassette
+</span><span style="color:#eff1f5;">{
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// ...
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// add this group to the fields you want to expose in the API
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">#[Groups([&#39;read:cassette&#39;])]
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private ?</span><span style="color:#ebcb8b;">string </span><span>$</span><span style="color:#bf616a;">title </span><span>= </span><span style="color:#d08770;">null</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// ...
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">#[Groups([&#39;read:cassette&#39;])]
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#ebcb8b;">Collection </span><span>$</span><span style="color:#bf616a;">sideA</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// ...
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">#[Groups([&#39;read:cassette&#39;])]
+</span><span style="color:#eff1f5;">    </span><span style="color:#b48ead;">private </span><span style="color:#ebcb8b;">Collection </span><span>$</span><span style="color:#bf616a;">sideB</span><span style="color:#eff1f5;">;
+</span><span style="color:#eff1f5;">
+</span><span style="color:#eff1f5;">    </span><span style="color:#65737e;">// ...
+</span><span style="color:#eff1f5;">}
+</span></code></pre>
+<p>And for the magic of it all we will add this group in the Song class as well.</p>
+<pre data-lang="php" style="background-color:#2b303b;color:#c0c5ce;" class="language-php "><code class="language-php" data-lang="php"><span>// ./src/Entity/Song
+</span><span>
+</span><span style="color:#ab7967;">&lt;?php
+</span><span>
+</span><span style="color:#b48ead;">use </span><span>Symfony\Component\Serializer\Annotation\</span><span style="color:#ebcb8b;">Groups</span><span>;
+</span><span style="color:#65737e;">// ...
+</span><span>
+</span><span>    </span><span style="color:#65737e;">#[Groups([&#39;read:cassette&#39;])]
+</span><span>    </span><span style="color:#b48ead;">private</span><span> ?</span><span style="color:#b48ead;">string </span><span>$</span><span style="color:#bf616a;">title </span><span>= </span><span style="color:#d08770;">null</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#65737e;">#[Groups([&#39;read:cassette&#39;])]
+</span><span>    </span><span style="color:#b48ead;">private</span><span> ?</span><span style="color:#b48ead;">string </span><span>$</span><span style="color:#bf616a;">artist </span><span>= </span><span style="color:#d08770;">null</span><span>;
+</span><span>
+</span><span>    </span><span style="color:#65737e;">// ...
+</span><span>
+</span><span>    </span><span style="color:#65737e;">#[Groups([&#39;read:cassette&#39;])]
+</span><span>    </span><span style="color:#b48ead;">public function </span><span style="color:#8fa1b3;">getFormattedDuration</span><span>(): </span><span style="color:#b48ead;">?string
+</span><span>    {
+</span><span>        </span><span style="color:#65737e;">// ...
+</span><span>    }
+</span><span>
+</span></code></pre>
+<p>So we did something odd here. We use a normalization-group defined in another API Resource and add it to the fields of the Song class. How would this ever be enough to get the behaviour that we want? The answer is magic! Or, <a href="https://api-platform.com/docs/core/serialization/">serialization process, you can read more about that in API Platform's documention</a>. This is the result:</p>
+<pre data-lang="yaml" style="background-color:#2b303b;color:#c0c5ce;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span>{
+</span><span>  &quot;</span><span style="color:#a3be8c;">@context</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/contexts/Cassette</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">@id</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/cassettes/1</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">@type</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Cassette</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Mix Tape #1</span><span>&quot;,
+</span><span>  &quot;</span><span style="color:#a3be8c;">sideA</span><span>&quot;: [
+</span><span>    {
+</span><span>      &quot;</span><span style="color:#a3be8c;">@id</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/songs/1</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">@type</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Song</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Never Gonna Give You Up</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">artist</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Rick Astley</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">formattedDuration</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">3:34</span><span>&quot;
+</span><span>    },
+</span><span>    {
+</span><span>      &quot;</span><span style="color:#a3be8c;">@id</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">/api/songs/2</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">@type</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Song</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">title</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">If I Could Turn Back Time</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">artist</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Cher</span><span>&quot;,
+</span><span>      &quot;</span><span style="color:#a3be8c;">formattedDuration</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">3:59</span><span>&quot;
+</span><span>    },
+</span><span>    </span><span style="color:#a3be8c;">// ...
+</span><span>  ]
+</span><span>  </span><span style="color:#a3be8c;">// ...
+</span><span>}
+</span><span>    
+</span></code></pre>
+<p>And that is exactly what we were working towards! But we have only been scratching the surface of API Platform. There are many other topics to discover, such as:</p>
+<ul>
+<li><a href="https://api-platform.com/docs/core/graphql/">RESTful to GraphQL</a></li>
+<li><a href="https://api-platform.com/docs/core/security/">Securing resources and operations</a></li>
+<li><a href="https://api-platform.com/docs/admin/">The Admin component</a></li>
+<li><a href="https://api-platform.com/docs/core/filters/">Filters</a></li>
+<li>...and so much more!</li>
+</ul>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>What thou seest is but the shadow of the truth; the substance lies beneath, and thou must scratch the surface to reveal it. But scratch not with thy nails, but with thy vinyl records!</p>
+
+    </cite>
+    
+</div>
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A classic writer as a DJ, scratching the surface of his mixtable"
+                src="shakespeare-dj.jpeg"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;shakespeare-dj.3bd5bb86e6e527f1.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;shakespeare-dj.147d5f6da0be4807.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;shakespeare-dj.a1d54aa84cbac8d3.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2023-03-27 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

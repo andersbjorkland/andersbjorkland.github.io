@@ -1,0 +1,811 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/elixir/liveview-and-broadcast/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/hero.e74ae549d31f1c4f.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/hero.e74ae549d31f1c4f.webp">
+    
+    
+    
+    
+   
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Laugh Out Loud with LiveView" />
+<meta property="og:description" content="Build a hilarious, interactive website with Phoenix LiveView! See jokes evolve in real-time as users vote, powered by database updates and PubSub broadcasts." />
+<meta property="og:url" content="https://abjork.land/articles/elixir/liveview-and-broadcast/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2023-05-23"> 
+
+
+ 
+     
+<meta name="last-updated" content="2024-03-28" />
+    
+
+
+
+        
+    
+
+    <title>
+ Laugh Out Loud with LiveView
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/elixir/liveview-and-broadcast/"
+    },
+    "headline": "Laugh Out Loud with LiveView",
+    "description": "Build a hilarious, interactive website with Phoenix LiveView! See jokes evolve in real-time as users vote, powered by database updates and PubSub broadcasts.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2024-03-28",
+    "datePublished": "2023-05-23"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/elixir/">Elixir</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero-slim.d5028e6999dc9a93.png"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero-slim.0ab0f6b973ee2f65.png 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero-slim.d5028e6999dc9a93.png 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero-slim.b800d87aa8abdc4a.png 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Laugh Out Loud with LiveView</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/elixir/" class="hover-bold">elixir</a></div>
+        
+        <div><a href="https://abjork.land/tags/phoenix/" class="hover-bold">phoenix</a></div>
+        
+        <div><a href="https://abjork.land/tags/liveview/" class="hover-bold">liveview</a></div>
+        
+        <div><a href="https://abjork.land/tags/pubsub/" class="hover-bold">PubSub</a></div>
+        
+    
+</div>
+
+
+
+</div>
+<p>Are you ready to take your website to the next level? Phoenix LiveView is here to help! In this article, we’ll show you how to create a website that’s not only interactive but also hilarious. Visitors will be able to make their mark by showing their taste in humor, and see how their taste align with others´. It’s the perfect way to engage your audience and keep them coming back for more. All powered by LiveView for instant updates, and the Publish-Subscribe pattern to broadcast updates to all the other visitors.</p>
+<h2 id="where-we-begin">Where we begin</h2>
+<p>In an earlier article we saw how to create a simple API with Phoenix. It was our <a href="/articles/exploration/discovering-phoenix/">Jokes API</a>. In today's article we will switch it up. We will build upon same schema of jokes, but we will introduce LiveView and PubSub. You can go back to the article if you want to see how to easily set up a project and build schemas with some excellent <code>mix</code> build-tools.</p>
+<p>While we are on the same page, and so we don't get hard to understand errors when following this tutorial, check which versions of these you are using. In this article we will be using following major tech:</p>
+<p><code>Elixir 1.14</code><br />
+<code>Docker Compose 2.17</code>
+<code>Phoenix 1.7</code></p>
+<h3 id="create-the-jokers-project">Create the 'Jokers' project</h3>
+<p>It starts with a command: <code>mix phx.new Jokers</code>. </p>
+<p>Then we will add a PostgreSQL Docker container to manage our database.
+<code>./docker-compose.yaml</code></p>
+<pre data-lang="yaml" style="background-color:#2b303b;color:#c0c5ce;" class="language-yaml "><code class="language-yaml" data-lang="yaml"><span style="color:#bf616a;">version</span><span>: &quot;</span><span style="color:#a3be8c;">3.4</span><span>&quot;
+</span><span>
+</span><span style="color:#bf616a;">services</span><span>:
+</span><span>  </span><span style="color:#bf616a;">db</span><span>:
+</span><span>    </span><span style="color:#bf616a;">image</span><span>: </span><span style="color:#a3be8c;">postgres
+</span><span>    </span><span style="color:#bf616a;">environment</span><span>:
+</span><span>      </span><span style="color:#bf616a;">POSTGRES_USER</span><span>: </span><span style="color:#a3be8c;">postgres
+</span><span>      </span><span style="color:#bf616a;">POSTGRES_PASSWORD</span><span>: </span><span style="color:#a3be8c;">postgres
+</span><span>    </span><span style="color:#bf616a;">ports</span><span>:
+</span><span>      - &quot;</span><span style="color:#a3be8c;">5432:5432</span><span>&quot;
+</span><span>    </span><span style="color:#bf616a;">volumes</span><span>:
+</span><span>      - </span><span style="color:#a3be8c;">pgdb:/var/lib/postgresql/data
+</span><span>
+</span><span style="color:#bf616a;">volumes</span><span>:
+</span><span>  </span><span style="color:#bf616a;">pgdb</span><span>:
+</span></code></pre>
+<p>Get the database up and the Phoenix server:
+<code>docker-compose up -d</code><br />
+<code>mix ecto.create</code> 
+<code>mix phx.server</code> </p>
+<p>When we go to <code>localhost:4000</code> we will see the default Phoenix landing-page. We will switch most of this out for a simple jokes list with like/dislike buttons later on.
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="The landing page with default Phoenix Framework splash screen"
+                src="start-screen.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;start-screen.a775324fdbb76412.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;start-screen.0b0a92bbcf19c7db.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;start-screen.a60b49ef0aae4274.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+</p>
+<h3 id="and-add-jokes-schema">And add Jokes schema</h3>
+<p>You will recognize the schema from an earlier article on Phoenix. We create it by running the following commands in a terminal:<br />
+<code>mix phx.gen.json Jokes Joke jokes text:text likes:integer dislikes:integer</code><br />
+<code>mix ecto.migrate</code></p>
+<h3 id="and-add-api-routes">And add API-routes</h3>
+<p>We will use the API to add new Jokes for our application. This is also a repetition of earlier article, but as it is with repetition: it makes the love grow fonder. (Or is that distance?)</p>
+<p>We will add the API-routes by adding the following to the module in <code>./lib/lean_jokers_web/router.ex</code>:</p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span>  scope &quot;</span><span style="color:#a3be8c;">/api</span><span>&quot;, </span><span style="color:#ebcb8b;">LeanJokersWeb </span><span style="color:#b48ead;">do
+</span><span>    pipe_through </span><span style="color:#a3be8c;">:api
+</span><span>
+</span><span>    resources &quot;</span><span style="color:#a3be8c;">/jokes</span><span>&quot;, </span><span style="color:#ebcb8b;">JokeController</span><span>, </span><span style="color:#d08770;">except: </span><span>[</span><span style="color:#a3be8c;">:new</span><span>, </span><span style="color:#a3be8c;">:edit</span><span>, </span><span style="color:#a3be8c;">:delete</span><span>]
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>And we will update the Joke-schema to default <code>likes</code> and <code>dislikes</code> to <code>0</code>:
+In <code>./lib/lean_jokers/jokes/joke.ex</code>:</p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span>  schema &quot;</span><span style="color:#a3be8c;">jokes</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span>    field </span><span style="color:#a3be8c;">:dislikes</span><span>, </span><span style="color:#a3be8c;">:integer</span><span>, </span><span style="color:#d08770;">default: 0
+</span><span>    field </span><span style="color:#a3be8c;">:likes</span><span>, </span><span style="color:#a3be8c;">:integer</span><span>, </span><span style="color:#d08770;">default: 0
+</span><span>    field </span><span style="color:#a3be8c;">:text</span><span>, </span><span style="color:#a3be8c;">:string
+</span><span>
+</span><span>    timestamps()
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>We are now ready to add a couple of classic bad-jokes (or absolutely-brilliant-jokes): </p>
+<ul>
+<li>Why did the coffee file a police report? It got mugged.</li>
+<li>Why don’t skeletons fight each other? They don’t have the guts.</li>
+<li>There are 10 types of people in the world: those who understand binary, and those who don’t.</li>
+<li>What do you call cheese that isn’t yours? Nacho cheese.</li>
+<li>Why don’t scientists trust atoms? Because they make up everything. </li>
+</ul>
+<p>Make a POST-request for each joke to the endpoint <code>http://localhost:4000/api/jokes</code> with the following JSON payload:</p>
+<pre data-lang="json" style="background-color:#2b303b;color:#c0c5ce;" class="language-json "><code class="language-json" data-lang="json"><span>{
+</span><span>    &quot;</span><span style="color:#a3be8c;">joke</span><span>&quot;: {
+</span><span>        &quot;</span><span style="color:#a3be8c;">text</span><span>&quot;: &quot;</span><span style="color:#a3be8c;">Why did the coffee file a police report? It got mugged.</span><span>&quot;
+</span><span>    }
+</span><span>}
+</span></code></pre>
+<h2 id="coming-alive">Coming alive!</h2>
+<p>Our next task is to show these jokes on our homepage. The recommended way to build with LiveView is to let all LiveView logic live in its own namespace under the web-paradigm. So lets add a <code>live</code> folder at <code>./lib/lean_jokers_web/</code> and create two new files in it: <code>home.ex</code> and <code>home.html.heex</code>. </p>
+<p>The first file, <code>home.ex</code>, will contain our logic, while <code>home.html.heex</code> will contain our view. Let's just see if we can get it all to run.</p>
+<p><code>./lib/lean_jokers_web/home.ex</code>:</p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">LeanJokersWeb</span><span>.</span><span style="color:#ebcb8b;">Live</span><span>.</span><span style="color:#ebcb8b;">Home </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#b48ead;">use </span><span style="color:#ebcb8b;">LeanJokersWeb</span><span>, </span><span style="color:#a3be8c;">:live_view
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">mount</span><span>(_params, _session, socket) </span><span style="color:#b48ead;">do
+</span><span>    {</span><span style="color:#a3be8c;">:ok</span><span>, socket}
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p><code>./lib/lean_jokers_web/home.html.heex</code>:</p>
+<pre data-lang="heex" style="background-color:#2b303b;color:#c0c5ce;" class="language-heex "><code class="language-heex" data-lang="heex"><span>&lt;h1&gt;Hello World&lt;/h1&gt;
+</span></code></pre>
+<p><code>./lib/lean_jokers_web/router.ex</code>:</p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span>  scope &quot;</span><span style="color:#a3be8c;">/</span><span>&quot;, </span><span style="color:#ebcb8b;">LeanJokersWeb </span><span style="color:#b48ead;">do
+</span><span>    pipe_through </span><span style="color:#a3be8c;">:browser
+</span><span>
+</span><span>    live &quot;</span><span style="color:#a3be8c;">/</span><span>&quot;, </span><span style="color:#ebcb8b;">Live</span><span>.</span><span style="color:#ebcb8b;">Home
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>When we now go to <code>localhost:4000</code> we should see a simple <code>Hello World</code>. If you do, we are ready to display some jokes. Head back to the <code>home.ex</code> file, and let's use an Ecto repository to get our jokes, and assign them to the socket.</p>
+<p><code>./lib/lean_jokers_web/home.ex</code>: </p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">LeanJokersWeb</span><span>.</span><span style="color:#ebcb8b;">Live</span><span>.</span><span style="color:#ebcb8b;">Home </span><span style="color:#b48ead;">do
+</span><span>  </span><span style="color:#b48ead;">use </span><span style="color:#ebcb8b;">LeanJokersWeb</span><span>, </span><span style="color:#a3be8c;">:live_view
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">mount</span><span>(_params, _session, socket) </span><span style="color:#b48ead;">do
+</span><span>    jokes = </span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke
+</span><span>      |&gt; </span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Repo</span><span>.all()
+</span><span>
+</span><span>    socket = socket
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:jokes</span><span>, jokes)
+</span><span>
+</span><span>    {</span><span style="color:#a3be8c;">:ok</span><span>, socket}
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>Our next task is to access the jokes from the socket in our view.
+<code>./lib/lean_jokers_web/home.html.heex</code>: </p>
+<pre data-lang="heex" style="background-color:#2b303b;color:#c0c5ce;" class="language-heex "><code class="language-heex" data-lang="heex"><span>&lt;div class=&quot;flex flex-col gap-4&quot;&gt;
+</span><span>&lt;%= for joke &lt;- @jokes do %&gt;
+</span><span>    &lt;div&gt;
+</span><span>        &lt;p&gt;&lt;%= joke.text %&gt;&lt;/p&gt;
+</span><span>        &lt;div class=&quot;flex gap-2&quot;&gt;
+</span><span>            &lt;div&gt;Likes: &lt;%= joke.likes %&gt;&lt;/div&gt;
+</span><span>            &lt;div&gt;Disikes: &lt;%= joke.dislikes %&gt;&lt;/div&gt;
+</span><span>        &lt;/div&gt;
+</span><span>    &lt;/div&gt;
+</span><span>&lt;% end %&gt;
+</span><span>&lt;/div&gt;
+</span></code></pre>
+<p>Phoenix comes packed with TailwindCSS, so we are using some of its utility classes to list our jokes with gap in between them by the power of flex and flex-gap. We are then looping through the <code>jokes</code> variable that we fetch from <code>socket.assigns.jokes</code>. We are using its shorthand <code>@jokes</code> to get it. After saving the file we will have all the jokes displayed on our website, along with their likes and dislikes.</p>
+<h3 id="add-interactivity">Add interactivity</h3>
+<p>Our Lean Jokes website is not very exciting at the moment, but it soon will be. We will be adding <em>buttons</em> to like or dislike a joke. By doing this we will update a joke and see it change in real-time! The difference between this and a simple incremented counter may not look like much, but all the changes occur on the server with updates to the database. Only the necessary data is exchanged between our frontend and backend. We will take a look at what happens in the network, but first we add the buttons to our view.</p>
+<p><code>./lib/lean_jokers_web/home.html.heex</code>: </p>
+<pre data-lang="heex" style="background-color:#2b303b;color:#c0c5ce;" class="language-heex "><code class="language-heex" data-lang="heex"><span>&lt;div class=&quot;flex flex-col gap-4&quot;&gt;
+</span><span>&lt;%= for joke &lt;- @jokes do %&gt;
+</span><span>    &lt;div&gt;
+</span><span>        &lt;p&gt;&lt;%= joke.text %&gt;&lt;/p&gt;
+</span><span>        &lt;div class=&quot;flex gap-2&quot;&gt;
+</span><span>            &lt;div&gt;
+</span><span>                &lt;button phx-click=&quot;like_joke&quot; phx-value-joke_id={joke.id}&gt;Like&lt;/button&gt; &lt;%= joke.likes %&gt;
+</span><span>            &lt;/div&gt;
+</span><span>            &lt;div&gt;
+</span><span>                &lt;button phx-click=&quot;dislike_joke&quot; phx-value-joke_id={joke.id}&gt;Dislike&lt;/button&gt; &lt;%= joke.dislikes %&gt;
+</span><span>            &lt;/div&gt;
+</span><span>        &lt;/div&gt;
+</span><span>    &lt;/div&gt;
+</span><span>&lt;% end %&gt;
+</span><span>&lt;/div&gt;
+</span></code></pre>
+<p>Next up, we will want to add event-handlers for these buttons. We should handle <code>like_joke</code> and <code>dislike_joke</code>. The passed <code>joke.id</code> will be used to update the correct <code>joke</code>. With the power of pattern-matching, we will get the variable <code>joke_id</code> from the parameters that are passed along with the event. This will help us with two things. First, it will help us update the correct joke in the database. Second, it will help us insert the updated joke in the jokes-list and pass it back in the socket. </p>
+<p><code>./lib/lean_jokers_web/home.ex</code>: </p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">handle_event</span><span>(&quot;</span><span style="color:#a3be8c;">like_joke</span><span>&quot;, %{&quot;</span><span style="color:#a3be8c;">joke_id</span><span>&quot; =&gt; joke_id} = _params, socket) </span><span style="color:#b48ead;">do
+</span><span>
+</span><span style="color:#65737e;">    # Elixir cares about types, but the joke_id is a string here as it was a templated variable
+</span><span>    {joke_id, _} = </span><span style="color:#ebcb8b;">Integer</span><span>.parse(joke_id)
+</span><span>    
+</span><span style="color:#65737e;">    # Filter out the joke with the help of the id
+</span><span>    socket_jokes = socket.assigns.jokes
+</span><span>    [socket_joke | _rest ] = </span><span style="color:#ebcb8b;">Enum</span><span>.filter(socket_jokes, &amp;(&amp;</span><span style="color:#d08770;">1</span><span>.id == joke_id))
+</span><span>
+</span><span style="color:#65737e;">    # Increment the value and update the joke in the database
+</span><span>    {</span><span style="color:#a3be8c;">:ok</span><span>, joke} = </span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.update_joke(socket_joke, %{</span><span style="color:#d08770;">likes:</span><span> socket_joke.likes + </span><span style="color:#d08770;">1 </span><span>})
+</span><span>
+</span><span style="color:#65737e;">    # Replace the joke with our updated joke in the list 
+</span><span>    jokes =
+</span><span>      socket.assigns.jokes
+</span><span>        |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.map(</span><span style="color:#b48ead;">fn
+</span><span>          %</span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke</span><span>{</span><span style="color:#d08770;">id: </span><span>^</span><span style="color:#bf616a;">joke_id</span><span>} -&gt; joke
+</span><span>          element -&gt; element
+</span><span>        </span><span style="color:#b48ead;">end</span><span>)
+</span><span>
+</span><span style="color:#65737e;">    # and add the list to the sockets assigns
+</span><span>    socket = socket
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:jokes</span><span>, jokes)
+</span><span>    {</span><span style="color:#a3be8c;">:noreply</span><span>, socket}
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">handle_event</span><span>(&quot;</span><span style="color:#a3be8c;">dislike_joke</span><span>&quot;, %{&quot;</span><span style="color:#a3be8c;">joke_id</span><span>&quot; =&gt; joke_id} = _params, socket) </span><span style="color:#b48ead;">do
+</span><span>    {joke_id, _} = </span><span style="color:#ebcb8b;">Integer</span><span>.parse(joke_id)
+</span><span>    socket_jokes = socket.assigns.jokes
+</span><span>    [socket_joke | _rest ] = </span><span style="color:#ebcb8b;">Enum</span><span>.filter(socket_jokes, &amp;(&amp;</span><span style="color:#d08770;">1</span><span>.id == joke_id))
+</span><span>
+</span><span>    {</span><span style="color:#a3be8c;">:ok</span><span>, joke} = </span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.update_joke(socket_joke, %{</span><span style="color:#d08770;">dislikes:</span><span> socket_joke.dislikes + </span><span style="color:#d08770;">1 </span><span>})
+</span><span>
+</span><span>    jokes =
+</span><span>      socket.assigns.jokes
+</span><span>        |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.map(</span><span style="color:#b48ead;">fn
+</span><span>          %</span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke</span><span>{</span><span style="color:#d08770;">id: </span><span>^</span><span style="color:#bf616a;">joke_id</span><span>} -&gt; joke
+</span><span>          element -&gt; element
+</span><span>        </span><span style="color:#b48ead;">end</span><span>)
+</span><span>
+</span><span>    socket = socket
+</span><span>      |&gt; assign(</span><span style="color:#a3be8c;">:jokes</span><span>, jokes)
+</span><span>    {</span><span style="color:#a3be8c;">:noreply</span><span>, socket}
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>Back in the browser we will see that we can now update each joke and see likes and dislikes being updated in real time. </p>
+
+
+
+<video width="600" height="337" muted controls>
+    <source src="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;elixir&#x2F;liveview-and-broadcast&#x2F;liveview_1.webm" type="video&#x2F;webm">
+    
+    Your browser does not support this video
+</video>
+<p>Let's tighten this up so that a visitor can toggle their like or dislike, so no-more will they be able to like it 10 times over. We will also set so if a joke has been liked by the visitor, were they to change their mind to dislike, the like will be removed and a dislike added.</p>
+<p>We will start by adding fields to the joker-struct to keep track of visitor's like or dislike of a joke. This will not be stored in a database as it will be unique for each visitor. So we will add a <code>virtual</code> field for this. </p>
+<p><code>lib/lean_jokers/jokes/joke.ex</code></p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span>  schema &quot;</span><span style="color:#a3be8c;">jokes</span><span>&quot; </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">    # ...
+</span><span>    field </span><span style="color:#a3be8c;">:has_liked</span><span>, </span><span style="color:#a3be8c;">:boolean</span><span>, </span><span style="color:#d08770;">virtual: true</span><span>, </span><span style="color:#d08770;">default: false
+</span><span>    field </span><span style="color:#a3be8c;">:has_disliked</span><span>, </span><span style="color:#a3be8c;">:boolean</span><span>, </span><span style="color:#d08770;">virtual: true</span><span>, </span><span style="color:#d08770;">default: false
+</span><span>
+</span><span style="color:#65737e;">    # ...
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>With these fields we can add a toggle-logic for a joke's likes and dislikes. </p>
+<p><code>lib/lean_jokers_web/live/home.ex</code></p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">handle_event</span><span>(&quot;</span><span style="color:#a3be8c;">like_joke</span><span>&quot;, %{&quot;</span><span style="color:#a3be8c;">joke_id</span><span>&quot; =&gt; joke_id} = _params, socket) </span><span style="color:#b48ead;">do
+</span><span>    {joke_id, _} = </span><span style="color:#ebcb8b;">Integer</span><span>.parse(joke_id)
+</span><span>
+</span><span>    socket_jokes = socket.assigns.jokes
+</span><span>    [socket_joke | _rest ] = </span><span style="color:#ebcb8b;">Enum</span><span>.filter(socket_jokes, &amp;(&amp;</span><span style="color:#d08770;">1</span><span>.id == joke_id))
+</span><span>
+</span><span>    toggled_joke = toggle_data(socket_joke, </span><span style="color:#a3be8c;">:like</span><span>)
+</span><span>
+</span><span>    {</span><span style="color:#a3be8c;">:ok</span><span>, _} =
+</span><span>      </span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke
+</span><span>        |&gt; </span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Repo</span><span>.get(joke_id)
+</span><span>        |&gt; </span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.update_joke(%{</span><span style="color:#d08770;">likes:</span><span> toggled_joke.likes, </span><span style="color:#d08770;">dislikes:</span><span> toggled_joke.dislikes})
+</span><span>
+</span><span>    jokes =
+</span><span>      socket.assigns.jokes
+</span><span>        |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.map(</span><span style="color:#b48ead;">fn
+</span><span>          %</span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke</span><span>{</span><span style="color:#d08770;">id: </span><span>^</span><span style="color:#bf616a;">joke_id</span><span>} -&gt; toggled_joke
+</span><span>          element -&gt; element
+</span><span>        </span><span style="color:#b48ead;">end</span><span>)
+</span><span>
+</span><span>    {</span><span style="color:#a3be8c;">:noreply</span><span>, assign(socket, </span><span style="color:#a3be8c;">:jokes</span><span>, jokes)}
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">handle_event</span><span>(&quot;</span><span style="color:#a3be8c;">dislike_joke</span><span>&quot;, %{&quot;</span><span style="color:#a3be8c;">joke_id</span><span>&quot; =&gt; joke_id} = _params, socket) </span><span style="color:#b48ead;">do
+</span><span>    {joke_id, _} = </span><span style="color:#ebcb8b;">Integer</span><span>.parse(joke_id)
+</span><span>
+</span><span>    socket_jokes = socket.assigns.jokes
+</span><span>    [socket_joke | _rest ] = </span><span style="color:#ebcb8b;">Enum</span><span>.filter(socket_jokes, &amp;(&amp;</span><span style="color:#d08770;">1</span><span>.id == joke_id))
+</span><span>
+</span><span>    toggled_joke = toggle_data(socket_joke, </span><span style="color:#a3be8c;">:dislike</span><span>)
+</span><span>
+</span><span>    {</span><span style="color:#a3be8c;">:ok</span><span>, _} =
+</span><span>      </span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke
+</span><span>        |&gt; </span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Repo</span><span>.get(joke_id)
+</span><span>        |&gt; </span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.update_joke(%{</span><span style="color:#d08770;">likes:</span><span> toggled_joke.likes, </span><span style="color:#d08770;">dislikes:</span><span> toggled_joke.dislikes})
+</span><span>
+</span><span>    jokes =
+</span><span>      socket.assigns.jokes
+</span><span>        |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.map(</span><span style="color:#b48ead;">fn
+</span><span>          %</span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke</span><span>{</span><span style="color:#d08770;">id: </span><span>^</span><span style="color:#bf616a;">joke_id</span><span>} -&gt; toggled_joke
+</span><span>          element -&gt; element
+</span><span>        </span><span style="color:#b48ead;">end</span><span>)
+</span><span>
+</span><span>    {</span><span style="color:#a3be8c;">:noreply</span><span>, assign(socket, </span><span style="color:#a3be8c;">:jokes</span><span>, jokes)}
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">toggle_data</span><span>(%</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke</span><span>{} = joke, </span><span style="color:#a3be8c;">:like</span><span>) </span><span style="color:#b48ead;">do
+</span><span>    dislikes = </span><span style="color:#b48ead;">if </span><span>(joke.has_disliked) </span><span style="color:#b48ead;">do
+</span><span>      joke.dislikes - </span><span style="color:#d08770;">1
+</span><span>    </span><span style="color:#b48ead;">else
+</span><span>      joke.dislikes
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>    likes = </span><span style="color:#b48ead;">if </span><span>(joke.has_liked) </span><span style="color:#b48ead;">do
+</span><span>      joke.likes - </span><span style="color:#d08770;">1
+</span><span>    </span><span style="color:#b48ead;">else
+</span><span>      joke.likes + </span><span style="color:#d08770;">1
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>    joke = %{joke | </span><span style="color:#d08770;">has_liked: </span><span>!joke.has_liked, </span><span style="color:#d08770;">likes:</span><span> likes, </span><span style="color:#d08770;">dislikes:</span><span> dislikes}
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">if </span><span>(joke.has_liked) </span><span style="color:#b48ead;">do
+</span><span>        %{joke | </span><span style="color:#d08770;">has_disliked: false</span><span>}
+</span><span>    </span><span style="color:#b48ead;">else
+</span><span>      joke
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">toggle_data</span><span>(%</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke</span><span>{} = joke, </span><span style="color:#a3be8c;">:dislike</span><span>) </span><span style="color:#b48ead;">do
+</span><span>    dislikes = </span><span style="color:#b48ead;">if </span><span>(joke.has_disliked) </span><span style="color:#b48ead;">do
+</span><span>      joke.dislikes - </span><span style="color:#d08770;">1
+</span><span>    </span><span style="color:#b48ead;">else
+</span><span>      joke.dislikes + </span><span style="color:#d08770;">1
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>    likes = </span><span style="color:#b48ead;">if </span><span>(joke.has_liked) </span><span style="color:#b48ead;">do
+</span><span>      joke.likes - </span><span style="color:#d08770;">1
+</span><span>    </span><span style="color:#b48ead;">else
+</span><span>      joke.likes
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>    joke = %{joke | </span><span style="color:#d08770;">has_disliked: </span><span>!joke.has_disliked, </span><span style="color:#d08770;">likes:</span><span> likes, </span><span style="color:#d08770;">dislikes:</span><span> dislikes}
+</span><span>
+</span><span>    </span><span style="color:#b48ead;">if </span><span>(joke.has_disliked) </span><span style="color:#b48ead;">do
+</span><span>        %{joke | </span><span style="color:#d08770;">has_liked: false</span><span>}
+</span><span>    </span><span style="color:#b48ead;">else
+</span><span>      joke
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>What is happening here? Well, we have toggled the data for jokes so that a user only can like or dislike a joke once. They will not be allowed to simultaneously like and dislike a joke. If a joke has been liked, disliking it will undo the like and increment the dislike one step.</p>
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<div class="image-text-overlay">
+    <div class="image-text image-text--up"></div>
+    <div class="image-text image-text--down">I wanted both?!</div>
+    <div class="image-container ">
+        <img
+                alt=""
+                src="articles&#x2F;elixir&#x2F;liveview_and_broadcast&#x2F;flabbergasted.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;flabbergasted.6bbf4ef511b720a1.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;flabbergasted.d29dba911151c584.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;flabbergasted.38accbb27d11eb5d.webp 600w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;flabbergasted.53c1aff61a9bb45e.webp 800w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            (max-width: 600px) 550px,
+                            800px"
+        />
+    </div>
+</div><h2 id="make-it-broadcast">Make it broadcast</h2>
+<p>The visitor will get speedy update back from the server via web sockets. Other visitors will see the updated state of each joke when they first visit it. But they won't see updates from other users happen while at the page. It's time we send updates to all visitors as they occur. The <a href="https://hexdocs.pm/phoenix_pubsub/Phoenix.PubSub.html">PubSub library</a> will help us do that by sending messages via specified topics, and we will use it via <code>LeanJokersWeb.Endpoint.broadcast()</code> and handle the messages via <code>handle_info</code>.</p>
+<p>We will subscribe to a topic which we will name 'jokes'. When a visitor initiates an event we will broadcast the updated joke to other visitors. We will make sure that the other visitors' jokes will preserve their each toggled state.</p>
+<p><code>lib/lean_jokers_web/live/home.ex</code></p>
+<pre data-lang="ex" style="background-color:#2b303b;color:#c0c5ce;" class="language-ex "><code class="language-ex" data-lang="ex"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">LeanJokersWeb</span><span>.</span><span style="color:#ebcb8b;">Live</span><span>.</span><span style="color:#ebcb8b;">Home </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">  # ...
+</span><span>  @</span><span style="color:#bf616a;">topic </span><span>&quot;</span><span style="color:#a3be8c;">jokes</span><span>&quot;
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">mount</span><span>(_params, _session, socket) </span><span style="color:#b48ead;">do
+</span><span>    </span><span style="color:#b48ead;">if</span><span> connected?(socket) </span><span style="color:#b48ead;">do
+</span><span>      </span><span style="color:#ebcb8b;">LeanJokersWeb</span><span>.</span><span style="color:#ebcb8b;">Endpoint</span><span>.subscribe(@</span><span style="color:#bf616a;">topic</span><span>)
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>
+</span><span style="color:#65737e;">    # ...
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">handle_event</span><span>(&quot;</span><span style="color:#a3be8c;">like_joke</span><span>&quot;, %{&quot;</span><span style="color:#a3be8c;">joke_id</span><span>&quot; =&gt; joke_id} = _params, socket) </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">    # ...
+</span><span>
+</span><span>    state = %{
+</span><span>      </span><span style="color:#d08770;">joke:</span><span> toggled_joke,
+</span><span>      </span><span style="color:#d08770;">sender:</span><span> self()
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#ebcb8b;">LeanJokersWeb</span><span>.</span><span style="color:#ebcb8b;">Endpoint</span><span>.broadcast(@</span><span style="color:#bf616a;">topic</span><span>, &quot;</span><span style="color:#a3be8c;">update_joke</span><span>&quot;, state)
+</span><span>
+</span><span>    {</span><span style="color:#a3be8c;">:noreply</span><span>, assign(socket, </span><span style="color:#a3be8c;">:jokes</span><span>, jokes)}
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">handle_event</span><span>(&quot;</span><span style="color:#a3be8c;">dislike_joke</span><span>&quot;, %{&quot;</span><span style="color:#a3be8c;">joke_id</span><span>&quot; =&gt; joke_id} = _params, socket) </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">    # ...
+</span><span>
+</span><span>    state = %{
+</span><span>      </span><span style="color:#d08770;">joke:</span><span> toggled_joke,
+</span><span>      </span><span style="color:#d08770;">sender:</span><span> self()
+</span><span>    }
+</span><span>
+</span><span>    </span><span style="color:#ebcb8b;">LeanJokersWeb</span><span>.</span><span style="color:#ebcb8b;">Endpoint</span><span>.broadcast(@</span><span style="color:#bf616a;">topic</span><span>, &quot;</span><span style="color:#a3be8c;">update_joke</span><span>&quot;, state)
+</span><span>
+</span><span>    {</span><span style="color:#a3be8c;">:noreply</span><span>, assign(socket, </span><span style="color:#a3be8c;">:jokes</span><span>, jokes)}
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">toggle_data</span><span>(%</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke</span><span>{} = joke, </span><span style="color:#a3be8c;">:like</span><span>) </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">    # ...
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">toggle_data</span><span>(%</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke</span><span>{} = joke, </span><span style="color:#a3be8c;">:dislike</span><span>) </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">    # ...
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">handle_info</span><span>(%{</span><span style="color:#d08770;">topic: </span><span>&quot;</span><span style="color:#a3be8c;">jokes</span><span>&quot;, </span><span style="color:#d08770;">event: </span><span>&quot;</span><span style="color:#a3be8c;">update_joke</span><span>&quot;, </span><span style="color:#d08770;">payload:</span><span> %{</span><span style="color:#d08770;">joke:</span><span> joke, </span><span style="color:#d08770;">sender:</span><span> sender}}, socket) </span><span style="color:#b48ead;">do
+</span><span>    jokes = </span><span style="color:#b48ead;">if </span><span>(sender == self()) </span><span style="color:#b48ead;">do
+</span><span>      socket.assigns.jokes
+</span><span>    </span><span style="color:#b48ead;">else
+</span><span>      [socket_joke | _rest ] = </span><span style="color:#ebcb8b;">Enum</span><span>.filter(socket.assigns.jokes, &amp;(&amp;</span><span style="color:#d08770;">1</span><span>.id == joke.id))
+</span><span>      joke = %{joke | </span><span style="color:#d08770;">has_liked:</span><span> socket_joke.has_liked, </span><span style="color:#d08770;">has_disliked:</span><span> socket_joke.has_disliked }
+</span><span>
+</span><span>      joke_id = joke.id
+</span><span>
+</span><span>      socket.assigns.jokes
+</span><span>        |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.map(</span><span style="color:#b48ead;">fn
+</span><span>          %</span><span style="color:#ebcb8b;">LeanJokers</span><span>.</span><span style="color:#ebcb8b;">Jokes</span><span>.</span><span style="color:#ebcb8b;">Joke</span><span>{</span><span style="color:#d08770;">id: </span><span>^</span><span style="color:#bf616a;">joke_id</span><span>} -&gt; joke
+</span><span>          element -&gt; element
+</span><span>        </span><span style="color:#b48ead;">end</span><span>)
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>    {</span><span style="color:#a3be8c;">:noreply</span><span>, assign(socket, </span><span style="color:#d08770;">jokes:</span><span> jokes)}
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span style="color:#b48ead;">end
+</span><span>
+</span></code></pre>
+<p>As we are broadcasting the updated joke-data, we will see how different visitors will get a live-update:</p>
+
+
+
+<video width="600" height="337" muted controls>
+    <source src="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;elixir&#x2F;liveview-and-broadcast&#x2F;pubsub.webm" type="video&#x2F;webm">
+    
+    Your browser does not support this video
+</video>
+<p>And in closing...
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>Why did the programmer use pattern matching? <em>To match their socks!</em></p>
+
+    </cite>
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A kitten rendered in synthwave style with socks on its hindlegs. Smiling while sitting. The background is dark with stars."
+                src="happy_socks.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;happy_socks.deee2baaac419ad5.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;happy_socks.b802bf35d93c9475.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;happy_socks.7dae254164b74d4e.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+</p>
+
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2023-05-23 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

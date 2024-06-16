@@ -1,0 +1,617 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/elixir/intro-to-genetic-algorithms-with-elixir/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+
+    
+        
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/meta.7e2f727e7f1d885f.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/meta.7e2f727e7f1d885f.webp">
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Intro to Genetic Algorithms with Elixir" />
+<meta property="og:description" content="Explore the fundamentals of Genetic Algorithms simple example in Elixir; showcasing evolution loop, fitness, and elitism for optimal solutions." />
+<meta property="og:url" content="https://abjork.land/articles/elixir/intro-to-genetic-algorithms-with-elixir/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2024-03-21"> 
+
+
+ 
+     
+<meta name="last-updated" content="2024-03-25" />
+    
+
+
+
+        
+    
+
+    <title>
+ Intro to Genetic Algorithms with Elixir
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/elixir/intro-to-genetic-algorithms-with-elixir/"
+    },
+    "headline": "Intro to Genetic Algorithms with Elixir",
+    "description": "Explore the fundamentals of Genetic Algorithms simple example in Elixir; showcasing evolution loop, fitness, and elitism for optimal solutions.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2024-03-25",
+    "datePublished": "2024-03-21"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/elixir/">Elixir</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.9c60893338d633b5.jpg"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.38c6b3a9afd8a180.jpg 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.9c60893338d633b5.jpg 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.0dc6effd0a792513.jpg 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Intro to Genetic Algorithms with Elixir</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/elixir/" class="hover-bold">elixir</a></div>
+        
+        <div><a href="https://abjork.land/tags/livebook/" class="hover-bold">livebook</a></div>
+        
+        <div><a href="https://abjork.land/tags/algorithms/" class="hover-bold">algorithms</a></div>
+        
+    
+</div>
+
+
+
+</div><div class="author-container">
+    <p>Written by Anders Björkland, Web Developer at <a href="https:&#x2F;&#x2F;www.umain.com&#x2F;">Umain</a></p>
+</div>
+<p><a href="https://en.wikipedia.org/wiki/Genetic_algorithm">Genetic Algorithms (GA)</a> are algorithms inspired by the evolutionary process found in nature. Sometimes these are called Stochastic Algorithms as they make use of randomness to find an optimal solution, but with features such a &quot;natural selection&quot; to remove less suitable solutions while generating new possible ones. </p>
+<p>Genetic Algorithms are found in <a href="https://ieeexplore.ieee.org/document/537939">route optimzation problems</a>, in engineering (e.g. <a href="https://en.wikipedia.org/wiki/Evolved_antenna">evolved antennas</a>), in <a href="https://arxiv.org/pdf/1707.05377.pdf">epidemic mitigation</a>, and much more. </p>
+<p>In this article we will solve a simple problem: &quot;what is the target phrase?&quot;. This is not a real-world problem, but suitable enough to showcase each component of a Genetic Algorithm; like a &quot;Hello World&quot; of Genetic Algorithms. With the foundation provided by this, I hope this can give you a better understanding of GAs, and an appreciation for using Elixir with them.</p>
+<h2 id="anatomy-of-a-genetic-algorithm">Anatomy of a Genetic Algorithm</h2>
+<p>A genetic algorithm will try to promote the possible soultions (<em>chromosomes</em>) with the best &quot;fitness&quot; and combine them into a new possible solution, which will inherit features of both. While it does this, it may introduce some mutations (small changes that were not part of its &quot;parents&quot; chromosomes). </p>
+<p>In essence, these are the genetic algorithm's components:</p>
+<ul>
+<li><em>Chromosomes</em><br />
+possible solutions</li>
+<li>Initial population<br />
+<em>random chromosomes</em></li>
+<li>Fitness evaluation</li>
+<li>Selection<br />
+<em>better fitness score are more likely to be chosen as &quot;parents&quot;</em></li>
+<li>Crossover<br />
+<em>&quot;mating&quot; of parents to produce an &quot;offspring&quot;, a new chromosome</em></li>
+<li>Mutation<br />
+<em>small random changes in a chromosome</em></li>
+<li>Evolution Loop<br />
+<em>repeating the steps of <strong>selection</strong> -&gt; <strong>crossover</strong> -&gt; <strong>mutation</strong> to arrive at a chromosome that is the best fit for the problem at the hand</em></li>
+</ul>
+<p>We will add an &quot;elitism&quot; component to this which will make sure that the best possible solutions are never discarded. This is a component that may act dynamic depending on where we are in the evolution loop. But initially we will keep it static. </p>
+<blockquote>
+<p>For anyone who has set up a Livebook application and want to experiment, just <a href="https://gist.github.com/andersbjorkland/99a96a26135fea7438ef90cfc354e1ed">grab the source from my <strong>gist</strong></a> (copy) and click <em>Open</em>/<em>From source</em>. 
+If you haven't set up a Livebook application, read about how to do that in my article <a href="https://abjork.land/articles/elixir/interactive-documents-with-livebook/#hosting-livebook-on-hugging-face">Interactive documents with Livebook</a>. You can set it up on free hosting via Hugging Face. </p>
+</blockquote>
+<h3 id="the-target-phrase">The target phrase</h3>
+<p>Our goal is via random chromosomes start selecting the best fit ones to crossover with each other. They will be selected based on how well they fit with the target phrase. It will be a phrase based on characters from 'a' to 'z', with space included. Let's define this:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">GeneticString </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">  # We define the target phrase here but it might as well be passed in via the evolve function.
+</span><span>  @</span><span style="color:#bf616a;">target_phrase </span><span>&quot;</span><span style="color:#a3be8c;">The solution is yet to emerge</span><span>&quot;
+</span><span>
+</span><span style="color:#65737e;">  # Defines which characters can be present in the target phrase
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">possible_characters</span><span>() </span><span style="color:#b48ead;">do
+</span><span>    </span><span style="color:#ebcb8b;">Enum</span><span>.to_list(</span><span style="color:#d08770;">?a</span><span>..</span><span style="color:#d08770;">?z</span><span>) ++
+</span><span>      </span><span style="color:#ebcb8b;">Enum</span><span>.to_list(</span><span style="color:#d08770;">?A</span><span>..</span><span style="color:#d08770;">?Z</span><span>) ++
+</span><span>      [</span><span style="color:#d08770;">?_</span><span>, </span><span style="color:#d08770;">?\s</span><span>]
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<h3 id="the-first-chromosome">The first chromosome</h3>
+<p>The first step towards arriving at a solution is a function to generate a random chromosome. It will produce a chromosome of length <code>length</code> by random characters present in <code>possible_characters</code>. This function will be used to generate the initial population.</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">GeneticString </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">  # ...
+</span><span>
+</span><span style="color:#65737e;">  # Generate a random chromosome (potential solution)
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">random_chromosome</span><span>() </span><span style="color:#b48ead;">do
+</span><span>    </span><span style="color:#ebcb8b;">Enum</span><span>.map(
+</span><span>      </span><span style="color:#d08770;">1</span><span>..</span><span style="color:#ebcb8b;">String</span><span>.length(@</span><span style="color:#bf616a;">target_phrase</span><span>),  </span><span style="color:#65737e;"># We will help the GA along the way by letting it set correct length
+</span><span>      </span><span style="color:#b48ead;">fn</span><span> _ -&gt; possible_characters() |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.random() </span><span style="color:#b48ead;">end
+</span><span>    )
+</span><span>    |&gt; </span><span style="color:#ebcb8b;">List</span><span>.to_string()
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<h3 id="evaluating-fitness">Evaluating fitness</h3>
+<p>The fitness evaluation is an important part in the genetic algorithm. It will tell the algorithm when it is moving closer towards a solution. In our case, we will do a fairly simple evalutaion. The fitness score will represent how many characters are correctly placed in the chromosome when compared to <code>target_phrase</code>. A more evolved fitness evaluation might take into account its length as well as maybe its <a href="https://en.wikipedia.org/wiki/Levenshtein_distance">Levenshtein distance</a>, and so on. </p>
+<p>We will see that our fitness evaluation will also take a map, a &quot;memo&quot; of already evaluated chromosomes. This way an already evaluated chromosome will not have to be calculated again. This would be a trade-off between memory/retrieval and calculation cycles.</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">GeneticString </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">  # ...
+</span><span>
+</span><span style="color:#65737e;">  # Calculate fitness based on if a character is placed in the correct n:th place.
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">fitness_calc</span><span>(chromosome) </span><span style="color:#b48ead;">do
+</span><span>    chromosome
+</span><span>    |&gt; </span><span style="color:#ebcb8b;">String</span><span>.graphemes()
+</span><span>    |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.zip(</span><span style="color:#ebcb8b;">String</span><span>.graphemes(@</span><span style="color:#bf616a;">target_phrase</span><span>))
+</span><span>    |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.count(</span><span style="color:#b48ead;">fn </span><span>{char1, char2} -&gt; char1 == char2 </span><span style="color:#b48ead;">end</span><span>)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span style="color:#65737e;">  # Either retrieve fitness score for a chromosome or calculate it and place it in the map
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">fitness</span><span>(chromosome, memo \\ %{}) </span><span style="color:#b48ead;">do
+</span><span>    </span><span style="color:#b48ead;">case </span><span style="color:#ebcb8b;">Map</span><span>.get(memo, chromosome) </span><span style="color:#b48ead;">do
+</span><span>      </span><span style="color:#d08770;">nil </span><span>-&gt;
+</span><span>        fitness = fitness_calc(chromosome)
+</span><span>        updated_memo = </span><span style="color:#ebcb8b;">Map</span><span>.put(memo, chromosome, fitness)
+</span><span>        {fitness, updated_memo}
+</span><span>
+</span><span>      fitness -&gt;
+</span><span>        {fitness, memo}
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span style="color:#65737e;">  # Updates the fitness map for all chromosomes
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">memoize_fitness</span><span>([], memo), </span><span style="color:#d08770;">do:</span><span> memo
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">memoize_fitness</span><span>([chromosome | tail], memo) </span><span style="color:#b48ead;">do
+</span><span>    {_, new_memo} = fitness(chromosome, memo)
+</span><span>    memoize_fitness(tail, new_memo)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<h3 id="parents-offsprings-and-mutations">Parents, offsprings and mutations</h3>
+<p>We have now defined fitness and chromosomes. Let's go to the next part, which is selecting parents to produce offsprings via the components <code>crossover</code> and <code>mutation</code>. The idea is to get at least one parent from the ones with the best fitness score, and the other parent from the broader population. Once selected, these will be passed to the crossover function to produce the offspring, and a mutation function that will introduce a bit of variation. Currently we will only make a mutation in one randomly chosen spot.</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">GeneticString </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">  # ...
+</span><span>
+</span><span style="color:#65737e;">  # Randomly select two &quot;parents&quot; from the provided list of chromosomes
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">select_parents</span><span>([]), </span><span style="color:#d08770;">do: </span><span>[]
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">select_parents</span><span>(possible_parents) </span><span style="color:#b48ead;">do
+</span><span>    possible_parents
+</span><span>    |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.shuffle()
+</span><span>    |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.take(</span><span style="color:#d08770;">2</span><span>)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span style="color:#65737e;">  # Combine first part of one chromosome to the second part of another. 
+</span><span style="color:#65737e;">  # The resulting chromosome will have features from both &quot;parents&quot;
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">crossover</span><span>(chromosome1, chromosome2) </span><span style="color:#b48ead;">do
+</span><span>    crossover_point = </span><span style="color:#ebcb8b;">Enum</span><span>.random(</span><span style="color:#d08770;">1</span><span>..(</span><span style="color:#ebcb8b;">String</span><span>.length(chromosome1) - </span><span style="color:#d08770;">1</span><span>))
+</span><span>
+</span><span>    </span><span style="color:#ebcb8b;">String</span><span>.slice(chromosome1, </span><span style="color:#d08770;">0</span><span>, crossover_point) &lt;&gt;
+</span><span>      </span><span style="color:#ebcb8b;">String</span><span>.slice(chromosome2, crossover_point, </span><span style="color:#ebcb8b;">String</span><span>.length(chromosome2) - crossover_point)
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span><span style="color:#65737e;">  # Introduce a random mutation to a chromsome. 
+</span><span style="color:#65737e;">  # The spot where the mutation will happen is randomly chosen, as is the possible character introduced.
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">mutation</span><span>(chromosome) </span><span style="color:#b48ead;">do
+</span><span>    mutation_point = </span><span style="color:#ebcb8b;">Enum</span><span>.random(</span><span style="color:#d08770;">0</span><span>..(</span><span style="color:#ebcb8b;">String</span><span>.length(chromosome) - </span><span style="color:#d08770;">1</span><span>))
+</span><span>
+</span><span>    </span><span style="color:#ebcb8b;">String</span><span>.slice(chromosome, </span><span style="color:#d08770;">0</span><span>, mutation_point) &lt;&gt;
+</span><span>      </span><span style="color:#ebcb8b;">List</span><span>.to_string([possible_characters() |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.random()]) &lt;&gt;
+</span><span>      </span><span style="color:#ebcb8b;">String</span><span>.slice(
+</span><span>        chromosome,
+</span><span>        mutation_point + </span><span style="color:#d08770;">1</span><span>,
+</span><span>        </span><span style="color:#ebcb8b;">String</span><span>.length(chromosome) - (mutation_point + </span><span style="color:#d08770;">1</span><span>)
+</span><span>      )
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span>
+</span></code></pre>
+<h3 id="evolution-the-iterative-process-to-produce-best-fit-chromosome">Evolution - the iterative process to produce best fit chromosome</h3>
+<p>We will be using a evolve mechanism where we will initialize a starter population with a radom chromosomes and set an <em>elitism rate</em>. These initial values will be passed into a recursive evolve mechanism (our evolution loop). Once we've either gotten a perfect fitness score, or we have hit the generation limit, we will return the best suited chromosome. </p>
+<p>(While we are at it we will also bundle in which iteration - <em>n</em>:th generation - we were at when the chromosome was produced.)</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">GeneticString </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">  # ...
+</span><span>
+</span><span style="color:#65737e;">  # Recursive function that will continue evolving the chromosomes until a perfect fitness score is reached, 
+</span><span style="color:#65737e;">  # or the generation limit has been reached.
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">evolve_mechanism</span><span>(generation, %{</span><span style="color:#d08770;">population: </span><span>[best_match | _]}, _elitism, _fitness_memo)
+</span><span>      when generation.limit == generation.i,
+</span><span>      </span><span style="color:#d08770;">do:</span><span> %{</span><span style="color:#d08770;">chromosome:</span><span> best_match, </span><span style="color:#d08770;">generation:</span><span> generation.i}
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">evolve_mechanism</span><span>(generation, population_data, elitism, fitness_memo) </span><span style="color:#b48ead;">do
+</span><span>    memoized_fitness = memoize_fitness(population_data.population, fitness_memo)
+</span><span>
+</span><span style="color:#65737e;">    # Sort population based on fitness
+</span><span>    sorted_population =
+</span><span>      population_data.population
+</span><span>      |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.sort_by(</span><span style="color:#b48ead;">fn</span><span> chromosome -&gt; </span><span style="color:#ebcb8b;">Map</span><span>.get(memoized_fitness, chromosome) </span><span style="color:#b48ead;">end</span><span>, </span><span style="color:#a3be8c;">:desc</span><span>)
+</span><span>
+</span><span style="color:#65737e;">    # Select number of population that will have a higher chance to survive, and produce offspring
+</span><span>    elite_population =
+</span><span>      sorted_population
+</span><span>      |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.take(elitism.count)
+</span><span>
+</span><span>    rest_population = </span><span style="color:#ebcb8b;">Enum</span><span>.drop(sorted_population, elitism.count) |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.shuffle()
+</span><span>
+</span><span>    possible_parents = </span><span style="color:#b48ead;">case</span><span> length(elite_population) </span><span style="color:#b48ead;">do
+</span><span>      x when x &lt; </span><span style="color:#d08770;">2 </span><span>-&gt; elite_population ++ </span><span style="color:#ebcb8b;">Enum</span><span>.take(sorted_population, </span><span style="color:#d08770;">2</span><span>)
+</span><span>      _ -&gt; elite_population
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>    [parent1, parent2] = select_parents(possible_parents)
+</span><span>
+</span><span style="color:#65737e;">    # Produce offspring by combining parents and introduce a mutation
+</span><span>    offspring = crossover(parent1, parent2) |&gt; mutation()
+</span><span>
+</span><span style="color:#65737e;">    # Keep an elite-num of chromosome, and drop less fortunate chromomse before appending the offspring
+</span><span>    new_population =
+</span><span>      (elite_population ++ rest_population)
+</span><span>      |&gt; </span><span style="color:#ebcb8b;">Enum</span><span>.drop(-</span><span style="color:#d08770;">1</span><span>)
+</span><span>      |&gt; </span><span style="color:#ebcb8b;">Kernel</span><span>.++([offspring])
+</span><span>
+</span><span>    [elite | _] = new_population
+</span><span>    fitness_score = </span><span style="color:#ebcb8b;">Map</span><span>.get(memoized_fitness, elite)
+</span><span>    max_score = </span><span style="color:#ebcb8b;">String</span><span>.length(@</span><span style="color:#bf616a;">target_phrase</span><span>)
+</span><span>
+</span><span style="color:#65737e;">    # If perfect fitness score, then return the elite chromosome.
+</span><span>    </span><span style="color:#b48ead;">case</span><span> fitness_score </span><span style="color:#b48ead;">do
+</span><span>      x when x == max_score -&gt;
+</span><span>        %{</span><span style="color:#d08770;">chromosome:</span><span> elite, </span><span style="color:#d08770;">generation:</span><span> generation.i}
+</span><span>
+</span><span>      _ -&gt;
+</span><span>        evolve_mechanism(
+</span><span>          %{</span><span style="color:#d08770;">i:</span><span> generation.i + </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">limit:</span><span> generation.limit},
+</span><span>          %{</span><span style="color:#d08770;">population:</span><span> new_population, </span><span style="color:#d08770;">size:</span><span> population_data.size},
+</span><span>          elitism,  </span><span style="color:#65737e;"># Might be switched for adaptive elitism
+</span><span>          memoized_fitness
+</span><span>        )
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>The <code>evolve_mechanism</code> function is recursive in that it will call itself as long as we either haven't gotten a perfect fitness or we have hit a generation limit.</p>
+<p>Now it's finally time to define our entry-point to this genetic algorithm. <code>evolve</code> will set up some initial values and start the <code>evolve-mechanism</code>:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">GeneticString </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">  # ...
+</span><span>
+</span><span style="color:#65737e;">  #  Our ENTRY POINT to the evolution
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">evolve</span><span>(population_size, generation_limit \\ </span><span style="color:#d08770;">100</span><span>) </span><span style="color:#b48ead;">do
+</span><span>    population = </span><span style="color:#ebcb8b;">Enum</span><span>.map(</span><span style="color:#d08770;">1</span><span>..population_size, </span><span style="color:#b48ead;">fn</span><span> _ -&gt; random_chromosome() </span><span style="color:#b48ead;">end</span><span>)
+</span><span>    elitism_rate = </span><span style="color:#d08770;">0.01
+</span><span>
+</span><span>    evolve_mechanism(
+</span><span>      %{</span><span style="color:#d08770;">i: 0</span><span>, </span><span style="color:#d08770;">limit:</span><span> generation_limit}, </span><span style="color:#65737e;"># generation data
+</span><span>      %{</span><span style="color:#d08770;">population:</span><span> population, </span><span style="color:#d08770;">size:</span><span> population_size}, </span><span style="color:#65737e;"># population data
+</span><span>      %{</span><span style="color:#d08770;">rate:</span><span> elitism_rate, </span><span style="color:#d08770;">count:</span><span> floor(elitism_rate * population_size)}, </span><span style="color:#65737e;"># elitism data (suitable for adding an adaptive mechanism)
+</span><span>      %{} </span><span style="color:#65737e;"># fitness map
+</span><span>    )
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>We can call our Genetic Algorithm with the following command: <code>GeneticString.evolve(50, 20000)</code>. This will set the initial population to <code>50</code> and sets the generation limit to <code>20000</code>. The result will be a map like this: <code>%{generation: 6367, chromosome: &quot;The solution is yet to emerge&quot;}</code></p>
+<p>Our Genetic Algorithm has multiple points where we can experiment with its different parameters. Instead of a static <code>elitism_rate</code> we can involve a more dynamic or adaptive format. We can also experiment with number of offsprings and parents as well. There are a lot of ways to tweak just this simple Genetic Algorithm, but for now, let's explore how it would be like to have elitism that is adjusted according to how far along the generations has come towards the generational limit.</p>
+<p>First we will add a new function that will update the elitism:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">GeneticString </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">  # ...
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">adjust_elitism</span><span>(elitism, generation, population_size) </span><span style="color:#b48ead;">do
+</span><span>    progress = generation.i / generation.limit
+</span><span>
+</span><span>    rate = </span><span style="color:#b48ead;">case</span><span> progress </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">      # Less of population considered for elite (aka, in this case, available for reproduction)
+</span><span>      x when x &lt; </span><span style="color:#d08770;">0.2 </span><span>-&gt;
+</span><span>        max(elitism.rate - </span><span style="color:#d08770;">0.05</span><span>, </span><span style="color:#d08770;">0.01</span><span>)
+</span><span>
+</span><span style="color:#65737e;">      # In later generations, a larger proportion of population will be included in elite population
+</span><span>      _ -&gt; 
+</span><span>        min(elitism.rate + </span><span style="color:#d08770;">0.01</span><span>, </span><span style="color:#d08770;">0.25</span><span>)
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>
+</span><span>    %{</span><span style="color:#d08770;">rate:</span><span> rate, </span><span style="color:#d08770;">count:</span><span> floor(rate * population_size)}
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>Then we will update our <code>evolution_mechanism</code> so that in its recursive call will be updating the elitism:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span style="color:#b48ead;">defmodule </span><span style="color:#ebcb8b;">GeneticString </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">  # ...
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">defp </span><span style="color:#8fa1b3;">evolve_mechanism</span><span>(generation, population_data, elitism, fitness_memo) </span><span style="color:#b48ead;">do
+</span><span style="color:#65737e;">    # ...
+</span><span>    </span><span style="color:#b48ead;">case</span><span> fitness_score </span><span style="color:#b48ead;">do
+</span><span>      x when x == max_score -&gt;
+</span><span>        %{</span><span style="color:#d08770;">chromosome:</span><span> elite, </span><span style="color:#d08770;">generation:</span><span> generation.i}
+</span><span>
+</span><span>      _ -&gt;
+</span><span>        evolve_mechanism(
+</span><span>          %{</span><span style="color:#d08770;">i:</span><span> generation.i + </span><span style="color:#d08770;">1</span><span>, </span><span style="color:#d08770;">limit:</span><span> generation.limit},
+</span><span>          %{</span><span style="color:#d08770;">population:</span><span> new_population, </span><span style="color:#d08770;">size:</span><span> population_data.size},
+</span><span>          adjust_elitism(elitism, generation, population_data.size),  </span><span style="color:#65737e;"># We change this row to update elitism
+</span><span>          memoized_fitness
+</span><span>        )
+</span><span>    </span><span style="color:#b48ead;">end
+</span><span>  </span><span style="color:#b48ead;">end
+</span><span style="color:#b48ead;">end
+</span></code></pre>
+<p>I test ran our genetic algorithm first with a static elitism, then with an adjusted elitism. Each was run 1000-times. I plotted their density curves and gathered their core descriptive statistics. Let's see the result:</p>
+<p>
+<div class="layout-row center">
+    <p><em>n:th generation (static elitism)</em></p>
+
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+    
+    <div class="image-container center mt-0">
+        <div>
+            <img
+                alt="Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with static elitism rate. The curve is centered (median) around 6763 with a standard deviation of 2497. The curve is right-tailed."
+                src="static_elitism.svg"
+                height="354" 
+                width="491"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+
+
+<div class="layout-row center">
+    <table><thead><tr><th>min</th><th>max</th><th>mean</th><th>median</th><th>stdev</th></tr></thead><tbody>
+<tr><td>2391</td><td>20000</td><td>7170</td><td>6763</td><td>2497</td></tr>
+</tbody></table>
+
+</div></p>
+<p>
+<div class="layout-row center">
+    <p><em>n:th generation (adjustable elitism)</em></p>
+
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+    
+    <div class="image-container center mt-0">
+        <div>
+            <img
+                alt="Density curve of n-th generation required for a genetic algorithm (GA) to find a perfect fit. Here is a GA with adjustable elitism rate. The curve is centered (median) around 5991 with a standard deviation of 1847. The curve is right-tailed."
+                src="adjustable_elitism.svg"
+                height="354" 
+                width="491"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+
+
+<div class="layout-row center">
+    <table><thead><tr><th>min</th><th>max</th><th>mean</th><th>median</th><th>stdev</th></tr></thead><tbody>
+<tr><td>2149</td><td>15078</td><td>6297</td><td>5991</td><td>1847</td></tr>
+</tbody></table>
+
+</div></p>
+<p>With this adjustable elitism, we got a more narrow distribution and a lower median. We can argue that the inclusion of the adjustable elitism improved our algorithm. But still, there are so many ways we can tinker with it. The elitism can have multiple ways it can be adjusted; different cut-offs, rate changes, minimum and maximum rates, and so on. But there are also many other adjustments we can make. How many parents we will allow getting offsprings, and how many? Perhaps the fitness-evaluation is too simple and need more nuance? Should the crossover be more of a diffusion where one parent's feature is scattered in the chromosome? </p>
+<p>The Genetic Algorithm is versatile! We have seen its core components and got to tinker with them. We have explored one way to make it more dynamic and what impact that may have. Even a simple GA as we have built here can be adjusted in many different ways. I therefor welcome you to do so. I have created a GitHub Gist with a Livebook document that you may use in your own Livebook session: <a href="https://gist.github.com/andersbjorkland/99a96a26135fea7438ef90cfc354e1ed">genetic-algorithm.livemd</a></p>
+
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2024-03-21 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

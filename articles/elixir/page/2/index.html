@@ -1,0 +1,366 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/elixir/page/2/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+
+
+
+
+
+
+    
+   
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Elixir" />
+<meta property="og:description" content="" />
+<meta property="og:url" content="https://abjork.land/articles/elixir/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+
+ 
+    
+    
+    
+
+
+
+    
+
+    <title>
+ Elixir
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+    
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg animate" width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+<div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+</div>
+
+
+
+    <h1>Elixir</h1>
+</div>
+
+<div class="link-container">
+
+</div>
+
+<div class="layout-grid">
+    
+    
+        <div class="grid-item">
+            
+
+
+    
+
+    
+
+    
+        
+        
+
+<a href="https://abjork.land/articles/elixir/resize-image-uploads-with-liveview/" class="card">
+    <h3>Resize Image Uploads with LiveView</h3>
+    
+
+
+
+
+
+<div class="image-container ">
+    <img
+            class=""
+            alt="Resize Image Uploads with LiveView"
+            src="&#x2F;articles&#x2F;elixir&#x2F;resize_image_uploads_with_liveview&#x2F;hero.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.2da10072ae3daeac.webp 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.8ff9f60b2906d8a9.webp 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.1ce57d06120834d2.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+    />
+</div>
+
+
+</a>
+
+            
+                <div class="tag-list">
+                
+                    elixir
+                
+                    phoenix
+                
+                    liveview
+                
+                </div>
+            
+        </div>
+    
+        <div class="grid-item">
+            
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+
+<a href="https://abjork.land/articles/elixir/opensource-models/" class="card">
+    <h3>Top 6 uses of open source machine learning models (and more)</h3>
+    
+
+
+
+
+
+<div class="image-container ">
+    <img
+            class=""
+            alt="Top 6 uses of open source machine learning models (and more)"
+            src="&#x2F;articles&#x2F;elixir&#x2F;opensource-models&#x2F;hero.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.98833a6c5a7e4e80.webp 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.e3187bce3e236eb2.webp 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.bf94ce58ceefb10f.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+    />
+</div>
+
+
+</a>
+
+            
+                <div class="tag-list">
+                
+                    axon
+                
+                    AI
+                
+                    ONNX
+                
+                    BumbleBee
+                
+                    HuggingFace
+                
+                </div>
+            
+        </div>
+    
+        <div class="grid-item">
+            
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        
+        
+
+<a href="https://abjork.land/articles/elixir/liveview-and-broadcast/" class="card">
+    <h3>Laugh Out Loud with LiveView</h3>
+    
+
+
+
+
+
+<div class="image-container ">
+    <img
+            class=""
+            alt="Laugh Out Loud with LiveView"
+            src="&#x2F;articles&#x2F;elixir&#x2F;liveview_and_broadcast&#x2F;hero.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.cce62ed450868a6d.webp 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.5d192aac996cef40.webp 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.5ab559a7059b1d9d.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+    />
+</div>
+
+
+</a>
+
+            
+                <div class="tag-list">
+                
+                    elixir
+                
+                    phoenix
+                
+                    liveview
+                
+                    PubSub
+                
+                </div>
+            
+        </div>
+    
+ </div>
+    
+
+
+
+
+    <nav class="pagination">
+        
+            <a class="previous" href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;elixir&#x2F;">‹ Previous</a>
+        
+        
+    </nav>
+
+    </div>
+    
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

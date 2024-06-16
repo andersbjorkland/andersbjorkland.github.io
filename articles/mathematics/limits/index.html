@@ -1,0 +1,544 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/mathematics/limits/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/hero.8c787a95c966b6ba.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/hero.8c787a95c966b6ba.webp">
+    
+    
+    
+    
+    
+    
+   
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Remembering Limits" />
+<meta property="og:description" content="Dive into the fundamentals of calculus with a focus on limits, a crucial concept for understanding continuity, derivatives, and integrals." />
+<meta property="og:url" content="https://abjork.land/articles/mathematics/limits/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2023-04-15"> 
+
+
+ 
+     
+<meta name="last-updated" content="2024-03-28" />
+    
+
+
+
+        
+    
+
+    <title>
+ Remembering Limits
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/mathematics/limits/"
+    },
+    "headline": "Remembering Limits",
+    "description": "Dive into the fundamentals of calculus with a focus on limits, a crucial concept for understanding continuity, derivatives, and integrals.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2024-03-28",
+    "datePublished": "2023-04-15"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/mathematics/">Mathematics</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.5fa1a79f732ea847.jpg"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.7f8a4e376b0ecdf0.jpg 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.5fa1a79f732ea847.jpg 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.c972485a31504455.jpg 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Remembering Limits</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/calculus/" class="hover-bold">calculus</a></div>
+        
+        <div><a href="https://abjork.land/tags/limits/" class="hover-bold">limits</a></div>
+        
+    
+</div>
+
+
+
+</div>
+<p>It’s been a long (loooooo-oooo-oooong) time since I studied mathematics. And with all the rage that is “AI” and machine learning (ML), I thought now would be a good time. I did an initial venture into ML but quickly realized that I do not know a knob from a steering wheel. That was when the YouTube Algo-monster figured I should look at a clip by <a href="https://youtu.be/wtolixa9XTg">AssemblyAI: “How I would learn Machine Learning (if I could start over)”</a>. And it was just what I needed to hear. So here I am, learning ML by first investing time in… <strong>MATH!</strong> </p>
+<p>Here are 3 points of why some mathematical skills would be an advantage to have going into ML:<br />
+<strong>Calculus</strong> is used for optimization algorithms - a group of algorithms that try to find the best solution to a problem.
+<strong>Linear Algebra</strong> deals with linear equations and matrices. In ML this is used in data preprocessing, feature extraction and dimensionality reduction. 
+<strong>Probability and Statistics</strong> are used for modeling uncertainty and making predictions. </p>
+<p>This will be a series of articles where I delve into some of these Mathematical concepts. Starting with Calculus’s core concept:  Limits!</p>
+<h2 id="limits">Limits</h2>
+<p>The essence to defining continuity, derivatives, and integrals comes down to limits. We will definitely see limits when we want to look at derivatives - or the rate of a change at a specific point. But even before we step into that realm, consider the function 
+<code>f(x)=(x-4)/(x-4)</code>:</p>
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A linear function"
+                src="limit_1.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;limit_1.c9818369fc0dee9b.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;limit_1.f46690abd2e63827.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;limit_1.013953040fe08db3.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+<p>From a cursory glance, we see that the function will equal to 1, for whatever value of <code>x</code>. Well, almost. When we have <code>x=4</code> we will have a <strong>situation</strong>. </p>
+
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container center">
+        <div>
+            <img
+                alt=""
+                src="undefined-1.svg"
+                height="27" 
+                width="175"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+<p>This would mean that we would have 0 divided by 0 which is an undefined concept. We can’t divide anything with 0. But as <code>x</code> approaches <code>4</code> we see that we have <code>1</code>. With <code>x</code> really really close to that undefined, such as 3.9999, we see that we still have <code>y = 1</code>. On the other side we see that <code>y(4.0001) = 1</code>. While <code>x = 4</code> is undefined for our function, we can take the limit of <code>f</code> at <code>x = 4</code> and find that it is <code>1</code>. We will have this expression:</p>
+
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container center">
+        <div>
+            <img
+                alt=""
+                src="limit_2.svg"
+                height="22" 
+                width="84"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+<p>It’s like magic! But keep in mind, this does not say that <code>y(4) = 1</code>, rather it is saying that the equation will behave in such a way that <code>y</code> will be <code>1</code> as we are moving very very close to <code>x = 4</code>.</p>
+<p>But this magic has its <strong>limits</strong>! If we find that as we increase <code>x</code> and moving closer to a point has one value, and decrease <code>x</code> to move closer to that same point from the other directions is moving us closer to a different value, then we have a situation where we can’t apply limits to find the value as we are moving closer to <code>x</code>. Consider the function <code>f(x)=x/(x - 2)</code>:</p>
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A symptotic function"
+                src="asymptot.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;asymptot.f8d978c6bafe164a.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;asymptot.664052c4bcf12337.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;asymptot.bdd0052eafdfc8a6.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext"></div>
+    </div>
+
+
+<p>As we increase <code>x</code> from <code>1</code> and get closer to <code>2</code>, we see that <code>y</code> will decrease dramatically. From the opposite side we see that when we decrease <code>x</code> from <code>3</code> and get closer to <code>2</code>, we see that <code>y</code> will increase dramatically. In this example we do not have a limit for when <code>x</code> gets closer to <code>2</code>, <em>the limit does not exist</em>. This actually showcases 2 ways that a limit does not exist:</p>
+<ol>
+<li>As we get closer to 2, the y-value moves in a different direction depending on the direction from which we approach 2.</li>
+<li>As we get closer to 2, the y-value is unbounded. </li>
+</ol>
+<h3 id="one-sided-limits">One-sided limits</h3>
+<p>We have described how a limit does not exist when the value of y approaches different values depending on the direction we are approaching a value of x from. We can however give ourselves more leeway by describing a one-sided limit. Take this example, a function would have the limit of x approach 4 when we move closer to x = 2. On the other side the x might approach -2. This give us the following expressions:<br />
+
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container center">
+        <div>
+            <img
+                alt=""
+                src="limit_3.svg"
+                height="22" 
+                width="84"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+<br />
+
+
+
+
+    
+
+
+
+    
+
+
+
+    
+    <div class="image-container center">
+        <div>
+            <img
+                alt=""
+                src="limit_4.svg"
+                height="23" 
+                width="105"
+            />
+        </div>
+        <div></div>
+    </div>
+
+
+</p>
+<p>But as we have described earlier, the two-sided limit does not exist when we approach different values from the two directions.</p>
+<h3 id="the-limit-when-the-function-s-value-do-exist">The limit when the function’s value do exist</h3>
+<p>The function <code>f(x)=x^2+3</code> is defined when <code>x=2</code>. This does not stop us from looking for its limit. In this case, we arrive at the limit approaching the same value as the defined value for <code>f(x)</code>. But this does not mean that the limit necessarily will approach the defined value.</p>
+<h2 id="conclusion-confusion">Conclusion confusion</h2>
+<p>So there you have it! We’ve seen how limits can help us approach undefined positions in a function using different graphs. This is a really important concept in calculus and mathematical analysis, and it’s also relevant to machine learning. By understanding the basics of limits, we can better understand the math behind machine learning and its optimization algorithms. We hope you found this article helpful and that it encourages you to learn more about this fascinating topic!</p>
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<div class="image-text-overlay">
+    <div class="image-text image-text--up">Why did the limit go to infinity?</div>
+    <div class="image-text image-text--down">To get away from the derivative</div>
+    <div class="image-container ">
+        <img
+                alt=""
+                src="articles&#x2F;mathematics&#x2F;limits&#x2F;kitten_joke.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;kitten_joke.e472ba7b5701eba5.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;kitten_joke.a20c2d153543b679.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;kitten_joke.279e79356964997f.webp 600w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;kitten_joke.95288242ad1810ce.webp 800w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            (max-width: 600px) 550px,
+                            800px"
+        />
+    </div>
+</div>
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2023-04-15 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>

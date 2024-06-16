@@ -1,0 +1,1142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - liveview</title>
+    <link href="https://abjork.land/tags/liveview/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://abjork.land"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-03-28T00:00:00+00:00</updated>
+    <id>https://abjork.land/tags/liveview/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Resize Image Uploads with LiveView</title>
+        <published>2024-01-31T00:00:00+00:00</published>
+        <updated>2024-03-28T00:00:00+00:00</updated>
+        <author>
+          <name>Anders Björkland</name>
+        </author>
+        <link rel="alternate" href="https://abjork.land/articles/elixir/resize-image-uploads-with-liveview/" type="text/html"/>
+        <id>https://abjork.land/articles/elixir/resize-image-uploads-with-liveview/</id>
+        <content type="html">&lt;div class=&quot;article-header&quot;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+&lt;img
+        alt=&quot;133&quot;
+        src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.997da961180fa2bd.png&quot;
+        srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.f27f81c956b2ac4f.png 240w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.997da961180fa2bd.png 400w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.cc31884f85fbc20f.png 600w&quot;
+        sizes=&quot;(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px&quot;
+&#x2F;&gt;
+
+
+    &lt;div class=&quot;text-content&quot;&gt;
+        &lt;h1 class=&quot;article-title&quot;&gt;
+            &lt;div class=&quot;title&quot;&gt;Resize Image Uploads with LiveView&lt;&#x2F;div&gt;
+            
+        &lt;&#x2F;h1&gt;
+    &lt;&#x2F;div&gt;
+    
+
+ 
+
+ 
+
+&lt;div class=&quot;tag-list absolute&quot;&gt;
+    
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;elixir&#x2F;&quot; class=&quot;hover-bold&quot;&gt;elixir&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;phoenix&#x2F;&quot; class=&quot;hover-bold&quot;&gt;phoenix&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;liveview&#x2F;&quot; class=&quot;hover-bold&quot;&gt;liveview&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+    
+&lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;p&gt;In this article we will see how to resize an image before uploading it to a Phoenix backend. We will do this by adding a profile image to the user in a basic Phoenix setup. This will take us through the process of modifying an existing schema, create and run a migration, write custom hooks, add file validation, and ultimately create a new file. So if you are up for the task and would like to follow along, here’s the resize&#x2F;upload flow:&lt;&#x2F;p&gt;
+&lt;div class=&quot;white-bg&quot;&gt;
+
+
+
+
+
+
+
+    
+
+
+
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;div&gt;
+            &lt;img
+                alt=&quot;The logic flow of uploading an image. A user selects an image, it is then resized. This will initialize a validation from the client on the server. If it is valid the User will be allowed to submit the image, otherwise must choose another image.&quot;
+                src=&quot;flow.svg&quot;
+                height=&quot;1262&quot; 
+                width=&quot;681&quot;
+            &#x2F;&gt;
+        &lt;&#x2F;div&gt;
+        &lt;div&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;h2 id=&quot;prerequisites-and-setup&quot;&gt;Prerequisites and Setup&lt;&#x2F;h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Docker&lt;&#x2F;li&gt;
+&lt;li&gt;Elixir&lt;&#x2F;li&gt;
+&lt;li&gt;Mix&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Run a postgres container: 
+&lt;code&gt;docker run --name phoenix_db -e POSTGRES_PASSWORD=phoenix_pwd -e POSTGRES_USER=phoenix_usr -d -p 5432:5432 postgres&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;If you do not have a Phoenix application, run:
+&lt;code&gt;mix phx.new my_app&lt;&#x2F;code&gt; &lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;If &lt;code&gt;phx.new&lt;&#x2F;code&gt; is not a recognized mix-command, install the command with &lt;code&gt;mix archive.install hex phx_new&lt;&#x2F;code&gt;. At the time of writing, this will install version &lt;code&gt;1.7.10&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Setup the application to use the correct database credentails in &lt;code&gt;.&#x2F;config&#x2F;dev.exs&lt;&#x2F;code&gt;. Adjust in the top of the file so it corresponds with your docker container setup:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# …
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# Configure your database
+&lt;&#x2F;span&gt;&lt;span&gt;config &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:my_app&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;MyApp&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Repo&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;username: &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;phoenix_usr&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;password: &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;phoenix_pwd&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;hostname: &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;localhost&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;database: &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;my_app_dev&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;stacktrace: true&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;show_sensitive_data_on_connection_error: true&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;pool_size: 10
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;# …
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;With database configuration ready we can set up the database with &lt;code&gt;mix ecto.create&lt;&#x2F;code&gt;. We will then add a Phoenix LiveView &lt;strong&gt;authentication&lt;&#x2F;strong&gt; system by first running &lt;code&gt;mix phx.gen.auth Accounts User users&lt;&#x2F;code&gt;. And then run &lt;code&gt;mix ecto.migrate&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;modify-the-user-schema&quot;&gt;Modify the User schema&lt;&#x2F;h2&gt;
+&lt;p&gt;We will have a profile image added to our new User model. The user will only ever have one of these and we will not preserve any kind of history beyond what the user currently has as their profile image. We plan to add a string field to the User model and schema to store the path for the image. Let’s create a migration file for this.&lt;&#x2F;p&gt;
+&lt;p&gt;From the CLI we run &lt;code&gt;mix ecto.gen.migration add_profile_image&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;This creates a new file &lt;code&gt; priv&#x2F;repo&#x2F;migrations&#x2F;[timestamp]_add_profile_image.exs&lt;&#x2F;code&gt; with the backbone for a migration-change. We will alter the table for &lt;code&gt;users&lt;&#x2F;code&gt; by adding a new field:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ArchAngler&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Repo&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Migrations&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;AddProfileImage &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Ecto&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Migration
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;change &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    alter table(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:users&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      add &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:profile_image&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:string
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Next we will run this migration with &lt;code&gt;mix ecto.migrate&lt;&#x2F;code&gt;. 
+Having updated the database schema for the &lt;code&gt;users&lt;&#x2F;code&gt; table, we now turn to update our model accordingly. The model is defined in &lt;code&gt;.&#x2F;lib&#x2F;my_app&#x2F;accounts&#x2F;user.ex&lt;&#x2F;code&gt;. Let’s adjust the schema:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;MyApp&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Accounts&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;User &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # …
+&lt;&#x2F;span&gt;&lt;span&gt;  schema &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;users&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # add the profile_image field here
+&lt;&#x2F;span&gt;&lt;span&gt;    field &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:profile_image&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:string
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    timestamps()
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  #...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # add a new changeset function for the new field by the end of the module:
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;@doc &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  A User changeset for updating Profile Image
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;profile_image_changeset&lt;&#x2F;span&gt;&lt;span&gt;(user, attrs, _opts \\ []) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    user
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; cast(attrs, [&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:profile_image&lt;&#x2F;span&gt;&lt;span&gt;])
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;With the updated User model, we should update the context as well. We find it in &lt;code&gt;.&#x2F;lib&#x2F;my_app&#x2F;accounts.ex&lt;&#x2F;code&gt;. Add the following function to the module:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;@doc &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  Returns an `%Ecto.Chageset{}` for updating the user profile_image.
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  &amp;quot;&amp;quot;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;change_profile_image&lt;&#x2F;span&gt;&lt;span&gt;(user, attrs \\ %{}) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;User&lt;&#x2F;span&gt;&lt;span&gt;.profile_image_changeset(user, attrs)
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;update_profile_image&lt;&#x2F;span&gt;&lt;span&gt;(%&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;User&lt;&#x2F;span&gt;&lt;span&gt;{} = user, attrs) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    user
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;User&lt;&#x2F;span&gt;&lt;span&gt;.profile_image_changeset(attrs)
+&lt;&#x2F;span&gt;&lt;span&gt;    |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Repo&lt;&#x2F;span&gt;&lt;span&gt;.update()
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This will be used to create a form for the LiveView component.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;update-user-settings-page&quot;&gt;Update User Settings page&lt;&#x2F;h2&gt;
+&lt;p&gt;With updates to the User model, we can now update the LiveView component for the User Settings page. Currently the view has two forms: One for changing &lt;code&gt;Email&lt;&#x2F;code&gt;, and another for changing &lt;code&gt;Password&lt;&#x2F;code&gt;. We will add a new form for uploading and changing the &lt;code&gt;Profile Image&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;The logic flow of uploading an image. A user selects an image, it is then resized. This will initialize a validation from the client on the server. If it is valid the User will be allowed to submit the image, otherwise must choose another image.&quot;
+            src=&quot;user-settings.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;user-settings.014fd3d636fb5603.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;user-settings.1c9c547d67791390.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;user-settings.aeb03949d69019ff.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;
+&lt;p&gt;We will find the LiveView component in &lt;code&gt;.&#x2F;lib&#x2F;my_app_web&#x2F;live&#x2F;user_settings_live.ex&lt;&#x2F;code&gt;. In its &lt;code&gt;render&lt;&#x2F;code&gt; function, we will add our new form. Insert the following code above the email-form.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;heex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-heex &quot;&gt;&lt;code class=&quot;language-heex&quot; data-lang=&quot;heex&quot;&gt;&lt;span&gt;      &amp;lt;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;lt;div id=&amp;quot;image-uploader-container&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &amp;lt;label&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;div class=&amp;quot;block text-sm font-semibold leading-6 text-zinc-800&amp;quot;&amp;gt;Profile Image&amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;input
+&lt;&#x2F;span&gt;&lt;span&gt;              id=&amp;quot;profile-image-uploader&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;              type=&amp;quot;file&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;              accept=&amp;quot;image&#x2F;png, image&#x2F;jpeg, image&#x2F;jpg, image&#x2F;webp&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;              phx-hook=&amp;quot;Resize&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;            &#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &amp;lt;&#x2F;label&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &amp;lt;%= if @image_error do %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;p class=&amp;quot;text-red-500&amp;quot;&amp;gt;&amp;lt;%= @image_error %&amp;gt;&amp;lt;&#x2F;p&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &amp;lt;% end %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;lt;.simple_form
+&lt;&#x2F;span&gt;&lt;span&gt;          for={@image_form}
+&lt;&#x2F;span&gt;&lt;span&gt;          id=&amp;quot;profile_image_form&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;          phx-submit=&amp;quot;update_profile_image&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;          phx-change=&amp;quot;validate_profile_image&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &amp;lt;%= if @profile_image do %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;img src={@profile_image} alt=&amp;quot;Profile Image&amp;quot; &#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &amp;lt;% end %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &amp;lt;div class=&amp;quot;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;div id=&amp;quot;image-preview-container&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;              &amp;lt;%= if @resized_image_src do %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                &amp;lt;img src={@resized_image_src} alt=&amp;quot;preview resized image&amp;quot; &#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;              &amp;lt;% end %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &amp;lt;.input
+&lt;&#x2F;span&gt;&lt;span&gt;            id=&amp;quot;profile-image-src-input&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;            field={@image_form[:profile_image]}
+&lt;&#x2F;span&gt;&lt;span&gt;            type=&amp;quot;hidden&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;            value={@resized_image_src}
+&lt;&#x2F;span&gt;&lt;span&gt;            required
+&lt;&#x2F;span&gt;&lt;span&gt;          &#x2F;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &amp;lt;:actions&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;%= if @allow_image_upload do %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;              &amp;lt;.button phx-disable-with=&amp;quot;Changing...&amp;quot; id=&amp;quot;submit-image-btn&amp;quot; class=&amp;quot;&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                Submit image
+&lt;&#x2F;span&gt;&lt;span&gt;              &amp;lt;&#x2F;.button&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;% end %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &amp;lt;&#x2F;:actions&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;lt;&#x2F;.simple_form&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &amp;lt;%!-- below is Email-form --%&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Couple of things to note here: we are currently referring to Phoenix functions and socket assignments that currently do not exist. We are missing these functions in the LiveView component:
+&lt;code&gt;validate_profile_image&lt;&#x2F;code&gt;, which will be called for every change in the form.
+&lt;code&gt;update_profile_image&lt;&#x2F;code&gt;, which will be called upon form-submit.&lt;&#x2F;p&gt;
+&lt;p&gt;The following socket assignments are missing: 
+&lt;code&gt;image_form&lt;&#x2F;code&gt;, a form-map that holds the field we want to parse.
+&lt;code&gt;image_error&lt;&#x2F;code&gt;, a variable that we will add an error message to, if needed.
+&lt;code&gt;profile_image&lt;&#x2F;code&gt;, a variable that will hold the current profile image.
+&lt;code&gt;resized_image_src&lt;&#x2F;code&gt;, will hold a data URL of a resized image if validated.
+&lt;code&gt;allow_image_upload&lt;&#x2F;code&gt;, will be false until validated.&lt;&#x2F;p&gt;
+&lt;p&gt;On top of these Elixir-related changes, we will also make use of &lt;a href=&quot;https:&#x2F;&#x2F;hexdocs.pm&#x2F;phoenix_live_view&#x2F;js-interop.html&quot;&gt;LiveView’s JavaScript Interoperability&lt;&#x2F;a&gt; capabilities via its hooks. We will need a &lt;code&gt;Resize&lt;&#x2F;code&gt; hook, which will be responsible to resize an image to within specified parameters, and once that is done, it will update the value of the hidden input field.
+Let’s start with the Elixir updates in the LiveView component (&lt;code&gt;user_settings_live.ex&lt;&#x2F;code&gt;). We will add the assignments first. These are added into the second &lt;code&gt;mount&lt;&#x2F;code&gt; function of the component:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;mount&lt;&#x2F;span&gt;&lt;span&gt;(_params, _session, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    user = socket.assigns.current_user
+&lt;&#x2F;span&gt;&lt;span&gt;    email_changeset = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Accounts&lt;&#x2F;span&gt;&lt;span&gt;.change_user_email(user)
+&lt;&#x2F;span&gt;&lt;span&gt;    password_changeset = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Accounts&lt;&#x2F;span&gt;&lt;span&gt;.change_user_password(user)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Let’s get the changeset for the image
+&lt;&#x2F;span&gt;&lt;span&gt;    profile_image_changset = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Accounts&lt;&#x2F;span&gt;&lt;span&gt;.change_profile_image(user)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    socket =
+&lt;&#x2F;span&gt;&lt;span&gt;      socket
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:current_password&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;nil&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:email_form_current_password&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;nil&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:current_email&lt;&#x2F;span&gt;&lt;span&gt;, user.email)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:email_form&lt;&#x2F;span&gt;&lt;span&gt;, to_form(email_changeset))
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:password_form&lt;&#x2F;span&gt;&lt;span&gt;, to_form(password_changeset))
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:trigger_submit&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;     
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;     # Our new assigns are added here
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:image_form&lt;&#x2F;span&gt;&lt;span&gt;, to_form(profile_image_changset))
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:image_error&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:profile_image&lt;&#x2F;span&gt;&lt;span&gt;, user.profile_image)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:resized_image_src&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:allow_image_upload&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:ok&lt;&#x2F;span&gt;&lt;span&gt;, socket}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Next up would be adding the event handlers for &lt;code&gt;validate_profile_image&lt;&#x2F;code&gt; and &lt;code&gt;update_profile_image&lt;&#x2F;code&gt;. But for the validation part it would be best to have a separate module that can validate by file size and type. This module’s &lt;code&gt;validate&lt;&#x2F;code&gt; function can then be called in our LiveView component. Create the file &lt;code&gt;.&#x2F;lib&#x2F;my_app&#x2F;image_validator.ex&lt;&#x2F;code&gt; with the following content:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;MyApp&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ImageValidator &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;validate_image&lt;&#x2F;span&gt;&lt;span&gt;(data_url, allowed_file_size, allowed_file_types)
+&lt;&#x2F;span&gt;&lt;span&gt;      when &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;is_binary&lt;&#x2F;span&gt;&lt;span&gt;(data_url) and &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;is_integer&lt;&#x2F;span&gt;&lt;span&gt;(allowed_file_size) and &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;is_list&lt;&#x2F;span&gt;&lt;span&gt;(allowed_file_types) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Extract the media type and the base64 part from the data_url
+&lt;&#x2F;span&gt;&lt;span&gt;    [meta_data, base64] = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.split(data_url, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    [media_type, _] = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.replace(meta_data, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;data:&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &amp;quot;&amp;quot;) |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.split(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;;&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Decode the base64 part and get the binary data
+&lt;&#x2F;span&gt;&lt;span&gt;    binary_data = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Base&lt;&#x2F;span&gt;&lt;span&gt;.decode64!(base64)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Get the file size in bytes
+&lt;&#x2F;span&gt;&lt;span&gt;    file_size = byte_size(binary_data)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Get the file extension from the media type
+&lt;&#x2F;span&gt;&lt;span&gt;    file_ext = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.split(media_type, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;) |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.at(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;) |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.replace_suffix(&amp;quot;&amp;quot;, &amp;quot;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Check if the file extension is allowed
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.member?(allowed_file_types, file_ext) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;        # Check if the file size is less than or equal to 2MB
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case&lt;&#x2F;span&gt;&lt;span&gt; file_size &amp;lt;= allowed_file_size &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:ok&lt;&#x2F;span&gt;&lt;span&gt;, data_url}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;            # Return an error message for invalid file size
+&lt;&#x2F;span&gt;&lt;span&gt;            {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:error&lt;&#x2F;span&gt;&lt;span&gt;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Image size must be less than or equal to #{&lt;&#x2F;span&gt;&lt;span&gt;allowed_file_size}&amp;quot;}
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;        # Return an error message for invalid file extension
+&lt;&#x2F;span&gt;&lt;span&gt;        {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:error&lt;&#x2F;span&gt;&lt;span&gt;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Image file type must be jpg, jpeg, png, or gif&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;}
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Let’s write out our &lt;em&gt;event handler&lt;&#x2F;em&gt; for &lt;code&gt;validate_profile_image&lt;&#x2F;code&gt; back in &lt;code&gt;user_settings_live.ex&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;validate_profile_image&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;        %{&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;user&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; =&amp;gt; %{&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;profile_image&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; =&amp;gt; profile_image}},
+&lt;&#x2F;span&gt;&lt;span&gt;        socket
+&lt;&#x2F;span&gt;&lt;span&gt;      ) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;MyApp&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ImageValidator&lt;&#x2F;span&gt;&lt;span&gt;.validate_image(profile_image, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2 &lt;&#x2F;span&gt;&lt;span&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1024 &lt;&#x2F;span&gt;&lt;span&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1024&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;~w&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;jpg jpeg gif png webp&lt;&#x2F;span&gt;&lt;span&gt;)) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:ok&lt;&#x2F;span&gt;&lt;span&gt;, data_url} -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;         socket
+&lt;&#x2F;span&gt;&lt;span&gt;         |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;resized_image_src:&lt;&#x2F;span&gt;&lt;span&gt; data_url, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;allow_image_upload: true&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;image_error: false&lt;&#x2F;span&gt;&lt;span&gt;)}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:error&lt;&#x2F;span&gt;&lt;span&gt;, message} -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;, socket |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;allow_image_upload: false&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;image_error:&lt;&#x2F;span&gt;&lt;span&gt; message)}
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We can see how we are using pattern matching to unpack &lt;code&gt;profile_image&lt;&#x2F;code&gt; from the incoming parameters variable. This data is passed into the &lt;code&gt;validate_image&lt;&#x2F;code&gt; function, along with the maximum allowed file size (&lt;em&gt;2MB&lt;&#x2F;em&gt;) and allowed file types. As the function returns either an &lt;code&gt;ok&lt;&#x2F;code&gt; atom along with the image data, or an &lt;code&gt;error&lt;&#x2F;code&gt; and message, we will adjust the socket assignments accordingly. &lt;&#x2F;p&gt;
+&lt;p&gt;Now, let’s add the event handler for &lt;code&gt;update_profile_image&lt;&#x2F;code&gt; in the same &lt;code&gt;user_settings_live.ex&lt;&#x2F;code&gt;, along with two helper functions:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;update_profile_image&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;        %{&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;user&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; =&amp;gt; %{&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;profile_image&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; =&amp;gt; profile_image}},
+&lt;&#x2F;span&gt;&lt;span&gt;        socket
+&lt;&#x2F;span&gt;&lt;span&gt;      ) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Make sure that the image data is still valid
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;MyApp&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;ImageValidator&lt;&#x2F;span&gt;&lt;span&gt;.validate_image(
+&lt;&#x2F;span&gt;&lt;span&gt;           profile_image,
+&lt;&#x2F;span&gt;&lt;span&gt;           &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;2 &lt;&#x2F;span&gt;&lt;span&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1024 &lt;&#x2F;span&gt;&lt;span&gt;* &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1024&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;           &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;~w&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;jpg jpeg gif png webp&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;         ) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;     
+&lt;&#x2F;span&gt;&lt;span&gt;      {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:ok&lt;&#x2F;span&gt;&lt;span&gt;, data_url} -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        handle_update_profile_image(data_url, socket)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:error&lt;&#x2F;span&gt;&lt;span&gt;, message} -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;, socket |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;allow_image_upload: false&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;image_error:&lt;&#x2F;span&gt;&lt;span&gt; message)}
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_update_profile_image&lt;&#x2F;span&gt;&lt;span&gt;(profile_image, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    [meta_data, base64] = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.split(profile_image, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;,&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    file_name = generate_file_name()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    image_binary = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Base&lt;&#x2F;span&gt;&lt;span&gt;.decode64!(base64)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    destination =
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Path&lt;&#x2F;span&gt;&lt;span&gt;.join([&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:code&lt;&#x2F;span&gt;&lt;span&gt;.priv_dir(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:my_app&lt;&#x2F;span&gt;&lt;span&gt;), &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;static&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;uploads&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Path&lt;&#x2F;span&gt;&lt;span&gt;.basename(file_name)])
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;File&lt;&#x2F;span&gt;&lt;span&gt;.write!(destination, image_binary)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    src_path = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;~p&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;uploads&#x2F;#{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Path&lt;&#x2F;span&gt;&lt;span&gt;.basename(destination)}&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    prev_file_name = socket.assigns.current_user.profile_image
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Accounts&lt;&#x2F;span&gt;&lt;span&gt;.update_profile_image(socket.assigns.current_user, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;profile_image:&lt;&#x2F;span&gt;&lt;span&gt; src_path}) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:ok&lt;&#x2F;span&gt;&lt;span&gt;, _} -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;        # If update was ok, then remove previous image
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;case &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;String&lt;&#x2F;span&gt;&lt;span&gt;.length(prev_file_name) &amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0 &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true &lt;&#x2F;span&gt;&lt;span&gt;-&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            previous_file_path =
+&lt;&#x2F;span&gt;&lt;span&gt;              &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Path&lt;&#x2F;span&gt;&lt;span&gt;.join([
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:code&lt;&#x2F;span&gt;&lt;span&gt;.priv_dir(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:my_app&lt;&#x2F;span&gt;&lt;span&gt;),
+&lt;&#x2F;span&gt;&lt;span&gt;                &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;static&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;                &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;uploads&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;,
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Path&lt;&#x2F;span&gt;&lt;span&gt;.basename(prev_file_name)
+&lt;&#x2F;span&gt;&lt;span&gt;              ])
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;File&lt;&#x2F;span&gt;&lt;span&gt;.rm!(previous_file_path)
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;        # Send back the updated image path and reset upload assignments
+&lt;&#x2F;span&gt;&lt;span&gt;        {
+&lt;&#x2F;span&gt;&lt;span&gt;          &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;,
+&lt;&#x2F;span&gt;&lt;span&gt;          socket
+&lt;&#x2F;span&gt;&lt;span&gt;          |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:profile_image&lt;&#x2F;span&gt;&lt;span&gt;, src_path)
+&lt;&#x2F;span&gt;&lt;span&gt;          |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:resized_image_src&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;          |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:allow_image_upload&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;false&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;        }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:error&lt;&#x2F;span&gt;&lt;span&gt;, _} -&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;, socket |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;image_error: &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Could not update new image to user.&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)}
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;generate_file_name &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Get the current timestamp in milliseconds
+&lt;&#x2F;span&gt;&lt;span&gt;    timestamp = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;DateTime&lt;&#x2F;span&gt;&lt;span&gt;.utc_now() |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;DateTime&lt;&#x2F;span&gt;&lt;span&gt;.to_unix(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:millisecond&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Generate a random string of 8 characters
+&lt;&#x2F;span&gt;&lt;span&gt;    random_string = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:crypto&lt;&#x2F;span&gt;&lt;span&gt;.strong_rand_bytes(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;8&lt;&#x2F;span&gt;&lt;span&gt;) |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Base&lt;&#x2F;span&gt;&lt;span&gt;.encode64(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;padding: false&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Concatenate the timestamp and the random string with a dash
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;#{&lt;&#x2F;span&gt;&lt;span&gt;timestamp}&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;-#{&lt;&#x2F;span&gt;&lt;span&gt;random_string}&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The new function will create a file in the directory at &lt;code&gt;.&#x2F;priv&#x2F;static&#x2F;uploads&lt;&#x2F;code&gt;. Create the directory if it does not exist. Then define it as one of the allowed static directories with the function &lt;code&gt;static_paths&lt;&#x2F;code&gt; in &lt;code&gt;.&#x2F;lib&#x2F;my_app_web.ex&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;static_paths&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;~w&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;assets fonts images uploads favicon.ico robots.txt&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We will be making use of a JavaScript LiveView Hook here as well. It will be mounted on a file-input and resize any incoming images and set the resulting data URL (including base64 bytestring) to the hidden input-field. When that is done, it will trigger a change-event on the form which in turn will trigger the validate-change hook in Phoenix. &lt;&#x2F;p&gt;
+&lt;p&gt;Lets first create a JavaScript module that can resize an image. Create the file &lt;code&gt;.&#x2F;assets&#x2F;js&#x2F;image_resizer.js&lt;&#x2F;code&gt; with the following content:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;js&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-js &quot;&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;export function &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;resizeImage&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxWidth&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxHeight&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;scale &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;width &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;naturalWidth
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;height &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;naturalHeight
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;width &lt;&#x2F;span&gt;&lt;span&gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxWidth&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;scale &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;.width &#x2F; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxWidth
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;width &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxWidth
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;height &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;.height &#x2F; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;scale
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;height &lt;&#x2F;span&gt;&lt;span&gt;&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxHeight&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;scale &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;.height &#x2F; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxHeight
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;height &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxHeight
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;width &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;.width &#x2F; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;scale
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;width &lt;&#x2F;span&gt;&lt;span&gt;= Math.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;floor&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;width&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;height &lt;&#x2F;span&gt;&lt;span&gt;= Math.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;floor&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;height&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;const &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;canvas &lt;&#x2F;span&gt;&lt;span&gt;= document.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;createElement&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;canvas&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;canvas&lt;&#x2F;span&gt;&lt;span&gt;.width = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;width
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;canvas&lt;&#x2F;span&gt;&lt;span&gt;.height = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;height
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;const &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;context2D &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;canvas&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;getContext&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;2d&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;context2D&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;drawImage&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;width&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;height&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;canvas&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;toDataURL&lt;&#x2F;span&gt;&lt;span&gt;();
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The let’s create the Resize hook and use this function in &lt;code&gt;.&#x2F;assets&#x2F;js&#x2F;app.js&lt;&#x2F;code&gt;: &lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;js&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-js &quot;&gt;&lt;code class=&quot;language-js&quot; data-lang=&quot;js&quot;&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; …
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; add import for the resizeImage function
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;import &lt;&#x2F;span&gt;&lt;span&gt;{ &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;resizeImage &lt;&#x2F;span&gt;&lt;span&gt;} &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;from &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;.&#x2F;image_resizer&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Then create our hook
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Hooks &lt;&#x2F;span&gt;&lt;span&gt;= {}
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Hooks&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Resize &lt;&#x2F;span&gt;&lt;span&gt;= {
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;mounted&lt;&#x2F;span&gt;&lt;span&gt;() {
+&lt;&#x2F;span&gt;&lt;span&gt;        
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;const &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxWidth &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;250
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;const &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxHeight &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;250
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;imageInput &lt;&#x2F;span&gt;&lt;span&gt;= document.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;getElementById&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;profile-image-uploader&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; Inspired by blog-post https:&#x2F;&#x2F;imagekit.io&#x2F;blog&#x2F;how-to-resize-image-in-javascript&#x2F;
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;imageInput&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;addEventListener&lt;&#x2F;span&gt;&lt;span&gt;(&amp;#39;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;change&lt;&#x2F;span&gt;&lt;span&gt;&amp;#39;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;function &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;e&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;e&lt;&#x2F;span&gt;&lt;span&gt;.target.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;files&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;imageFile &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;e&lt;&#x2F;span&gt;&lt;span&gt;.target.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;files&lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;];
+&lt;&#x2F;span&gt;&lt;span&gt;    
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;var &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;reader &lt;&#x2F;span&gt;&lt;span&gt;= new FileReader();
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;reader&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;onload &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;function &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;e&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;                    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;const &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image &lt;&#x2F;span&gt;&lt;span&gt;= new Image()
+&lt;&#x2F;span&gt;&lt;span&gt;                    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;onload &lt;&#x2F;span&gt;&lt;span&gt;= () &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;=&amp;gt; &lt;&#x2F;span&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;                        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;const &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dataUrl &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;resizeImage&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxWidth&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;maxHeight&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dataUrl&lt;&#x2F;span&gt;&lt;span&gt;.length === &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;0&lt;&#x2F;span&gt;&lt;span&gt;) {
+&lt;&#x2F;span&gt;&lt;span&gt;                            &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;return&lt;&#x2F;span&gt;&lt;span&gt;;
+&lt;&#x2F;span&gt;&lt;span&gt;                        }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;resizedImage &lt;&#x2F;span&gt;&lt;span&gt;= document.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;getElementById&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;image-preview&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;) ?? new Image()
+&lt;&#x2F;span&gt;&lt;span&gt;                        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;resizedImage&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;setAttribute&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;id&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;image-preview&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;                        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;resizedImage&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;setAttribute&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;alt&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Preview&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;                        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;resizedImage&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;src &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dataUrl
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                        document.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;getElementById&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;image-preview-container&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;).&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;appendChild&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;resizedImage&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;hiddenInput &lt;&#x2F;span&gt;&lt;span&gt;= document.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;getElementById&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;profile-image-src-input&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;)
+&lt;&#x2F;span&gt;&lt;span&gt;                        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;hiddenInput&lt;&#x2F;span&gt;&lt;span&gt;.value = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;dataUrl
+&lt;&#x2F;span&gt;&lt;span&gt;                        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;hiddenInput&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#96b5b4;&quot;&gt;dispatchEvent&lt;&#x2F;span&gt;&lt;span&gt;(
+&lt;&#x2F;span&gt;&lt;span&gt;                            new Event(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;input&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, {bubbles: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;true&lt;&#x2F;span&gt;&lt;span&gt;})
+&lt;&#x2F;span&gt;&lt;span&gt;                        )
+&lt;&#x2F;span&gt;&lt;span&gt;                    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;src &lt;&#x2F;span&gt;&lt;span&gt;= &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;e&lt;&#x2F;span&gt;&lt;span&gt;.target.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;result
+&lt;&#x2F;span&gt;&lt;span&gt;                }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;reader&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;readAsDataURL&lt;&#x2F;span&gt;&lt;span&gt;(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;imageFile&lt;&#x2F;span&gt;&lt;span&gt;);
+&lt;&#x2F;span&gt;&lt;span&gt;            }
+&lt;&#x2F;span&gt;&lt;span&gt;        })
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; and let’s make it available to our LiveView socket:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;let &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;liveSocket &lt;&#x2F;span&gt;&lt;span&gt;= new LiveSocket(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;live&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Socket&lt;&#x2F;span&gt;&lt;span&gt;, {params: {_csrf_token: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;csrfToken&lt;&#x2F;span&gt;&lt;span&gt;}, hooks: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Hooks&lt;&#x2F;span&gt;&lt;span&gt;})
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;&#x2F;&#x2F; …
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We see how we can set a preview image from the &lt;code&gt;dataUrl&lt;&#x2F;code&gt; produced by the &lt;code&gt;resizeImage&lt;&#x2F;code&gt; function and append it into a container in the DOM. We are also setting it as a value on the hidden input element. This alone won’t trigger the form to emit a &lt;code&gt;change&lt;&#x2F;code&gt; event, so we explicitly do that with a &lt;code&gt;dispatchEvent&lt;&#x2F;code&gt; on the element. That in turn will trigger the &lt;code&gt;phx-change&lt;&#x2F;code&gt; instruction which will emit the &lt;code&gt;validate_profile_image&lt;&#x2F;code&gt; event, and if all is valid then a “Submit image” button will appear. &lt;&#x2F;p&gt;
+&lt;h2 id=&quot;in-summary&quot;&gt;In summary&lt;&#x2F;h2&gt;
+&lt;p&gt;Phoenix LiveView is all about reacting to events. We can attach hooks and event handlers on most elements we choose. In this scenario we upload a file indirectly via a LiveView form, which has hooks and events that takes care of resizing and validating uploads whenever a new file has been chosen.&lt;&#x2F;p&gt;
+&lt;p&gt;We take care of resizing on the client-side. We emit a change-event on the form to initialize a server-side validation on the resized image data. If everything appears OK, the upload is greenlit on the client and the user may submit the image. Upon submitting a new event is taking place and we will again reaffirm that the image data is valid before we create a file, store the updated image path to the user and then remove the old image.&lt;&#x2F;p&gt;
+&lt;p&gt;Here’s our updated User Settings page:
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+&lt;div class=&quot;image-container center&quot;&gt;
+    &lt;img
+            alt=&quot;The current profile image is shown. It is a quokka in a lab coat hunched over a table with papers on it. The incoming file for uploading is below it. It shows a quokka in a labcoat holding a handful of macarons. All around it is raining macarons.&quot;
+            src=&quot;submit-image.png&quot;
+            srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;submit-image.05625f4824ce936f.webp 240w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;submit-image.827481acc741db6c.webp 400w,
+                        https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;submit-image.0b163a11618b1ee5.webp 600w&quot;
+            sizes=&quot;(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px&quot;
+    &#x2F;&gt;
+    &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;&#x2F;p&gt;
+</content>
+    </entry>
+    <entry xml:lang="en">
+        <title>Laugh Out Loud with LiveView</title>
+        <published>2023-05-23T00:00:00+00:00</published>
+        <updated>2024-03-28T00:00:00+00:00</updated>
+        <author>
+          <name>Anders Björkland</name>
+        </author>
+        <link rel="alternate" href="https://abjork.land/articles/elixir/liveview-and-broadcast/" type="text/html"/>
+        <id>https://abjork.land/articles/elixir/liveview-and-broadcast/</id>
+        <content type="html">&lt;div class=&quot;article-header&quot;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+&lt;img
+        alt=&quot;133&quot;
+        src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero-slim.d5028e6999dc9a93.png&quot;
+        srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero-slim.0ab0f6b973ee2f65.png 240w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero-slim.d5028e6999dc9a93.png 400w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero-slim.b800d87aa8abdc4a.png 600w&quot;
+        sizes=&quot;(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px&quot;
+&#x2F;&gt;
+
+
+    &lt;div class=&quot;text-content&quot;&gt;
+        &lt;h1 class=&quot;article-title&quot;&gt;
+            &lt;div class=&quot;title&quot;&gt;Laugh Out Loud with LiveView&lt;&#x2F;div&gt;
+            
+        &lt;&#x2F;h1&gt;
+    &lt;&#x2F;div&gt;
+    
+
+ 
+
+ 
+
+&lt;div class=&quot;tag-list absolute&quot;&gt;
+    
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;elixir&#x2F;&quot; class=&quot;hover-bold&quot;&gt;elixir&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;phoenix&#x2F;&quot; class=&quot;hover-bold&quot;&gt;phoenix&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;liveview&#x2F;&quot; class=&quot;hover-bold&quot;&gt;liveview&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;pubsub&#x2F;&quot; class=&quot;hover-bold&quot;&gt;PubSub&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+    
+&lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;p&gt;Are you ready to take your website to the next level? Phoenix LiveView is here to help! In this article, we’ll show you how to create a website that’s not only interactive but also hilarious. Visitors will be able to make their mark by showing their taste in humor, and see how their taste align with others´. It’s the perfect way to engage your audience and keep them coming back for more. All powered by LiveView for instant updates, and the Publish-Subscribe pattern to broadcast updates to all the other visitors.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;where-we-begin&quot;&gt;Where we begin&lt;&#x2F;h2&gt;
+&lt;p&gt;In an earlier article we saw how to create a simple API with Phoenix. It was our &lt;a href=&quot;&#x2F;articles&#x2F;exploration&#x2F;discovering-phoenix&#x2F;&quot;&gt;Jokes API&lt;&#x2F;a&gt;. In today&#x27;s article we will switch it up. We will build upon same schema of jokes, but we will introduce LiveView and PubSub. You can go back to the article if you want to see how to easily set up a project and build schemas with some excellent &lt;code&gt;mix&lt;&#x2F;code&gt; build-tools.&lt;&#x2F;p&gt;
+&lt;p&gt;While we are on the same page, and so we don&#x27;t get hard to understand errors when following this tutorial, check which versions of these you are using. In this article we will be using following major tech:&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;Elixir 1.14&lt;&#x2F;code&gt;&lt;br &#x2F;&gt;
+&lt;code&gt;Docker Compose 2.17&lt;&#x2F;code&gt;
+&lt;code&gt;Phoenix 1.7&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;create-the-jokers-project&quot;&gt;Create the &#x27;Jokers&#x27; project&lt;&#x2F;h3&gt;
+&lt;p&gt;It starts with a command: &lt;code&gt;mix phx.new Jokers&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+&lt;p&gt;Then we will add a PostgreSQL Docker container to manage our database.
+&lt;code&gt;.&#x2F;docker-compose.yaml&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;yaml&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-yaml &quot;&gt;&lt;code class=&quot;language-yaml&quot; data-lang=&quot;yaml&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;version&lt;&#x2F;span&gt;&lt;span&gt;: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;3.4&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;services&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;db&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;image&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;postgres
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;environment&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;POSTGRES_USER&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;postgres
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;POSTGRES_PASSWORD&lt;&#x2F;span&gt;&lt;span&gt;: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;postgres
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;ports&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;      - &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;5432:5432&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;      - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;pgdb:&#x2F;var&#x2F;lib&#x2F;postgresql&#x2F;data
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;volumes&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;pgdb&lt;&#x2F;span&gt;&lt;span&gt;:
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Get the database up and the Phoenix server:
+&lt;code&gt;docker-compose up -d&lt;&#x2F;code&gt;&lt;br &#x2F;&gt;
+&lt;code&gt;mix ecto.create&lt;&#x2F;code&gt; 
+&lt;code&gt;mix phx.server&lt;&#x2F;code&gt; &lt;&#x2F;p&gt;
+&lt;p&gt;When we go to &lt;code&gt;localhost:4000&lt;&#x2F;code&gt; we will see the default Phoenix landing-page. We will switch most of this out for a simple jokes list with like&#x2F;dislike buttons later on.
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;img
+                alt=&quot;The landing page with default Phoenix Framework splash screen&quot;
+                src=&quot;start-screen.png&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;start-screen.a775324fdbb76412.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;start-screen.0b0a92bbcf19c7db.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;start-screen.a60b49ef0aae4274.webp 600w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px&quot;
+        &#x2F;&gt;
+        &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;and-add-jokes-schema&quot;&gt;And add Jokes schema&lt;&#x2F;h3&gt;
+&lt;p&gt;You will recognize the schema from an earlier article on Phoenix. We create it by running the following commands in a terminal:&lt;br &#x2F;&gt;
+&lt;code&gt;mix phx.gen.json Jokes Joke jokes text:text likes:integer dislikes:integer&lt;&#x2F;code&gt;&lt;br &#x2F;&gt;
+&lt;code&gt;mix ecto.migrate&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;and-add-api-routes&quot;&gt;And add API-routes&lt;&#x2F;h3&gt;
+&lt;p&gt;We will use the API to add new Jokes for our application. This is also a repetition of earlier article, but as it is with repetition: it makes the love grow fonder. (Or is that distance?)&lt;&#x2F;p&gt;
+&lt;p&gt;We will add the API-routes by adding the following to the module in &lt;code&gt;.&#x2F;lib&#x2F;lean_jokers_web&#x2F;router.ex&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;ex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-ex &quot;&gt;&lt;code class=&quot;language-ex&quot; data-lang=&quot;ex&quot;&gt;&lt;span&gt;  scope &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;api&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokersWeb &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    pipe_through &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:api
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    resources &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;jokes&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;JokeController&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;except: &lt;&#x2F;span&gt;&lt;span&gt;[&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:new&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:edit&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:delete&lt;&#x2F;span&gt;&lt;span&gt;]
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And we will update the Joke-schema to default &lt;code&gt;likes&lt;&#x2F;code&gt; and &lt;code&gt;dislikes&lt;&#x2F;code&gt; to &lt;code&gt;0&lt;&#x2F;code&gt;:
+In &lt;code&gt;.&#x2F;lib&#x2F;lean_jokers&#x2F;jokes&#x2F;joke.ex&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;ex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-ex &quot;&gt;&lt;code class=&quot;language-ex&quot; data-lang=&quot;ex&quot;&gt;&lt;span&gt;  schema &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;jokes&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    field &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:dislikes&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:integer&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;default: 0
+&lt;&#x2F;span&gt;&lt;span&gt;    field &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:likes&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:integer&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;default: 0
+&lt;&#x2F;span&gt;&lt;span&gt;    field &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:text&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:string
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    timestamps()
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We are now ready to add a couple of classic bad-jokes (or absolutely-brilliant-jokes): &lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Why did the coffee file a police report? It got mugged.&lt;&#x2F;li&gt;
+&lt;li&gt;Why don’t skeletons fight each other? They don’t have the guts.&lt;&#x2F;li&gt;
+&lt;li&gt;There are 10 types of people in the world: those who understand binary, and those who don’t.&lt;&#x2F;li&gt;
+&lt;li&gt;What do you call cheese that isn’t yours? Nacho cheese.&lt;&#x2F;li&gt;
+&lt;li&gt;Why don’t scientists trust atoms? Because they make up everything. &lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;Make a POST-request for each joke to the endpoint &lt;code&gt;http:&#x2F;&#x2F;localhost:4000&#x2F;api&#x2F;jokes&lt;&#x2F;code&gt; with the following JSON payload:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;json&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-json &quot;&gt;&lt;code class=&quot;language-json&quot; data-lang=&quot;json&quot;&gt;&lt;span&gt;{
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;joke&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;: {
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;text&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;: &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;Why did the coffee file a police report? It got mugged.&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;coming-alive&quot;&gt;Coming alive!&lt;&#x2F;h2&gt;
+&lt;p&gt;Our next task is to show these jokes on our homepage. The recommended way to build with LiveView is to let all LiveView logic live in its own namespace under the web-paradigm. So lets add a &lt;code&gt;live&lt;&#x2F;code&gt; folder at &lt;code&gt;.&#x2F;lib&#x2F;lean_jokers_web&#x2F;&lt;&#x2F;code&gt; and create two new files in it: &lt;code&gt;home.ex&lt;&#x2F;code&gt; and &lt;code&gt;home.html.heex&lt;&#x2F;code&gt;. &lt;&#x2F;p&gt;
+&lt;p&gt;The first file, &lt;code&gt;home.ex&lt;&#x2F;code&gt;, will contain our logic, while &lt;code&gt;home.html.heex&lt;&#x2F;code&gt; will contain our view. Let&#x27;s just see if we can get it all to run.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;.&#x2F;lib&#x2F;lean_jokers_web&#x2F;home.ex&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;ex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-ex &quot;&gt;&lt;code class=&quot;language-ex&quot; data-lang=&quot;ex&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokersWeb&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Live&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Home &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokersWeb&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:live_view
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;mount&lt;&#x2F;span&gt;&lt;span&gt;(_params, _session, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:ok&lt;&#x2F;span&gt;&lt;span&gt;, socket}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;code&gt;.&#x2F;lib&#x2F;lean_jokers_web&#x2F;home.html.heex&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;heex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-heex &quot;&gt;&lt;code class=&quot;language-heex&quot; data-lang=&quot;heex&quot;&gt;&lt;span&gt;&amp;lt;h1&amp;gt;Hello World&amp;lt;&#x2F;h1&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;code&gt;.&#x2F;lib&#x2F;lean_jokers_web&#x2F;router.ex&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;ex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-ex &quot;&gt;&lt;code class=&quot;language-ex&quot; data-lang=&quot;ex&quot;&gt;&lt;span&gt;  scope &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokersWeb &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    pipe_through &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:browser
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    live &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;&#x2F;&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Live&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Home
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;When we now go to &lt;code&gt;localhost:4000&lt;&#x2F;code&gt; we should see a simple &lt;code&gt;Hello World&lt;&#x2F;code&gt;. If you do, we are ready to display some jokes. Head back to the &lt;code&gt;home.ex&lt;&#x2F;code&gt; file, and let&#x27;s use an Ecto repository to get our jokes, and assign them to the socket.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;.&#x2F;lib&#x2F;lean_jokers_web&#x2F;home.ex&lt;&#x2F;code&gt;: &lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;ex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-ex &quot;&gt;&lt;code class=&quot;language-ex&quot; data-lang=&quot;ex&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokersWeb&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Live&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Home &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;use &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokersWeb&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:live_view
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;mount&lt;&#x2F;span&gt;&lt;span&gt;(_params, _session, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    jokes = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Repo&lt;&#x2F;span&gt;&lt;span&gt;.all()
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    socket = socket
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:jokes&lt;&#x2F;span&gt;&lt;span&gt;, jokes)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:ok&lt;&#x2F;span&gt;&lt;span&gt;, socket}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Our next task is to access the jokes from the socket in our view.
+&lt;code&gt;.&#x2F;lib&#x2F;lean_jokers_web&#x2F;home.html.heex&lt;&#x2F;code&gt;: &lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;heex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-heex &quot;&gt;&lt;code class=&quot;language-heex&quot; data-lang=&quot;heex&quot;&gt;&lt;span&gt;&amp;lt;div class=&amp;quot;flex flex-col gap-4&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;%= for joke &amp;lt;- @jokes do %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;lt;p&amp;gt;&amp;lt;%= joke.text %&amp;gt;&amp;lt;&#x2F;p&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;lt;div class=&amp;quot;flex gap-2&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;div&amp;gt;Likes: &amp;lt;%= joke.likes %&amp;gt;&amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;div&amp;gt;Disikes: &amp;lt;%= joke.dislikes %&amp;gt;&amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;% end %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Phoenix comes packed with TailwindCSS, so we are using some of its utility classes to list our jokes with gap in between them by the power of flex and flex-gap. We are then looping through the &lt;code&gt;jokes&lt;&#x2F;code&gt; variable that we fetch from &lt;code&gt;socket.assigns.jokes&lt;&#x2F;code&gt;. We are using its shorthand &lt;code&gt;@jokes&lt;&#x2F;code&gt; to get it. After saving the file we will have all the jokes displayed on our website, along with their likes and dislikes.&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;add-interactivity&quot;&gt;Add interactivity&lt;&#x2F;h3&gt;
+&lt;p&gt;Our Lean Jokes website is not very exciting at the moment, but it soon will be. We will be adding &lt;em&gt;buttons&lt;&#x2F;em&gt; to like or dislike a joke. By doing this we will update a joke and see it change in real-time! The difference between this and a simple incremented counter may not look like much, but all the changes occur on the server with updates to the database. Only the necessary data is exchanged between our frontend and backend. We will take a look at what happens in the network, but first we add the buttons to our view.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;.&#x2F;lib&#x2F;lean_jokers_web&#x2F;home.html.heex&lt;&#x2F;code&gt;: &lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;heex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-heex &quot;&gt;&lt;code class=&quot;language-heex&quot; data-lang=&quot;heex&quot;&gt;&lt;span&gt;&amp;lt;div class=&amp;quot;flex flex-col gap-4&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;%= for joke &amp;lt;- @jokes do %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;lt;p&amp;gt;&amp;lt;%= joke.text %&amp;gt;&amp;lt;&#x2F;p&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;lt;div class=&amp;quot;flex gap-2&amp;quot;&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                &amp;lt;button phx-click=&amp;quot;like_joke&amp;quot; phx-value-joke_id={joke.id}&amp;gt;Like&amp;lt;&#x2F;button&amp;gt; &amp;lt;%= joke.likes %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;                &amp;lt;button phx-click=&amp;quot;dislike_joke&amp;quot; phx-value-joke_id={joke.id}&amp;gt;Dislike&amp;lt;&#x2F;button&amp;gt; &amp;lt;%= joke.dislikes %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;            &amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;        &amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;% end %&amp;gt;
+&lt;&#x2F;span&gt;&lt;span&gt;&amp;lt;&#x2F;div&amp;gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Next up, we will want to add event-handlers for these buttons. We should handle &lt;code&gt;like_joke&lt;&#x2F;code&gt; and &lt;code&gt;dislike_joke&lt;&#x2F;code&gt;. The passed &lt;code&gt;joke.id&lt;&#x2F;code&gt; will be used to update the correct &lt;code&gt;joke&lt;&#x2F;code&gt;. With the power of pattern-matching, we will get the variable &lt;code&gt;joke_id&lt;&#x2F;code&gt; from the parameters that are passed along with the event. This will help us with two things. First, it will help us update the correct joke in the database. Second, it will help us insert the updated joke in the jokes-list and pass it back in the socket. &lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;.&#x2F;lib&#x2F;lean_jokers_web&#x2F;home.ex&lt;&#x2F;code&gt;: &lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;ex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-ex &quot;&gt;&lt;code class=&quot;language-ex&quot; data-lang=&quot;ex&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;like_joke&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, %{&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;joke_id&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; =&amp;gt; joke_id} = _params, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Elixir cares about types, but the joke_id is a string here as it was a templated variable
+&lt;&#x2F;span&gt;&lt;span&gt;    {joke_id, _} = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Integer&lt;&#x2F;span&gt;&lt;span&gt;.parse(joke_id)
+&lt;&#x2F;span&gt;&lt;span&gt;    
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Filter out the joke with the help of the id
+&lt;&#x2F;span&gt;&lt;span&gt;    socket_jokes = socket.assigns.jokes
+&lt;&#x2F;span&gt;&lt;span&gt;    [socket_joke | _rest ] = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.filter(socket_jokes, &amp;amp;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;.id == joke_id))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Increment the value and update the joke in the database
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:ok&lt;&#x2F;span&gt;&lt;span&gt;, joke} = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.update_joke(socket_joke, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;likes:&lt;&#x2F;span&gt;&lt;span&gt; socket_joke.likes + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span&gt;})
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # Replace the joke with our updated joke in the list 
+&lt;&#x2F;span&gt;&lt;span&gt;    jokes =
+&lt;&#x2F;span&gt;&lt;span&gt;      socket.assigns.jokes
+&lt;&#x2F;span&gt;&lt;span&gt;        |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn
+&lt;&#x2F;span&gt;&lt;span&gt;          %&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;id: &lt;&#x2F;span&gt;&lt;span&gt;^&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;joke_id&lt;&#x2F;span&gt;&lt;span&gt;} -&amp;gt; joke
+&lt;&#x2F;span&gt;&lt;span&gt;          element -&amp;gt; element
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # and add the list to the sockets assigns
+&lt;&#x2F;span&gt;&lt;span&gt;    socket = socket
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:jokes&lt;&#x2F;span&gt;&lt;span&gt;, jokes)
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;, socket}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;dislike_joke&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, %{&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;joke_id&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; =&amp;gt; joke_id} = _params, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    {joke_id, _} = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Integer&lt;&#x2F;span&gt;&lt;span&gt;.parse(joke_id)
+&lt;&#x2F;span&gt;&lt;span&gt;    socket_jokes = socket.assigns.jokes
+&lt;&#x2F;span&gt;&lt;span&gt;    [socket_joke | _rest ] = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.filter(socket_jokes, &amp;amp;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;.id == joke_id))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:ok&lt;&#x2F;span&gt;&lt;span&gt;, joke} = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.update_joke(socket_joke, %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;dislikes:&lt;&#x2F;span&gt;&lt;span&gt; socket_joke.dislikes + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1 &lt;&#x2F;span&gt;&lt;span&gt;})
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    jokes =
+&lt;&#x2F;span&gt;&lt;span&gt;      socket.assigns.jokes
+&lt;&#x2F;span&gt;&lt;span&gt;        |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn
+&lt;&#x2F;span&gt;&lt;span&gt;          %&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;id: &lt;&#x2F;span&gt;&lt;span&gt;^&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;joke_id&lt;&#x2F;span&gt;&lt;span&gt;} -&amp;gt; joke
+&lt;&#x2F;span&gt;&lt;span&gt;          element -&amp;gt; element
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    socket = socket
+&lt;&#x2F;span&gt;&lt;span&gt;      |&amp;gt; assign(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:jokes&lt;&#x2F;span&gt;&lt;span&gt;, jokes)
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;, socket}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Back in the browser we will see that we can now update each joke and see likes and dislikes being updated in real time. &lt;&#x2F;p&gt;
+
+
+
+&lt;video width=&quot;600&quot; height=&quot;337&quot; muted controls&gt;
+    &lt;source src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;articles&amp;#x2F;elixir&amp;#x2F;liveview-and-broadcast&amp;#x2F;liveview_1.webm&quot; type=&quot;video&amp;#x2F;webm&quot;&gt;
+    
+    Your browser does not support this video
+&lt;&#x2F;video&gt;
+&lt;p&gt;Let&#x27;s tighten this up so that a visitor can toggle their like or dislike, so no-more will they be able to like it 10 times over. We will also set so if a joke has been liked by the visitor, were they to change their mind to dislike, the like will be removed and a dislike added.&lt;&#x2F;p&gt;
+&lt;p&gt;We will start by adding fields to the joker-struct to keep track of visitor&#x27;s like or dislike of a joke. This will not be stored in a database as it will be unique for each visitor. So we will add a &lt;code&gt;virtual&lt;&#x2F;code&gt; field for this. &lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;lib&#x2F;lean_jokers&#x2F;jokes&#x2F;joke.ex&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;ex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-ex &quot;&gt;&lt;code class=&quot;language-ex&quot; data-lang=&quot;ex&quot;&gt;&lt;span&gt;  schema &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;jokes&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # ...
+&lt;&#x2F;span&gt;&lt;span&gt;    field &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:has_liked&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:boolean&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;virtual: true&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;default: false
+&lt;&#x2F;span&gt;&lt;span&gt;    field &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:has_disliked&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:boolean&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;virtual: true&lt;&#x2F;span&gt;&lt;span&gt;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;default: false
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # ...
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;With these fields we can add a toggle-logic for a joke&#x27;s likes and dislikes. &lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;lib&#x2F;lean_jokers_web&#x2F;live&#x2F;home.ex&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;ex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-ex &quot;&gt;&lt;code class=&quot;language-ex&quot; data-lang=&quot;ex&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;like_joke&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, %{&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;joke_id&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; =&amp;gt; joke_id} = _params, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    {joke_id, _} = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Integer&lt;&#x2F;span&gt;&lt;span&gt;.parse(joke_id)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    socket_jokes = socket.assigns.jokes
+&lt;&#x2F;span&gt;&lt;span&gt;    [socket_joke | _rest ] = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.filter(socket_jokes, &amp;amp;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;.id == joke_id))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    toggled_joke = toggle_data(socket_joke, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:like&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:ok&lt;&#x2F;span&gt;&lt;span&gt;, _} =
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke
+&lt;&#x2F;span&gt;&lt;span&gt;        |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Repo&lt;&#x2F;span&gt;&lt;span&gt;.get(joke_id)
+&lt;&#x2F;span&gt;&lt;span&gt;        |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.update_joke(%{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;likes:&lt;&#x2F;span&gt;&lt;span&gt; toggled_joke.likes, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;dislikes:&lt;&#x2F;span&gt;&lt;span&gt; toggled_joke.dislikes})
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    jokes =
+&lt;&#x2F;span&gt;&lt;span&gt;      socket.assigns.jokes
+&lt;&#x2F;span&gt;&lt;span&gt;        |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn
+&lt;&#x2F;span&gt;&lt;span&gt;          %&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;id: &lt;&#x2F;span&gt;&lt;span&gt;^&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;joke_id&lt;&#x2F;span&gt;&lt;span&gt;} -&amp;gt; toggled_joke
+&lt;&#x2F;span&gt;&lt;span&gt;          element -&amp;gt; element
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;, assign(socket, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:jokes&lt;&#x2F;span&gt;&lt;span&gt;, jokes)}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;dislike_joke&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, %{&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;joke_id&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; =&amp;gt; joke_id} = _params, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    {joke_id, _} = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Integer&lt;&#x2F;span&gt;&lt;span&gt;.parse(joke_id)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    socket_jokes = socket.assigns.jokes
+&lt;&#x2F;span&gt;&lt;span&gt;    [socket_joke | _rest ] = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.filter(socket_jokes, &amp;amp;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;.id == joke_id))
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    toggled_joke = toggle_data(socket_joke, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:dislike&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:ok&lt;&#x2F;span&gt;&lt;span&gt;, _} =
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke
+&lt;&#x2F;span&gt;&lt;span&gt;        |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Repo&lt;&#x2F;span&gt;&lt;span&gt;.get(joke_id)
+&lt;&#x2F;span&gt;&lt;span&gt;        |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.update_joke(%{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;likes:&lt;&#x2F;span&gt;&lt;span&gt; toggled_joke.likes, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;dislikes:&lt;&#x2F;span&gt;&lt;span&gt; toggled_joke.dislikes})
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    jokes =
+&lt;&#x2F;span&gt;&lt;span&gt;      socket.assigns.jokes
+&lt;&#x2F;span&gt;&lt;span&gt;        |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn
+&lt;&#x2F;span&gt;&lt;span&gt;          %&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;id: &lt;&#x2F;span&gt;&lt;span&gt;^&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;joke_id&lt;&#x2F;span&gt;&lt;span&gt;} -&amp;gt; toggled_joke
+&lt;&#x2F;span&gt;&lt;span&gt;          element -&amp;gt; element
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;, assign(socket, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:jokes&lt;&#x2F;span&gt;&lt;span&gt;, jokes)}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;toggle_data&lt;&#x2F;span&gt;&lt;span&gt;(%&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke&lt;&#x2F;span&gt;&lt;span&gt;{} = joke, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:like&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    dislikes = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(joke.has_disliked) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      joke.dislikes - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;      joke.dislikes
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    likes = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(joke.has_liked) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      joke.likes - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;      joke.likes + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    joke = %{joke | &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;has_liked: &lt;&#x2F;span&gt;&lt;span&gt;!joke.has_liked, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;likes:&lt;&#x2F;span&gt;&lt;span&gt; likes, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;dislikes:&lt;&#x2F;span&gt;&lt;span&gt; dislikes}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(joke.has_liked) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;        %{joke | &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;has_disliked: false&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;      joke
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;toggle_data&lt;&#x2F;span&gt;&lt;span&gt;(%&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke&lt;&#x2F;span&gt;&lt;span&gt;{} = joke, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:dislike&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    dislikes = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(joke.has_disliked) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      joke.dislikes - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;      joke.dislikes + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    likes = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(joke.has_liked) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      joke.likes - &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;      joke.likes
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    joke = %{joke | &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;has_disliked: &lt;&#x2F;span&gt;&lt;span&gt;!joke.has_disliked, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;likes:&lt;&#x2F;span&gt;&lt;span&gt; likes, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;dislikes:&lt;&#x2F;span&gt;&lt;span&gt; dislikes}
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(joke.has_disliked) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;        %{joke | &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;has_liked: false&lt;&#x2F;span&gt;&lt;span&gt;}
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;      joke
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;What is happening here? Well, we have toggled the data for jokes so that a user only can like or dislike a joke once. They will not be allowed to simultaneously like and dislike a joke. If a joke has been liked, disliking it will undo the like and increment the dislike one step.&lt;&#x2F;p&gt;
+
+
+
+
+
+    
+
+
+
+
+
+
+
+&lt;div class=&quot;image-text-overlay&quot;&gt;
+    &lt;div class=&quot;image-text image-text--up&quot;&gt;&lt;&#x2F;div&gt;
+    &lt;div class=&quot;image-text image-text--down&quot;&gt;I wanted both?!&lt;&#x2F;div&gt;
+    &lt;div class=&quot;image-container &quot;&gt;
+        &lt;img
+                alt=&quot;&quot;
+                src=&quot;articles&amp;#x2F;elixir&amp;#x2F;liveview_and_broadcast&amp;#x2F;flabbergasted.png&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;flabbergasted.6bbf4ef511b720a1.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;flabbergasted.d29dba911151c584.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;flabbergasted.38accbb27d11eb5d.webp 600w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;flabbergasted.53c1aff61a9bb45e.webp 800w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            (max-width: 600px) 550px,
+                            800px&quot;
+        &#x2F;&gt;
+    &lt;&#x2F;div&gt;
+&lt;&#x2F;div&gt;&lt;h2 id=&quot;make-it-broadcast&quot;&gt;Make it broadcast&lt;&#x2F;h2&gt;
+&lt;p&gt;The visitor will get speedy update back from the server via web sockets. Other visitors will see the updated state of each joke when they first visit it. But they won&#x27;t see updates from other users happen while at the page. It&#x27;s time we send updates to all visitors as they occur. The &lt;a href=&quot;https:&#x2F;&#x2F;hexdocs.pm&#x2F;phoenix_pubsub&#x2F;Phoenix.PubSub.html&quot;&gt;PubSub library&lt;&#x2F;a&gt; will help us do that by sending messages via specified topics, and we will use it via &lt;code&gt;LeanJokersWeb.Endpoint.broadcast()&lt;&#x2F;code&gt; and handle the messages via &lt;code&gt;handle_info&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;We will subscribe to a topic which we will name &#x27;jokes&#x27;. When a visitor initiates an event we will broadcast the updated joke to other visitors. We will make sure that the other visitors&#x27; jokes will preserve their each toggled state.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;code&gt;lib&#x2F;lean_jokers_web&#x2F;live&#x2F;home.ex&lt;&#x2F;code&gt;&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;ex&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-ex &quot;&gt;&lt;code class=&quot;language-ex&quot; data-lang=&quot;ex&quot;&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defmodule &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokersWeb&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Live&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Home &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;  # ...
+&lt;&#x2F;span&gt;&lt;span&gt;  @&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;topic &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;jokes&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;mount&lt;&#x2F;span&gt;&lt;span&gt;(_params, _session, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if&lt;&#x2F;span&gt;&lt;span&gt; connected?(socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokersWeb&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Endpoint&lt;&#x2F;span&gt;&lt;span&gt;.subscribe(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;topic&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # ...
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;like_joke&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, %{&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;joke_id&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; =&amp;gt; joke_id} = _params, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    state = %{
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;joke:&lt;&#x2F;span&gt;&lt;span&gt; toggled_joke,
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;sender:&lt;&#x2F;span&gt;&lt;span&gt; self()
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokersWeb&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Endpoint&lt;&#x2F;span&gt;&lt;span&gt;.broadcast(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;topic&lt;&#x2F;span&gt;&lt;span&gt;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;update_joke&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, state)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;, assign(socket, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:jokes&lt;&#x2F;span&gt;&lt;span&gt;, jokes)}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_event&lt;&#x2F;span&gt;&lt;span&gt;(&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;dislike_joke&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, %{&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;joke_id&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot; =&amp;gt; joke_id} = _params, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # ...
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    state = %{
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;joke:&lt;&#x2F;span&gt;&lt;span&gt; toggled_joke,
+&lt;&#x2F;span&gt;&lt;span&gt;      &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;sender:&lt;&#x2F;span&gt;&lt;span&gt; self()
+&lt;&#x2F;span&gt;&lt;span&gt;    }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokersWeb&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Endpoint&lt;&#x2F;span&gt;&lt;span&gt;.broadcast(@&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;topic&lt;&#x2F;span&gt;&lt;span&gt;, &amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;update_joke&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, state)
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;, assign(socket, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:jokes&lt;&#x2F;span&gt;&lt;span&gt;, jokes)}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;toggle_data&lt;&#x2F;span&gt;&lt;span&gt;(%&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke&lt;&#x2F;span&gt;&lt;span&gt;{} = joke, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:like&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # ...
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;defp &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;toggle_data&lt;&#x2F;span&gt;&lt;span&gt;(%&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke&lt;&#x2F;span&gt;&lt;span&gt;{} = joke, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:dislike&lt;&#x2F;span&gt;&lt;span&gt;) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#65737e;&quot;&gt;    # ...
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;handle_info&lt;&#x2F;span&gt;&lt;span&gt;(%{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;topic: &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;jokes&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;event: &lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;update_joke&lt;&#x2F;span&gt;&lt;span&gt;&amp;quot;, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;payload:&lt;&#x2F;span&gt;&lt;span&gt; %{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;joke:&lt;&#x2F;span&gt;&lt;span&gt; joke, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;sender:&lt;&#x2F;span&gt;&lt;span&gt; sender}}, socket) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;    jokes = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;if &lt;&#x2F;span&gt;&lt;span&gt;(sender == self()) &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;do
+&lt;&#x2F;span&gt;&lt;span&gt;      socket.assigns.jokes
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;else
+&lt;&#x2F;span&gt;&lt;span&gt;      [socket_joke | _rest ] = &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.filter(socket.assigns.jokes, &amp;amp;(&amp;amp;&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;.id == joke.id))
+&lt;&#x2F;span&gt;&lt;span&gt;      joke = %{joke | &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;has_liked:&lt;&#x2F;span&gt;&lt;span&gt; socket_joke.has_liked, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;has_disliked:&lt;&#x2F;span&gt;&lt;span&gt; socket_joke.has_disliked }
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      joke_id = joke.id
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;      socket.assigns.jokes
+&lt;&#x2F;span&gt;&lt;span&gt;        |&amp;gt; &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.map(&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;fn
+&lt;&#x2F;span&gt;&lt;span&gt;          %&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;LeanJokers&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Jokes&lt;&#x2F;span&gt;&lt;span&gt;.&lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Joke&lt;&#x2F;span&gt;&lt;span&gt;{&lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;id: &lt;&#x2F;span&gt;&lt;span&gt;^&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;joke_id&lt;&#x2F;span&gt;&lt;span&gt;} -&amp;gt; joke
+&lt;&#x2F;span&gt;&lt;span&gt;          element -&amp;gt; element
+&lt;&#x2F;span&gt;&lt;span&gt;        &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end&lt;&#x2F;span&gt;&lt;span&gt;)
+&lt;&#x2F;span&gt;&lt;span&gt;    &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;    {&lt;&#x2F;span&gt;&lt;span style=&quot;color:#a3be8c;&quot;&gt;:noreply&lt;&#x2F;span&gt;&lt;span&gt;, assign(socket, &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;jokes:&lt;&#x2F;span&gt;&lt;span&gt; jokes)}
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;end
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;As we are broadcasting the updated joke-data, we will see how different visitors will get a live-update:&lt;&#x2F;p&gt;
+
+
+
+&lt;video width=&quot;600&quot; height=&quot;337&quot; muted controls&gt;
+    &lt;source src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;articles&amp;#x2F;elixir&amp;#x2F;liveview-and-broadcast&amp;#x2F;pubsub.webm&quot; type=&quot;video&amp;#x2F;webm&quot;&gt;
+    
+    Your browser does not support this video
+&lt;&#x2F;video&gt;
+&lt;p&gt;And in closing...
+
+
+    
+
+
+&lt;div class=&quot;quote &quot;&gt;
+    &lt;cite&gt;
+        &lt;p&gt;Why did the programmer use pattern matching? &lt;em&gt;To match their socks!&lt;&#x2F;em&gt;&lt;&#x2F;p&gt;
+
+    &lt;&#x2F;cite&gt;
+    
+&lt;&#x2F;div&gt;
+
+
+
+
+
+
+
+    
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    &lt;div class=&quot;image-container center&quot;&gt;
+        &lt;img
+                alt=&quot;A kitten rendered in synthwave style with socks on its hindlegs. Smiling while sitting. The background is dark with stars.&quot;
+                src=&quot;happy_socks.png&quot;
+                srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;happy_socks.deee2baaac419ad5.webp 240w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;happy_socks.b802bf35d93c9475.webp 400w,
+                            https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;happy_socks.7dae254164b74d4e.webp 600w&quot;
+                sizes=&quot;(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px&quot;
+        &#x2F;&gt;
+        &lt;div class=&quot;image-subtext&quot;&gt;&lt;&#x2F;div&gt;
+    &lt;&#x2F;div&gt;
+
+
+&lt;&#x2F;p&gt;
+</content>
+    </entry>
+</feed>

@@ -1,0 +1,718 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/elixir/opensource-models/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/hero.f12eaf92073f347f.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/hero.f12eaf92073f347f.webp">
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Top 6 uses of open source machine learning models (and more)" />
+<meta property="og:description" content="Explore open source ML models like XLM-RoBERTa, ResNet, and Whisper, and their diverse applications in AI." />
+<meta property="og:url" content="https://abjork.land/articles/elixir/opensource-models/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2023-06-23"> 
+
+
+ 
+     
+<meta name="last-updated" content="2024-03-28" />
+    
+
+
+
+        
+    
+
+    <title>
+ Top 6 uses of open source machine learning models (and more)
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/elixir/opensource-models/"
+    },
+    "headline": "Top 6 uses of open source machine learning models (and more)",
+    "description": "Explore open source ML models like XLM-RoBERTa, ResNet, and Whisper, and their diverse applications in AI.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2024-03-28",
+    "datePublished": "2023-06-23"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/elixir/">Elixir</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.d0aca02321b170f8.png"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.fcaaab65718e8ff4.png 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.d0aca02321b170f8.png 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.a21b6c1213765994.png 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Top 6 uses of open source machine learning models</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/axon/" class="hover-bold">axon</a></div>
+        
+        <div><a href="https://abjork.land/tags/ai/" class="hover-bold">AI</a></div>
+        
+        <div><a href="https://abjork.land/tags/onnx/" class="hover-bold">ONNX</a></div>
+        
+        <div><a href="https://abjork.land/tags/bumblebee/" class="hover-bold">BumbleBee</a></div>
+        
+        <div><a href="https://abjork.land/tags/huggingface/" class="hover-bold">HuggingFace</a></div>
+        
+    
+</div>
+
+
+
+</div>
+<p>AI is all the rage right now. While it's not the first time in history that we believe we are on the cusp of a great leap in AI advancement only to have an <a href="https://en.wikipedia.org/wiki/AI_winter">&quot;AI winter&quot;</a> fall upon the field. This time it feels different, and rather than waning investments in the field, we see many diverse organizations (and individuals) running towards ChatGPT and other ML models to enhance their operations. We can see their uses from Search Algorithms to medical diagnoses. <a href="https://www.technologyreview.com/2023/05/12/1072950/open-source-ai-google-openai-eleuther-meta/">While some argue</a> that privately owned and privately licensed models will always have the upper hand on open source models, the <a href="https://www.semianalysis.com/p/google-we-have-no-moat-and-neither">opposite sentiment can also be found</a>. No matter which side of the argument you fall, it can't be denied that open source models can provide great value for whomever chooses to use them.</p>
+<p>In this article we will dive into a few of these models and see what they are capable of. We will give an overview of different areas they can be used in and provide links for those who want to read their respective research paper. We will see models for sentiment analysis, image recognition, voice recognition, named entity recognition, text generation, and text-to-image generation. And as a surprise (<strong>SPOILER ALERT!</strong>), we may recognize that some of these models have multiple areas of applications.</p>
+<h2 id="1-sentiment-analysis">1. Sentiment analysis</h2>
+<p>Natural language processing (NLP) is a field where we can harness the power of computers to make sense of human language. That's where we see models such as <a href="https://huggingface.co/blog/bert-101">BERT</a> or <a href="https://huggingface.co/docs/transformers/model_doc/bart">BART</a> being used for different tasks. When it comes to sentiment analysis, we often see a BERT-type model being used. One example is XLM-RoBERTa, a multilingual model. In this example we can see it being used for classifying a text based on 3 different categories, and the probability that the text expresses a particular sentiment: </p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="Prompt: &quot;If cats ruled the world, nothing would be different. So how do we know that they are not already ruling?&quot;. Negative: 0.686, Neutral: 0.276, Positive: 0.038"
+            src="roberta-sentiment.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;roberta-sentiment.53f4afdc78ce4377.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;roberta-sentiment.d8a6ebc74c9ca96b.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;roberta-sentiment.e1021d0ca13571c7.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+<p>The model in this case is <a href="https://huggingface.co/cardiffnlp/twitter-xlm-roberta-base-sentiment?text=If+cats+ruled+the+world%2C+nothing+would+be+different.+So+how+do+we+know+that+they+are+not+already+ruling%3F">cardiffnlp/twitter-xlm-roberta-base-sentiment</a>. It is further specialization of XLM-RoBERTa by training on 198M tweets. So to no surprise it can make sense of emojis as well. However, it has difficulty detecting sarcasm. There are particular ventures <a href="https://towardsdatascience.com/sarcasm-detection-with-nlp-cbff1723f69a">1</a>, <a href="https://ieeexplore.ieee.org/abstract/document/8284317">2</a> that seeks to rectify that!</p>
+
+
+
+
+
+
+
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="Prompt: &quot;If cats ruled the world, nothing would be different. So how do we know that they are not already ruling?&quot;. Negative: 0.686, Neutral: 0.276, Positive: 0.038"
+                src="cat-ruler-01-m.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-ruler-01-m.eaac88023b3e9f4c.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-ruler-01-m.6ec1c4f9a1bc4a70.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-ruler-01-m.0ffd0360b2339644.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext">User generated image using Bing Image Creator</div>
+    </div>
+
+
+<p>Read the paper introducing XLM-RoBERTa, from November 2019: <a href="https://arxiv.org/abs/1911.02116">Unsupervised Cross-lingual Representation Learning at Scale</a>.</p>
+<h2 id="2-image-classification-with-resnet">2. Image classification with ResNet</h2>
+<p>From Microsoft Research comes this open source Image Recognition model, Residual Network (ResNet). In its basic form, it will try to classify a single dominant object in a picture. Derived models comes with more features, such as detecting multiple objects in a picture.</p>
+<p>In this example, the <a href="https://huggingface.co/facebook/detr-resnet-101">facebook/detr-rednet-101</a> model detects 3 objects, but gives two classifications for the car, either a truck or a car. It also successfully detects the two persons.</p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="ResNet analysis of image with a car in the background, and an elderly woman with a young boy in the foreground."
+            src="detr-resnet-101-01.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;detr-resnet-101-01.214ddd0349ebfa93.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;detr-resnet-101-01.df9afb0935c20081.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;detr-resnet-101-01.ddffdb40f9b567c5.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+<p>The ResNet model was introduced by Microsoft Research in December 2015 with the paper <a href="https://arxiv.org/abs/1512.03385">Deep Residual Learning for Image Recognition</a>. The detection transformer (DETR) variant from Facebook AI was introduced in May 2020 with the paper <a href="https://arxiv.org/abs/2005.12872">End-to-End Object Detection with Transformers</a>.</p>
+<h2 id="3-voice-recognition-with-whisper">3. Voice recognition with Whisper</h2>
+<p>Automatic speech recognition is a task where a model is used to enable a program to process human speech into text. So in essence, it is a speech-to-text model. Whisper is a popular model from OpenAI. It can be used for transcribing recordings and real-time speech recognition tasks.</p>
+<p>In this example I'm posing the model with an important query:
+{{ imager_standard(
+asset='articles/elixir/opensource-models/whisper-01.png', 
+alt='Speech is transcribed to &quot;Just because you can Fourier transform a cat doesn't mean you should, but really you really should.&quot;.', 
+class='center'
+) }}</p>
+<p>Whisper was introduced in December 2022 in the paper <a href="https://arxiv.org/abs/2212.04356">Robust Speech Recognition via Large-Scale Weak Supervision</a>.</p>
+<h2 id="4-named-entity-recognition">4. Named Entity Recognition</h2>
+<p>A useful task in processing language is extracting tokens from text, such as recognizing if a location or a person is mentioned, or perhaps some grammatical features. BERT is often used for this as this model is good at taking the context into account, and if multilingual support is needed, XLM-RoBERTa can be applied. </p>
+<p>In this example we are using a RoBERTa model trained on English to detect persons, location, and organization:</p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="Prompt &quot;Me and my friends Elaine and Karla live on Mêlée Island where we often frequent the Scumm Bar.&quot;, highlighted are the words &quot;Elain&quot; and &quot;Karla&quot; which are marked with &quot;PER&quot;, &quot;Mêlée Island&quot; is marked with &quot;LOC&quot;, and &quot;Scumm Bar&quot; is marked with &quot;ORG&quot;."
+            src="roberta-ner-task-02.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;roberta-ner-task-02.2b484fa896b4e713.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;roberta-ner-task-02.3ff1f4522a0c3cfb.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;roberta-ner-task-02.9dca47b121b5facd.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+<p>Read about the RoBERTa model, introduced in July 2019, from Facebook AI in the paper <a href="https://arxiv.org/abs/1907.11692">RoBERTa: A Robustly Optimized BERT Pretraining Approach</a>.</p>
+<h2 id="5-text-generation">5. Text Generation</h2>
+<p>This is one of the tasks that has lead to some AI-craze of late, especially when a Text Generation model is being used as a chat partner. <strong>ChatGPT</strong> based on GPT versions 3+ and <strong>BARD</strong> based on PaLM, are two examples of this. But neither is currently on an open source license. <strong>HuggingChat</strong> is closer to open-source, but it is based on a LLaMA derivate and so it has a different kind of license attached (not any of the common open-source licenses like Appache 2.0 or MIT). There are more specialized conversational models, like <a href="https://huggingface.co/facebook/blenderbot-400M-distill">facebook/blenderbot</a>.</p>
+<p>But if we want to take a look at a simpler text-generation task, without the conversational part, we can find many available models. <a href="https://huggingface.co/facebook/blenderbot-400M-distill">DistilGPT2</a> is a smaller variant of GPT version 2, an open-source model. Here it is in action, where we can see it generate one word at a time.</p>
+
+
+
+<video width="600" height="337" muted controls>
+    <source src="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;elixir&#x2F;opensource-models&#x2F;distilgpt2.webm" type="video&#x2F;webm">
+    
+    Your browser does not support this video
+</video>
+<p>Read the paper behind GPT from OpenAI: <a href="https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Language Models are Unsupervised Multitask Learners</a>.</p>
+<p>An up-and-coming large language model, <a href="https://huggingface.co/blog/falcon">Falcon</a>, is another open-source model. Compared to the other alternatives here, this one is bigger and more resource-intensive. But work is being done to make it work on lighter commercial machines. </p>
+<h2 id="6-image-generation-with-stable-diffusion">6. Image Generation with Stable Diffusion</h2>
+<p>Stable Diffusion is a text-to-image diffusion model from Stability AI. Released in <a href="https://stability.ai/blog/stable-diffusion-public-release">August 2022</a> it is an open-sourced licensed model that in short &quot;<a href="https://huggingface.co/spaces/CompVis/stable-diffusion-license">strives for both the open and responsible downstream use of the accompanying model</a>&quot;. </p>
+
+
+
+<video width="600" height="337" muted controls>
+    <source src="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;elixir&#x2F;opensource-models&#x2F;diffusers_showcase.webm" type="video&#x2F;webm">
+    
+    Your browser does not support this video
+</video>
+<p>Hugging Face has released a native application for Mac: <a href="https://apps.apple.com/se/app/diffusers/id1666309574?l=en&amp;mt=12">Diffusers</a>. Showcased above, we can choose one of the available versions, write a prompt, and number of steps (the higher the steps, in general, the higher the quality).</p>
+<p>A paid service to use the different versions of Stable Diffusion do also exist. Stability AI offers <a href="https://dreamstudio.ai/">DreamStudio</a>, where we can generate images right in the browser.</p>
+<h2 id="bubbler-text-summarization">Bubbler: Text Summarization</h2>
+<p>There are models that have trained on texts that have been distorted and the models then should be able to recreate the text in its original form. This way of training has led to models like BART being well suited to tasks where they should distil a body of text in to smaller segments in a way where it does not lose too much information. </p>
+<p>An example of this is <a href="https://huggingface.co/facebook/bart-large-cnn">facebook/bart-large-cnn</a>, which is a BART model that has been trained on CNN Daily Mail. When summarizing the very first paragraph of Charles Dickens's &quot;A Tale of Two Cities&quot; we get:</p>
+
+
+    
+
+
+<div class="quote ">
+    <cite>
+        <p>&quot;It was the best of times, it was the worst of times,&quot; he says. &quot;We were all going direct to Heaven, we were all going direct the other way&quot;. &quot;We had everything before us, we had nothing before us,&quot; he adds. &quot;The spring of hope&quot; was the winter of despair.</p>
+
+    </cite>
+    
+</div>
+
+
+
+
+
+
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="A white cat with sunglasses on sitting on top of a stair going towards the sky above a cityscape"
+                src="cat-to-heaven.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-to-heaven.f2196dedeb4f8a90.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-to-heaven.92461352a7ca497a.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;cat-to-heaven.24030264b63c9c62.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext">User generated image using SDXL Beta</div>
+    </div>
+
+
+<h2 id="bubbler-q-a">Bubbler: Q/A</h2>
+<p>Question and Answer is a task well suited for models that take context of words into account. The BERT-family of models are often used here. In general, there are in general three types of Q/A models: extractive, open-generative, and closed-generative. Extractive models can <em>extract</em> the answer from the provided context (be it text, table, or markup). Open-generative models glean the answer from the context and generate free text as an answer. Closed-generative models do not need a provided context. They are trained within a domain and the answer is purely generated by the model.</p>
+<h3 id="extractive-model-example">Extractive model example</h3>
+<p>With the <a href="https://huggingface.co/distilbert-base-cased-distilled-squad?context=Quantum+machine+learning+is+the+integration+of+quantum+algorithms+within+machine+learning+programs.+The+most+common+use+of+the+term+refers+to+machine+learning+algorithms+for+the+analysis+of+classical+data+executed+on+a+quantum+computer%2C+i.e.+quantum-enhanced+machine+learning.+While+machine+learning+algorithms+are+used+to+compute+immense+quantities+of+data%2C+quantum+machine+learning+utilizes+qubits+and+quantum+operations+or+specialized+quantum+systems+to+improve+computational+speed+and+data+storage+done+by+algorithms+in+a+program.&amp;question=What+is+an+advantage+of+using+quantum+machine+learning%3F">DistilBERT</a> model, we can see how it finds the sentence that best can answer the question and extract it from the provided context:</p>
+<blockquote>
+<p><strong>Context</strong>:<br />
+<code>Quantum machine learning is the integration of quantum algorithms within machine learning programs. The most common use of the term refers to machine learning algorithms for the analysis of classical data executed on a quantum computer, i.e. quantum-enhanced machine learning. While machine learning algorithms are used to compute immense quantities of data, quantum machine learning utilizes qubits and quantum operations or specialized quantum systems to improve computational speed and data storage done by algorithms in a program.</code></p>
+<p><strong>Question</strong>:<br />
+What is an advantage of using quantum machine learning?</p>
+<p><strong>Answer</strong>:<br />
+<code>improve computational speed and data storage</code></p>
+</blockquote>
+<p>There are also contexts that can be in table-format. The <a href="https://huggingface.co/google/tapas-base-finetuned-wtq">Google/TAPAS</a> model is used in this example to find the correct answer from a table-cell:</p>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<div class="image-container center">
+    <img
+            alt="Prompt: &quot;How many stars does the transformers repository have?&quot;. 1 match :
+36542"
+            src="tapas-01.png"
+            srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;tapas-01.fe3a2c50da6520a3.webp 240w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;tapas-01.bbf8dfa41752571b.webp 400w,
+                        https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;tapas-01.fa732d767b2fdff2.webp 600w"
+            sizes="(max-width: 240px) 200px,
+                        (max-width: 400px) 360px,
+                        600px"
+    />
+    <div class="image-subtext"></div>
+</div>
+<p>TAPAS is a BERT-like model trained on English Wikipedia articles. It trained in a  self-supervised way where it learned to associate texts with tables, as well as learned numerical reasoning. Read more about the model in its accompanying paper from 2020 by Google Research: <a href="https://arxiv.org/abs/2004.02349">TAPAS: Weakly Supervised Table Parsing via Pre-training</a>.</p>
+<h3 id="open-generative-model-example">Open-generative model example</h3>
+<p>An open-generative model will rely on contexts to freely generate answers. The context is sometimes a database of documents, as is the case for <a href="https://huggingface.co/spaces/deepset/wikipedia-assistant">Wikipedia Assistant</a>. It provides a Long-Form Question Answering that can encode the question to fetch relevant documents (context) and a BART model that can parse the provided context to generate an answer.</p>
+<blockquote>
+<p><strong>Question</strong>:<br />
+What is an advantage of using quantum machine learning?</p>
+<p><strong>Answer</strong><br />
+<code>Quantum machine learning is an area of research that is still very much in its infancy. The most common use of the term refers to machine learning algorithms for the analysis of classical data executed on a quantum computer, i.e. &quot;quantum-enhanced machine learning&quot; (QML). The main advantage of QML is that it can be applied to a large number of data sets at once. For example, if you have a large set of data, and you want to learn how to classify it, you can use QML to do this. However, the problem is that QML can't be used to solve all of the data sets in the same way that a classical machine learning algorithm can. For instance, you might want to use a QML algorithm to solve the problem of how to categorize a large collection of images, but you can't use a classical algorithm to do the same thing with the same number of images. So, you need to use quantum machine learning to solve this problem. Another advantage is that you don't have to worry about the fact that the data set you're trying to classify is quantum.</code></p>
+</blockquote>
+<blockquote>
+<details>
+    <summary><b>Found contexts:</b></summary>
+    <pre data-lang="json" style="background-color:#2b303b;color:#c0c5ce;" class="language-json "><code class="language-json" data-lang="json"><span>[
+</span><span>  {
+</span><span>    "</span><span style="color:#a3be8c;">wikipedia_id</span><span>": "</span><span style="color:#a3be8c;">30303286</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">title</span><span>": "</span><span style="color:#a3be8c;">Decoding Reality</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">text</span><span>": "</span><span style="color:#a3be8c;">Quantum computers offer a search advantage over classical computers by searching many database elements at once as a result of quantum superpositions. A sufficiently advanced quantum computer would break current encryption methods by factorizing large numbers several orders of magnitude faster than any existing classical computer. Any computable problem may be expressed as a general quantum search algorithm although classical computers may have an advantage over quantum search when using more efficient tailored classical algorithms. The issue with quantum computers is that a measurement must be made to determine if the problem is solved which collapses the superposition. Vedral points out that unintentional interaction with the environment can be mitigated with redundancy, and this would be necessary if we were to scale up current quantum computers to achieve greater utility, i.e. to utilize 10 qubits have a 100 atom quantum system so that if one atom decoheres a consensus will still be held by the other 9 for the state of the same qubit.</span><span style="color:#96b5b4;">\n</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">section</span><span>": "</span><span style="color:#a3be8c;">Section::::Contents.:</span><span style="color:#96b5b4;">\"</span><span style="color:#a3be8c;">Surfing the Waves: Hyper-Fast Computers</span><span style="color:#96b5b4;">\"</span><span style="color:#a3be8c;">.</span><span style="color:#96b5b4;">\n</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">start_paragraph_id</span><span>": </span><span style="color:#d08770;">20</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">end_paragraph_id</span><span>": </span><span style="color:#d08770;">20</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">start_character</span><span>": </span><span style="color:#d08770;">0</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">end_character</span><span>": </span><span style="color:#d08770;">1055</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">answer_similarity</span><span>": "</span><span style="color:#a3be8c;">0.82</span><span>"
+</span><span>  },
+</span><span>  {
+</span><span>    "</span><span style="color:#a3be8c;">wikipedia_id</span><span>": "</span><span style="color:#a3be8c;">44108758</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">title</span><span>": "</span><span style="color:#a3be8c;">Quantum machine learning</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">text</span><span>": "</span><span style="color:#a3be8c;">Quantum machine learning is an emerging interdisciplinary research area at the intersection of quantum physics and machine learning. The most common use of the term refers to machine learning algorithms for the analysis of classical data executed on a quantum computer, i.e. </span><span style="color:#96b5b4;">\"</span><span style="color:#a3be8c;">quantum-enhanced machine learning</span><span style="color:#96b5b4;">\"</span><span style="color:#a3be8c;">. While machine learning algorithms are used to compute immense quantities of data, quantum machine learning increases such capabilities intelligently, by creating opportunities to conduct analysis on quantum states and systems. This includes hybrid methods that involve both classical and quantum processing, where computationally difficult subroutines are outsourced to a quantum device. These routines can be more complex in nature and executed faster with the assistance of quantum devices. Furthermore, quantum algorithms can be used to analyze quantum states instead of classical data. Beyond quantum computing, the term </span><span style="color:#96b5b4;">\"</span><span style="color:#a3be8c;">quantum machine learning</span><span style="color:#96b5b4;">\"</span><span style="color:#a3be8c;"> is often associated with classical machine learning methods applied to data generated from quantum experiments (i.e. </span><span style="color:#96b5b4;">\"</span><span style="color:#a3be8c;">machine learning of quantum systems</span><span style="color:#96b5b4;">\"</span><span style="color:#a3be8c;">), such as learning quantum phase transitions or creating new quantum experiments. Quantum machine learning also extends to a branch of research that explores methodological and structural similarities between certain physical systems and learning systems, in particular neural networks. For example, some mathematical and numerical techniques from quantum physics are applicable to classical deep learning and vice versa. Finally, researchers investigate more abstract notions of learning theory with respect to quantum information, sometimes referred to as </span><span style="color:#96b5b4;">\"</span><span style="color:#a3be8c;">quantum learning theory</span><span style="color:#96b5b4;">\"</span><span style="color:#a3be8c;">.</span><span style="color:#96b5b4;">\n</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">section</span><span>": "",
+</span><span>    "</span><span style="color:#a3be8c;">start_paragraph_id</span><span>": </span><span style="color:#d08770;">1</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">end_paragraph_id</span><span>": </span><span style="color:#d08770;">1</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">start_character</span><span>": </span><span style="color:#d08770;">0</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">end_character</span><span>": </span><span style="color:#d08770;">1704</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">answer_similarity</span><span>": "</span><span style="color:#a3be8c;">0.70</span><span>"
+</span><span>  },
+</span><span>  {
+</span><span>    "</span><span style="color:#a3be8c;">wikipedia_id</span><span>": "</span><span style="color:#a3be8c;">44108758</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">title</span><span>": "</span><span style="color:#a3be8c;">Quantum machine learning</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">text</span><span>": "</span><span style="color:#a3be8c;">Another approach to improving classical machine learning with quantum information processing uses amplitude amplification methods based on Grover's search algorithm, which has been shown to solve unstructured search problems with a quadratic speedup compared to classical algorithms. These quantum routines can be employed for learning algorithms that translate into an unstructured search task, as can be done, for instance, in the case of the k-medians and the k-nearest neighbors algorithms. Another application is a quadratic speedup in the training of perceptron.</span><span style="color:#96b5b4;">\n</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">section</span><span>": "</span><span style="color:#a3be8c;">Section::::Machine learning with quantum computers.:Quantum machine learning algorithms based on Grover search.</span><span style="color:#96b5b4;">\n</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">start_paragraph_id</span><span>": </span><span style="color:#d08770;">10</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">end_paragraph_id</span><span>": </span><span style="color:#d08770;">10</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">start_character</span><span>": </span><span style="color:#d08770;">0</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">end_character</span><span>": </span><span style="color:#d08770;">569</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">answer_similarity</span><span>": "</span><span style="color:#a3be8c;">0.70</span><span>"
+</span><span>  },
+</span><span>  {
+</span><span>    "</span><span style="color:#a3be8c;">wikipedia_id</span><span>": "</span><span style="color:#a3be8c;">44108758</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">title</span><span>": "</span><span style="color:#a3be8c;">Quantum machine learning</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">text</span><span>": "</span><span style="color:#a3be8c;">Quantum-enhanced machine learning refers to quantum algorithms that solve tasks in machine learning, thereby improving and often expediting classical machine learning techniques. Such algorithms typically require one to encode the given classical data set into a quantum computer to make it accessible for quantum information processing. Subsequently, quantum information processing routines are applied and the result of the quantum computation is read out by measuring the quantum system. For example, the outcome of the measurement of a qubit reveals the result of a binary classification task. While many proposals of quantum machine learning algorithms are still purely theoretical and require a full-scale universal quantum computer to be tested, others have been implemented on small-scale or special purpose quantum devices.</span><span style="color:#96b5b4;">\n</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">section</span><span>": "</span><span style="color:#a3be8c;">Section::::Machine learning with quantum computers.</span><span style="color:#96b5b4;">\n</span><span>",
+</span><span>    "</span><span style="color:#a3be8c;">start_paragraph_id</span><span>": </span><span style="color:#d08770;">3</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">end_paragraph_id</span><span>": </span><span style="color:#d08770;">3</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">start_character</span><span>": </span><span style="color:#d08770;">0</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">end_character</span><span>": </span><span style="color:#d08770;">833</span><span>,
+</span><span>    "</span><span style="color:#a3be8c;">answer_similarity</span><span>": "</span><span style="color:#a3be8c;">0.64</span><span>"
+</span><span>  }
+</span><span>]
+</span></code></pre>
+</details>
+</blockquote>  
+<p>Read about Long-Form Question Answering in this article from February 2022 by Vladimir Blagojevic: <a href="https://towardsdatascience.com/long-form-qa-beyond-eli5-an-updated-dataset-and-approach-319cb841aabb">Long-Form QA beyond ELI5: an updated dataset and approach</a> </p>
+<blockquote>
+<p>If you are intrigued by Quantum Machine Learning (QML), there's a course from IBM for self-learners: <a href="https://learn.qiskit.org/course/machine-learning">Quantum Machine Learning</a>.</p>
+</blockquote>
+<h3 id="closed-generative-model-example">Closed-generative model example</h3>
+<p>From OpenAssistant comes the supervised-fine-tuning model: <a href="https://huggingface.co/OpenAssistant/oasst-sft-4-pythia-12b-epoch-3.5?text=%3C%7Cprompter%7C%3EWhat+is+a+meme%2C+and+what%27s+the+history+behind+this+word%3F%3C%7Cendoftext%7C%3E%3C%7Cassistant%7C%3EA+meme+is+a+cultural+idea%2C+behavior%2C+or+style+that+spreads+from+person+to+person+within+a+culture.+It+is+often+used+to+describe+a+unit+of+cultural+information+that+is+passed+from+one+individual+to+another.+The+word+%22meme%22+was+first+used+in+the+1960s+to+describe+a+type+of">Open-Assistant SFT-4 12B</a>.</p>
+<blockquote>
+<p><strong>Question</strong>:<br />
+What is a meme, and what's the history behind this word?</p>
+<p><strong>Answer</strong><br />
+<code>A meme is a cultural idea, behavior, or style that spreads from person to person within a culture. It is often used to describe a unit of cultural information that is passed from one individual to another. The word &quot;meme&quot; was first used in the 1960s to describe a type of cultural unit that was similar to a gene in that it could be passed from one individual to another.</code></p>
+</blockquote>
+<h2 id="in-closing">In closing</h2>
+<p>We have seen many different ML tasks - and that different models are seemed to be used for different tasks. BERT and BART are models that looks to be used in similar contexts, but whereas BERT seem better suited for taking apart a sentence, BART seem better at distilling meaning from a larger body of text into a summarized body, and for text generation. We have also seen models for making sense of images (ResNet), voice recognition (Whisper), and image generation (Stable Diffusion). </p>
+<p>We have given a quick overview over some of the most exciting models and how they are used. But there are a tonne more out there to discover. And to use. You can start exploring by heading over to <a href="https://huggingface.co/">huggingface.co</a> and take some models for a spin, right on their site.</p>
+
+
+
+
+
+
+
+
+
+
+    
+        
+        
+    
+    
+
+    
+    
+    
+    
+    <div class="image-container center">
+        <img
+                alt="yellow smiley face with its arms hugging itself. The background is other-wordly."
+                src="yellow-smiley-spaced.png"
+                srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;yellow-smiley-spaced.8c24e2c56ae0d355.webp 240w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;yellow-smiley-spaced.344ead4b74d0c453.webp 400w,
+                            https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;yellow-smiley-spaced.7f6db5f40092b6cf.webp 600w"
+                sizes="(max-width: 240px) 200px,
+                            (max-width: 400px) 360px,
+                            600px"
+        />
+        <div class="image-subtext">User generated image using SDXL Beta</div>
+    </div>
+
+
+
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2023-06-23 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>
