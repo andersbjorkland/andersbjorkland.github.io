@@ -19,11 +19,13 @@ title='Resize Image Uploads with LiveView'
 
 In this article we will see how to resize an image before uploading it to a Phoenix backend. We will do this by adding a profile image to the user in a basic Phoenix setup. This will take us through the process of modifying an existing schema, create and run a migration, write custom hooks, add file validation, and ultimately create a new file. So if you are up for the task and would like to follow along, here’s the resize/upload flow:
 
+<div class="white-bg">
 {{ imager(
     asset='flow.svg',
     alt='The logic flow of uploading an image. A user selects an image, it is then resized. This will initialize a validation from the client on the server. If it is valid the User will be allowed to submit the image, otherwise must choose another image.', 
     class='center'
 ) }}
+</div>
 
 ## Prerequisites and Setup
 * Docker
