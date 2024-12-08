@@ -2,3 +2,4 @@
 /static/processed_images
 /public/*
 !/public/.gitignore
+.DS_Store
