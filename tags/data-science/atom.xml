@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title> - Data Science</title>
+    <link rel="self" type="application/atom+xml" href="https://abjork.land/tags/data-science/atom.xml"/>
+    <link rel="alternate" type="text/html" href="https://abjork.land"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2024-12-08T00:00:00+00:00</updated>
+    <id>https://abjork.land/tags/data-science/atom.xml</id>
+    <entry xml:lang="en">
+        <title>Cons is Good - or why concatenating lists is slower than prepending elements</title>
+        <published>2024-12-08T00:00:00+00:00</published>
+        <updated>2024-12-08T00:00:00+00:00</updated>
+        
+        <author>
+          <name>
+            Anders Björkland
+          </name>
+        </author>
+        
+        <link rel="alternate" type="text/html" href="https://abjork.land/articles/elixir/cons-is-good/"/>
+        <id>https://abjork.land/articles/elixir/cons-is-good/</id>
+        
+        <content type="html" xml:base="https://abjork.land/articles/elixir/cons-is-good/">&lt;div class=&quot;article-header&quot;&gt;
+    
+
+
+
+
+
+
+
+
+
+
+&lt;img
+        alt=&quot;133&quot;
+        src=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.65449b78f5dfd604.png&quot;
+        srcset=&quot;https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.1cdc2e203370e249.png 240w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.65449b78f5dfd604.png 400w,
+                    https:&amp;#x2F;&amp;#x2F;abjork.land&amp;#x2F;processed_images&amp;#x2F;hero.14be5c3c381a98b5.png 600w&quot;
+        sizes=&quot;(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px&quot;
+&#x2F;&gt;
+
+
+    &lt;div class=&quot;text-content&quot;&gt;
+        &lt;h1 class=&quot;article-title&quot;&gt;
+            &lt;div class=&quot;title&quot;&gt;Cons is Good - or why concatenating lists is slower than prepending elements&lt;&#x2F;div&gt;
+            
+        &lt;&#x2F;h1&gt;
+    &lt;&#x2F;div&gt;
+    
+
+ 
+
+ 
+
+&lt;div class=&quot;tag-list absolute&quot;&gt;
+    
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;elixir&#x2F;&quot; class=&quot;hover-bold&quot;&gt;Elixir&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+        &lt;div&gt;&lt;a href=&quot;https:&#x2F;&#x2F;abjork.land&#x2F;tags&#x2F;data-science&#x2F;&quot; class=&quot;hover-bold&quot;&gt;Data Science&lt;&#x2F;a&gt;&lt;&#x2F;div&gt;
+        
+    
+&lt;&#x2F;div&gt;
+
+
+
+&lt;&#x2F;div&gt;
+&lt;p&gt;Recently I sat and leafed through the book &lt;em&gt;Programming Elixir&lt;&#x2F;em&gt;. It had a simple challenge to write a function that would create a list from two inputs: &lt;code&gt;from&lt;&#x2F;code&gt; and &lt;code&gt;to&lt;&#x2F;code&gt;, creating an element for each value between and including &lt;code&gt;from&lt;&#x2F;code&gt; and &lt;code&gt;to&lt;&#x2F;code&gt;. I wrote something like this:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;span_list&lt;&#x2F;span&gt;&lt;span&gt;(from, to, acc \\ [])
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;span_list&lt;&#x2F;span&gt;&lt;span&gt;(to, to, acc), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do:&lt;&#x2F;span&gt;&lt;span&gt; acc ++ [to]
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;span_list&lt;&#x2F;span&gt;&lt;span&gt;(from, to, acc), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do:&lt;&#x2F;span&gt;&lt;span&gt; span_list(from + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, to, acc ++ [from])
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This works fine and is easy enough to understand: Starting with &lt;code&gt;from&lt;&#x2F;code&gt; we add it to the accumulator (&lt;code&gt;acc&lt;&#x2F;code&gt;) and then recursively call the function with &lt;code&gt;from + 1&lt;&#x2F;code&gt; as the new &lt;code&gt;from&lt;&#x2F;code&gt; value and the same &lt;code&gt;to&lt;&#x2F;code&gt; value. This will continue until we reach &lt;code&gt;to&lt;&#x2F;code&gt;, where we will return the accumulated list.&lt;&#x2F;p&gt;
+&lt;p&gt;But I was curious! I&#x27;ve heard that it is more performant to prepend elements to lists rather than doing concatenations. So I rewrote the function by adding each element to the head of a list and upon returning it I reverse it. How would this other function compare to concatenations?&lt;&#x2F;p&gt;
+&lt;p&gt;The updated functions:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;elixir&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-elixir &quot;&gt;&lt;code class=&quot;language-elixir&quot; data-lang=&quot;elixir&quot;&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;span_list_concats&lt;&#x2F;span&gt;&lt;span&gt;(from, to, acc \\ [])
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;span_list_concats&lt;&#x2F;span&gt;&lt;span&gt;(to, to, acc), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do:&lt;&#x2F;span&gt;&lt;span&gt; acc ++ [to]
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;span_list_concats&lt;&#x2F;span&gt;&lt;span&gt;(from, to, acc), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do:&lt;&#x2F;span&gt;&lt;span&gt; span_list_concats(from + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, to, acc ++ [from])
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;span_list_cons&lt;&#x2F;span&gt;&lt;span&gt;(from, to, acc \\ [])
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;span_list_cons&lt;&#x2F;span&gt;&lt;span&gt;(to, to, acc), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do: &lt;&#x2F;span&gt;&lt;span style=&quot;color:#ebcb8b;&quot;&gt;Enum&lt;&#x2F;span&gt;&lt;span&gt;.reverse([to | acc])
+&lt;&#x2F;span&gt;&lt;span&gt;  &lt;&#x2F;span&gt;&lt;span style=&quot;color:#b48ead;&quot;&gt;def &lt;&#x2F;span&gt;&lt;span style=&quot;color:#8fa1b3;&quot;&gt;span_list_cons&lt;&#x2F;span&gt;&lt;span&gt;(from, to, acc), &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;do:&lt;&#x2F;span&gt;&lt;span&gt; span_list_cons(from + &lt;&#x2F;span&gt;&lt;span style=&quot;color:#d08770;&quot;&gt;1&lt;&#x2F;span&gt;&lt;span&gt;, to, [from | acc])
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;benchmarking&quot;&gt;Benchmarking&lt;&#x2F;h2&gt;
+&lt;p&gt;I used the &lt;code&gt;benchee&lt;&#x2F;code&gt; library for benchmarking, which is great. It&#x27;s simple to use and easy to understand. I had it run each function with the values &lt;code&gt;from = 0&lt;&#x2F;code&gt; and &lt;code&gt;to = 1_000&lt;&#x2F;code&gt;. The results were not too surprising:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; style=&quot;background-color:#2b303b;color:#c0c5ce;&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Name&lt;&#x2F;span&gt;&lt;span&gt;                        ips        average  deviation         median         99th %
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span_list_cons&lt;&#x2F;span&gt;&lt;span&gt;         294.28 K     0.00340 ms   ±199.98%     0.00321 ms     0.00938 ms
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span_list_concats&lt;&#x2F;span&gt;&lt;span&gt;        0.92 K        1.08 ms    ±11.20%        1.11 ms        1.24 ms
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Comparison:
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span_list_cons&lt;&#x2F;span&gt;&lt;span&gt;         294.28 K
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span_list_concats&lt;&#x2F;span&gt;&lt;span&gt;        0.92 K - 318.86x slower +1.08 ms
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Memory&lt;&#x2F;span&gt;&lt;span&gt; usage statistics:
+&lt;&#x2F;span&gt;&lt;span&gt;
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;Name&lt;&#x2F;span&gt;&lt;span&gt;                      average  deviation         median         99th %
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span_list_cons&lt;&#x2F;span&gt;&lt;span&gt;          0.0211 MB     ±0.00%      0.0211 MB      0.0211 MB
+&lt;&#x2F;span&gt;&lt;span style=&quot;color:#bf616a;&quot;&gt;span_list_concats&lt;&#x2F;span&gt;&lt;span&gt;         6.53 MB     ±0.00%        6.53 MB        6.53 MB
+&lt;&#x2F;span&gt;&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;As we can see, &lt;code&gt;span_list_cons&lt;&#x2F;code&gt; performs way better, both in iterations per second (&lt;code&gt;ips&lt;&#x2F;code&gt;) and per memory usage. The offficial documentation has this to say about that:&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Due to their cons cell based representation, prepending an element to a list is always fast (constant time), while appending becomes slower as the list grows in size (linear time)&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;But why is that? What does it mean that cons cells are faster than appending? Let&#x27;s take a look at how they work:&lt;&#x2F;p&gt;
+&lt;h3 id=&quot;cons-cells&quot;&gt;Cons Cells&lt;&#x2F;h3&gt;
+&lt;p&gt;A &lt;a href=&quot;https:&#x2F;&#x2F;en.wikipedia.org&#x2F;wiki&#x2F;Cons&quot;&gt;cons cell&lt;&#x2F;a&gt; is a data structure that holds two values or reference to values. The first value is the &lt;code&gt;head&lt;&#x2F;code&gt; while the second value is the &lt;code&gt;tail&lt;&#x2F;code&gt;, or rather; it points to the tail. In Elixir we can have a list &lt;code&gt;[1, 2, 3]&lt;&#x2F;code&gt;. When we look at the first element in the list we will have a cons cell where the head is &lt;code&gt;1&lt;&#x2F;code&gt; and the tail is referencing the rest of the list - or rather, it is pointing to its next neightbour. When we use this structure for lists we have a linked list.&lt;&#x2F;p&gt;
+&lt;p&gt;This leads us into why appending values is more expensive than prepending them: any value we want to add to the end of the list, we need to traverse the whole list to find the last element and then append it there. This means that every time we append an element to a list, we have to do this traversal which takes linear time &lt;code&gt;O(n)&lt;&#x2F;code&gt;. On top of this, in Elixir, we will have a new list without the reference to the old list. So we are creating a new list for each appended value. As we are abandoning the old list we are occupying memory space with unused data and can hope that &lt;a href=&quot;https:&#x2F;&#x2F;www.erlang.org&#x2F;doc&#x2F;apps&#x2F;erts&#x2F;garbagecollection&quot;&gt;garbage collection&lt;&#x2F;a&gt; will handle it for us. Imagine that this will have to be done for each new element, this will be very expensive for large number of elements when we know that there is an alternative.&lt;&#x2F;p&gt;
+&lt;p&gt;The alternative is that we prepend an element to a list. When we do that, we only need to update the head of the list. The tail is still pointing to the rest of the list and we don&#x27;t need to traverse it. This means that prepending elements is constant time &lt;code&gt;O(1)&lt;&#x2F;code&gt;, and we don&#x27;t have to create a new list, because the &quot;old&quot; list still makes up the rest of the &quot;new&quot; list. This is why we see both memory benefits as well as performance benefits when using cons cells for lists.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;reflections&quot;&gt;Reflections&lt;&#x2F;h2&gt;
+&lt;p&gt;When I first started to write the span function, my natural inclination was that the function should assemble the list in the correct order. Why would I assemble it backwards only to have to reverse it in the last step? Would not the time complexity of the reverse function be linear (&lt;code&gt;O(n)&lt;&#x2F;code&gt;) as well? I think the prudent way is to analyse the total time complexity for each function.&lt;&#x2F;p&gt;
+&lt;p&gt;While &lt;code&gt;span_list_cons&lt;&#x2F;code&gt; is doing prepending, the function itself is not constant time - as the function is having to do recursive call for each value between &lt;code&gt;from&lt;&#x2F;code&gt; and &lt;code&gt;to&lt;&#x2F;code&gt;. This means that the function is not constant time, but rather linear.&lt;&#x2F;p&gt;
+&lt;p&gt;So what is going on with &lt;code&gt;span_list_concats&lt;&#x2F;code&gt; then? Well, for each &lt;code&gt;n&lt;&#x2F;code&gt; it will be doing an &lt;code&gt;O(n)&lt;&#x2F;code&gt; operation for each recursive call, meaning that we end up with a time complexity of &lt;code&gt;O(n^2)&lt;&#x2F;code&gt;. This is typically not ideal.&lt;&#x2F;p&gt;
+&lt;p&gt;So concluding on why the reverse function is not dragging &lt;code&gt;span_list_cons&lt;&#x2F;code&gt; down in the time complexity calculation is because it is only done once, which means that we have its recursive calls being linear, and just adding the linear time complexity of the reverse call: &lt;code&gt;O(n) + O(n)&lt;&#x2F;code&gt; which in the grand scheme of things can be summarised as &lt;code&gt;O(n)&lt;&#x2F;code&gt; for large number of operations.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;strong&gt;Cons are neat, do more cons!&lt;&#x2F;strong&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

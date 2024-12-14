@@ -1,0 +1,328 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    
+    
+    <meta
+        http-equiv="Content-Security-Policy"
+        content="default-src 'self' abjork.land *.gstatic.com *.googletagmanager.com *.google-analytics.com/ *.youtube.com; style-src 'self' abjork.land *.googleapis.com *.youtube.com 'unsafe-inline'" />
+    
+
+    <link rel="canonical" href="https://abjork.land/articles/elixir/cons-is-good/">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    
+        
+    
+
+
+
+
+    
+
+    
+
+    
+        
+        
+<meta name="image" property="og:image" content="https://abjork.land/processed_images/meta.017ca7e51cb09b39.webp" />
+<meta name="twitter:image:src" content="https://abjork.land/processed_images/meta.017ca7e51cb09b39.webp">
+
+
+
+
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cons is Good - or why concatenating lists is slower than prepending elements" />
+<meta property="og:description" content="There are different ways to add an element to a list, but some ways are better than others. In Elixir this comes down to the difference between copying new lists for each element versus just referencing the list from the new element." />
+<meta property="og:url" content="https://abjork.land/articles/elixir/cons-is-good/" />
+<meta property="og:site_name" content="abjork.land - Web Developer">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="author" content="Anders Björkland" />
+
+
+<meta name="publish_date" property="og:publish_date" content="2024-12-08"> 
+
+
+ 
+     
+<meta name="last-updated" content="2024-12-08" />
+    
+
+
+
+        
+    
+
+    <title>
+ Cons is Good - or why concatenating lists is slower than prepending elements
+ | abjork.land</title>
+    <link rel="icon" href="https://abjork.land/favicon.ico">
+    
+    <link rel="alternate" type="application/atom+xml" title="Atom" href="https://abjork.land/atom.xml">
+    
+    <link rel="stylesheet" href="https://abjork.land/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,400;0,700;0,900;1,100;1,400;1,700&display=swap" rel="stylesheet">
+
+    
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://abjork.land/articles/elixir/cons-is-good/"
+    },
+    "headline": "Cons is Good - or why concatenating lists is slower than prepending elements",
+    "description": "There are different ways to add an element to a list, but some ways are better than others. In Elixir this comes down to the difference between copying new lists for each element versus just referencing the list from the new element.",
+    
+    "author": {
+        "@type": "Person",
+        "name": "A.Björkland"
+    },
+    "publisher": {
+        "@type": "Organization",
+        "name": "abjork.land",
+        "logo": {
+        "@type": "ImageObject",
+        "url": "https://abjork.land/favicon.ico"
+        }
+    },
+    "dateUpdated": "2024-12-08",
+    "datePublished": "2024-12-08"
+}
+    </script>
+
+
+    
+</head>
+<body>
+    <header class="layout-wrapper">
+    <svg class="burger" width="25" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg"><line y1="1" x1="1" x2="25" y2="1" stroke="white" stroke-width="2"></line><line y1="10" x1="1" x2="25" y2="10" stroke="white" stroke-width="2"></line><line y1="19" x1="1" x2="12.5" y2="19" stroke="white" stroke-width="2"></line><line y1="19" x1="12.5" x2="25" y2="19" stroke="white" stroke-width="2"></line></svg>
+
+    <nav>
+        <div class="nav-inner-container">
+            <ul>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">home</div>
+    <div class="neon-shadow">home</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;articles&#x2F;" class="letter-anim-text-container active">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">articles</div>
+    <div class="neon-shadow">articles</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;showroom&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">showroom</div>
+    <div class="neon-shadow">showroom</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;about&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">about</div>
+    <div class="neon-shadow">about</div>
+  </div>
+</a>
+
+
+                </li>
+                <li>
+                    
+
+<a href="https:&#x2F;&#x2F;abjork.land&#x2F;contact&#x2F;" class="letter-anim-text-container ">
+  <div class="neon-container">
+    <div class="nav-text letter-anim-text">contact</div>
+    <div class="neon-shadow">contact</div>
+  </div>
+</a>
+
+
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+    <svg id="slider" class="bg-svg " width="1440" height="1024" viewBox="0 0 1440 1024" fill="none" xmlns="http://www.w3.org/2000/svg"><path id="wave-1" d="M130 1041C600.5 161 986 583 1455.5 71" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1697.430908203125px 1697.430908203125px"></path><path id="wave-2" width="1200" d="M1288.57 -6.9397C858.266 598.353 401.358 300.718 -13.3003 856.662" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1596.0498046875px 1596.0498046875px"></path><path id="wave-3" width="1200" d="M1155.57 -16.1926C819.929 588.329 397.446 352.38 -29.7303 728.664" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1439.9014892578125px 1439.9014892578125px"></path><path id="wave-4" width="1200" d="M-17.9946 1053.29C474.902 208.19 925.55 609.919 1438.79 -11.5659" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1850.29736328125px 1850.29736328125px"></path><path id="wave-5" width="1200" d="M1073 -7.5C745.657 540.326 513.5 389 -1.50012 624" stroke="url(#paint0_linear)" opacity="0.2" stroke-dashoffset="0px" stroke-dasharray="1290.9949951171875px 1290.9949951171875px"></path><defs><linearGradient id="paint0_linear" x1="-201.5" y1="997" x2="1315.5" y2="-16" gradientUnits="userSpaceOnUse"><stop offset="0.015625" stop-color="#4E044B"></stop><stop offset="0.654947" stop-color="#F98AF5"></stop><stop offset="1" stop-color="#4E044B"></stop></linearGradient></defs></svg>
+    <div class="layout-wrapper">
+    
+    <div class="layout-row">
+    
+
+
+<div class="breadcrumb-container">
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/"></a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/">Articles</a>
+    </div>
+    
+    
+    <div class="breadcrumb">
+        <a href="https://abjork.land/articles/elixir/">Elixir</a>
+    </div>
+    
+</div>
+
+
+
+    </div>
+    <div class="article">
+    <div class="article-header">
+    
+
+
+
+
+
+
+
+
+
+
+<img
+        alt="133"
+        src="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.65449b78f5dfd604.png"
+        srcset="https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.1cdc2e203370e249.png 240w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.65449b78f5dfd604.png 400w,
+                    https:&#x2F;&#x2F;abjork.land&#x2F;processed_images&#x2F;hero.14be5c3c381a98b5.png 600w"
+        sizes="(max-width: 240px) 200px,
+                    (max-width: 400px) 360px,
+                    600px"
+/>
+
+
+    <div class="text-content">
+        <h1 class="article-title">
+            <div class="title">Cons is Good - or why concatenating lists is slower than prepending elements</div>
+            
+        </h1>
+    </div>
+    
+
+ 
+
+ 
+
+<div class="tag-list absolute">
+    
+        
+        <div><a href="https://abjork.land/tags/elixir/" class="hover-bold">Elixir</a></div>
+        
+        <div><a href="https://abjork.land/tags/data-science/" class="hover-bold">Data Science</a></div>
+        
+    
+</div>
+
+
+
+</div>
+<p>Recently I sat and leafed through the book <em>Programming Elixir</em>. It had a simple challenge to write a function that would create a list from two inputs: <code>from</code> and <code>to</code>, creating an element for each value between and including <code>from</code> and <code>to</code>. I wrote something like this:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">span_list</span><span>(from, to, acc \\ [])
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">span_list</span><span>(to, to, acc), </span><span style="color:#d08770;">do:</span><span> acc ++ [to]
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">span_list</span><span>(from, to, acc), </span><span style="color:#d08770;">do:</span><span> span_list(from + </span><span style="color:#d08770;">1</span><span>, to, acc ++ [from])
+</span></code></pre>
+<p>This works fine and is easy enough to understand: Starting with <code>from</code> we add it to the accumulator (<code>acc</code>) and then recursively call the function with <code>from + 1</code> as the new <code>from</code> value and the same <code>to</code> value. This will continue until we reach <code>to</code>, where we will return the accumulated list.</p>
+<p>But I was curious! I've heard that it is more performant to prepend elements to lists rather than doing concatenations. So I rewrote the function by adding each element to the head of a list and upon returning it I reverse it. How would this other function compare to concatenations?</p>
+<p>The updated functions:</p>
+<pre data-lang="elixir" style="background-color:#2b303b;color:#c0c5ce;" class="language-elixir "><code class="language-elixir" data-lang="elixir"><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">span_list_concats</span><span>(from, to, acc \\ [])
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">span_list_concats</span><span>(to, to, acc), </span><span style="color:#d08770;">do:</span><span> acc ++ [to]
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">span_list_concats</span><span>(from, to, acc), </span><span style="color:#d08770;">do:</span><span> span_list_concats(from + </span><span style="color:#d08770;">1</span><span>, to, acc ++ [from])
+</span><span>
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">span_list_cons</span><span>(from, to, acc \\ [])
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">span_list_cons</span><span>(to, to, acc), </span><span style="color:#d08770;">do: </span><span style="color:#ebcb8b;">Enum</span><span>.reverse([to | acc])
+</span><span>  </span><span style="color:#b48ead;">def </span><span style="color:#8fa1b3;">span_list_cons</span><span>(from, to, acc), </span><span style="color:#d08770;">do:</span><span> span_list_cons(from + </span><span style="color:#d08770;">1</span><span>, to, [from | acc])
+</span></code></pre>
+<h2 id="benchmarking">Benchmarking</h2>
+<p>I used the <code>benchee</code> library for benchmarking, which is great. It's simple to use and easy to understand. I had it run each function with the values <code>from = 0</code> and <code>to = 1_000</code>. The results were not too surprising:</p>
+<pre data-lang="bash" style="background-color:#2b303b;color:#c0c5ce;" class="language-bash "><code class="language-bash" data-lang="bash"><span style="color:#bf616a;">Name</span><span>                        ips        average  deviation         median         99th %
+</span><span style="color:#bf616a;">span_list_cons</span><span>         294.28 K     0.00340 ms   ±199.98%     0.00321 ms     0.00938 ms
+</span><span style="color:#bf616a;">span_list_concats</span><span>        0.92 K        1.08 ms    ±11.20%        1.11 ms        1.24 ms
+</span><span>
+</span><span style="color:#bf616a;">Comparison:
+</span><span style="color:#bf616a;">span_list_cons</span><span>         294.28 K
+</span><span style="color:#bf616a;">span_list_concats</span><span>        0.92 K - 318.86x slower +1.08 ms
+</span><span>
+</span><span>
+</span><span style="color:#bf616a;">Memory</span><span> usage statistics:
+</span><span>
+</span><span style="color:#bf616a;">Name</span><span>                      average  deviation         median         99th %
+</span><span style="color:#bf616a;">span_list_cons</span><span>          0.0211 MB     ±0.00%      0.0211 MB      0.0211 MB
+</span><span style="color:#bf616a;">span_list_concats</span><span>         6.53 MB     ±0.00%        6.53 MB        6.53 MB
+</span></code></pre>
+<p>As we can see, <code>span_list_cons</code> performs way better, both in iterations per second (<code>ips</code>) and per memory usage. The offficial documentation has this to say about that:</p>
+<blockquote>
+<p>Due to their cons cell based representation, prepending an element to a list is always fast (constant time), while appending becomes slower as the list grows in size (linear time)</p>
+</blockquote>
+<p>But why is that? What does it mean that cons cells are faster than appending? Let's take a look at how they work:</p>
+<h3 id="cons-cells">Cons Cells</h3>
+<p>A <a href="https://en.wikipedia.org/wiki/Cons">cons cell</a> is a data structure that holds two values or reference to values. The first value is the <code>head</code> while the second value is the <code>tail</code>, or rather; it points to the tail. In Elixir we can have a list <code>[1, 2, 3]</code>. When we look at the first element in the list we will have a cons cell where the head is <code>1</code> and the tail is referencing the rest of the list - or rather, it is pointing to its next neightbour. When we use this structure for lists we have a linked list.</p>
+<p>This leads us into why appending values is more expensive than prepending them: any value we want to add to the end of the list, we need to traverse the whole list to find the last element and then append it there. This means that every time we append an element to a list, we have to do this traversal which takes linear time <code>O(n)</code>. On top of this, in Elixir, we will have a new list without the reference to the old list. So we are creating a new list for each appended value. As we are abandoning the old list we are occupying memory space with unused data and can hope that <a href="https://www.erlang.org/doc/apps/erts/garbagecollection">garbage collection</a> will handle it for us. Imagine that this will have to be done for each new element, this will be very expensive for large number of elements when we know that there is an alternative.</p>
+<p>The alternative is that we prepend an element to a list. When we do that, we only need to update the head of the list. The tail is still pointing to the rest of the list and we don't need to traverse it. This means that prepending elements is constant time <code>O(1)</code>, and we don't have to create a new list, because the "old" list still makes up the rest of the "new" list. This is why we see both memory benefits as well as performance benefits when using cons cells for lists.</p>
+<h2 id="reflections">Reflections</h2>
+<p>When I first started to write the span function, my natural inclination was that the function should assemble the list in the correct order. Why would I assemble it backwards only to have to reverse it in the last step? Would not the time complexity of the reverse function be linear (<code>O(n)</code>) as well? I think the prudent way is to analyse the total time complexity for each function.</p>
+<p>While <code>span_list_cons</code> is doing prepending, the function itself is not constant time - as the function is having to do recursive call for each value between <code>from</code> and <code>to</code>. This means that the function is not constant time, but rather linear.</p>
+<p>So what is going on with <code>span_list_concats</code> then? Well, for each <code>n</code> it will be doing an <code>O(n)</code> operation for each recursive call, meaning that we end up with a time complexity of <code>O(n^2)</code>. This is typically not ideal.</p>
+<p>So concluding on why the reverse function is not dragging <code>span_list_cons</code> down in the time complexity calculation is because it is only done once, which means that we have its recursive calls being linear, and just adding the linear time complexity of the reverse call: <code>O(n) + O(n)</code> which in the grand scheme of things can be summarised as <code>O(n)</code> for large number of operations.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p><strong>Cons are neat, do more cons!</strong></p>
+
+    </div>
+
+    </div>
+    
+<footer class="article-footer">
+    <div class="layout-wrapper">
+        <div class="layout-row">
+            <p>
+                <a href="https://www.linkedin.com/in/anders-bj%C3%B6rkland-9679b859/">Anders Björkland</a> is a passionate Web Developer who loves coding and writing about it. 
+                Anders is a developer at the product design and software engineering consultancy <a href="https://www.umain.com/">UMAIN</a> since 2022. 
+            </p>
+        </div>
+        <div class="layout-row">
+            2024-12-08 Stockholm, Sweden
+        </div>
+    </div>
+</footer>
+
+    <script src="https://abjork.land/assets/burger.js"></script>
+    <script src="https://abjork.land/assets/letterAnimator.js"></script>
+    
+
+</body>
+</html>
