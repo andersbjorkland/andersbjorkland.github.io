@@ -2,6 +2,7 @@
 base_url = "https://abjork.land"
 
 generate_feeds = true
+feed_filenames = ["atom.xml"]
 
 taxonomies = [
     { name = "category", feed = true },
